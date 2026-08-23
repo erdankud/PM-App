@@ -1,0 +1,189 @@
+{
+  "id": "launch-scope-cut",
+  "version": 1,
+  "status": "published",
+  "title": "Three weeks to launch and two weeks of work left",
+  "summary": "A dated launch, a slipping build, and four things that all feel required. Something has to give and you choose what.",
+  "estimatedMinutes": 9,
+  "level": "developing",
+  "primarySkill": "prioritization",
+  "secondarySkills": [
+    "execution",
+    "communication"
+  ],
+  "tags": [
+    "launch",
+    "scope",
+    "delivery",
+    "b2b"
+  ],
+  "brief": {
+    "role": "You are the PM for a team launching a new billing module.",
+    "company": "Rill, a 140-person company selling operations software to logistics firms.",
+    "context": "The new billing module launches in three weeks at your industry conference, a date announced publicly two months ago with a keynote slot. As of this morning engineering estimates five weeks of remaining work against three weeks of capacity. The four remaining items are: multi-currency support, an invoice PDF template editor, automated dunning for failed payments, and a migration tool that moves existing customers' billing data across. Your engineering lead says the estimates are honest and that adding people will not help this late. Your CEO is giving the keynote.",
+    "objective": "Get to a launch you can stand behind on the announced date, or make the case to change the date early enough to matter.",
+    "constraints": "Three weeks. Six engineers, already at full capacity. The conference date cannot move. Whatever is not built at launch is visible to customers and press.",
+    "task": "Decide what ships at launch and what you do about the rest."
+  },
+  "evidenceCards": [
+    {
+      "id": "estimates",
+      "title": "Remaining work and estimates",
+      "type": "technical",
+      "order": 1,
+      "content": "From the engineering lead, in remaining engineer-weeks (team capacity is 18 engineer-weeks over three weeks):\n\nMulti-currency: 6 weeks. Touches the pricing model, tax calculation and the ledger. Cannot be partially shipped safely — half-done currency handling produces wrong invoices.\nInvoice PDF template editor: 7 weeks. A drag-and-drop editor. There is a fallback: three fixed templates that we already have, zero additional work.\nAutomated dunning: 4 weeks. Retry schedule, emails, card-update flow. A manual fallback exists — the finance team currently chases failed payments by hand for 40 accounts and says they could handle up to about 200.\nMigration tool: 8 weeks. Moves existing customers' billing history and subscriptions onto the new module. Without it, existing customers cannot use the new module at all; new customers are unaffected.\n\nLead's note: 'Total is 25 engineer-weeks against 18. I have already cut everything I can cut inside these four. Adding engineers now costs more than it returns — anyone new spends a week just learning the ledger.'"
+    },
+    {
+      "id": "customers",
+      "title": "Customer and market evidence",
+      "type": "business",
+      "order": 2,
+      "content": "Sales pipeline for the billing module: 14 qualified opportunities. Of those, 3 have named multi-currency as a requirement; those 3 are the largest by deal size. 0 have mentioned a template editor. 2 have asked about dunning.\n\nExisting customers: 380 accounts currently use the old billing system. Account management has surveyed the 40 largest; 6 want to move in the first quarter after launch, the rest are indifferent or would rather wait for a stable release.\n\nCompetitive note: your two main competitors both have multi-currency. Neither has a template editor. One has dunning.\n\nPress and analyst briefings scheduled for launch week focus on the module as a whole, not on individual features. The comms lead has not yet written the feature list."
+    },
+    {
+      "id": "team",
+      "title": "Team and quality signals",
+      "type": "technical",
+      "order": 3,
+      "content": "The team has worked two of the last four weekends. The engineering lead has raised burnout in your last two one-to-ones.\n\nOpen defect count on the already-built parts of the module: 31, of which 4 are marked severity-1 (incorrect amounts on invoices under specific proration cases). None of the 31 are in the current three-week plan.\n\nQA lead's note: 'Whatever you decide, I need five days of stabilisation at the end or we ship the proration bugs to customers. I have said this in three planning meetings.'\n\nThe engineering lead added: 'If we try to do all four, my honest forecast is we ship all four half-done plus the 31 defects. That is the worst outcome available to us.'"
+    },
+    {
+      "id": "commitments",
+      "title": "What has actually been promised",
+      "type": "business",
+      "order": 4,
+      "content": "You went back through the public and contractual record:\n- The conference announcement said 'billing, rebuilt' with no feature list.\n- Two signed contracts include a billing module clause. Both name multi-currency specifically. Neither mentions the other three items. Both have delivery dates in the quarter after the conference, not at it.\n- The CEO's draft keynote script mentions 'a billing system built for companies that operate across borders'. She has not yet rehearsed it and the comms lead says the script is still open for edits this week.\n- No public or contractual commitment exists for the template editor, dunning, or the migration tool.\n- Internal Slack has several messages from sales promising customers 'everything at launch', none of which are contractual."
+    }
+  ],
+  "decisionPrompt": "What ships at the launch in three weeks?",
+  "decisionOptions": [
+    {
+      "id": "currency-only",
+      "label": "Multi-currency only, plus stabilisation",
+      "description": "Ship multi-currency (6 weeks), fix the severity-1 defects, take the five days of stabilisation, and use fixed invoice templates and manual dunning at launch.",
+      "consequence": "Multi-currency lands with four days to spare. The four severity-1 proration defects are fixed and QA gets its stabilisation window. Launch happens on the announced date with a working, narrow product.\nThe keynote is edited to lead on cross-border billing, which lands well because it is true. Two of the three multi-currency opportunities close within the quarter.\nExisting customers cannot migrate, which the account team handles by telling the six interested accounts that migration lands next quarter; four are fine, two are annoyed. Finance chases failed payments manually, which is sustainable at current volume.\nTrade-off: you shipped one thing properly and told a narrower story than sales had been promising.",
+      "decisionPoints": 25,
+      "rubricNote": "Strongest when the rationale checks what was actually promised, uses the contract evidence, protects the stabilisation window, and has a specific plan for the sales expectations that were set informally."
+    },
+    {
+      "id": "currency-dunning",
+      "label": "Multi-currency and dunning",
+      "description": "Ship the two items customers have actually asked for, ten engineer-weeks against eighteen, leaving room for defects but not the full stabilisation window.",
+      "consequence": "Both ship, three days late into a compressed test window. The team works one more weekend. QA gets two days rather than five.\nTwo of the four severity-1 proration defects reach customers, producing incorrect invoices for eleven accounts in the first month. Fixing them and issuing corrections consumes most of the following sprint and one apology call from your CEO.\nThe launch story is broader and the dunning feature is genuinely liked. The migration tool still does not exist.\nTrade-off: you got more into the launch and paid for it by shipping known billing defects, which is the worst category of defect to ship in a billing product.",
+      "decisionPoints": 13,
+      "rubricNote": "Reasonable scope logic, poor quality judgement. Mark down when the rationale never engages with the QA lead's stabilisation requirement or the severity-1 defects, especially in a billing context."
+    },
+    {
+      "id": "move-date",
+      "label": "Make the case to move the launch",
+      "description": "Go to the CEO this week and propose launching after the conference with the full scope, using the keynote to preview rather than announce availability.",
+      "consequence": "The CEO hears you out and declines. The keynote slot is the reason the date exists, and a preview-only keynote was already rejected once by the board.\nYou lose four days to the conversation and end up shipping multi-currency only anyway, now with less stabilisation time than if you had committed on day one. QA gets three days rather than five and one severity-1 defect ships.\nThe CEO does note, positively, that you raised it early and with numbers.\nTrade-off: you tested a constraint that was worth testing and paid for it in the days it took, after being told the date could not move.",
+      "decisionPoints": 9,
+      "rubricNote": "The brief states the conference date cannot move. Some credit for surfacing the risk early and with evidence; low credit when the rationale treats the date as genuinely negotiable despite being told otherwise."
+    },
+    {
+      "id": "currency-migration",
+      "label": "Multi-currency and the migration tool",
+      "description": "Ship for both new and existing customers so the launch is not limited to new business, at fourteen engineer-weeks against eighteen.",
+      "consequence": "Multi-currency lands. The migration tool is 80% done at the deadline and ships as a beta with manual assistance from the support team for the first six accounts.\nStabilisation is cut to two days. Three of the four severity-1 defects ship, and two of the six migrating accounts hit them — which is worse than usual because migrated accounts have historical invoices to reconcile. Support spends three weeks on it.\nThe six accounts that wanted to move do move, eventually and unhappily.\nTrade-off: you served existing customers at launch and did it with a half-finished tool and known defects, in the one area where errors are least forgivable.",
+      "decisionPoints": 10,
+      "rubricNote": "Give some credit for noticing existing customers are stranded. Mark down for ignoring that only 6 of 380 accounts want to move in the first quarter, and for shipping billing defects to exactly those accounts."
+    }
+  ],
+  "rubric": {
+    "referenceReasoning": "Capacity is 18 engineer-weeks and the ask is 25, so something is cut regardless. The evidence makes the ranking clearer than the debate does. Multi-currency is the only item with contractual commitments, named pipeline demand from the three largest opportunities, competitive parity pressure, and no viable fallback — and it is the one the keynote script already gestures at. The template editor has zero customer demand and a zero-cost fallback. Dunning has a manual fallback that scales to five times current volume. Migration matters to 6 of 380 accounts in the first quarter. Separately, the QA lead's five-day stabilisation window is not scope, it is the difference between launching a billing product and launching incorrect invoices — four severity-1 proration defects are already known. A strong answer cuts to multi-currency plus stabilisation, uses the contract and pipeline evidence rather than the loudest internal voices, and deals explicitly with the informal promises sales has been making.",
+    "evidenceSignals": [
+      "Compares 25 engineer-weeks of work against 18 of capacity rather than negotiating estimates",
+      "Checks what was actually promised contractually versus what was said in Slack",
+      "Notices the template editor has zero customer requests and a free fallback",
+      "Notices dunning's manual fallback scales to 200 accounts against a current 40",
+      "Treats the five-day stabilisation window and four severity-1 defects as non-negotiable in a billing product",
+      "Notes only 6 of 380 existing accounts want to migrate in the first quarter"
+    ],
+    "positiveSignals": {
+      "product_sense": [
+        "Judges each item by customer demand and fallback availability rather than by how complete the module feels",
+        "Recognises a narrow working product beats a broad half-working one at launch"
+      ],
+      "analytics": [
+        "Uses the pipeline and existing-account numbers to rank the items"
+      ],
+      "user_research": [
+        "Notes that no customer has asked for the template editor"
+      ],
+      "prioritization": [
+        "Cuts against a capacity number rather than hoping the team absorbs the gap",
+        "Distinguishes items with fallbacks from items without"
+      ],
+      "execution": [
+        "Protects the stabilisation window explicitly",
+        "Treats known severity-1 billing defects as launch-blocking",
+        "Acknowledges the team has worked two weekends and does not plan for more"
+      ],
+      "communication": [
+        "Has a plan for the customers sales has already promised everything to",
+        "Proposes the keynote framing that matches what will actually ship"
+      ]
+    },
+    "negativeSignals": {
+      "product_sense": [
+        "Treats all four items as equally required because they were all in the plan"
+      ],
+      "analytics": [
+        "Ignores that only 3 opportunities named multi-currency and 0 named the editor"
+      ],
+      "prioritization": [
+        "Proposes doing all four in compressed form, which the engineering lead already called the worst outcome",
+        "Negotiates the estimates down rather than cutting scope"
+      ],
+      "execution": [
+        "Sacrifices the stabilisation window to fit more scope",
+        "Plans on weekend work as capacity"
+      ],
+      "communication": [
+        "Leaves the sales team's informal promises unaddressed"
+      ]
+    }
+  },
+  "learnTakeaway": {
+    "title": "Cut by fallback, not by importance",
+    "body": "Under a fixed date, the useful ranking is not 'what matters most' — everything on the list matters or it would not be there. It is 'what has a survivable fallback'. Fixed templates replace the editor at zero cost; a finance team replaces dunning up to five times current volume; nothing replaces correct multi-currency invoices. Ranking by fallback turns an argument about importance into an arithmetic problem, and it usually protects the quality window that the argument was about to consume."
+  },
+  "qaSubmissions": [
+    {
+      "label": "strong",
+      "optionId": "currency-only",
+      "evidenceIds": [
+        "estimates",
+        "customers",
+        "team",
+        "commitments"
+      ],
+      "rationale": "Multi-currency only, fix the four severity-1 proration defects, and give QA its five days. 25 engineer-weeks against 18 means I'm cutting 7 regardless; what decides which 7 is fallback availability, not importance. The editor has fixed templates ready and zero requests. Dunning has a manual process good to 200 accounts against 40. Migration matters to 6 of 380 accounts. Multi-currency has no fallback and sits in two contracts. Shipping wrong invoice amounts is worse than shipping less. This week: edit the keynote while comms says it's open, and get sales in a room about the Slack promises.",
+      "expectedScoreMin": 86,
+      "expectedScoreMax": 99
+    },
+    {
+      "label": "defensible_alternative",
+      "optionId": "currency-dunning",
+      "evidenceIds": [
+        "estimates",
+        "customers",
+        "team"
+      ],
+      "rationale": "Multi-currency and dunning — ten engineer-weeks against eighteen, leaving eight for defects and testing. Multi-currency is non-negotiable. I'd add dunning because two opportunities named it, a competitor has it, and a single-feature launch is hard to keynote and hard to sell against a fuller competitor. Eight weeks covers the four severity-1 defects plus a real test window, though not the full five days QA asked for — that's the weak point of my answer. If defect burn-down is behind in week two, I cut dunning rather than the test window.",
+      "expectedScoreMin": 62,
+      "expectedScoreMax": 80
+    },
+    {
+      "label": "weak",
+      "optionId": "currency-migration",
+      "evidenceIds": [
+        "estimates"
+      ],
+      "rationale": "We need multi-currency because it is in contracts, and we need the migration tool because otherwise existing customers cannot use the new billing module at all, which would look bad at launch. That is 14 weeks out of 18 so it should just about fit if the team pushes. The template editor and dunning can wait.",
+      "expectedScoreMin": 20,
+      "expectedScoreMax": 40
+    }
+  ]
+}

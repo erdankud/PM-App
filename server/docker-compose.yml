@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pmcoach
+      POSTGRES_PASSWORD: pmcoach
+      POSTGRES_DB: pmcoach
+    ports:
+      - "5432:5432"
+    volumes:
+      - pmcoach-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pmcoach"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://pmcoach:pmcoach@db:5432/pmcoach
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      JWT_SECRET: ${JWT_SECRET:-dev-only-insecure-secret-change-me}
+      ALLOW_DEV_AUTH: ${ALLOW_DEV_AUTH:-true}
+      APPLE_CLIENT_ID: ${APPLE_CLIENT_ID:-}
+      EVALUATOR_PROVIDER: ${EVALUATOR_PROVIDER:-mock}
+      EVALUATOR_API_KEY: ${EVALUATOR_API_KEY:-}
+      EVALUATOR_MODEL: ${EVALUATOR_MODEL:-}
+      RUN_INLINE_WORKER: "false"
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "alembic upgrade head &&
+             python -m scripts.seed &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+  worker:
+    build: .
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql+psycopg2://pmcoach:pmcoach@db:5432/pmcoach
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      JWT_SECRET: ${JWT_SECRET:-dev-only-insecure-secret-change-me}
+      ALLOW_DEV_AUTH: ${ALLOW_DEV_AUTH:-true}
+      EVALUATOR_PROVIDER: ${EVALUATOR_PROVIDER:-mock}
+      EVALUATOR_API_KEY: ${EVALUATOR_API_KEY:-}
+      EVALUATOR_MODEL: ${EVALUATOR_MODEL:-}
+    command: python -m app.worker
+
+volumes:
+  pmcoach-db:

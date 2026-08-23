@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "baselineScore": 50,
+  "baselineMin": 35,
+  "baselineMax": 65,
+  "levelBands": [
+    { "level": "foundation", "maxAverage": 47 },
+    { "level": "developing", "maxAverage": 56 },
+    { "level": "advanced", "maxAverage": 100 }
+  ],
+  "notice": "These three questions calibrate where you start. They are not a test and they are not an assessment of job readiness.",
+  "items": [
+    {
+      "id": "assess-signal",
+      "index": 1,
+      "prompt": "Reading a metric change",
+      "context": "You run a subscription app. Weekly active users are up 9% month over month, and the number of users who complete the core action at least once a week is down 4%. Nothing else obviously changed. Someone asks you in a meeting what you think is happening.",
+      "question": "What is your first move?",
+      "options": [
+        {
+          "id": "segment",
+          "label": "Split both numbers by acquisition source, tenure, and platform before saying anything",
+          "skillWeights": {
+            "analytics": 9,
+            "product_sense": 4,
+            "user_research": 0,
+            "prioritization": 0,
+            "execution": 2,
+            "communication": 2
+          }
+        },
+        {
+          "id": "hypothesis",
+          "label": "Say the likely explanation is that a marketing push brought in lower-intent users, and check that",
+          "skillWeights": {
+            "analytics": 4,
+            "product_sense": 6,
+            "user_research": 2,
+            "prioritization": 0,
+            "execution": 0,
+            "communication": 4
+          }
+        },
+        {
+          "id": "interviews",
+          "label": "Set up interviews with users who stopped completing the core action",
+          "skillWeights": {
+            "analytics": 0,
+            "product_sense": 2,
+            "user_research": 7,
+            "prioritization": -1,
+            "execution": 0,
+            "communication": 0
+          }
+        },
+        {
+          "id": "wait",
+          "label": "Wait another month, since one month of movement is not enough to act on",
+          "skillWeights": {
+            "analytics": 1,
+            "product_sense": -1,
+            "user_research": 0,
+            "prioritization": -3,
+            "execution": -2,
+            "communication": -2
+          }
+        }
+      ]
+    },
+    {
+      "id": "assess-tradeoff",
+      "index": 2,
+      "prompt": "Choosing under constraint",
+      "context": "Your team has four weeks. There are three candidates: a fix for a bug affecting 3% of users badly, a small feature 40% of users have asked for, and paying down debt that is slowing the team by roughly 20%. Each takes most of the four weeks. Your manager has no strong opinion and says it is your call.",
+      "question": "How do you decide?",
+      "options": [
+        {
+          "id": "expected-value",
+          "label": "Estimate the cost of each option not happening for a quarter, then pick the one with the worst cost of delay",
+          "skillWeights": {
+            "analytics": 5,
+            "product_sense": 3,
+            "user_research": 0,
+            "prioritization": 9,
+            "execution": 2,
+            "communication": 1
+          }
+        },
+        {
+          "id": "smallest-slices",
+          "label": "Ask whether any of the three has a smaller version that fits in one week, and try to do two of them",
+          "skillWeights": {
+            "analytics": 0,
+            "product_sense": 4,
+            "user_research": 0,
+            "prioritization": 6,
+            "execution": 5,
+            "communication": 0
+          }
+        },
+        {
+          "id": "users-first",
+          "label": "Fix the bug, because a broken experience for real users comes before anything else",
+          "skillWeights": {
+            "analytics": -1,
+            "product_sense": 3,
+            "user_research": 3,
+            "prioritization": 1,
+            "execution": 1,
+            "communication": 0
+          }
+        },
+        {
+          "id": "ask-team",
+          "label": "Put it to the team and go with what most of them want to work on",
+          "skillWeights": {
+            "analytics": -2,
+            "product_sense": -1,
+            "user_research": 0,
+            "prioritization": -3,
+            "execution": 1,
+            "communication": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "assess-communication",
+      "index": 3,
+      "prompt": "Delivering an unwelcome recommendation",
+      "context": "After three weeks of research you have concluded that a feature your CEO championed publicly is not worth building — the demand behind it is much narrower than it appeared. You have one slot in tomorrow's leadership meeting.",
+      "question": "How do you open?",
+      "options": [
+        {
+          "id": "recommendation-first",
+          "label": "State the recommendation and the single strongest piece of evidence, then take questions",
+          "skillWeights": {
+            "analytics": 1,
+            "product_sense": 2,
+            "user_research": 0,
+            "prioritization": 2,
+            "execution": 1,
+            "communication": 9
+          }
+        },
+        {
+          "id": "walk-through",
+          "label": "Walk through the research in order so the group reaches the conclusion with you",
+          "skillWeights": {
+            "analytics": 2,
+            "product_sense": 1,
+            "user_research": 4,
+            "prioritization": 0,
+            "execution": 0,
+            "communication": 4
+          }
+        },
+        {
+          "id": "alternative",
+          "label": "Lead with what you would build instead, and use the research to explain why",
+          "skillWeights": {
+            "analytics": 0,
+            "product_sense": 6,
+            "user_research": 1,
+            "prioritization": 4,
+            "execution": 2,
+            "communication": 6
+          }
+        },
+        {
+          "id": "private-first",
+          "label": "Do not raise it in the meeting; speak to the CEO privately first",
+          "skillWeights": {
+            "analytics": 0,
+            "product_sense": 0,
+            "user_research": 0,
+            "prioritization": 0,
+            "execution": 1,
+            "communication": 3
+          }
+        }
+      ]
+    }
+  ]
+}

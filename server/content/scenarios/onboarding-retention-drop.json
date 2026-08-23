@@ -1,0 +1,193 @@
+{
+  "id": "onboarding-retention-drop",
+  "version": 1,
+  "status": "published",
+  "title": "Retention drops after an onboarding redesign",
+  "summary": "A redesigned signup flow lifted completion rates but week-one retention fell. Decide what to do with two days of data.",
+  "estimatedMinutes": 8,
+  "level": "foundation",
+  "primarySkill": "product_sense",
+  "secondarySkills": [
+    "analytics",
+    "user_research"
+  ],
+  "tags": [
+    "onboarding",
+    "retention",
+    "b2c",
+    "experiment"
+  ],
+  "brief": {
+    "role": "You are the PM for growth at a consumer habit-tracking app.",
+    "company": "Tempo, a 40-person consumer app with 900k monthly active users.",
+    "context": "Ten days ago the team shipped a redesigned onboarding flow to 100% of new users. The redesign cut signup from nine screens to four by removing the goal-setting step and the first-habit setup, both of which were moved into the main app. Signup completion went from 61% to 78% almost immediately, which the team celebrated. Yesterday the data analyst flagged that week-one retention for the cohort that went through the new flow is materially lower than the old one. Your head of product wants a recommendation in tomorrow's leadership review.",
+    "objective": "Protect week-one retention without giving up the signup completion gain if you can avoid it.",
+    "constraints": "Two engineers are available this sprint. A full rollback takes about a day. You have ten days of data and only two full weekly cohorts, one of which is still incomplete.",
+    "task": "Recommend what the team should do next, and be explicit about what you are trading off."
+  },
+  "evidenceCards": [
+    {
+      "id": "funnel",
+      "title": "Funnel and retention data",
+      "type": "quantitative",
+      "order": 1,
+      "content": "Old flow (4 weeks before launch): signup completion 61%, D7 retention 34%, D30 retention 19%.\nNew flow (10 days since launch): signup completion 78%, D7 retention 27%.\nNet effect on activated users per 1,000 visitors: old 207, new 211. The difference is inside the noise band the analyst quoted (±14).\nSegment split for the new flow: users who set a habit within their first session retain at 41% D7; users who do not retain at 12%. In the old flow, 88% of signups had a habit set by the end of signup. In the new flow, 46% have one set by the end of day one.\nNote from the analyst: 'Ten days is one and a bit cohorts. There was also an App Store feature on day 3 that brought in about 30k installs we would not normally get.'"
+    },
+    {
+      "id": "interviews",
+      "title": "User interview notes",
+      "type": "qualitative",
+      "order": 2,
+      "content": "Five 20-minute calls with new users from the new flow, run by the researcher last week.\n- Three of the five said the app felt 'empty' when they landed on the home screen. Two of those three could not describe what the app was for after signing up.\n- Two users had created a habit by the time of the call. Both had found the '+' button on their own within the first minute and both described the app clearly.\n- One user said the old flow 'took forever' when shown a recording of it, and preferred the new one despite not using the app since day two.\n- The researcher's caveat: participants were recruited from users who opted into research, which skews toward more engaged people."
+    },
+    {
+      "id": "engineering",
+      "title": "Engineering note",
+      "type": "technical",
+      "order": 3,
+      "content": "From the engineer who built the flow:\n'The four-screen flow is behind a flag, so we can flip anyone back to the nine-screen version in minutes, not a day. What we cannot do quickly is a partial revert — goal-setting and habit-setup were removed as one commit and the state machine was rewritten around it. Splitting them back apart is about three days of work plus testing.\nAdding a first-run prompt on the home screen that pushes new users into habit creation is roughly a day. It would be a card at the top of the home screen, not a blocking step.\nWe never set this up as a proper experiment — the new flow went to everyone at once, so the comparison is week-over-week, not a controlled split.'"
+    },
+    {
+      "id": "business",
+      "title": "Business context",
+      "type": "business",
+      "order": 4,
+      "content": "Tempo monetises through a subscription offered on day 14. Roughly 6% of users who reach day 14 convert, and conversion is strongly correlated with having at least one active habit.\nThe growth team has a paid acquisition test starting in three weeks that will roughly double new-user volume for a month. Finance has already approved the spend. The head of growth has said, in writing, that she does not want to spend that budget 'pouring users into a leaky bucket'.\nThere is no revenue impact visible yet — the first new-flow cohort has not reached day 14."
+    }
+  ],
+  "decisionPrompt": "What do you recommend the team does next about the new onboarding flow?",
+  "decisionOptions": [
+    {
+      "id": "rollback",
+      "label": "Roll back to the old nine-screen flow",
+      "description": "Flip the flag back for all new users, restore the known D7 retention, and revisit the redesign later with a proper experiment.",
+      "consequence": "Retention for new cohorts returns to roughly 34% D7 over the following two weeks, and signup completion falls back to about 61%. The engineer flips the flag the same afternoon.\nThe design lead pushes back hard in the next team meeting: three weeks of design work is now shipped to nobody, and the team learned little about which of the two removed steps actually mattered. Two months later the same redesign is proposed again and the team has no more evidence than before.\nTrade-off: you bought back a known number quickly and gave up the completion gain and the chance to learn which step drove retention.",
+      "decisionPoints": 12,
+      "rubricNote": "Defensible if the reasoning names the leaky-bucket risk ahead of the paid acquisition push and treats the rollback as buying time rather than as a verdict on the redesign. Weak if it treats a 7-point D7 move over ten days and one App Store spike as settled proof."
+    },
+    {
+      "id": "habit-prompt",
+      "label": "Keep the new flow and add a first-run habit prompt",
+      "description": "Ship the one-day home-screen card that pushes new users to create their first habit, then measure whether the habit-set rate and D7 retention recover.",
+      "consequence": "The card ships in two days. Over the next two weeks the share of new users with a habit set by end of day one moves from 46% to 71%. D7 retention for that cohort lands at 33%, close to the old flow, while signup completion holds at 76%.\nThe analyst notes you still cannot fully separate the card's effect from the App Store spike washing out of the data. The team agrees to run the paid acquisition test with a proper 50/50 holdout so the next change is measurable.\nTrade-off: you kept both numbers and moved fast, but you acted on a hypothesis rather than a confirmed cause, and you will not know for certain which removed step mattered.",
+      "decisionPoints": 25,
+      "rubricNote": "Strongest when the rationale identifies habit-setting as the mechanism linking the two numbers, uses the 41% vs 12% segment split, and names the paid acquisition deadline as why waiting for clean data is expensive."
+    },
+    {
+      "id": "investigate",
+      "label": "Hold the flow as-is and spend the sprint investigating",
+      "description": "Change nothing for new users, wait for the second full cohort, run more interviews, and bring a recommendation with clean data in two weeks.",
+      "consequence": "Two weeks later the second cohort confirms the pattern: D7 retention settles around 28% and the habit-set correlation holds. Ten more interviews sharpen the story but do not change it.\nBy the time the team is ready to act, the paid acquisition test is one week out. The head of growth delays it by a sprint, which pushes the quarterly growth target at risk, and says so in the review.\nTrade-off: you now have a well-evidenced answer and no fix shipped, having spent the one window where the fix was cheap.",
+      "decisionPoints": 14,
+      "rubricNote": "Reasonable instinct — the data genuinely is thin — but the rationale must confront the cost of waiting. Credit answers that pair investigation with a low-cost mitigation; penalise ones that treat 'get more data' as free."
+    },
+    {
+      "id": "split-revert",
+      "label": "Rebuild the flow to restore habit setup only",
+      "description": "Spend the three engineering days splitting the commit apart so signup keeps the shorter goal-free path but puts first-habit setup back inside onboarding.",
+      "consequence": "The work takes four days rather than three once testing is included, consuming most of the sprint. The resulting five-screen flow lands at 71% signup completion and 35% D7 retention over the following three weeks — the best combined result of any option.\nThe cost is that nothing else shipped this sprint, and the paid acquisition test starts before the new numbers are stable enough to trust. The head of growth runs it anyway.\nTrade-off: you optimised for the likely right end state and paid for it with the whole sprint and with launching the acquisition test on unstable data.",
+      "decisionPoints": 20,
+      "rubricNote": "Strong if the rationale explains why habit setup specifically is worth three days and acknowledges the sprint cost. Weaker if it assumes the split is cheap or ignores that a cheaper test of the same hypothesis exists."
+    }
+  ],
+  "rubric": {
+    "referenceReasoning": "The two metrics are not in conflict; they are linked by a mechanism. Signup completion rose because two steps were removed, and one of those steps — first-habit setup — is the strongest available predictor of week-one retention (41% vs 12%). The cheapest way to test that hypothesis is to restore habit-setting outside the signup flow rather than inside it, which is the one-day home-screen card. The data is genuinely thin (ten days, one and a bit cohorts, an App Store spike) so no option should be defended as proven. What makes waiting expensive is the paid acquisition test three weeks out: spending that budget on a flow that loses users is a much larger mistake than shipping a cheap, reversible fix on a plausible hypothesis. A strong answer names the mechanism, picks a reversible action, and says what it would measure to confirm or reject it.",
+    "evidenceSignals": [
+      "Uses the 41% vs 12% habit-set retention split rather than only the headline D7 number",
+      "Notices that the habit-set rate fell from 88% to 46%, which is the actual behavioural change",
+      "Treats ten days, one and a bit cohorts, and an App Store spike as a reason for caution, not certainty",
+      "Connects the decision to the paid acquisition test three weeks out",
+      "Notes that the redesign was never run as a controlled experiment, so week-over-week comparison is weak"
+    ],
+    "positiveSignals": {
+      "product_sense": [
+        "Frames the problem as 'the removed step did work we did not replace', not as 'the redesign was bad'",
+        "Separates the user value of a fast signup from the user value of reaching first value in the product"
+      ],
+      "analytics": [
+        "Uses the segment split rather than the aggregate to locate the cause",
+        "Names a specific confound (App Store feature, no control group) instead of treating the numbers as clean"
+      ],
+      "user_research": [
+        "Uses the interview quotes about the app feeling 'empty' as a mechanism, not as proof",
+        "Notices the recruitment skew the researcher flagged"
+      ],
+      "prioritization": [
+        "Weighs a one-day fix against a three-day rebuild explicitly",
+        "Uses the acquisition deadline as the reason speed has value here"
+      ],
+      "execution": [
+        "Proposes a reversible change and states what would be measured next",
+        "Suggests running the acquisition test with a holdout so the next decision has clean data"
+      ],
+      "communication": [
+        "States a clear recommendation in the first sentence or two",
+        "Names the trade-off being accepted rather than presenting the choice as costless"
+      ]
+    },
+    "negativeSignals": {
+      "product_sense": [
+        "Treats signup completion and retention as a simple trade-off to be split down the middle",
+        "Proposes a large new feature rather than addressing the change that caused the shift"
+      ],
+      "analytics": [
+        "Declares causation from a ten-day uncontrolled week-over-week comparison",
+        "Ignores the segment data entirely and argues only from the headline retention number"
+      ],
+      "user_research": [
+        "Generalises from five self-selected interviews as if they were representative"
+      ],
+      "prioritization": [
+        "Recommends doing everything: rollback, rebuild, and more research at once",
+        "Ignores that engineering capacity this sprint is two people"
+      ],
+      "execution": [
+        "Gives no measurement or follow-up plan for the chosen action"
+      ],
+      "communication": [
+        "Never states which option is being recommended",
+        "Lists considerations without reaching a decision"
+      ]
+    }
+  },
+  "learnTakeaway": {
+    "title": "Look for the mechanism, not the trade-off",
+    "body": "When two metrics move in opposite directions after one change, the useful question is rarely 'which metric matters more'. It is 'what work was the old design doing that the new one stopped doing'. Here the removed step was not just friction — it was the thing that got users to their first habit, and first habit is what predicts week-one retention. Once you name the mechanism, cheaper options usually appear: the work can often be moved rather than restored."
+  },
+  "qaSubmissions": [
+    {
+      "label": "strong",
+      "optionId": "habit-prompt",
+      "evidenceIds": [
+        "funnel",
+        "interviews",
+        "engineering",
+        "business"
+      ],
+      "rationale": "The two numbers aren't in tension — habit-set rate fell from 88% to 46%, and users with a habit retain at 41% vs 12%. The redesign removed the step that got people to first value. Cheapest test is the one-day home-screen card: reversible, and it keeps the completion gain. Ten days, one and a bit cohorts and an App Store spike isn't enough to roll back three weeks of work on. What makes waiting expensive is the paid acquisition test in three weeks. I'd track habit-set rate by end of day one, and ask growth to run that test with a 50/50 holdout so the next call has clean data.",
+      "expectedScoreMin": 82,
+      "expectedScoreMax": 97
+    },
+    {
+      "label": "defensible_alternative",
+      "optionId": "rollback",
+      "evidenceIds": [
+        "funnel",
+        "business"
+      ],
+      "rationale": "I'd roll back, framed as buying time rather than a verdict on the redesign. The flag flip takes minutes and is reversible, so being wrong is cheap. Being wrong the other way isn't: paid acquisition doubles volume in three weeks and conversion depends on an active habit. Ten days with an App Store spike and no control isn't enough to design a fix on — the 41/12 split is correlational, and engaged users may simply be the ones who set habits. Revert now, then re-ship the four-screen flow as a proper 50/50 experiment alongside the acquisition test.",
+      "expectedScoreMin": 68,
+      "expectedScoreMax": 84
+    },
+    {
+      "label": "weak",
+      "optionId": "rollback",
+      "evidenceIds": [
+        "funnel"
+      ],
+      "rationale": "Retention dropped from 34% to 27% which is a big drop, so the new onboarding is clearly worse and we should roll it back to the version that worked. Retention matters more than signup completion because retained users are the ones who pay.",
+      "expectedScoreMin": 22,
+      "expectedScoreMax": 42
+    }
+  ]
+}

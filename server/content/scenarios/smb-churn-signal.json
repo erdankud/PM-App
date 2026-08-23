@@ -1,0 +1,193 @@
+{
+  "id": "smb-churn-signal",
+  "version": 1,
+  "status": "published",
+  "title": "Small-business churn is climbing and nobody knows why",
+  "summary": "SMB churn is up 5 points over two quarters while enterprise is flat. Four plausible causes, one quarter of capacity.",
+  "estimatedMinutes": 9,
+  "level": "developing",
+  "primarySkill": "analytics",
+  "secondarySkills": [
+    "user_research",
+    "product_sense"
+  ],
+  "tags": [
+    "churn",
+    "retention",
+    "segments",
+    "b2b"
+  ],
+  "brief": {
+    "role": "You are the PM responsible for retention across the self-serve product.",
+    "company": "Halo, a 200-person company selling customer support software.",
+    "context": "Monthly churn in the SMB segment (accounts under 20 seats, self-serve, 41% of ARR) has gone from 3.1% to 3.9% over two quarters. Enterprise churn is flat at 0.7%. The executive team has asked for a plan. Four theories are circulating: a price increase eight months ago, a competitor that launched an aggressive free tier, a decline in support responsiveness, and a redesigned inbox shipped five months ago that some users disliked. You have one quarter of your team's capacity to spend on retention.",
+    "objective": "Identify what is actually driving the SMB churn increase before committing the quarter.",
+    "constraints": "One quarter, four engineers. The data team can build cohort analyses within a week. You cannot survey churned users at scale — legal requires opt-in and past response rates are under 3%.",
+    "task": "Decide what you do first and what evidence would confirm or reject your read."
+  },
+  "evidenceCards": [
+    {
+      "id": "cohorts",
+      "title": "Churn by cohort and plan",
+      "type": "quantitative",
+      "order": 1,
+      "content": "Monthly SMB churn by signup cohort age:\n- Accounts under 6 months old: 5.8% (was 5.5% two quarters ago)\n- Accounts 6-18 months: 3.4% (was 2.9%)\n- Accounts over 18 months: 1.9% (was 1.8%)\n\nBy price cohort:\n- Accounts on the old price (grandfathered, no increase): churn went 2.9% → 3.7%\n- Accounts on the new price: churn went 3.3% → 4.1%\nBoth moved by roughly the same amount, about 0.8 points.\n\nBy seat count within SMB:\n- 1-4 seats: 4.9% (was 3.6%)\n- 5-19 seats: 2.6% (was 2.5%)\n\nData team note: '1-4 seat accounts are 62% of SMB account count but 21% of SMB ARR. Almost all of the aggregate increase comes from them.'"
+    },
+    {
+      "id": "competitor",
+      "title": "Competitive and win/loss",
+      "type": "business",
+      "order": 2,
+      "content": "The competitor's free tier launched seven months ago: up to 3 seats, unlimited tickets, no automation.\n\nChurn exit-survey responses (self-serve cancel flow, 2.8% response rate, n=61 over two quarters):\n- 'Too expensive' 24\n- 'Not using it enough' 19\n- 'Switching to another tool' 11 (7 of these name the competitor)\n- 'Missing a feature' 4\n- Other 3\n\nSales note on win/loss for new business: competitor mentioned in 22% of lost deals this quarter, up from 14%. Almost entirely in deals under 5 seats.\n\nCaveat from the data team: 'Exit surveys are the least reliable data we have. 61 responses from roughly 2,200 churned accounts, and people pick the least awkward reason.'"
+    },
+    {
+      "id": "product",
+      "title": "Product usage and the inbox redesign",
+      "type": "quantitative",
+      "order": 3,
+      "content": "The inbox redesign shipped five months ago to all accounts.\n\nWeekly active usage per account, SMB, before and after the redesign:\n- 1-4 seats: 3.1 → 2.4 sessions per week\n- 5-19 seats: 6.8 → 6.9 sessions per week\n\nThe redesign added a triage sidebar that assumes multiple agents. On 1-4 seat accounts the sidebar occupies about 30% of the screen and, according to the analytics, is interacted with in 4% of their sessions.\n\nAn NPS pulse run three months ago: 1-4 seat NPS fell from +11 to -6. 5-19 seat NPS was flat at +24.\n\nSupport metrics: first response time went from 4.2 to 5.1 hours over the same period, applied evenly across all segments."
+    },
+    {
+      "id": "timing",
+      "title": "Timing reconstruction",
+      "type": "quantitative",
+      "order": 4,
+      "content": "Monthly SMB churn, 1-4 seat accounts, by month over the last nine months:\n3.5, 3.6, 3.5 (price increase happens at end of month 3), 3.7, 3.6 (competitor free tier launches in month 5), 3.8, 4.4, 4.7, 4.9 (inbox redesign shipped at start of month 4... corrected: start of month 5)\n\nData team correction issued with the table: 'The inbox redesign shipped in month 5, the same month the competitor launched. We cannot separate those two with observational data alone. The price increase in month 3 is cleanly separated and produced no visible step change.'\n\nThe step change is between month 6 and month 7, one to two months after both the redesign and the competitor launch — consistent with either, given that SMB accounts are on monthly contracts and typically churn at a renewal date."
+    }
+  ],
+  "decisionPrompt": "What is your first move this quarter, and what would confirm or reject your read?",
+  "decisionOptions": [
+    {
+      "id": "fix-inbox-small",
+      "label": "Make the inbox adapt to 1-4 seat accounts and measure it as an experiment",
+      "description": "Collapse the triage sidebar by default for accounts under 5 seats, ship it to half of them, and use the holdout to separate the redesign effect from the competitor effect.",
+      "consequence": "The change ships in three weeks to a 50% holdout. Over the following eight weeks the treated group's sessions per week recover from 2.4 to 2.9 and their monthly churn falls from 4.9% to 4.0%. The holdout stays at 4.8%.\nThat is roughly two-thirds of the increase, and it is now attributable rather than argued. The remaining gap is consistent with competitive pressure, which the team addresses in the following quarter with a pricing change for the smallest accounts.\nTrade-off: you committed to one hypothesis before proving it, and it was the right one — but the experiment design, not the guess, is what let you know that.",
+      "decisionPoints": 25,
+      "rubricNote": "Strongest when the rationale localises the churn to 1-4 seat accounts, links the sidebar usage and session decline to that segment, and explicitly uses a holdout to separate two confounded causes."
+    },
+    {
+      "id": "price-response",
+      "label": "Respond to the competitor with a cheaper small-account tier",
+      "description": "Treat the free tier as the driver and launch a low-cost or free tier for accounts under 5 seats this quarter.",
+      "consequence": "A 3-seat starter tier ships in seven weeks. Churn in 1-4 seat accounts falls from 4.9% to 4.4% over the following quarter, and new signups in that band rise 18%.\nSMB ARR falls slightly as existing small accounts downgrade into the new tier. The inbox problem is untouched, so the accounts that stay are still using the product less than before, and NPS in that band recovers only to +1.\nSix months later the team ships the sidebar fix and sees a second improvement, which prompts the observation that the cheaper tier partly paid to retain users who were leaving for a usability reason.\nTrade-off: you addressed a real competitive threat and spent revenue solving a problem that was partly a product defect.",
+      "decisionPoints": 12,
+      "rubricNote": "Defensible if the rationale engages with why price would move grandfathered and new-price cohorts equally, and acknowledges the usage decline is unexplained by pricing. Low credit when the exit survey's 'too expensive' count is taken at face value."
+    },
+    {
+      "id": "support-investment",
+      "label": "Invest in support responsiveness",
+      "description": "First response time has degraded from 4.2 to 5.1 hours; fund support capacity and reduce it back.",
+      "consequence": "Response time returns to 4.0 hours within six weeks after two hires and a routing change.\nChurn in 1-4 seat accounts is essentially unchanged at 4.8%. In the review, someone points out what the data already said: the degradation applied evenly across all segments, and 5-19 seat and enterprise churn never moved.\nThe support improvement is genuinely valuable and shows up in satisfaction scores. It is not what was driving the churn.\nTrade-off: you improved something real and spent the quarter on the one theory the segment data had already ruled out.",
+      "decisionPoints": 5,
+      "rubricNote": "Weak. Support degradation is segment-neutral while the churn increase is entirely in one segment, so it cannot be the main driver. Only credit if the rationale confronts and rebuts that."
+    },
+    {
+      "id": "research-first",
+      "label": "Run qualitative research with recently churned small accounts",
+      "description": "Spend the first six weeks recruiting and interviewing churned 1-4 seat accounts to understand the decision, then commit the rest of the quarter.",
+      "consequence": "Recruiting is hard, as expected — 9 interviews from 400 outreach attempts over five weeks. The interviews are genuinely useful: 6 of the 9 describe the inbox as 'cluttered' or 'built for bigger teams' and 4 mention seeing the competitor's free tier.\nYou now have a clear story and half a quarter left. The sidebar fix ships in week 11 with no holdout, so when churn improves in the following quarter the team argues about whether it was the fix or seasonality.\nTrade-off: you bought a good qualitative explanation and lost the ability to prove which cause you fixed.",
+      "decisionPoints": 15,
+      "rubricNote": "Credit the instinct to understand before building, and the recognition that exit surveys are weak. Mark down when it ignores that the quantitative data already localises the problem, and that the experiment would produce both the fix and the proof."
+    }
+  ],
+  "rubric": {
+    "referenceReasoning": "The aggregate number hides the finding. Almost all of the SMB churn increase is in 1-4 seat accounts (3.6% → 4.9%) while 5-19 seat accounts barely moved. That single cut eliminates two of the four theories: the price increase moved grandfathered and new-price cohorts equally, which is not how a price effect behaves, and the support degradation applied evenly across segments that did not equally churn. What remains is the competitor's free tier (aimed at up to 3 seats) and the inbox redesign (whose sidebar assumes multiple agents and is used in 4% of small-account sessions). Both landed in the same month, so observational data cannot separate them — and the usage decline from 3.1 to 2.4 sessions and the NPS fall from +11 to -6 in exactly that band are behaviour a competitor's existence does not explain. The strong move is to ship the segment-aware inbox change to half of the affected accounts, which produces both a fix and the attribution the team has been arguing about.",
+    "evidenceSignals": [
+      "Segments the churn increase and finds it is concentrated in 1-4 seat accounts",
+      "Notices grandfathered and new-price cohorts moved equally, which argues against the price increase",
+      "Notices support degradation was segment-neutral while the churn increase was not",
+      "Connects the sidebar's multi-agent assumption to the 4% interaction rate and the session decline in small accounts",
+      "Recognises the redesign and the competitor launch are confounded in time",
+      "Treats the 61 exit-survey responses as weak evidence"
+    ],
+    "positiveSignals": {
+      "product_sense": [
+        "Identifies that a design assuming multiple agents fails a segment that has one or two",
+        "Sees that 1-4 seat accounts are 62% of accounts but 21% of ARR and reasons about what that means for the response"
+      ],
+      "analytics": [
+        "Segments before theorising rather than testing theories against the aggregate",
+        "Uses cohort comparisons to rule theories out, not only to support one",
+        "Names the confound between the redesign and the competitor launch explicitly",
+        "Proposes a holdout as the way to break the confound"
+      ],
+      "user_research": [
+        "Discounts a 2.8% response-rate exit survey appropriately",
+        "Uses the NPS split by seat band as corroboration rather than as the finding"
+      ],
+      "prioritization": [
+        "Chooses the intervention that produces both a fix and an attribution"
+      ],
+      "execution": [
+        "States what result would reject the hypothesis, not only what would confirm it",
+        "Sizes the change so it can ship inside the quarter with time to measure"
+      ],
+      "communication": [
+        "Explains to executives why two of the four circulating theories are already ruled out"
+      ]
+    },
+    "negativeSignals": {
+      "product_sense": [
+        "Proposes a broad retention programme rather than addressing the specific segment that moved"
+      ],
+      "analytics": [
+        "Reasons from the aggregate 3.1% → 3.9% without segmenting",
+        "Takes the exit survey's 'too expensive' count as the cause",
+        "Claims the redesign or the competitor is the cause without acknowledging they are confounded"
+      ],
+      "user_research": [
+        "Treats 61 self-selected responses as representative of 2,200 churned accounts"
+      ],
+      "prioritization": [
+        "Attempts all four theories at once with four engineers in one quarter"
+      ],
+      "execution": [
+        "Ships a fix with no holdout and no way to attribute the result"
+      ],
+      "communication": [
+        "Presents the four theories back to the executive team without narrowing them"
+      ]
+    }
+  },
+  "learnTakeaway": {
+    "title": "Segment first, then theorise",
+    "body": "When an aggregate metric moves, the fastest path is not to test each circulating theory — it is to cut the metric by the dimensions you already have. A cut that shows the change is concentrated in one segment eliminates every theory that would have moved all segments. Here, one table ruled out price and support in a minute. When two remaining causes are confounded in time, a holdout on the one you can control is usually the only way to separate them, and it delivers the fix at the same time."
+  },
+  "qaSubmissions": [
+    {
+      "label": "strong",
+      "optionId": "fix-inbox-small",
+      "evidenceIds": [
+        "cohorts",
+        "competitor",
+        "product",
+        "timing"
+      ],
+      "rationale": "Segmenting settles most of this. The increase is almost entirely 1-4 seat accounts, 3.6 to 4.9, while 5-19 seat barely moved — which rules out price (grandfathered and new-price cohorts moved the same 0.8) and support (degraded evenly across segments that didn't churn evenly). What's left is the free tier and the inbox redesign, confounded in the same month. Only one fits the behaviour: sessions fell 3.1 to 2.4, NPS +11 to -6, and the sidebar assumes multiple agents. Collapse the sidebar under 5 seats, ship to a 50% holdout, and read churn over eight weeks.",
+      "expectedScoreMin": 87,
+      "expectedScoreMax": 100
+    },
+    {
+      "label": "defensible_alternative",
+      "optionId": "research-first",
+      "evidenceIds": [
+        "cohorts",
+        "competitor",
+        "product"
+      ],
+      "rationale": "I'd spend four weeks on qualitative work with churned 1-4 seat accounts before committing engineering. I agree the problem lives in small accounts, but the data can't tell me whether they left because the inbox got worse or because a free alternative appeared — and those imply completely different responses, a design change versus a pricing change. Our exit survey is 61 responses at 2.8%. Ten conversations would tell me which decision people made. The cost is a third of the quarter, so I'd build the cohort dashboard in parallel so whichever fix we pick can still ship with a holdout.",
+      "expectedScoreMin": 66,
+      "expectedScoreMax": 82
+    },
+    {
+      "label": "weak",
+      "optionId": "price-response",
+      "evidenceIds": [
+        "competitor"
+      ],
+      "rationale": "The top reason in the exit survey is 'too expensive' with 24 responses, and a competitor just launched a free tier that is taking 22% of our lost deals. SMB customers are price sensitive so we should launch a free or cheap tier for small accounts this quarter to stop the bleeding.",
+      "expectedScoreMin": 18,
+      "expectedScoreMax": 36
+    }
+  ]
+}

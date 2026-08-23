@@ -1,0 +1,187 @@
+{
+  "id": "enterprise-feature-request",
+  "version": 1,
+  "status": "published",
+  "title": "Your largest customer wants a feature nobody else asked for",
+  "summary": "A renewal worth 14% of revenue is tied to a six-week build that serves one account. Two engineers, one quarter.",
+  "estimatedMinutes": 8,
+  "level": "foundation",
+  "primarySkill": "prioritization",
+  "secondarySkills": [
+    "communication",
+    "product_sense"
+  ],
+  "tags": [
+    "b2b",
+    "roadmap",
+    "customers",
+    "trade-offs"
+  ],
+  "brief": {
+    "role": "You are the PM for a small B2B product team.",
+    "company": "Fieldline, a 35-person company selling scheduling software to field service businesses.",
+    "context": "Northgate Facilities is your largest customer at 14% of ARR and their renewal is in ten weeks. Their operations director has told your account manager that renewal 'depends on' custom approval chains — a feature where each job over a value threshold routes through a named approver hierarchy that Northgate defines. No other customer has requested it. Your engineering lead estimates six weeks for two engineers, which is most of the quarter's capacity. The quarter's plan is a mobile offline mode that 31 customers have asked for and that sales says is the top reason they lose deals.",
+    "objective": "Protect the business without letting one account set the roadmap by default.",
+    "constraints": "Two engineers for the quarter, roughly eleven weeks of capacity. The renewal decision is made in ten weeks. You cannot hire in time.",
+    "task": "Decide what the team builds this quarter and how you will handle Northgate."
+  },
+  "evidenceCards": [
+    {
+      "id": "account",
+      "title": "Account and revenue detail",
+      "type": "business",
+      "order": 1,
+      "content": "Northgate: $420k ARR, 14% of company ARR, customer for three years, renewal in ten weeks.\nAccount manager's notes from the last two calls:\n- The request came from the operations director, not the economic buyer. The economic buyer is the CFO, who has not mentioned it.\n- Northgate has been through a compliance audit that flagged 'insufficient approval controls' across several systems, not just yours.\n- When asked directly whether they would leave without it, the ops director said 'we would have to look at alternatives'.\n- Northgate's usage is healthy: 340 weekly active users, up 12% year over year.\n- Switching cost is high; they have three years of job history and 11 integrations.\n\nThe two next-largest customers are 6% and 5% of ARR."
+    },
+    {
+      "id": "demand",
+      "title": "Demand evidence for the alternatives",
+      "type": "quantitative",
+      "order": 2,
+      "content": "Offline mode: requested by 31 customers covering 38% of ARR. Sales lost 9 deals in the last two quarters where offline was cited as a reason, worth roughly $600k in new ARR. Support sees around 60 tickets a month from technicians in low-signal areas.\n\nApproval chains: requested by 1 customer (Northgate). A scan of the last two years of feature requests finds 4 mentions of 'approvals' from other accounts, all describing a simpler single-approver flow that the product already supports.\n\nNote from the head of sales: 'Approval workflows come up in maybe one in fifteen enterprise deals. It is a checkbox on a security questionnaire more often than it is a real requirement.'"
+    },
+    {
+      "id": "engineering",
+      "title": "Engineering assessment",
+      "type": "technical",
+      "order": 3,
+      "content": "From the engineering lead:\n'Six weeks for full custom approval chains — arbitrary hierarchies, thresholds by job type, delegation when someone is away, audit log. That is the version Northgate described.\n\nThere is a much smaller version: a single configurable threshold with a fixed two-step approver chain, reusing the existing approval primitive. That is about ten days and it is genuinely reusable across customers.\n\nOffline mode is seven weeks and I do not want to interleave it — it touches sync and the data model, and splitting the team across both means neither ships this quarter.'"
+    },
+    {
+      "id": "history",
+      "title": "Company history with custom work",
+      "type": "business",
+      "order": 4,
+      "content": "Fieldline has built custom features for large accounts twice before.\n- Two years ago: a custom reporting export for a customer who then churned 14 months later anyway. The export is still maintained and nobody else uses it. Roughly one engineer-week per year of upkeep.\n- Last year: a custom permissions model for a customer who is still active. It was later generalised and three other accounts now use it. This is considered the success case.\n\nThe difference the team identified in a retro: the second one was built as a general capability with the customer as the first user, the first was built to the customer's exact spec.\n\nThe CEO's stated position: 'I will not tell you to build it. I will tell you that losing Northgate this year means we do not hire in Q3.'"
+    }
+  ],
+  "decisionPrompt": "What do you commit the team to this quarter, and what do you tell Northgate?",
+  "decisionOptions": [
+    {
+      "id": "build-custom",
+      "label": "Build the full custom approval chains",
+      "description": "Commit the six weeks to Northgate's specification and push offline mode to next quarter.",
+      "consequence": "The feature ships in seven weeks. Northgate renews, and the ops director is pleased. The CFO, it turns out, was never at risk of leaving.\nOffline mode slips a quarter. Sales loses two more deals citing it. Two of the 31 requesting customers escalate; one, at 4% of ARR, starts an evaluation of a competitor.\nEighteen months later approval chains have one user and cost about a week a year to maintain.\nTrade-off: you removed the renewal risk and paid for it with a quarter of roadmap and a feature the rest of the base does not use.",
+      "decisionPoints": 10,
+      "rubricNote": "Defensible only if the rationale engages with the 38%-of-ARR demand being deferred and explains why the renewal risk is judged high despite the ops-director-not-CFO signal. Low credit if it simply follows the biggest customer."
+    },
+    {
+      "id": "generalised-slice",
+      "label": "Ship the ten-day general version, then offline mode",
+      "description": "Build the reusable single-threshold two-step approval flow, take it to Northgate as the first release of a roadmap, and protect the seven weeks for offline mode.",
+      "consequence": "The general version ships in twelve days. You present it to Northgate with a written commitment to delegation and audit log in the following quarter.\nThe ops director is not fully satisfied but takes it to the CFO, who signs the renewal — the audit finding is addressed well enough by the threshold and audit trail. Two other customers turn the feature on within a month.\nOffline mode ships in week ten of the quarter. Sales closes two of the previously lost deals in the following quarter.\nTrade-off: you carried real renewal risk for six weeks by not building what was asked for, and you owe Northgate a follow-up you now have to fund.",
+      "decisionPoints": 25,
+      "rubricNote": "Strongest when the rationale uses the 'general capability with this customer as first user' lesson from the retro, checks who the actual decision maker is, and treats the ten-day slice as risk reduction rather than a full answer."
+    },
+    {
+      "id": "offline-only",
+      "label": "Build offline mode and decline the request",
+      "description": "Tell Northgate the feature is not on this quarter's roadmap, protect the 38%-of-ARR demand, and manage the renewal through the account team.",
+      "consequence": "Offline mode ships in week eight and is well received; three of the nine lost deals re-engage.\nNorthgate's renewal goes to a competitive evaluation. They renew, at a 9% discount and on a one-year rather than three-year term, and the relationship is noticeably cooler. The ops director stops taking product calls.\nThe CEO does not overrule you but asks, twice, whether there was a cheaper middle option.\nTrade-off: you protected the majority of the base and took a real, avoidable hit on your largest account.",
+      "decisionPoints": 14,
+      "rubricNote": "Credit the discipline and the demand evidence. Mark down when the rationale ignores that a ten-day reusable option existed, or treats 'don't let one customer set the roadmap' as a rule rather than a judgement."
+    },
+    {
+      "id": "split-team",
+      "label": "Split the team and do both",
+      "description": "Put one engineer on approval chains and one on offline mode so neither commitment is dropped.",
+      "consequence": "By week eight neither is done. Offline mode's sync work needs both engineers and stalls; approval chains are half built when the renewal conversation happens, so you show Northgate a demo of something incomplete.\nNorthgate renews on a short term after your CEO joins the call. Offline mode ships in week five of the following quarter. The engineering lead's warning about interleaving is quoted in the retro.\nTrade-off: you avoided choosing and paid the cost of both choices.",
+      "decisionPoints": 3,
+      "rubricNote": "This is the avoidance option. It should score low unless the rationale somehow makes a specific, evidenced case against the engineering lead's assessment, which the evidence does not support."
+    }
+  ],
+  "rubric": {
+    "referenceReasoning": "The choice looks like 'one big customer versus many' but the evidence offers a third path. The engineering note describes a ten-day reusable slice that addresses the underlying driver — the compliance audit finding — without building Northgate's full specification. The account evidence weakens the threat: the request comes from the ops director rather than the CFO, switching costs are high, usage is growing, and the stated risk is soft ('we would have to look at alternatives'). The company's own history says custom-to-spec work rots while generalised work compounds. So the strong move is to build the general capability quickly with Northgate as first user, verify the risk with the economic buyer, and protect the seven weeks for offline mode where 38% of ARR and $600k of lost pipeline sit. A strong answer also says what would change its mind: if the CFO confirms the renewal genuinely depends on the full chain, the calculus changes.",
+    "evidenceSignals": [
+      "Notices the request comes from the ops director, not the economic buyer",
+      "Uses the compliance audit as the underlying need rather than taking the feature spec at face value",
+      "Finds the ten-day reusable option in the engineering note",
+      "Compares one customer against 31 customers and 38% of ARR",
+      "Uses the company's own history of custom versus generalised builds"
+    ],
+    "positiveSignals": {
+      "product_sense": [
+        "Separates the customer's stated solution from the underlying need",
+        "Designs for the general case with a specific customer as first user"
+      ],
+      "analytics": [
+        "Quantifies both sides: 14% of ARR at risk against 38% of ARR requesting and $600k lost pipeline"
+      ],
+      "user_research": [
+        "Questions who the decision maker is and what the real requirement is",
+        "Notes that other 'approvals' requests describe a simpler flow already supported"
+      ],
+      "prioritization": [
+        "Recognises capacity is roughly eleven weeks and that six plus seven does not fit",
+        "Chooses a sequencing that reduces risk on both sides rather than maximising one"
+      ],
+      "execution": [
+        "Respects the engineering lead's warning about splitting the team",
+        "Commits to a specific follow-up scope and timeline for Northgate"
+      ],
+      "communication": [
+        "Frames the Northgate conversation as a roadmap with a first release, not a refusal",
+        "States clearly what would change the recommendation"
+      ]
+    },
+    "negativeSignals": {
+      "product_sense": [
+        "Builds exactly what was asked without asking what problem it solves"
+      ],
+      "analytics": [
+        "Treats 14% of ARR as decisive without weighing the 38% on the other side"
+      ],
+      "prioritization": [
+        "Attempts both full efforts in a quarter that cannot hold them",
+        "Applies a blanket rule about never building for one customer instead of judging this case"
+      ],
+      "execution": [
+        "Ignores the explicit engineering warning about interleaving the two projects"
+      ],
+      "communication": [
+        "Leaves Northgate with a flat no and no alternative or timeline"
+      ]
+    }
+  },
+  "learnTakeaway": {
+    "title": "Find the general capability inside the specific ask",
+    "body": "Large-customer requests are usually a specific solution to a general problem. The productive question is not 'do we build it or not' but 'what is the smallest generally useful capability that addresses their actual driver'. That reframing often turns a six-week custom build into a ten-day platform feature with a named first user — and it is the difference between roadmap debt and roadmap progress. It also helps to check whether the person making the threat is the person who signs."
+  },
+  "qaSubmissions": [
+    {
+      "label": "strong",
+      "optionId": "generalised-slice",
+      "evidenceIds": [
+        "account",
+        "demand",
+        "engineering",
+        "history"
+      ],
+      "rationale": "Ship the ten-day general approval flow and protect offline mode. The ask is a solution, not the need — the need is the audit finding on approval controls, which a configurable threshold plus audit log addresses. The threat is softer than it looks: it came from the ops director, not the CFO, usage is up 12%, and switching means three years of history and 11 integrations. Our own history says custom-to-spec rots and generalised work compounds. Offline is 31 customers and 38% of ARR. I'd have the AM get the CFO on a call this week; if he says the full chain is a hard condition, I'd revisit.",
+      "expectedScoreMin": 85,
+      "expectedScoreMax": 98
+    },
+    {
+      "label": "defensible_alternative",
+      "optionId": "build-custom",
+      "evidenceIds": [
+        "account",
+        "history",
+        "engineering"
+      ],
+      "rationale": "Build it, but as a configurable capability rather than to Northgate's exact spec — that's the difference between our permissions work and the reporting export nobody uses. My reasoning is asymmetry: losing 14% of ARR means no Q3 hiring, which costs more roadmap next year than one quarter costs now. Offline is deferred, not lost; the renewal can't be redone. I'd still have the AM verify with the CFO in week one, and if the risk turns out to be soft, cut back to the ten-day version and start offline early.",
+      "expectedScoreMin": 64,
+      "expectedScoreMax": 80
+    },
+    {
+      "label": "weak",
+      "optionId": "split-team",
+      "evidenceIds": [
+        "account"
+      ],
+      "rationale": "Northgate is our biggest customer so we cannot risk the renewal, but offline mode is also important for sales. I would put one engineer on each so we deliver both and nobody is unhappy. We can always adjust as we go.",
+      "expectedScoreMin": 10,
+      "expectedScoreMax": 30
+    }
+  ]
+}

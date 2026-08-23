@@ -1,0 +1,180 @@
+{
+  "id": "feature-adoption-mystery",
+  "version": 1,
+  "status": "published",
+  "title": "The feature everyone asked for, that nobody uses",
+  "summary": "Eleven percent adoption after three months on the most-requested feature in your backlog. Decide what you need to learn.",
+  "estimatedMinutes": 8,
+  "level": "developing",
+  "primarySkill": "user_research",
+  "secondarySkills": [
+    "product_sense",
+    "analytics"
+  ],
+  "tags": [
+    "adoption",
+    "research",
+    "discovery",
+    "b2b"
+  ],
+  "brief": {
+    "role": "You are the PM for the reporting area.",
+    "company": "Cadence, a 150-person company selling workforce scheduling software to retail chains.",
+    "context": "Custom report builder was the top request in your feedback tool for two years — 340 votes, mentioned in 47 sales calls. It shipped three months ago after a quarter of work. Adoption is 11% of accounts, and of those, 62% built exactly one report and never returned. Your head of product asked whether the team should invest more in it or move on. The team is split: half think it needs discoverability work, half think the request was never real.",
+    "objective": "Work out why adoption is low before spending anything more, or before writing the feature off.",
+    "constraints": "Two weeks before the next planning cycle. The researcher has four days. You can instrument anything, but new instrumentation takes a week to produce data.",
+    "task": "Decide what you do in the next two weeks and what question you are trying to answer."
+  },
+  "evidenceCards": [
+    {
+      "id": "usage",
+      "title": "Adoption and usage data",
+      "type": "quantitative",
+      "order": 1,
+      "content": "Three months post-launch, across 2,100 accounts:\n- Opened the report builder at least once: 34% of accounts\n- Created at least one report: 11%\n- Created a second report: 4.2%\n- Ran a saved report more than once: 3.1%\n\nWithin the builder, for sessions that did not result in a saved report (n = 4,800):\n- Median time in the builder: 3m 40s\n- 71% of these sessions added at least two fields\n- 44% reached the preview step\n- Of those reaching preview, 68% left without saving\n\nThe 25 accounts with the most saved reports are all enterprise accounts with a dedicated ops analyst. Their reports average 9 fields and 3 filters.\n\nOf the accounts that voted for the feature in the feedback tool, 19% created a report — higher than the 11% base but not dramatically."
+    },
+    {
+      "id": "support",
+      "title": "Support and success signals",
+      "type": "qualitative",
+      "order": 2,
+      "content": "Support tickets mentioning the report builder since launch: 61.\nRough breakdown by the support lead:\n- 'How do I get last week's hours by store?' — 22. All of these describe reports the builder can produce.\n- 'The report is empty / wrong' — 17. The support lead's note: 'Almost all of these are date-range confusion. Our default is calendar month, people expect their fiscal or payroll week.'\n- 'Can I schedule this to email?' — 14. Not supported.\n- Other — 8.\n\nCustomer success note: 'When I screen-share and build the report with a customer, they get it in about two minutes and they like it. I've done that maybe 30 times. I don't think they'd have got there alone.'\n\nSales note: three deals this quarter cited the report builder positively in the evaluation. None of those three accounts have created a report since signing."
+    },
+    {
+      "id": "requests",
+      "title": "The original requests, re-read",
+      "type": "qualitative",
+      "order": 3,
+      "content": "The researcher went back and read the 340 feedback-tool votes and the comments attached to them (118 had comments).\n\nHer summary:\n- 54 comments describe a specific report they wanted: 'hours by store by week', 'overtime by manager', 'no-shows by location'. Twelve distinct reports account for 41 of the 54.\n- 38 comments are about exporting: they want data out, into a spreadsheet or their BI tool.\n- 14 describe scheduling or emailing a report on a recurring basis.\n- 12 are general ('more reporting', 'better reports').\n\nHer note: 'I would be careful with this. People vote for a feature name and describe a job in the comments, and those are different things. Only 12 of 118 asked for a builder. Most asked for a report.'"
+    }
+  ],
+  "decisionPrompt": "What do you do in the next two weeks?",
+  "decisionOptions": [
+    {
+      "id": "jobs-behind-votes",
+      "label": "Re-read the requests as jobs and test a small set of prebuilt reports",
+      "description": "Treat the 340 votes as requests for specific reports, not a builder. Ship the twelve most-requested reports as one-click templates behind a flag and measure whether they get used.",
+      "consequence": "The twelve templates ship in nine days as presets inside the existing builder. Within a month, 38% of accounts run at least one, and 21% run one more than once — roughly triple the builder's own repeat usage.\nThe builder is not removed; it becomes the thing people use to modify a template rather than start from nothing. Saved-report creation rises to 19% of accounts.\nThe date-range default is changed to the account's payroll week at the same time, which removes most of the 'report is empty/wrong' tickets.\nTrade-off: you got adoption by narrowing what the product asks of the user, and you built the templates on a re-reading of old comments rather than fresh research.",
+      "decisionPoints": 25,
+      "rubricNote": "Strongest when the rationale separates the requested feature from the underlying job, uses the 54 specific-report comments, and treats the builder's blank canvas as the adoption barrier."
+    },
+    {
+      "id": "onboarding-tour",
+      "label": "Improve discoverability and add an in-product tour",
+      "description": "34% opened the builder and only 11% created a report, so the problem is that people cannot work out how to use it. Build a guided first-run experience.",
+      "consequence": "The tour ships in two weeks. Accounts opening the builder rise from 34% to 41% and report creation moves from 11% to 14%.\nThe drop-off pattern is unchanged: people still add fields, reach preview, and leave. In a later session-replay review someone notices that many previews show an empty table because of the date-range default, which the tour does not address.\nTrade-off: you treated a blank-canvas problem as a navigation problem and got a small, real, insufficient improvement.",
+      "decisionPoints": 11,
+      "rubricNote": "Partial credit — discoverability is a plausible reading of 34% open vs 11% create. Loses credit for not using the support data, which explains a large share of failed previews."
+    },
+    {
+      "id": "deprioritise",
+      "label": "Conclude the request was not real and move on",
+      "description": "Two years of votes produced 11% adoption. Stop investing, keep the feature running, and put the team on something else.",
+      "consequence": "The team moves to other work. The report builder stays as-is and adoption drifts down to 9% over two quarters.\nCustom reporting reappears as the top request in the feedback tool within a year, and the same 12 report types are described in the comments. In the meantime two enterprise deals cite reporting as a weakness against a competitor with prebuilt retail reports.\nTrade-off: you avoided sinking more cost into a low-adoption feature and left the underlying demand — which is real and specific — unserved.",
+      "decisionPoints": 8,
+      "rubricNote": "Defensible only with a reading of the evidence that explains away the 54 specific-report comments and the customer success screen-share signal. Low credit when 'the request was not real' is asserted rather than argued."
+    },
+    {
+      "id": "fresh-research",
+      "label": "Run fresh interviews with accounts that opened but did not create",
+      "description": "Use the researcher's four days on 8-10 interviews with accounts that opened the builder and abandoned it, then decide.",
+      "consequence": "Eight interviews in four days. Findings: six describe not knowing what to build ('I opened it and thought, what report do I even want?'), three hit the date-range default and assumed the data was missing, two wanted the output in their BI tool rather than in the product.\nThis is a clear and correct diagnosis, and it points at exactly the template-plus-default-fix answer. It arrives at the end of the two weeks, so nothing ships before planning.\nTrade-off: you confirmed the diagnosis rigorously, and the evidence needed to reach the same conclusion was already in the support queue and the original comments.",
+      "decisionPoints": 17,
+      "rubricNote": "Good research instinct and a correct result. Mark down slightly for spending the window on new data when the existing comments and tickets already carried the finding, and for shipping nothing before planning."
+    }
+  ],
+  "rubric": {
+    "referenceReasoning": "The votes were never for a builder. When the researcher re-read the comments, 54 of 118 described a specific report and only 12 asked for a builder; the team shipped the generalised tool that the feature name implied. The usage data agrees: people open it, add fields, reach preview, and leave, which is what a blank canvas produces when users know what they want to know but not how to express it. The support queue carries the same story twice over — 22 tickets asking for a report the builder can already make, and 17 caused by a date-range default that produces empty previews. The customer success observation is the clincher: with two minutes of guidance people succeed and like it, which means the capability is right and the starting point is wrong. A strong answer separates the requested feature from the underlying job, notices the evidence is already available without new research, and picks an intervention that reduces what the user has to invent.",
+    "evidenceSignals": [
+      "Notices only 12 of 118 comments asked for a builder while 54 named specific reports",
+      "Reads the add-fields-then-abandon pattern as a blank-canvas problem",
+      "Uses the 22 'how do I get X' tickets as evidence the capability exists but the entry point is wrong",
+      "Spots the date-range default as a cause of empty previews",
+      "Uses the customer success screen-share observation as evidence about guidance, not about capability",
+      "Notes that voters adopted at 19% versus 11%, so intent alone did not produce use"
+    ],
+    "positiveSignals": {
+      "product_sense": [
+        "Distinguishes the feature people named from the job they described",
+        "Recognises that a general tool can be the wrong shape for a specific, repeated need"
+      ],
+      "analytics": [
+        "Uses the in-builder funnel rather than only the adoption headline",
+        "Compares voter adoption to base adoption to test whether demand was real"
+      ],
+      "user_research": [
+        "Re-reads existing qualitative data before commissioning new data",
+        "Treats a vote count as a signal of interest, not a specification",
+        "Uses support tickets as a research source"
+      ],
+      "prioritization": [
+        "Picks an intervention that fits the two-week window and can ship before planning"
+      ],
+      "execution": [
+        "Fixes the date-range default alongside the main change",
+        "States what adoption number would indicate the change worked"
+      ],
+      "communication": [
+        "Gives the split team a specific reason both readings were partly right"
+      ]
+    },
+    "negativeSignals": {
+      "product_sense": [
+        "Concludes demand was fake without explaining the 54 specific requests"
+      ],
+      "analytics": [
+        "Reasons only from the 11% headline without the in-builder funnel"
+      ],
+      "user_research": [
+        "Treats 340 votes as validation of the thing that was built",
+        "Commissions new research without reading the qualitative data already held"
+      ],
+      "execution": [
+        "Ignores the date-range default that is producing empty previews"
+      ],
+      "communication": [
+        "Presents the team's disagreement upward without narrowing it"
+      ]
+    }
+  },
+  "learnTakeaway": {
+    "title": "Votes name a feature; comments describe the job",
+    "body": "Feature request counts are a measure of interest in a label. The specification is usually sitting in the free text underneath, and it often describes something narrower and more useful than the label implies. Before concluding that demand was fake, re-read what people actually wrote — and check the support queue, which is a research corpus that arrives free and continuously. A blank canvas is the most expensive thing you can hand a user who knows what they want to know but not how to ask for it."
+  },
+  "qaSubmissions": [
+    {
+      "label": "strong",
+      "optionId": "jobs-behind-votes",
+      "evidenceIds": [
+        "usage",
+        "support",
+        "requests"
+      ],
+      "rationale": "The demand was real; we built the wrong shape. Only 12 of 118 comments asked for a builder — 54 named a specific report, and twelve types cover 41 of them. The in-builder funnel agrees: 71% add fields and 68% of those reaching preview leave, which is what a blank canvas produces. And customer success is running the experiment already — two minutes of screen-share and people succeed, about 30 times. Ship the twelve reports as one-click templates and fix the date-range default, which explains 17 tickets. Success measure is repeat usage, not first use.",
+      "expectedScoreMin": 86,
+      "expectedScoreMax": 100
+    },
+    {
+      "label": "defensible_alternative",
+      "optionId": "fresh-research",
+      "evidenceIds": [
+        "usage",
+        "support",
+        "requests"
+      ],
+      "rationale": "I'd spend the researcher's four days on eight to ten interviews with accounts that opened the builder and abandoned it. I have a hypothesis — the votes describe reports, not a builder — but I'd be committing the next planning cycle on a re-reading of two-year-old comments plus a support lead's rough categorisation. The three readings on my team lead to very different investments. The funnel tells me where people stop, not what they were trying to do. I'd ship the date-range default fix immediately since it needs no further evidence.",
+      "expectedScoreMin": 68,
+      "expectedScoreMax": 84
+    },
+    {
+      "label": "weak",
+      "optionId": "onboarding-tour",
+      "evidenceIds": [
+        "usage"
+      ],
+      "rationale": "34% of accounts open the builder but only 11% create a report, so people are clearly getting stuck once they are in there. A guided tour walking them through building their first report would close that gap. It also takes two weeks so we can have it done before planning.",
+      "expectedScoreMin": 20,
+      "expectedScoreMax": 38
+    }
+  ]
+}
