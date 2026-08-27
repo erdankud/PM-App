@@ -491,6 +491,14 @@ class LessonSectionView(ApiModel):
     blocks: list[LessonBlockView]
 
 
+class LessonAudioView(ApiModel):
+    """Аудиоверсия урока. Её может не быть — это не ошибка, а отсутствие файла."""
+
+    available: bool
+    url: str | None = None
+    duration_seconds: int | None = None
+
+
 class LessonResponse(ApiModel):
     id: str
     node_id: str
@@ -508,6 +516,7 @@ class LessonResponse(ApiModel):
     diagrams: list[DiagramView] = []
     exercise_id: str | None = None
     cross_refs: list[str] = []
+    audio: LessonAudioView | None = None
     completed: bool
     next_lesson_id: str | None = None
 

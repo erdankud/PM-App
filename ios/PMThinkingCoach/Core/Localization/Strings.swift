@@ -297,6 +297,17 @@ enum S {
         static var terms: String { t("Terms in this lesson", "Термины урока") }
         static var exercise: String { t("Exercise", "Упражнение") }
         static var markRead: String { t("Mark as read", "Отметить как прочитанное") }
+        // Аудио — тот же урок вслух, а не пересказ. Название говорит об этом прямо,
+        // чтобы никто не ждал отдельного содержания.
+        static var audioTitle: String { t("Listen to the lesson", "Послушать урок") }
+        static var audioLoading: String { t("Preparing…", "Готовлю…") }
+        static var audioFailed: String { t("Could not load. Tap to retry.", "Не удалось загрузить. Нажмите ещё раз.") }
+        static var audioPlay: String { t("Play", "Слушать") }
+        static var audioPause: String { t("Pause", "Пауза") }
+        static var audioBack15: String { t("Back 15 seconds", "Назад на 15 секунд") }
+        static var audioForward15: String { t("Forward 15 seconds", "Вперёд на 15 секунд") }
+        static var audioSpeed: String { t("Speed", "Скорость") }
+        static var audioPosition: String { t("Position", "Позиция") }
         static var nextLesson: String { t("Next lesson", "Следующий урок") }
         static var backToBlock: String { t("Back to the block", "Вернуться к блоку") }
     }

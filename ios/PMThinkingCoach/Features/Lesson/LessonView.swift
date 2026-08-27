@@ -9,10 +9,16 @@ struct LessonView: View {
     @EnvironmentObject private var container: AppContainer
     @Environment(\.dismiss) private var dismiss
     @State private var selectedTerm: TermView?
+    @StateObject private var audio: LessonAudioViewModel
     let onFinish: () -> Void
 
-    init(viewModel: @autoclosure @escaping () -> LessonViewModel, onFinish: @escaping () -> Void) {
+    init(
+        viewModel: @autoclosure @escaping () -> LessonViewModel,
+        audio: @autoclosure @escaping () -> LessonAudioViewModel,
+        onFinish: @escaping () -> Void
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel())
+        _audio = StateObject(wrappedValue: audio())
         self.onFinish = onFinish
     }
 
@@ -33,6 +39,13 @@ struct LessonView: View {
         .background(Theme.Palette.background)
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
+        .onChange(of: viewModel.lesson?.id) { _, _ in
+            audio.nowPlayingTitle = viewModel.lesson?.title ?? ""
+            audio.configure(with: viewModel.lesson?.audio)
+        }
+        // Звук не переживает экран: уходя с урока, плеер останавливается и
+        // освобождает аудиосессию, иначе музыка пользователя не вернётся.
+        .onDisappear { audio.teardown() }
         .sheet(item: $selectedTerm) { term in
             TermCard(term: term)
                 .presentationDetents([.medium])
@@ -44,6 +57,10 @@ struct LessonView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Spacing.l) {
                     header(lesson).appear(0)
+
+                    if audio.state != .unavailable {
+                        LessonAudioPlayer(viewModel: audio).appear(1)
+                    }
 
                     let body = renderedBlocks(lesson)
                     ForEach(Array(body.enumerated()), id: \.offset) { index, block in

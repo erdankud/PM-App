@@ -218,6 +218,7 @@ struct LessonResponse: Codable, Sendable {
     let diagrams: [DiagramView]
     let exerciseId: String?
     let crossRefs: [String]
+    let audio: LessonAudioView?
     let completed: Bool
     let nextLessonId: String?
 
@@ -262,6 +263,14 @@ struct ExerciseSubmitResponse: Codable, Sendable {
     let exerciseId: String
     let results: [ExerciseInputResult]
     let referenceReasoningBlocks: [LessonBlockView]
+}
+
+/// Аудиоверсия урока. `available == false` — это норма, а не сбой: файл
+/// собирается заранее скриптом, и урок без него просто не показывает плеер.
+struct LessonAudioView: Codable, Sendable {
+    let available: Bool
+    let url: String?
+    let durationSeconds: Int?
 }
 
 struct LessonCompleteResponse: Codable, Sendable {

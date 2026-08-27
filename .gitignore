@@ -25,3 +25,7 @@ build/
 
 # Node (not used yet, but keeps stray installs out)
 node_modules/
+
+# Аудиоверсии уроков и голос синтеза: генерируется скриптом, в репозиторий
+# не кладётся — голос весит 63 МБ, корпус в mp3 около 170 МБ.
+server/var/

@@ -1,0 +1,9 @@
+# Синтез аудиоверсий уроков. Отдельным файлом, а не в requirements.txt, потому что
+# API аудио не синтезирует — он раздаёт готовые файлы. onnxruntime весит около
+# 50 МБ, и тащить его в рантайм-образ незачем.
+#
+#   pip install -r requirements-audio.txt
+#   python -m scripts.build_audio --download
+#   python -m scripts.build_audio
+piper-tts==1.7.0
+lameenc==1.8.4

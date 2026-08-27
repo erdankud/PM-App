@@ -29,6 +29,7 @@ protocol APIClientProtocol: Sendable {
     func block(id: String) async throws -> BlockDetailResponse
     func lesson(id: String) async throws -> LessonResponse
     func completeLesson(id: String) async throws -> LessonCompleteResponse
+    func downloadAudio(path: String, cacheKey: String) async throws -> URL
     func startGate(id: String) async throws -> ChallengeResponse
 
     func saveDraft(attemptId: String, request: DraftRequest) async throws -> DraftResponse
@@ -268,6 +269,42 @@ final class APIClient: APIClientProtocol, @unchecked Sendable {
 
     func lesson(id: String) async throws -> LessonResponse {
         try await perform(.get, "/lessons/\(id)")
+    }
+
+    /// Скачивает аудио урока в кэш и возвращает локальный файл.
+    ///
+    /// Проигрывается именно скачанный файл, а не поток: аудиоурок слушают в дороге,
+    /// и один раз загруженный урок должен играть без сети. Ключ кэша — отпечаток
+    /// сценария с сервера, поэтому правка текста урока сама отменяет старый файл.
+    func downloadAudio(path: String, cacheKey: String) async throws -> URL {
+        let directory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("LessonAudio", isDirectory: true)
+        let destination = directory.appendingPathComponent("\(cacheKey).mp3")
+        if FileManager.default.fileExists(atPath: destination.path) { return destination }
+
+        guard let url = URL(string: path, relativeTo: baseURL())?.absoluteURL else {
+            throw APIError.invalidURL
+        }
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 120
+        if let provider = tokenProvider, let token = await provider.currentAccessToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        let (temporary, response) = try await session.download(for: request)
+        guard let http = response as? HTTPURLResponse else {
+            throw APIError.server(status: -1, code: nil)
+        }
+        guard (200..<300).contains(http.statusCode) else {
+            throw APIError.server(status: http.statusCode, code: "audio_download_failed")
+        }
+
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        // Замена, а не запись поверх: прерванная загрузка не должна оставить
+        // обрезанный mp3, который потом сойдёт за готовый.
+        try? FileManager.default.removeItem(at: destination)
+        try FileManager.default.moveItem(at: temporary, to: destination)
+        return destination
     }
 
     func completeLesson(id: String) async throws -> LessonCompleteResponse {

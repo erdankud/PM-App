@@ -72,6 +72,15 @@ final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
         return lessonResponse
     }
 
+    var downloadedAudioPaths: [String] = []
+    var audioFileURL: URL?
+
+    func downloadAudio(path: String, cacheKey: String) async throws -> URL {
+        downloadedAudioPaths.append(path)
+        guard let audioFileURL else { throw APIError.notFound }
+        return audioFileURL
+    }
+
     func completeLesson(id: String) async throws -> LessonCompleteResponse {
         completedLessonIds.append(id)
         guard let lessonCompleteResponse else { throw APIError.notFound }

@@ -32,7 +32,10 @@ struct BlockDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
         .navigationDestination(item: $openLessonId) { lessonId in
-            LessonView(viewModel: container.makeLessonViewModel(lessonId: lessonId)) {
+            LessonView(
+                viewModel: container.makeLessonViewModel(lessonId: lessonId),
+                audio: container.makeLessonAudioViewModel(lessonId: lessonId)
+            ) {
                 Task { await viewModel.load() }
             }
         }

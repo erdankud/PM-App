@@ -38,8 +38,6 @@ boundaries it explains are unchanged).
   feedback and must never depend on model/provider availability.
 - Exactly 3 root tabs: Map, Progress, Profile. No chat tab, no paywall, no
   leaderboards, no user-generated content (v0.1 §24, still in force).
-- Lessons are authored. The model never generates teaching content — it only
-  evaluates a submission (v0.2 §1, invariant 6).
 - A gate needs at least two scenarios. With one, a retake becomes memorising
   which option was right, which is the quiz this product must not be.
 - Failure is information: never take XP away for a failed gate, never lock
@@ -146,6 +144,32 @@ boundaries it explains are unchanged).
   --port 8000`. There is no seed step any more — tree, lessons and gate
   scenarios are validated content files. iOS `API_BASE_URL` points at the
   Mac's LAN IP, not localhost, because a physical device cannot reach it.
+
+## Lesson audio
+
+- Every lesson has an audio version. The narration is **assembled from the authored
+  sections, never written**: same text, same order, plus spoken section markers.
+  `tests/test_audio.py` asserts that no word reaches the listener that is not in the
+  lesson (or in the closed list of spoken frames) — that test is what keeps audio and
+  text from drifting into two different lessons.
+- Synthesis is Piper, local, on CPU, ~25× real time; MP3 via `lameenc`, so no ffmpeg.
+  Dependencies live in `requirements-audio.txt` and are **not** in the runtime image:
+  the API serves prebuilt files and never synthesizes.
+
+      pip install -r requirements-audio.txt
+      python -m scripts.build_audio --download   # голос, 63 МБ, один раз
+      python -m scripts.build_audio              # весь корпус, ~20 минут
+
+- Files are built ahead of time, not on request: half a minute of synthesis behind a
+  play button is worse than no button. No file means `audio.available == false` and no
+  player — a state, not an error.
+- The file name and the URL carry a hash of the script, so editing a lesson
+  invalidates its audio by itself and only changed lessons are rebuilt.
+- Tables are not read aloud (a grid as a list of cells is unfollowable) — the script
+  points at the screen instead. Diagrams *are* read, through `describe_diagram`.
+- A Russian voice reads `SLA` as «сла»: new Latin abbreviations need an entry in
+  `PRONUNCIATION` in `app/services/audio.py`.
+- `server/var/` (voice + built mp3) is generated and gitignored.
 
 ## Before making changes
 

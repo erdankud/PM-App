@@ -66,6 +66,10 @@ final class AppContainer: ObservableObject {
         LessonViewModel(lessonId: lessonId, client: apiClient, analytics: analytics)
     }
 
+    func makeLessonAudioViewModel(lessonId: String) -> LessonAudioViewModel {
+        LessonAudioViewModel(lessonId: lessonId, client: apiClient, analytics: analytics)
+    }
+
     func makeChallengeViewModel(challenge: ChallengeResponse) -> ChallengeViewModel {
         ChallengeViewModel(
             challenge: challenge,

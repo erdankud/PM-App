@@ -41,6 +41,14 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 
+	<!-- Аудиоверсию урока слушают в дороге, с погашенным экраном: без этого режима
+	     воспроизведение обрывается при блокировке, и функция теряет смысл. Ничего,
+	     кроме звука, в фоне не выполняется. -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+
 	<!-- Base URL for the PM Thinking Coach API. Set per build configuration via the
 	     API_BASE_URL build setting. There is no AI provider key here or anywhere else
 	     in the client: evaluation is server-side only (spec §13, §17). -->

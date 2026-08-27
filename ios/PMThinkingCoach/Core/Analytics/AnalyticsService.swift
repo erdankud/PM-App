@@ -29,6 +29,9 @@ enum AnalyticsEvent: Sendable {
     case blockOpened(blockId: String, status: String)
     case lessonOpened(lessonId: String, nodeId: String)
     case lessonCompleted(lessonId: String, nodeId: String, seconds: Int)
+    // Аудиоверсия урока: только факт прослушивания, без позиции и без текста.
+    case lessonAudioStarted(lessonId: String)
+    case lessonAudioFinished(lessonId: String)
     case remediationLessonOpened(lessonId: String, fromGateId: String)
     case gateStarted(gateId: String, scenarioId: String, attemptIndex: Int, lessonsCompletedRatio: Double)
     case gateResult(gateId: String, passed: Bool, scoreBand: String, attemptIndex: Int)
@@ -61,6 +64,8 @@ enum AnalyticsEvent: Sendable {
         case .blockOpened: return "block_opened"
         case .lessonOpened: return "lesson_opened"
         case .lessonCompleted: return "lesson_completed"
+        case .lessonAudioStarted: return "lesson_audio_started"
+        case .lessonAudioFinished: return "lesson_audio_finished"
         case .remediationLessonOpened: return "remediation_lesson_opened"
         case .gateStarted: return "gate_started"
         case .gateResult: return "gate_result"
@@ -142,6 +147,8 @@ enum AnalyticsEvent: Sendable {
             return ["blockId": .string(blockId), "status": .string(status)]
         case .lessonOpened(let lessonId, let nodeId):
             return ["lessonId": .string(lessonId), "nodeId": .string(nodeId)]
+        case .lessonAudioStarted(let lessonId), .lessonAudioFinished(let lessonId):
+            return ["lessonId": .string(lessonId)]
         case .lessonCompleted(let lessonId, let nodeId, let seconds):
             return [
                 "lessonId": .string(lessonId), "nodeId": .string(nodeId),

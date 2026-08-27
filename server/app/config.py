@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     api_prefix: str = "/v1"
     database_url: str = f"sqlite:///{SERVER_ROOT / 'pmcoach.db'}"
 
+    # --- Audio ---------------------------------------------------------------
+    # Аудиоверсия урока: синтез локальный, ключа нет. Голос и готовые файлы лежат
+    # вне репозитория — модель весит 63 МБ, а корпус в mp3 около 170 МБ.
+    audio_dir: str = str(SERVER_ROOT / "var" / "audio")
+    audio_voice_dir: str = str(SERVER_ROOT / "var" / "voices")
+
     # --- Auth ---------------------------------------------------------------
     # Override in every deployed environment.
     jwt_secret: str = "dev-only-insecure-secret-change-me"

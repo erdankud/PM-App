@@ -8,10 +8,13 @@ earned (spec v0.2 §14).
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import FileResponse
 
 from app import tree_content
+from app.config import settings
 from app.deps import ContentLanguage, CurrentUser, DbSession
 from app.schemas import (
+    LessonAudioView,
     LessonSectionView,
     TermView,
     TreeSummary,
@@ -29,6 +32,7 @@ from app.schemas import (
     TierView,
     TreeResponse,
 )
+from app.services import audio as audio_service
 from app.services import glossary as glossary_service
 from app.services import tree as tree_service
 from app.views import challenge_response
@@ -205,6 +209,51 @@ def _term_view(term: dict, *, seen: bool = False) -> TermView:
     )
 
 
+def _audio_view(lesson: dict) -> LessonAudioView:
+    """Аудио предлагается только когда файл уже лежит на диске.
+
+    Синтез 12-минутного урока занимает около полуминуты, поэтому запускать его по
+    открытию экрана нельзя: человек увидит кнопку, которая не играет. Файлы
+    собираются заранее (`python -m scripts.build_audio`), а урок без файла просто
+    не показывает плеер.
+    """
+    ready = audio_service.audio_path(lesson).exists()
+    if not ready:
+        return LessonAudioView(available=False)
+    # Отпечаток сценария в адресе: путь урока постоянен, а файл за ним меняется при
+    # правке текста. Без него клиент, закешировавший mp3 по адресу, продолжал бы
+    # проигрывать прошлую редакцию урока.
+    version = audio_service.digest(lesson)
+    return LessonAudioView(
+        available=True,
+        url=f"{settings.api_prefix}/lessons/{lesson['id']}/audio?v={version}",
+        duration_seconds=audio_service.duration_seconds(lesson),
+    )
+
+
+@router.get("/lessons/{lesson_id}/audio")
+def get_lesson_audio(lesson_id: str, user: CurrentUser) -> FileResponse:
+    """Отдаёт mp3 урока.
+
+    `FileResponse` сам обрабатывает `Range`, а без этого перемотка в плеере на
+    iOS не работает: `AVPlayer` запрашивает куски, а не файл целиком.
+    """
+    lesson = _lesson_or_404(lesson_id)
+    path = audio_service.audio_path(lesson)
+    if not path.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "audio_not_built"}
+        )
+    return FileResponse(
+        path,
+        media_type="audio/mpeg",
+        filename=f"{lesson_id}.mp3",
+        # Имя файла содержит хеш сценария, поэтому старый ответ никогда не окажется
+        # аудио изменённого урока — кэшировать можно надолго.
+        headers={"Cache-Control": "public, max-age=604800, immutable"},
+    )
+
+
 def _lesson_or_404(lesson_id: str) -> dict:
     lesson = tree_content.lesson(lesson_id)
     if lesson is None:
@@ -259,6 +308,7 @@ def get_lesson(lesson_id: str, user: CurrentUser, db: DbSession) -> LessonRespon
         exercise_id=lesson.get("exerciseId")
         or (tree_content.exercise_for_node(lesson["nodeId"]) or {}).get("id"),
         cross_refs=lesson.get("crossRefs", []),
+        audio=_audio_view(lesson),
         completed=lesson_id in completed,
         next_lesson_id=next_id,
     )
