@@ -4,6 +4,13 @@ import XCTest
 /// Step gating and form validation (spec §23 step 2, §21 quality acceptance).
 final class ChallengeFormStateTests: XCTestCase {
 
+    /// The counter and validation strings below are localised, so these assertions pin
+    /// the language rather than inheriting whatever the host device is set to.
+    override func setUp() {
+        super.setUp()
+        L10n.current = .english
+    }
+
     private func makeState(cards: Int = 4, options: [String] = ["a", "b", "c"]) -> ChallengeFormState {
         ChallengeFormState(totalEvidenceCards: cards, validOptionIds: Set(options))
     }

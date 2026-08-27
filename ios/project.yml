@@ -49,7 +49,7 @@ targets:
       configs:
         # No AI provider key is ever configured here. The client talks only to our API.
         Debug:
-          API_BASE_URL: http://localhost:8000
+          API_BASE_URL: http://192.168.1.252:8000
         Release:
           API_BASE_URL: https://api.pmthinkingcoach.example
 

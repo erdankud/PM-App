@@ -6,7 +6,7 @@ evaluator and reports the resulting total score against the expected band. Use t
 before publishing content, and again whenever the provider or prompt changes.
 
     EVALUATOR_PROVIDER=gemini EVALUATOR_API_KEY=... python -m scripts.qa_evaluate
-    python -m scripts.qa_evaluate --scenario onboarding-retention-drop
+    python -m scripts.qa_evaluate --scenario gate-d1-smena-churn
 
 A defensible alternative that scores like a weak answer is a content bug, not a
 model bug: it usually means the option weights or the rubric need work.
@@ -25,7 +25,7 @@ from app.ai.prompt import SYSTEM_PROMPT, build_user_prompt  # noqa: E402
 from app.ai.registry import get_provider  # noqa: E402
 from app.ai.validation import InvalidEvaluation, parse_evaluation  # noqa: E402
 from app.config import settings  # noqa: E402
-from app.content import load_all_scenarios  # noqa: E402
+from app.tree_content import all_content  # noqa: E402
 from app.services.scoring import build_breakdown, evidence_points  # noqa: E402
 
 
@@ -76,7 +76,7 @@ def main() -> int:
     parser.add_argument("--scenario", help="run a single scenario id")
     args = parser.parse_args()
 
-    scenarios = load_all_scenarios()
+    scenarios = sorted(all_content()["scenarios"].values(), key=lambda s: s["id"])
     if args.scenario:
         scenarios = [s for s in scenarios if s["id"] == args.scenario]
         if not scenarios:

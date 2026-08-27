@@ -27,13 +27,19 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
+# The six domains of the skill map plus communication, which every gate rubric scores
+# regardless of domain (spec v0.2 §7). The node's domain decides where its delta lands.
 SKILL_KEYS: tuple[str, ...] = (
-    "product_sense",
-    "analytics",
-    "user_research",
-    "prioritization",
-    "execution",
+    "discovery",
+    "value_design",
+    "delivery",
+    "marketing",
+    "growth",
+    "economics",
     "communication",
+    # System Design — восьмая компетенция, добавлена вместе с седьмым доменом
+    # (спека System Design §2.2). Существующие записи стартуют с нейтральных 50.
+    "system_design",
 )
 
 LEVELS: tuple[str, ...] = ("foundation", "developing", "advanced")
@@ -68,7 +74,7 @@ class User(Base):
         DateTime(timezone=True), default=utcnow
     )
     timezone: Mapped[str] = mapped_column(String(64), default="UTC")
-    # signed_in -> goal_set -> assessed -> complete
+    # signed_in -> complete (the onboarding diagnostic is gone, spec v0.2 §10)
     onboarding_status: Mapped[str] = mapped_column(String(32), default="signed_in")
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
@@ -83,8 +89,11 @@ class UserProfile(Base):
     user_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
     )
-    goal: Mapped[str | None] = mapped_column(String(48))
-    starting_level: Mapped[str | None] = mapped_column(String(16))
+    # Optional, and only a highlight filter over the map in this version (spec §7).
+    target_role: Mapped[str | None] = mapped_column(String(48))
+    # Content language. Stored rather than read from a request header because the
+    # evaluation worker writes coaching long after the request that queued it.
+    language: Mapped[str] = mapped_column(String(8), default="ru", server_default="ru")
     current_level: Mapped[str | None] = mapped_column(String(16))
     level: Mapped[int] = mapped_column(Integer, default=1)
     total_xp: Mapped[int] = mapped_column(Integer, default=0)
@@ -98,6 +107,48 @@ class UserProfile(Base):
     )
 
     user: Mapped[User] = relationship(back_populates="profile")
+
+
+class ExerciseAttempt(Base):
+    """Попытка формирующего упражнения (спека SD §3.3).
+
+    Намеренно не связана с `BlockProgress`: упражнения не влияют ни на доступность
+    гейта, ни на `final_score`, ни на XP. Хранится только ради того, чтобы человек
+    видел свой прошлый ответ рядом с эталоном.
+    """
+
+    __tablename__ = "exercise_attempts"
+    __table_args__ = (
+        UniqueConstraint("user_id", "exercise_id", name="uq_exercise_user"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    exercise_id: Mapped[str] = mapped_column(String(64), index=True)
+    submitted_values: Mapped[dict] = mapped_column(JSON, default=dict)
+    viewed_reference_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, onupdate=utcnow
+    )
+
+
+class TermEncounter(Base):
+    """Отметка «встречал» в глоссарии: термин показан в прочитанном уроке."""
+
+    __tablename__ = "term_encounters"
+    __table_args__ = (UniqueConstraint("user_id", "term_id", name="uq_term_user"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    term_id: Mapped[str] = mapped_column(String(64), index=True)
+    first_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
 class SkillScore(Base):
@@ -124,7 +175,7 @@ class SkillAssessment(Base):
     user_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
     )
-    source: Mapped[str] = mapped_column(String(32))  # onboarding_assessment | attempt
+    source: Mapped[str] = mapped_column(String(32))  # always "gate" in v0.2
     scenario_id: Mapped[str | None] = mapped_column(String(64))
     attempt_id: Mapped[str | None] = mapped_column(String(36), index=True)
     skill_key: Mapped[str] = mapped_column(String(32))
@@ -133,82 +184,22 @@ class SkillAssessment(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
-class Scenario(Base):
-    """Published scenario content, immutable per (id, version) (spec §11, §14)."""
-
-    __tablename__ = "scenarios"
-    __table_args__ = (
-        UniqueConstraint("scenario_id", "version", name="uq_scenario_version"),
-    )
-
-    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
-    scenario_id: Mapped[str] = mapped_column(String(64), index=True)
-    version: Mapped[int] = mapped_column(Integer)
-    status: Mapped[str] = mapped_column(String(16), default="published", index=True)
-    title: Mapped[str] = mapped_column(String(120))
-    summary: Mapped[str] = mapped_column(Text)
-    estimated_minutes: Mapped[int] = mapped_column(Integer)
-    level: Mapped[str] = mapped_column(String(16), index=True)
-    primary_skill: Mapped[str] = mapped_column(String(32), index=True)
-    secondary_skills: Mapped[list] = mapped_column(JSON, default=list)
-    tags: Mapped[list] = mapped_column(JSON, default=list)
-    content: Mapped[dict] = mapped_column(JSON)
-    published_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=utcnow
-    )
-
-
-class AssessmentResponse(Base):
-    __tablename__ = "assessment_responses"
-    __table_args__ = (
-        UniqueConstraint("user_id", "item_id", name="uq_assessment_user_item"),
-    )
-
-    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
-    user_id: Mapped[str] = mapped_column(
-        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
-    )
-    item_id: Mapped[str] = mapped_column(String(64))
-    choice_id: Mapped[str] = mapped_column(String(64))
-    rationale: Mapped[str | None] = mapped_column(Text)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
-
-
-class LearningPathAssignment(Base):
-    __tablename__ = "learning_path_assignments"
-    __table_args__ = (
-        UniqueConstraint("user_id", "local_date", name="uq_assignment_user_date"),
-        Index("ix_assignment_user_status", "user_id", "status"),
-    )
-
-    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
-    user_id: Mapped[str] = mapped_column(
-        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
-    )
-    local_date: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD, device-local
-    day_index: Mapped[int] = mapped_column(Integer, default=0)
-    scenario_id: Mapped[str] = mapped_column(String(64))
-    scenario_version: Mapped[int] = mapped_column(Integer)
-    path_version: Mapped[int] = mapped_column(Integer, default=1)
-    # assigned -> started -> submitted -> evaluated | feedback_failed
-    status: Mapped[str] = mapped_column(String(24), default="assigned")
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
-
-
 class ChallengeAttempt(Base):
+    """One sitting of a block gate. Immutable once submitted (spec v0.1 §9)."""
+
     __tablename__ = "challenge_attempts"
-    __table_args__ = (
-        UniqueConstraint("assignment_id", name="uq_attempt_assignment"),
-        Index("ix_attempt_user_status", "user_id", "status"),
-    )
+    __table_args__ = (Index("ix_attempt_user_status", "user_id", "status"),)
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     user_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
     )
-    assignment_id: Mapped[str] = mapped_column(
-        String(36), ForeignKey("learning_path_assignments.id", ondelete="CASCADE")
-    )
+    gate_id: Mapped[str] = mapped_column(String(64), index=True)
+    block_id: Mapped[str] = mapped_column(String(8), index=True)
+    # 1-based, so a rubric can tell a first sitting from a retake.
+    attempt_index: Mapped[int] = mapped_column(Integer, default=1)
+    # Written by the server together with the score; never sent up by the client.
+    passed: Mapped[bool | None] = mapped_column(Boolean)
     scenario_id: Mapped[str] = mapped_column(String(64))
     scenario_version: Mapped[int] = mapped_column(Integer)
     # draft -> submitted -> awaiting_feedback -> complete | feedback_failed
@@ -268,18 +259,62 @@ class FeedbackEvaluation(Base):
     evaluated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
-class XpLedgerEntry(Base):
-    """Append-only. One award per (attempt, reason) enforced by the database."""
+class LessonProgress(Base):
+    """A lesson is either read or not. Re-reading changes nothing and awards nothing."""
 
-    __tablename__ = "xp_ledger_entries"
+    __tablename__ = "lesson_progress"
     __table_args__ = (
-        UniqueConstraint("attempt_id", "reason", name="uq_xp_attempt_reason"),
+        UniqueConstraint("user_id", "lesson_id", name="uq_lesson_progress"),
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     user_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
     )
+    lesson_id: Mapped[str] = mapped_column(String(64))
+    completed_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow
+    )
+
+
+class BlockProgress(Base):
+    """Server-owned unlock state. The client renders this and never computes it."""
+
+    __tablename__ = "block_progress"
+    __table_args__ = (UniqueConstraint("user_id", "block_id", name="uq_block_progress"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    block_id: Mapped[str] = mapped_column(String(8))
+    # locked -> available -> in_progress -> gate_ready -> passed
+    status: Mapped[str] = mapped_column(String(16), default="locked")
+    attempt_count: Mapped[int] = mapped_column(Integer, default=0)
+    unlocked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    passed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, onupdate=utcnow
+    )
+
+
+class XpLedgerEntry(Base):
+    """Append-only. One award per (user, reason, ref) enforced by the database.
+
+    `ref_id` is a lesson id or a block id depending on `reason`, which is what makes
+    re-reading a lesson or re-passing a block award nothing (spec v0.2 §9).
+    """
+
+    __tablename__ = "xp_ledger_entries"
+    __table_args__ = (
+        UniqueConstraint("user_id", "reason", "ref_id", name="uq_xp_user_reason_ref"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    ref_id: Mapped[str] = mapped_column(String(64))
     attempt_id: Mapped[str | None] = mapped_column(String(36))
     amount: Mapped[int] = mapped_column(Integer)
     reason: Mapped[str] = mapped_column(String(48))

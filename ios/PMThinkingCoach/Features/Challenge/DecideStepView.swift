@@ -22,18 +22,20 @@ struct DecideStepView: View {
                         Text(scenario.decisionPrompt)
                             .font(.title3.weight(.bold))
                             .fixedSize(horizontal: false, vertical: true)
-                        Text("Several answers can be defended. What matters is the reasoning.")
+                        Text(S.Challenge.severalAnswers)
                             .font(.subheadline)
                             .foregroundStyle(Theme.Palette.secondaryText)
                     }
+                    .appear(0)
 
                     VStack(spacing: Theme.Spacing.m) {
-                        ForEach(scenario.decisionOptions) { option in
-                            optionCard(option)
+                        ForEach(Array(scenario.decisionOptions.enumerated()), id: \.element.id) {
+                            index, option in
+                            optionCard(option).appear(index + 1)
                         }
                     }
 
-                    rationaleSection
+                    rationaleSection.appear(5)
 
                     if let error = viewModel.submissionError {
                         InlineNotice(
@@ -45,29 +47,30 @@ struct DecideStepView: View {
 
                     if viewModel.isOfflineDraft {
                         InlineNotice(
-                            text: "Saved on this device. It will sync when you're back online — "
-                                + "you can't submit until it does.",
+                            text: S.Challenge.offlineDraft,
                             systemImage: "wifi.slash",
                             tint: Theme.Palette.caution
                         )
                     } else if viewModel.draftSavedAt != nil {
-                        InlineNotice(text: "Saved", systemImage: "checkmark.circle")
+                        InlineNotice(text: S.Challenge.saved, systemImage: "checkmark.circle")
                     }
                 }
                 .padding(Theme.Spacing.l)
+                .animation(Motion.standard, value: viewModel.submissionError)
+                .animation(Motion.quick, value: viewModel.draftSavedAt)
             }
 
             VStack(spacing: Theme.Spacing.s) {
-                Text("Feedback assesses your reasoning, not only which option you picked.")
+                Text(S.Challenge.reasoningNotOptionNote)
                     .font(.caption)
                     .foregroundStyle(Theme.Palette.tertiaryText)
                     .multilineTextAlignment(.center)
                 HStack(spacing: Theme.Spacing.m) {
-                    SecondaryButton(title: "Back", systemImage: "chevron.left") {
+                    SecondaryButton(title: S.Common.back, systemImage: "chevron.left") {
                         viewModel.goBack()
                     }
                     PrimaryButton(
-                        title: "Submit decision",
+                        title: S.Challenge.submitDecision,
                         isLoading: viewModel.isSubmitting,
                         isEnabled: viewModel.form.canSubmit
                     ) {
@@ -84,12 +87,14 @@ struct DecideStepView: View {
     private func optionCard(_ option: DecisionOption) -> some View {
         let isSelected = viewModel.form.selectedOptionId == option.id
         return Button {
-            viewModel.select(option: option)
+            Haptics.selection()
+            withAnimation(Motion.quick) { viewModel.select(option: option) }
         } label: {
             HStack(alignment: .top, spacing: Theme.Spacing.m) {
                 Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
                     .font(.title3)
                     .foregroundStyle(isSelected ? Theme.Palette.accent : Theme.Palette.tertiaryText)
+                    .contentTransition(.symbolEffect(.replace))
                 VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
                     Text(option.label)
                         .font(.headline)
@@ -110,15 +115,16 @@ struct DecideStepView: View {
                 RoundedRectangle(cornerRadius: Theme.Radius.card)
                     .stroke(isSelected ? Theme.Palette.accent : .clear, lineWidth: 2)
             )
+            .shadow(color: Theme.Palette.accent.opacity(isSelected ? 0.16 : 0), radius: 12, y: 6)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pressable)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 
     private var rationaleSection: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.s) {
-            Text("Defend your decision").font(.headline)
+            Text(S.Challenge.defendYourDecision).font(.headline)
 
             ZStack(alignment: .topLeading) {
                 TextEditor(
@@ -130,19 +136,30 @@ struct DecideStepView: View {
                 .focused($isEditingRationale)
                 .frame(minHeight: 160)
                 .padding(Theme.Spacing.s)
-                .background(
-                    Theme.Palette.surface,
-                    in: RoundedRectangle(cornerRadius: Theme.Radius.control)
-                )
-                .accessibilityLabel("Your reasoning")
+                .scrollContentBackground(.hidden)
+                .background {
+                    RoundedRectangle(cornerRadius: Theme.Radius.control)
+                        .fill(Theme.Palette.surface)
+                        .overlay {
+                            // A quiet focus ring: the text field is the work on this screen.
+                            RoundedRectangle(cornerRadius: Theme.Radius.control)
+                                .strokeBorder(
+                                    Theme.Palette.accent.opacity(isEditingRationale ? 0.55 : 0),
+                                    lineWidth: 2
+                                )
+                        }
+                }
+                .animation(Motion.quick, value: isEditingRationale)
+                .accessibilityLabel(S.Challenge.yourReasoning)
 
                 if viewModel.form.rationale.isEmpty {
-                    Text("What evidence, trade-off, and risk informed your choice?")
+                    Text(S.Challenge.rationalePlaceholder)
                         .font(.body)
                         .foregroundStyle(Theme.Palette.tertiaryText)
                         .padding(.horizontal, Theme.Spacing.m)
                         .padding(.vertical, Theme.Spacing.m + 2)
                         .allowsHitTesting(false)
+                        .transition(.opacity)
                 }
             }
 
@@ -151,16 +168,20 @@ struct DecideStepView: View {
                     Text(message)
                         .font(.caption)
                         .foregroundStyle(Theme.Palette.caution)
+                        .transition(.opacity)
                 } else if viewModel.form.isRationaleValid {
-                    Label("Long enough", systemImage: "checkmark")
+                    Label(S.Challenge.longEnough, systemImage: "checkmark")
                         .font(.caption)
                         .foregroundStyle(Theme.Palette.positive)
+                        .transition(.scale.combined(with: .opacity))
                 }
                 Spacer()
                 Text("\(viewModel.form.rationaleCharacterCount)/\(ChallengeFormState.rationaleMaximum)")
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(Theme.Palette.tertiaryText)
+                    .contentTransition(.numericText())
             }
+            .animation(Motion.quick, value: viewModel.form.isRationaleValid)
             .accessibilityElement(children: .combine)
         }
     }

@@ -46,31 +46,33 @@ enum APIError: Error, Equatable {
     var userMessage: String {
         switch self {
         case .offline:
-            return "You're offline. Your work is saved on this device and will sync when you reconnect."
+            return S.Errors.offline
         case .timedOut:
-            return "That took too long. Check your connection and try again."
+            return S.Errors.timedOut
         case .unauthorized:
-            return "Your session expired. Sign in again to continue."
+            return S.Errors.unauthorized
         case .forbidden, .notFound:
-            return "That challenge isn't available on this account."
+            return S.Errors.notAvailable
         case .conflict(let code) where code == "onboarding_incomplete":
-            return "Finish setting up your account to see today's challenge."
+            return S.Errors.onboardingIncomplete
         case .conflict:
-            return "That's already been submitted. Pull to refresh for the latest state."
+            return S.Errors.alreadySubmitted
         case .validation(let code) where code == "no_evidence_reviewed":
-            return "Open at least one signal before making a decision."
+            return S.Errors.noEvidenceReviewed
         case .validation(let code) where code == "rationale_length_invalid":
-            return "Your reasoning needs to be between 30 and 600 characters."
+            return S.Errors.rationaleLength(
+                AppConfig.rationaleMinimum, AppConfig.rationaleMaximum
+            )
         case .validation:
-            return "Something in that submission wasn't valid. Check your answer and try again."
+            return S.Errors.invalidSubmission
         case .rateLimited:
-            return "You've reached today's coaching limit. Try again tomorrow."
+            return S.Errors.rateLimited
         case .unavailable(let code) where code == "no_scenario_available":
-            return "Today's challenge isn't ready yet. Try again in a moment."
+            return S.Errors.noScenarioAvailable
         case .unavailable, .server:
-            return "The server had a problem. Your answer is safe — try again shortly."
+            return S.Errors.serverProblem
         case .decoding, .invalidURL:
-            return "Something unexpected came back from the server. Try again shortly."
+            return S.Errors.unexpectedResponse
         }
     }
 }

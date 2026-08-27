@@ -14,21 +14,22 @@ struct HistoryView: View {
             if viewModel.items.isEmpty, viewModel.isLoading {
                 LoadingState()
             } else if viewModel.items.isEmpty, let error = viewModel.error {
-                ErrorState(title: "Couldn't load history", message: error.userMessage) {
+                ErrorState(title: S.History.loadFailed, message: error.userMessage) {
                     Task { await viewModel.loadFirstPage() }
                 }
             } else if viewModel.items.isEmpty {
                 ContentUnavailableView(
-                    "No completed challenges yet",
-                    systemImage: "list.bullet.rectangle",
-                    description: Text("Finish today's challenge and it will appear here.")
+                    S.History.emptyTitle,
+                    systemImage: "flag.checkered",
+                    description: Text(S.History.emptyBody)
                 )
             } else {
                 list
             }
         }
+        .animation(Motion.standard, value: viewModel.items.count)
         .background(Theme.Palette.background)
-        .navigationTitle("History")
+        .navigationTitle(S.History.title)
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.loadFirstPage() }
     }
@@ -36,7 +37,7 @@ struct HistoryView: View {
     private var list: some View {
         ScrollView {
             LazyVStack(spacing: Theme.Spacing.m) {
-                ForEach(viewModel.items) { item in
+                ForEach(Array(viewModel.items.enumerated()), id: \.element.id) { index, item in
                     NavigationLink {
                         ResultDetailView(
                             viewModel: ResultDetailViewModel(
@@ -46,12 +47,13 @@ struct HistoryView: View {
                     } label: {
                         row(item)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.pressable)
+                    .appear(index)
                     .simultaneousGesture(TapGesture().onEnded { viewModel.itemOpened(item) })
                 }
 
                 if viewModel.canLoadMore {
-                    Button("Load more") {
+                    Button(S.History.loadMore) {
                         Task { await viewModel.loadNextPage() }
                     }
                     .frame(minHeight: Theme.minimumTapTarget)
@@ -72,7 +74,7 @@ struct HistoryView: View {
                         .foregroundStyle(Theme.Palette.primaryText)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
-                    Text("\(Theme.formattedDate(item.localDate)) · \(item.primarySkillLabel)")
+                    Text(S.History.blockAndAttempt(item.blockTitle, item.attemptIndex))
                         .font(.caption)
                         .foregroundStyle(Theme.Palette.tertiaryText)
                     statusChip(item)
@@ -99,11 +101,23 @@ struct HistoryView: View {
     private func statusChip(_ item: HistoryItem) -> some View {
         switch item.feedbackStatus {
         case .complete:
-            Chip(text: "Coaching ready", systemImage: "checkmark", tint: Theme.Palette.positive)
+            Chip(
+                text: item.passed == true ? S.History.passed : S.History.notPassed,
+                systemImage: item.passed == true ? "checkmark" : "arrow.counterclockwise",
+                tint: item.passed == true ? Theme.Palette.positive : Theme.Palette.caution
+            )
         case .pending:
-            Chip(text: "Feedback pending", systemImage: "hourglass", tint: Theme.Palette.secondaryText)
+            Chip(
+                text: S.History.feedbackPending,
+                systemImage: "hourglass",
+                tint: Theme.Palette.secondaryText
+            )
         case .failed:
-            Chip(text: "Coaching failed", systemImage: "exclamationmark", tint: Theme.Palette.caution)
+            Chip(
+                text: S.History.coachingFailed,
+                systemImage: "exclamationmark",
+                tint: Theme.Palette.caution
+            )
         }
     }
 }
@@ -122,19 +136,23 @@ struct ResultDetailView: View {
                 if viewModel.isLoading {
                     LoadingState()
                 } else if let error = viewModel.error {
-                    ErrorState(title: "Couldn't load result", message: error.userMessage) {
+                    ErrorState(title: S.History.resultLoadFailed, message: error.userMessage) {
                         Task { await viewModel.load() }
                     }
                 } else if let response = viewModel.feedback {
                     Text(response.scenarioTitle)
                         .font(.title2.weight(.bold))
                         .fixedSize(horizontal: false, vertical: true)
+                        .appear(0)
 
-                    CardContainer {
+                    CardContainer(isHighlighted: true) {
                         VStack(alignment: .leading, spacing: Theme.Spacing.m) {
-                            Label("What happened next", systemImage: "arrow.turn.down.right")
-                                .font(.footnote.weight(.semibold))
-                                .foregroundStyle(Theme.Palette.accent)
+                            Label(
+                                S.Challenge.whatHappenedNext,
+                                systemImage: "arrow.turn.down.right"
+                            )
+                            .font(.footnote.weight(.semibold))
+                            .foregroundStyle(Theme.Palette.accent)
                             Text(response.consequence.optionLabel)
                                 .font(.headline)
                             Text(response.consequence.text)
@@ -142,6 +160,7 @@ struct ResultDetailView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
+                    .appear(1)
 
                     if let body = response.feedback {
                         CardContainer {
@@ -149,44 +168,50 @@ struct ResultDetailView: View {
                                 ScoreHeadline(score: body.score, band: body.band)
                             }
                         }
-                        readOnlyPoints("What you did well", body.strengths)
-                        readOnlyPoints("What to strengthen", body.improvements)
+                        .appear(2)
+                        readOnlyPoints(S.Challenge.strengthsTitle, body.strengths).appear(3)
+                        readOnlyPoints(S.Challenge.improvementsTitle, body.improvements).appear(4)
                         VStack(alignment: .leading, spacing: Theme.Spacing.m) {
-                            SectionHeader(title: "A sharper approach")
+                            SectionHeader(title: S.Challenge.sharperApproach)
                             CardContainer {
                                 Text(body.sharperApproach)
                                     .font(.body)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
+                        .appear(5)
                     } else {
                         CardContainer {
                             VStack(alignment: .leading, spacing: Theme.Spacing.m) {
                                 Label(
                                     response.status == .failed
-                                        ? "Coaching didn't finish" : "Coaching still pending",
+                                        ? S.Challenge.coachingDidntFinish
+                                        : S.Challenge.coachingStillPending,
                                     systemImage: "hourglass"
                                 )
                                 .font(.headline)
-                                Text("Your answer is saved. XP is pending until coaching completes.")
+                                Text(S.History.pendingXpNote)
                                     .font(.subheadline)
                                     .foregroundStyle(Theme.Palette.secondaryText)
                                 if response.retryAvailable {
                                     SecondaryButton(
-                                        title: "Retry coaching", systemImage: "arrow.clockwise"
+                                        title: S.Challenge.retryCoaching,
+                                        systemImage: "arrow.clockwise"
                                     ) {
                                         Task { await viewModel.retry() }
                                     }
                                 }
                             }
                         }
+                        .appear(2)
                     }
                 }
             }
             .padding(Theme.Spacing.l)
+            .animation(Motion.standard, value: viewModel.isLoading)
         }
         .background(Theme.Palette.background)
-        .navigationTitle("Result")
+        .navigationTitle(S.History.resultTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
     }

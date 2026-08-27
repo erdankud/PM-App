@@ -26,8 +26,8 @@ actor LocalStore {
     private struct Snapshot: Codable {
         var drafts: [String: Draft] = [:]
         var submissions: [String: PendingSubmission] = [:]
-        var cachedToday: TodayResponse?
-        var cachedTodaySavedAt: Date?
+        var cachedTree: TreeResponse?
+        var cachedTreeSavedAt: Date?
     }
 
     private let fileURL: URL
@@ -92,16 +92,18 @@ actor LocalStore {
         persist()
     }
 
-    // MARK: - Today cache
+    // MARK: - Map cache
 
-    func cacheToday(_ response: TodayResponse) {
-        snapshot.cachedToday = response
-        snapshot.cachedTodaySavedAt = Date()
+    /// The map is what a cold, offline launch can still show: the route is meaningful
+    /// even when nothing new can be fetched.
+    func cacheTree(_ response: TreeResponse) {
+        snapshot.cachedTree = response
+        snapshot.cachedTreeSavedAt = Date()
         persist()
     }
 
-    func cachedToday() -> (payload: TodayResponse, savedAt: Date)? {
-        guard let payload = snapshot.cachedToday, let savedAt = snapshot.cachedTodaySavedAt else {
+    func cachedTree() -> (payload: TreeResponse, savedAt: Date)? {
+        guard let payload = snapshot.cachedTree, let savedAt = snapshot.cachedTreeSavedAt else {
             return nil
         }
         return (payload, savedAt)

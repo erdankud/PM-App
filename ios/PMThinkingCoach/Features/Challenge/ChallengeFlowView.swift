@@ -16,15 +16,16 @@ struct ChallengeFlowView: View {
             Group {
                 switch viewModel.phase {
                 case .loading:
-                    LoadingState(message: "Loading the scenario…")
+                    LoadingState(message: S.Challenge.loadingScenario)
                 case .failed(let error):
-                    ErrorState(title: "Couldn't load", message: error.userMessage) {
+                    ErrorState(title: S.Common.couldntLoad, message: error.userMessage) {
                         Task { await viewModel.load() }
                     }
                 case .ready:
                     steps
                 }
             }
+            .animation(Motion.standard, value: viewModel.phase)
             .background(Theme.Palette.background)
             .navigationTitle(viewModel.form.step.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -43,17 +44,17 @@ struct ChallengeFlowView: View {
                 }
             }
             .confirmationDialog(
-                "Leave this challenge?",
+                S.Challenge.leaveTitle,
                 isPresented: $showingLeaveConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("Save and leave") {
+                Button(S.Challenge.saveAndLeave) {
                     viewModel.leave()
                     dismiss()
                 }
-                Button("Keep working", role: .cancel) {}
+                Button(S.Challenge.keepWorking, role: .cancel) {}
             } message: {
-                Text("Your work is saved. You can pick it up from Today.")
+                Text(S.Challenge.leaveMessage)
             }
         }
         .task { await viewModel.load() }
@@ -61,7 +62,7 @@ struct ChallengeFlowView: View {
     }
 
     private var closeLabel: String {
-        viewModel.form.isSubmitted ? "Done" : "Close"
+        viewModel.form.isSubmitted ? S.Common.done : S.Common.close
     }
 
     private func close() {
@@ -75,20 +76,24 @@ struct ChallengeFlowView: View {
 
     @ViewBuilder
     private var steps: some View {
-        switch viewModel.form.step {
-        case .brief:
-            BriefStepView(viewModel: viewModel)
-        case .investigate:
-            InvestigateStepView(viewModel: viewModel)
-        case .decide:
-            DecideStepView(viewModel: viewModel)
-        case .consequence:
-            ConsequenceStepView(viewModel: viewModel)
-        case .feedback:
-            FeedbackStepView(viewModel: viewModel, onFinish: {
-                viewModel.leave()
-                dismiss()
-            })
+        Group {
+            switch viewModel.form.step {
+            case .brief:
+                BriefStepView(viewModel: viewModel)
+            case .investigate:
+                InvestigateStepView(viewModel: viewModel)
+            case .decide:
+                DecideStepView(viewModel: viewModel)
+            case .consequence:
+                ConsequenceStepView(viewModel: viewModel)
+            case .feedback:
+                FeedbackStepView(viewModel: viewModel, onFinish: {
+                    viewModel.leave()
+                    dismiss()
+                })
+            }
         }
+        .transition(.stepForward)
+        .animation(Motion.standard, value: viewModel.form.step)
     }
 }

@@ -68,8 +68,13 @@ class Settings(BaseSettings):
     # --- Product rules (server-owned, spec §12) -----------------------------
     xp_base_completion: int = 50
     xp_quality_bonus_cap: int = 50
-    level_thresholds: list[int] = [0, 200, 500, 900]
-    level_step_after_thresholds: int = 500
+    xp_lesson_completed: int = 10
+    # A gate is passed on the total, never on one component: option choice plus full
+    # evidence review caps out at 40, so no one passes without writing (spec v0.2 §9).
+    gate_pass_threshold: int = 70
+    # Recalibrated for ~140 lessons and 18 gates rather than a daily challenge.
+    level_thresholds: list[int] = [0, 150, 400, 800, 1400, 2200]
+    level_step_after_thresholds: int = 800
     path_days: int = 7
 
     @property

@@ -19,21 +19,23 @@ struct InvestigateStepView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Spacing.l) {
                     VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
-                        Text("What do you want to look at?")
+                        Text(S.Challenge.investigatePrompt)
                             .font(.title3.weight(.bold))
                         Text(viewModel.form.evidenceCounterText)
                             .font(.subheadline)
                             .foregroundStyle(Theme.Palette.secondaryText)
+                            .contentTransition(.numericText())
+                            .animation(Motion.quick, value: viewModel.form.reviewedCount)
+                    }
+                    .appear(0)
+
+                    ForEach(Array(scenario.evidenceCards.enumerated()), id: \.element.id) {
+                        index, card in
+                        evidenceCard(card).appear(index + 1)
                     }
 
-                    ForEach(scenario.evidenceCards) { card in
-                        evidenceCard(card)
-                    }
-
-                    InlineNotice(
-                        text: "This is everything you get. Real decisions are made on partial "
-                            + "evidence — say what you can't know as well as what you can."
-                    )
+                    InlineNotice(text: S.Challenge.partialEvidenceNotice)
+                        .appear(scenario.evidenceCards.count + 1)
                 }
                 .padding(Theme.Spacing.l)
             }
@@ -41,16 +43,16 @@ struct InvestigateStepView: View {
             VStack(spacing: Theme.Spacing.s) {
                 if !viewModel.form.canAdvanceToDecision {
                     InlineNotice(
-                        text: "Open at least one signal before deciding.",
+                        text: S.Challenge.openOneSignal,
                         systemImage: "hand.tap"
                     )
                 }
                 HStack(spacing: Theme.Spacing.m) {
-                    SecondaryButton(title: "Back", systemImage: "chevron.left") {
+                    SecondaryButton(title: S.Common.back, systemImage: "chevron.left") {
                         viewModel.goBack()
                     }
                     PrimaryButton(
-                        title: "Make a decision",
+                        title: S.Challenge.makeADecision,
                         isEnabled: viewModel.form.canAdvanceToDecision
                     ) {
                         viewModel.advance()
@@ -59,6 +61,7 @@ struct InvestigateStepView: View {
             }
             .padding(Theme.Spacing.l)
             .background(.bar)
+            .animation(Motion.standard, value: viewModel.form.canAdvanceToDecision)
         }
     }
 
@@ -69,7 +72,8 @@ struct InvestigateStepView: View {
         return CardContainer(padding: Theme.Spacing.m) {
             VStack(alignment: .leading, spacing: Theme.Spacing.m) {
                 Button {
-                    withAnimation(.easeInOut(duration: 0.2)) {
+                    Haptics.tap()
+                    withAnimation(Motion.standard) {
                         if isOpen {
                             expanded.remove(card.id)
                         } else {
@@ -93,17 +97,23 @@ struct InvestigateStepView: View {
                         }
                         Spacer(minLength: 0)
                         if isReviewed {
-                            Chip(text: "Reviewed", systemImage: "checkmark", tint: Theme.Palette.positive)
+                            Chip(
+                                text: S.Challenge.reviewed,
+                                systemImage: "checkmark",
+                                tint: Theme.Palette.positive
+                            )
+                            .transition(.scale.combined(with: .opacity))
                         }
-                        Image(systemName: isOpen ? "chevron.up" : "chevron.down")
+                        Image(systemName: "chevron.down")
                             .font(.footnote)
                             .foregroundStyle(Theme.Palette.tertiaryText)
+                            .rotationEffect(.degrees(isOpen ? 180 : 0))
                     }
                     .frame(minHeight: Theme.minimumTapTarget)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityHint(isOpen ? "Collapses this signal" : "Opens this signal")
+                .accessibilityHint(isOpen ? S.Challenge.collapsesSignal : S.Challenge.opensSignal)
                 .accessibilityAddTraits(.isButton)
 
                 if isOpen {
@@ -111,7 +121,7 @@ struct InvestigateStepView: View {
                         .font(.callout)
                         .foregroundStyle(Theme.Palette.primaryText)
                         .fixedSize(horizontal: false, vertical: true)
-                        .transition(.opacity)
+                        .transition(.expand)
                 }
             }
         }

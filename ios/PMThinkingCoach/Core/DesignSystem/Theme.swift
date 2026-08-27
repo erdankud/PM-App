@@ -32,27 +32,33 @@ enum Theme {
         static let caution = Color(.systemOrange)
         static let negative = Color(.systemRed)
         static let neutral = Color(.systemGray)
+        /// Warm counterpart to the accent, matching the chosen node in the app icon.
+        static let spark = Color(red: 1.0, green: 0.78, blue: 0.47)
+    }
+
+    enum Gradients {
+        /// Behind the day's challenge, so the one card that matters reads as the hero.
+        static let hero = LinearGradient(
+            colors: [
+                Palette.accent.opacity(0.16),
+                Palette.accent.opacity(0.04)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+
+        static let accentFill = LinearGradient(
+            colors: [Palette.accent.opacity(0.8), Palette.accent],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
     }
 
     /// Minimum tap target (spec §16).
     static let minimumTapTarget: CGFloat = 44
 
     static func levelLabel(_ level: String) -> String {
-        switch level {
-        case "foundation": return "Foundation"
-        case "developing": return "Developing"
-        case "advanced": return "Advanced"
-        default: return level.capitalized
-        }
-    }
-
-    static func goalLabel(_ goal: String?) -> String {
-        switch goal {
-        case "break_into_pm": return "Break into PM"
-        case "grow_in_first_role": return "Grow in my first PM role"
-        case "practise_product_thinking": return "Practise product thinking"
-        default: return "Not set"
-        }
+        S.Labels.level(level)
     }
 
     /// Colour is never the only carrier of meaning; each of these pairs with a label
@@ -65,33 +71,35 @@ enum Theme {
         }
     }
 
-    static func formattedDate(_ isoDate: String) -> String {
+    // MARK: - Dates
+    //
+    // Server dates are UTC calendar days, so parsing stays fixed to UTC. Only the
+    // presentation follows the language the user picked.
+
+    private static let isoParser: DateFormatter = {
         let parser = DateFormatter()
         parser.dateFormat = "yyyy-MM-dd"
+        parser.locale = Locale(identifier: "en_US_POSIX")
         parser.timeZone = TimeZone(identifier: "UTC")
-        guard let date = parser.date(from: isoDate) else { return isoDate }
+        return parser
+    }()
+
+    static func formattedDate(_ isoDate: String) -> String {
+        guard let date = isoParser.date(from: isoDate) else { return isoDate }
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
+        formatter.locale = L10n.current.locale
         formatter.timeZone = TimeZone(identifier: "UTC")
         return formatter.string(from: date)
     }
 
     static func shortWeekday(_ isoDate: String) -> String {
-        let parser = DateFormatter()
-        parser.dateFormat = "yyyy-MM-dd"
-        parser.timeZone = TimeZone(identifier: "UTC")
-        guard let date = parser.date(from: isoDate) else { return "" }
+        guard let date = isoParser.date(from: isoDate) else { return "" }
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEEE"
+        formatter.locale = L10n.current.locale
         formatter.timeZone = TimeZone(identifier: "UTC")
         return formatter.string(from: date)
     }
 
-    static func greeting(for date: Date = Date()) -> String {
-        switch Calendar.current.component(.hour, from: date) {
-        case 0..<12: return "Good morning"
-        case 12..<18: return "Good afternoon"
-        default: return "Good evening"
-        }
-    }
 }

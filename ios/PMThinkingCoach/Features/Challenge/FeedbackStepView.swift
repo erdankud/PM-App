@@ -20,7 +20,7 @@ struct FeedbackStepView: View {
                 .padding(Theme.Spacing.l)
             }
 
-            PrimaryButton(title: "Finish") { onFinish() }
+            PrimaryButton(title: S.Challenge.finish) { onFinish() }
                 .padding(Theme.Spacing.l)
                 .background(.bar)
         }
@@ -31,12 +31,12 @@ struct FeedbackStepView: View {
 
     private func completeContent(_ response: FeedbackResponse, _ body: FeedbackBody) -> some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.xl) {
-            CardContainer {
+            CardContainer(isHighlighted: true) {
                 VStack(spacing: Theme.Spacing.m) {
                     ScoreHeadline(score: body.score, band: body.band)
                     if body.xpAwarded > 0 {
                         Chip(
-                            text: "+\(body.xpAwarded) XP",
+                            text: S.Challenge.xpAwarded(body.xpAwarded),
                             systemImage: "sparkles",
                             tint: Theme.Palette.accent
                         )
@@ -44,71 +44,81 @@ struct FeedbackStepView: View {
                     breakdown(body.breakdown)
                 }
             }
+            .appear(0)
+            .onAppear { Haptics.success() }
 
             if body.needsRetry {
                 InlineNotice(
-                    text: "There wasn't much reasoning to work with this time. A longer answer "
-                        + "gives the coaching more to respond to.",
+                    text: S.Challenge.needsRetryNotice,
                     systemImage: "info.circle",
                     tint: Theme.Palette.caution
                 )
+                .appear(1)
             }
 
             pointsSection(
-                title: "What you did well",
+                title: S.Challenge.strengthsTitle,
                 symbol: "checkmark.seal",
                 tint: Theme.Palette.positive,
-                points: body.strengths
+                points: body.strengths,
+                startIndex: 2
             )
 
             pointsSection(
-                title: "What to strengthen",
+                title: S.Challenge.improvementsTitle,
                 symbol: "arrow.up.forward",
                 tint: Theme.Palette.caution,
-                points: body.improvements
+                points: body.improvements,
+                startIndex: 4
             )
 
             VStack(alignment: .leading, spacing: Theme.Spacing.m) {
-                SectionHeader(title: "A sharper approach")
+                SectionHeader(title: S.Challenge.sharperApproach)
                 CardContainer {
                     Text(body.sharperApproach)
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
+            .appear(6)
 
-            skillImpactSection(body.skillImpact)
+            skillImpactSection(body.skillImpact).appear(7)
 
-            ratingSection(response)
+            ratingSection(response).appear(8)
 
-            InlineNotice(
-                text: "Skill scores are practice signals based on your in-app work, not an "
-                    + "assessment of job readiness."
-            )
+            InlineNotice(text: S.Challenge.practiceSignalDisclaimer).appear(8)
         }
     }
 
     private func breakdown(_ breakdown: ScoreBreakdown) -> some View {
         VStack(spacing: Theme.Spacing.s) {
             ForEach(breakdown.rows, id: \.label) { row in
-                HStack {
-                    Text(row.label)
-                        .font(.caption)
-                        .foregroundStyle(Theme.Palette.secondaryText)
-                    Spacer()
-                    Text("\(row.value)/\(row.max)")
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(Theme.Palette.primaryText)
+                VStack(spacing: Theme.Spacing.xs) {
+                    HStack {
+                        Text(row.label)
+                            .font(.caption)
+                            .foregroundStyle(Theme.Palette.secondaryText)
+                        Spacer()
+                        Text("\(row.value)/\(row.max)")
+                            .font(.caption.monospacedDigit())
+                            .foregroundStyle(Theme.Palette.primaryText)
+                    }
+                    ProgressTrack(
+                        progress: row.max > 0 ? Double(row.value) / Double(row.max) : 0,
+                        height: 4
+                    )
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(row.label): \(row.value) out of \(row.max)")
+                .accessibilityLabel(
+                    S.Challenge.breakdownAccessibility(row.label, row.value, row.max)
+                )
             }
         }
         .padding(.top, Theme.Spacing.s)
     }
 
     private func pointsSection(
-        title: String, symbol: String, tint: Color, points: [FeedbackPoint]
+        title: String, symbol: String, tint: Color, points: [FeedbackPoint], startIndex: Int
     ) -> some View {
         Group {
             if points.isEmpty {
@@ -133,6 +143,7 @@ struct FeedbackStepView: View {
                         .accessibilityElement(children: .combine)
                     }
                 }
+                .appear(startIndex)
             }
         }
     }
@@ -144,14 +155,14 @@ struct FeedbackStepView: View {
             } else {
                 VStack(alignment: .leading, spacing: Theme.Spacing.m) {
                     SectionHeader(
-                        title: "Skill impact",
-                        subtitle: "Only the skills this challenge touched."
+                        title: S.Challenge.skillImpactTitle,
+                        subtitle: S.Challenge.skillImpactSubtitle
                     )
                     CardContainer {
                         VStack(spacing: Theme.Spacing.m) {
                             ForEach(impacts) { impact in
                                 HStack {
-                                    Text(impact.label).font(.subheadline)
+                                    Text(impact.localizedLabel).font(.subheadline)
                                     Spacer()
                                     Text(impact.deltaText)
                                         .font(.subheadline.weight(.semibold).monospacedDigit())
@@ -159,13 +170,17 @@ struct FeedbackStepView: View {
                                             impact.delta >= 0
                                                 ? Theme.Palette.positive : Theme.Palette.caution
                                         )
-                                    Text("→ \(impact.score)")
-                                        .font(.subheadline.monospacedDigit())
-                                        .foregroundStyle(Theme.Palette.secondaryText)
+                                    HStack(spacing: 2) {
+                                        Image(systemName: "arrow.right").font(.caption2)
+                                        CountUpText(value: impact.score, font: .subheadline)
+                                    }
+                                    .foregroundStyle(Theme.Palette.secondaryText)
                                 }
                                 .accessibilityElement(children: .ignore)
                                 .accessibilityLabel(
-                                    "\(impact.label) changed by \(impact.delta), now \(impact.score)"
+                                    S.Challenge.skillImpactAccessibility(
+                                        impact.localizedLabel, impact.delta, impact.score
+                                    )
                                 )
                             }
                         }
@@ -177,20 +192,24 @@ struct FeedbackStepView: View {
 
     private func ratingSection(_ response: FeedbackResponse) -> some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.m) {
-            SectionHeader(title: "Was this useful?")
+            SectionHeader(title: S.Challenge.wasThisUseful)
             HStack(spacing: Theme.Spacing.m) {
-                ratingButton(title: "Useful", symbol: "hand.thumbsup", value: "useful")
-                ratingButton(title: "Not useful", symbol: "hand.thumbsdown", value: "not_useful")
+                ratingButton(title: S.Challenge.useful, symbol: "hand.thumbsup", value: "useful")
+                ratingButton(
+                    title: S.Challenge.notUseful, symbol: "hand.thumbsdown", value: "not_useful"
+                )
             }
             if viewModel.ratingSubmitted != nil {
-                InlineNotice(text: "Thanks — this helps us improve the coaching.")
+                InlineNotice(text: S.Challenge.ratingThanks)
             }
         }
+        .animation(Motion.standard, value: viewModel.ratingSubmitted)
     }
 
     private func ratingButton(title: String, symbol: String, value: String) -> some View {
         let isSelected = viewModel.ratingSubmitted == value
         return Button {
+            Haptics.tap()
             Task { await viewModel.rate(value) }
         } label: {
             Label(title, systemImage: symbol)
@@ -198,6 +217,8 @@ struct FeedbackStepView: View {
         }
         .buttonStyle(.bordered)
         .tint(isSelected ? Theme.Palette.accent : Theme.Palette.neutral)
+        .scaleEffect(isSelected ? 1.03 : 1)
+        .animation(Motion.quick, value: isSelected)
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 
@@ -208,7 +229,7 @@ struct FeedbackStepView: View {
             if let consequence = viewModel.consequence {
                 CardContainer {
                     VStack(alignment: .leading, spacing: Theme.Spacing.m) {
-                        Label("What happens next", systemImage: "arrow.turn.down.right")
+                        Label(S.Challenge.whatHappensNext, systemImage: "arrow.turn.down.right")
                             .font(.footnote.weight(.semibold))
                             .foregroundStyle(Theme.Palette.accent)
                         Text(consequence.text)
@@ -216,30 +237,31 @@ struct FeedbackStepView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
+                .appear(0)
             }
 
             CardContainer {
                 VStack(alignment: .leading, spacing: Theme.Spacing.m) {
                     Label(
                         viewModel.feedback?.status == .failed
-                            ? "Coaching didn't finish" : "Coaching is taking longer",
+                            ? S.Challenge.coachingDidntFinish : S.Challenge.coachingTakingLonger,
                         systemImage: "hourglass"
                     )
                     .font(.headline)
 
-                    Text(
-                        "Your answer is saved and your XP is pending until coaching completes. "
-                        + "Nothing is lost — you can come back to this from Progress."
-                    )
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.Palette.secondaryText)
-                    .fixedSize(horizontal: false, vertical: true)
+                    Text(S.Challenge.unavailableBody)
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.Palette.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
 
-                    SecondaryButton(title: "Retry coaching", systemImage: "arrow.clockwise") {
+                    SecondaryButton(
+                        title: S.Challenge.retryCoaching, systemImage: "arrow.clockwise"
+                    ) {
                         Task { await viewModel.retryCoaching() }
                     }
                 }
             }
+            .appear(1)
         }
     }
 }

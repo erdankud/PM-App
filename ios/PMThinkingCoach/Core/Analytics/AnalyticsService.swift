@@ -15,11 +15,24 @@ enum AnalyticsEvent: Sendable {
     case authStarted(method: String)
     case authCompleted(method: String)
     case authFailed(method: String, errorCode: String)
-    case onboardingGoalSelected(goal: String)
-    case assessmentItemCompleted(itemId: String, choiceId: String, index: Int)
-    case onboardingCompleted(startingLevel: String, focusSkills: String)
-    case todayViewed(assignmentState: String, scenarioId: String)
-    case challengeStarted(scenarioId: String, level: String, primarySkill: String)
+    case onboardingCompleted(targetRole: String)
+    case treeViewed(blocksPassed: Int, blocksAvailable: Int)
+    // System Design (спека домена §9). Свободный текст ответов на упражнения
+    // в аналитику не уходит — только факт и попадание в интервал.
+    case treeSwitched(from: String, to: String)
+    case diagramOpened(diagramId: String, lessonId: String)
+    case termTapped(termId: String, lessonId: String, isFirstEncounter: Bool)
+    case glossaryOpened(source: String, searchQueryLength: Int)
+    case exerciseStarted(exerciseId: String, type: String)
+    case exerciseSubmitted(exerciseId: String, type: String, withinRange: Bool, seconds: Int)
+    case exerciseSkipped(exerciseId: String)
+    case blockOpened(blockId: String, status: String)
+    case lessonOpened(lessonId: String, nodeId: String)
+    case lessonCompleted(lessonId: String, nodeId: String, seconds: Int)
+    case remediationLessonOpened(lessonId: String, fromGateId: String)
+    case gateStarted(gateId: String, scenarioId: String, attemptIndex: Int, lessonsCompletedRatio: Double)
+    case gateResult(gateId: String, passed: Bool, scoreBand: String, attemptIndex: Int)
+    case blockUnlocked(blockId: String)
     case evidenceOpened(scenarioId: String, evidenceId: String, countOpened: Int)
     case decisionOptionSelected(scenarioId: String, optionId: String)
     case attemptDraftSaved(scenarioId: String, hasOption: Bool, rationaleLengthBucket: String)
@@ -37,11 +50,22 @@ enum AnalyticsEvent: Sendable {
         case .authStarted: return "auth_started"
         case .authCompleted: return "auth_completed"
         case .authFailed: return "auth_failed"
-        case .onboardingGoalSelected: return "onboarding_goal_selected"
-        case .assessmentItemCompleted: return "assessment_item_completed"
+        case .treeViewed: return "tree_viewed"
+        case .treeSwitched: return "tree_switched"
+        case .diagramOpened: return "diagram_opened"
+        case .termTapped: return "term_tapped"
+        case .glossaryOpened: return "glossary_opened"
+        case .exerciseStarted: return "exercise_started"
+        case .exerciseSubmitted: return "exercise_submitted"
+        case .exerciseSkipped: return "exercise_skipped"
+        case .blockOpened: return "block_opened"
+        case .lessonOpened: return "lesson_opened"
+        case .lessonCompleted: return "lesson_completed"
+        case .remediationLessonOpened: return "remediation_lesson_opened"
+        case .gateStarted: return "gate_started"
+        case .gateResult: return "gate_result"
+        case .blockUnlocked: return "block_unlocked"
         case .onboardingCompleted: return "onboarding_completed"
-        case .todayViewed: return "today_viewed"
-        case .challengeStarted: return "challenge_started"
         case .evidenceOpened: return "evidence_opened"
         case .decisionOptionSelected: return "decision_option_selected"
         case .attemptDraftSaved: return "attempt_draft_saved"
@@ -63,19 +87,6 @@ enum AnalyticsEvent: Sendable {
             return ["method": .string(method)]
         case .authFailed(let method, let errorCode):
             return ["method": .string(method), "errorCode": .string(errorCode)]
-        case .onboardingGoalSelected(let goal):
-            return ["goal": .string(goal)]
-        case .assessmentItemCompleted(let itemId, let choiceId, let index):
-            return ["itemId": .string(itemId), "choiceId": .string(choiceId), "index": .int(index)]
-        case .onboardingCompleted(let level, let focus):
-            return ["startingLevel": .string(level), "focusSkills": .string(focus)]
-        case .todayViewed(let state, let scenarioId):
-            return ["assignmentState": .string(state), "scenarioId": .string(scenarioId)]
-        case .challengeStarted(let scenarioId, let level, let skill):
-            return [
-                "scenarioId": .string(scenarioId), "level": .string(level),
-                "primarySkill": .string(skill)
-            ]
         case .evidenceOpened(let scenarioId, let evidenceId, let count):
             return [
                 "scenarioId": .string(scenarioId), "evidenceId": .string(evidenceId),
@@ -100,6 +111,59 @@ enum AnalyticsEvent: Sendable {
             ]
             if let errorCode { properties["errorCode"] = .string(errorCode) }
             return properties
+        case .onboardingCompleted(let role):
+            return ["targetRole": .string(role)]
+        case .treeViewed(let passed, let available):
+            return ["blocksPassed": .int(passed), "blocksAvailable": .int(available)]
+        case .treeSwitched(let from, let to):
+            return ["fromKind": .string(from), "toKind": .string(to)]
+        case .diagramOpened(let diagramId, let lessonId):
+            return ["diagramId": .string(diagramId), "lessonId": .string(lessonId)]
+        case .termTapped(let termId, let lessonId, let first):
+            return [
+                "termId": .string(termId),
+                "lessonId": .string(lessonId),
+                "isFirstEncounter": .bool(first),
+            ]
+        case .glossaryOpened(let source, let length):
+            return ["source": .string(source), "searchQueryLength": .int(length)]
+        case .exerciseStarted(let exerciseId, let type):
+            return ["exerciseId": .string(exerciseId), "type": .string(type)]
+        case .exerciseSubmitted(let exerciseId, let type, let within, let seconds):
+            return [
+                "exerciseId": .string(exerciseId),
+                "type": .string(type),
+                "withinRange": .bool(within),
+                "timeSeconds": .int(seconds),
+            ]
+        case .exerciseSkipped(let exerciseId):
+            return ["exerciseId": .string(exerciseId)]
+        case .blockOpened(let blockId, let status):
+            return ["blockId": .string(blockId), "status": .string(status)]
+        case .lessonOpened(let lessonId, let nodeId):
+            return ["lessonId": .string(lessonId), "nodeId": .string(nodeId)]
+        case .lessonCompleted(let lessonId, let nodeId, let seconds):
+            return [
+                "lessonId": .string(lessonId), "nodeId": .string(nodeId),
+                "secondsOnScreen": .int(seconds),
+            ]
+        case .remediationLessonOpened(let lessonId, let gateId):
+            return ["lessonId": .string(lessonId), "fromGateId": .string(gateId)]
+        case .gateStarted(let gateId, let scenarioId, let index, let ratio):
+            // The guard against people clicking through lessons just to unlock a gate
+            // (spec v0.2 §5): if this ratio falls, the lessons are the problem.
+            return [
+                "gateId": .string(gateId), "scenarioId": .string(scenarioId),
+                "attemptIndex": .int(index),
+                "lessonsCompletedRatio": .int(Int((ratio * 100).rounded())),
+            ]
+        case .gateResult(let gateId, let passed, let band, let index):
+            return [
+                "gateId": .string(gateId), "passed": .bool(passed),
+                "scoreBand": .string(band), "attemptIndex": .int(index),
+            ]
+        case .blockUnlocked(let blockId):
+            return ["blockId": .string(blockId)]
         case .feedbackViewed(let scenarioId, let band):
             return ["scenarioId": .string(scenarioId), "scoreBand": .string(band)]
         case .feedbackRated(let scenarioId, let rating):

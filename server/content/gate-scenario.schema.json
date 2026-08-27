@@ -1,0 +1,613 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pm-thinking-coach.app/schemas/gate-scenario.schema.json",
+  "title": "PM Thinking Coach gate scenario",
+  "description": "Practical exam for one block (spec v0.2 §8). Same situation shape as a v0.1 scenario, but every positive signal names the lesson whose concept it checks, and every gap names the lesson to send the learner back to. That link is what makes a failed gate actionable instead of discouraging.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "status",
+    "title",
+    "summary",
+    "estimatedMinutes",
+    "level",
+    "primarySkill",
+    "secondarySkills",
+    "tags",
+    "brief",
+    "evidenceCards",
+    "decisionPrompt",
+    "decisionOptions",
+    "rubric",
+    "learnTakeaway",
+    "qaSubmissions",
+    "blockId",
+    "coveredLessonIds"
+  ],
+  "definitions": {
+    "skillKey": {
+      "type": "string",
+      "enum": [
+        "discovery",
+        "value_design",
+        "delivery",
+        "marketing",
+        "growth",
+        "economics",
+        "communication",
+        "system_design"
+      ]
+    },
+    "signalMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_sense": {
+          "$ref": "#/definitions/signalList"
+        },
+        "analytics": {
+          "$ref": "#/definitions/signalList"
+        },
+        "user_research": {
+          "$ref": "#/definitions/signalList"
+        },
+        "prioritization": {
+          "$ref": "#/definitions/signalList"
+        },
+        "execution": {
+          "$ref": "#/definitions/signalList"
+        },
+        "communication": {
+          "$ref": "#/definitions/signalList"
+        }
+      }
+    },
+    "signalList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 240
+      }
+    },
+    "translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "summary",
+        "brief",
+        "evidenceCards",
+        "decisionPrompt",
+        "decisionOptions",
+        "learnTakeaway"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decisionPrompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "brief": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "company",
+            "context",
+            "objective",
+            "constraints",
+            "task"
+          ],
+          "properties": {
+            "role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "company": {
+              "type": "string",
+              "minLength": 1
+            },
+            "context": {
+              "type": "string",
+              "minLength": 1
+            },
+            "objective": {
+              "type": "string",
+              "minLength": 1
+            },
+            "constraints": {
+              "type": "string",
+              "minLength": 1
+            },
+            "task": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "evidenceCards": {
+          "type": "object",
+          "description": "Keyed by evidence card id.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "title",
+              "content"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "content": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "decisionOptions": {
+          "type": "object",
+          "description": "Keyed by decision option id.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "description",
+              "consequence"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "consequence": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "learnTakeaway": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "title",
+            "body"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "body": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 4,
+      "maxLength": 64
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "retired"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 90
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 220
+    },
+    "estimatedMinutes": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 15
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "foundation",
+        "developing",
+        "advanced"
+      ]
+    },
+    "primarySkill": {
+      "$ref": "#/definitions/skillKey"
+    },
+    "secondarySkills": {
+      "type": "array",
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/skillKey"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      }
+    },
+    "brief": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "company",
+        "context",
+        "objective",
+        "constraints",
+        "task"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 200
+        },
+        "company": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 260
+        },
+        "context": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 900
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 300
+        },
+        "constraints": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 400
+        },
+        "task": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 300
+        }
+      }
+    },
+    "evidenceCards": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "type",
+          "order",
+          "content"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 60
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "quantitative",
+              "qualitative",
+              "technical",
+              "business"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "content": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 1200,
+            "description": "Факт, на который опирается решение. Нижняя граница — 40 символов: короткая цельная строка вроде «бонусы начисляются при оформлении, до подтверждения оплаты» — это полноценное доказательство, а не заглушка."
+          }
+        }
+      }
+    },
+    "decisionPrompt": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 300
+    },
+    "decisionOptions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "description",
+          "consequence",
+          "decisionPoints",
+          "rubricNote"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 100
+          },
+          "description": {
+            "type": "string",
+            "minLength": 30,
+            "maxLength": 320
+          },
+          "consequence": {
+            "type": "string",
+            "minLength": 80,
+            "maxLength": 1200,
+            "description": "Authored outcome text shown immediately after submit. Never model-generated (spec §10.9, P0-08)."
+          },
+          "decisionPoints": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 25,
+            "description": "Author weight for the 0-25 'Decision quality' scoring component (spec §12)."
+          },
+          "rubricNote": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 400
+          }
+        }
+      }
+    },
+    "rubric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "referenceReasoning",
+        "evidenceSignals",
+        "positiveSignals",
+        "negativeSignals",
+        "remediation"
+      ],
+      "properties": {
+        "referenceReasoning": {
+          "type": "string",
+          "minLength": 80,
+          "maxLength": 1200
+        },
+        "evidenceSignals": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 240
+          }
+        },
+        "positiveSignals": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lessonId",
+              "skill",
+              "signal"
+            ],
+            "properties": {
+              "lessonId": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "skill": {
+                "$ref": "#/definitions/skillKey"
+              },
+              "signal": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "negativeSignals": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "skill",
+              "signal"
+            ],
+            "properties": {
+              "skill": {
+                "$ref": "#/definitions/skillKey"
+              },
+              "signal": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "remediation": {
+          "description": "Where a failed gate sends the learner back to. One entry per gap.",
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "gap",
+              "lessonId"
+            ],
+            "properties": {
+              "gap": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lessonId": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "learnTakeaway": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 80
+        },
+        "body": {
+          "type": "string",
+          "minLength": 60,
+          "maxLength": 600
+        }
+      }
+    },
+    "qaSubmissions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "description": "Editorial QA fixtures: at least one strong, one weak, one defensible alternative (spec §11). Rationale length matches the product's own 30-600 character limit (spec §10.8), so every fixture is something a user could actually submit.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "optionId",
+          "evidenceIds",
+          "rationale",
+          "expectedScoreMin",
+          "expectedScoreMax"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "enum": [
+              "strong",
+              "weak",
+              "defensible_alternative"
+            ]
+          },
+          "optionId": {
+            "type": "string"
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 30,
+            "maxLength": 600
+          },
+          "expectedScoreMin": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "expectedScoreMax": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "translations": {
+      "type": "object",
+      "description": "Learner-facing text in other languages, keyed by language code. The rubric, skill weights and QA fixtures are deliberately absent: they are internal and feed the evaluation prompt. Completeness is enforced in app/content.py, not here, because it depends on the evidence and option ids in this file.",
+      "additionalProperties": false,
+      "properties": {
+        "ru": {
+          "$ref": "#/definitions/translation"
+        }
+      }
+    },
+    "blockId": {
+      "type": "string",
+      "pattern": "^[A-Z]{1,2}[0-9]$"
+    },
+    "coveredLessonIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    }
+  }
+}

@@ -1,46 +1,48 @@
-"""Builders that turn database rows into API payloads."""
+"""Builders that turn stored state into API payloads."""
 
 from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from app.models import (
-    ChallengeAttempt,
-    LearningPathAssignment,
-    Scenario,
-    User,
-    UserProfile,
-)
+from app import tree_content
+from app.i18n import Language, copy
+from app.models import ChallengeAttempt, EvidenceInteraction, User, UserProfile
 from app.schemas import (
+    AttemptView,
+    BriefView,
+    ChallengeResponse,
+    DecisionOptionView,
+    EvidenceCardView,
     MeResponse,
-    PathPreviewDay,
+    ScenarioView,
     SkillView,
 )
-from app.services import path as path_service
 from app.services import skills as skills_service
+from app.services import tree as tree_service
 from app.services.scoring import xp_for_next_level
 
-WHAT_GOOD_LOOKS_LIKE = "Use the evidence, make a trade-off, and explain your choice."
 
-PROGRESS_FOOTNOTE = (
-    "Skill scores are practice signals based on your in-app work, not an assessment "
-    "of job readiness."
-)
-
-PATH_DISCLAIMER = (
-    "This is a starting point based on three short questions, not a validated "
-    "assessment. It only affects which scenarios you see first."
-)
+def what_good_looks_like(language: Language) -> str:
+    return copy("what_good_looks_like", language)
 
 
-def skill_views(db: Session, user_id: str, keys: list[str] | None = None) -> list[SkillView]:
+def progress_footnote(language: Language) -> str:
+    return copy("progress_footnote", language)
+
+
+def skill_views(
+    db: Session,
+    user_id: str,
+    keys: list[str] | None = None,
+    language: Language = Language.EN,
+) -> list[SkillView]:
     scores = skills_service.get_scores(db, user_id)
     trend_map = skills_service.trends(db, user_id)
     selected = keys if keys is not None else list(scores.keys())
     return [
         SkillView(
             key=key,
-            label=skills_service.SKILL_LABELS.get(key, key),
+            label=skills_service.label(key, language),
             score=scores.get(key, 50),
             trend=trend_map.get(key, "steady"),
         )
@@ -49,12 +51,12 @@ def skill_views(db: Session, user_id: str, keys: list[str] | None = None) -> lis
 
 
 def me_response(db: Session, user: User, profile: UserProfile) -> MeResponse:
+    language = Language.coerce(profile.language)
     return MeResponse(
         user_id=user.id,
         onboarding_status=user.onboarding_status,
-        goal=profile.goal,
+        target_role=profile.target_role,
         timezone=user.timezone,
-        starting_level=profile.starting_level,
         current_level=profile.current_level,
         level=profile.level,
         total_xp=profile.total_xp,
@@ -62,64 +64,88 @@ def me_response(db: Session, user: User, profile: UserProfile) -> MeResponse:
         streak_count=profile.streak_count,
         entitlement=profile.entitlement,
         focus_skills=list(profile.focus_skills or []),
-        skills=skill_views(db, user.id),
+        skills=skill_views(db, user.id, language=language),
+        language=language.value,
     )
 
 
-def attempt_state(
-    attempt: ChallengeAttempt | None, assignment: LearningPathAssignment
-) -> str:
+def attempt_state(attempt: ChallengeAttempt | None) -> str:
     if attempt is None:
         return "not_started"
     if attempt.status == "draft":
         has_progress = bool(attempt.selected_option_id or attempt.rationale)
         return "in_progress" if has_progress else "not_started"
-    if attempt.status == "submitted":
-        return "submitted"
-    if attempt.status == "awaiting_feedback":
-        return "awaiting_feedback"
-    if attempt.status == "feedback_failed":
-        return "feedback_failed"
-    if attempt.status == "complete":
-        return "complete"
+    if attempt.status in {"submitted", "awaiting_feedback", "feedback_failed", "complete"}:
+        return attempt.status
     return "not_started"
 
 
-def scenario_map(db: Session, scenario_ids: list[str]) -> dict[str, Scenario]:
-    if not scenario_ids:
-        return {}
-    rows = db.query(Scenario).filter(Scenario.scenario_id.in_(scenario_ids)).all()
-    latest: dict[str, Scenario] = {}
-    for row in rows:
-        current = latest.get(row.scenario_id)
-        if current is None or row.version > current.version:
-            latest[row.scenario_id] = row
-    return latest
+def gate_scenario(scenario_id: str) -> dict | None:
+    # Оба дерева: сценарии гейтов есть и у карты продукта, и у System Design.
+    return tree_content.scenario(scenario_id)
 
 
-def path_preview(
-    db: Session, user: User, assignments: list[LearningPathAssignment]
-) -> list[PathPreviewDay]:
-    today = path_service.local_date_for(user)
-    scenarios = scenario_map(db, [a.scenario_id for a in assignments])
-    days: list[PathPreviewDay] = []
-    for assignment in assignments:
-        scenario = scenarios.get(assignment.scenario_id)
-        if scenario is None:
-            continue
-        days.append(
-            PathPreviewDay(
-                local_date=assignment.local_date,
-                day_index=assignment.day_index,
-                scenario_id=scenario.scenario_id,
-                title=scenario.title,
-                primary_skill=scenario.primary_skill,
-                primary_skill_label=skills_service.SKILL_LABELS.get(
-                    scenario.primary_skill, scenario.primary_skill
-                ),
-                level=scenario.level,
-                estimated_minutes=scenario.estimated_minutes,
-                is_today=assignment.local_date == today,
-            )
-        )
-    return days
+def challenge_response(
+    db: Session, attempt: ChallengeAttempt, language: Language
+) -> ChallengeResponse:
+    """The gate payload the client renders.
+
+    Consequences and the authored rubric are withheld until submission, exactly as in
+    v0.1: seeing the outcome before deciding would remove the decision.
+    """
+    content = gate_scenario(attempt.scenario_id)
+    if content is None:
+        raise LookupError(attempt.scenario_id)
+
+    reviewed = [
+        row.evidence_card_id
+        for row in db.query(EvidenceInteraction)
+        .filter(EvidenceInteraction.attempt_id == attempt.id)
+        .order_by(EvidenceInteraction.opened_at.asc())
+    ]
+    block = tree_content.block(attempt.block_id)
+
+    return ChallengeResponse(
+        gate_id=attempt.gate_id,
+        block_id=attempt.block_id,
+        block_title=block["title"] if block else attempt.block_id,
+        attempt_index=attempt.attempt_index,
+        pass_threshold=tree_service.pass_threshold(
+            tree_content.gate(attempt.gate_id) or {}
+        ),
+        state=attempt_state(attempt),
+        scenario=ScenarioView(
+            id=content["id"],
+            version=content["version"],
+            title=content["title"],
+            summary=content["summary"],
+            estimated_minutes=content["estimatedMinutes"],
+            level=content["level"],
+            primary_skill=content["primarySkill"],
+            primary_skill_label=skills_service.label(content["primarySkill"], language),
+            tags=list(content["tags"]),
+            brief=BriefView(
+                **content["brief"], what_good_looks_like=what_good_looks_like(language)
+            ),
+            evidence_cards=[
+                EvidenceCardView(**card)
+                for card in sorted(content["evidenceCards"], key=lambda c: c["order"])
+            ],
+            decision_prompt=content["decisionPrompt"],
+            decision_options=[
+                DecisionOptionView(
+                    id=option["id"],
+                    label=option["label"],
+                    description=option["description"],
+                )
+                for option in content["decisionOptions"]
+            ],
+        ),
+        attempt=AttemptView(
+            attempt_id=attempt.id,
+            status=attempt.status,
+            selected_option_id=attempt.selected_option_id,
+            rationale=attempt.rationale,
+            reviewed_evidence_ids=reviewed,
+        ),
+    )

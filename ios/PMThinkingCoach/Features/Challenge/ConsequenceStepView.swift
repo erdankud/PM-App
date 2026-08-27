@@ -12,31 +12,37 @@ struct ConsequenceStepView: View {
                 VStack(alignment: .leading, spacing: Theme.Spacing.xl) {
                     if let consequence = viewModel.consequence {
                         VStack(alignment: .leading, spacing: Theme.Spacing.s) {
-                            Text("You chose")
+                            Text(S.Challenge.youChose)
                                 .font(.footnote.weight(.semibold))
                                 .foregroundStyle(Theme.Palette.secondaryText)
                             Text(consequence.optionLabel)
                                 .font(.title3.weight(.bold))
                                 .fixedSize(horizontal: false, vertical: true)
                         }
+                        .appear(0)
 
-                        CardContainer {
+                        CardContainer(isHighlighted: true) {
                             VStack(alignment: .leading, spacing: Theme.Spacing.m) {
-                                Label("What happens next", systemImage: "arrow.turn.down.right")
-                                    .font(.footnote.weight(.semibold))
-                                    .foregroundStyle(Theme.Palette.accent)
+                                Label(
+                                    S.Challenge.whatHappensNext,
+                                    systemImage: "arrow.turn.down.right"
+                                )
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(Theme.Palette.accent)
                                 Text(consequence.text)
                                     .font(.body)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
+                        .appear(1)
                     } else {
-                        LoadingState(message: "Loading the outcome…")
+                        LoadingState(message: S.Challenge.loadingOutcome)
                     }
 
-                    statusSection
+                    statusSection.appear(2)
                 }
                 .padding(Theme.Spacing.l)
+                .animation(Motion.standard, value: feedbackStatus)
             }
 
             PrimaryButton(
@@ -61,9 +67,11 @@ struct ConsequenceStepView: View {
 
     private var buttonTitle: String {
         switch feedbackStatus {
-        case .complete: return "See coaching"
-        case .failed: return "Retry coaching"
-        case .pending: return viewModel.isPollingFeedback ? "Preparing coaching…" : "Check again"
+        case .complete: return S.Challenge.seeCoaching
+        case .failed: return S.Challenge.retryCoaching
+        case .pending:
+            return viewModel.isPollingFeedback
+                ? S.Challenge.preparingCoaching : S.Challenge.checkAgain
         }
     }
 
@@ -72,21 +80,19 @@ struct ConsequenceStepView: View {
         switch feedbackStatus {
         case .complete:
             InlineNotice(
-                text: "Your coaching is ready.",
+                text: S.Challenge.coachingReady,
                 systemImage: "checkmark.circle",
                 tint: Theme.Palette.positive
             )
         case .pending:
             InlineNotice(
-                text: "Coaching is taking a moment. Your answer is saved — you can leave and "
-                    + "come back to it from Today.",
+                text: S.Challenge.coachingPending,
                 systemImage: "hourglass",
                 tint: Theme.Palette.secondaryText
             )
         case .failed:
             InlineNotice(
-                text: "Coaching didn't finish this time. Your answer and this outcome are "
-                    + "saved, and XP is pending until coaching completes.",
+                text: S.Challenge.coachingFailedNotice,
                 systemImage: "exclamationmark.triangle",
                 tint: Theme.Palette.caution
             )

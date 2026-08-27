@@ -1,0 +1,181 @@
+{
+  "gates": [
+    {
+      "id": "gate-d1",
+      "blockId": "D1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-d1-smena-churn",
+        "gate-d1-litera-first-lesson",
+        "gate-d1-temp-onboarding-retention"
+      ]
+    },
+    {
+      "id": "gate-v1",
+      "blockId": "V1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-v1-plast-forty-requirements",
+        "gate-v1-kromka-supply-orders",
+        "gate-v1-versta-sold-what-doesnt-exist"
+      ]
+    },
+    {
+      "id": "gate-r1",
+      "blockId": "R1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-r1-polka-sprint-stall",
+        "gate-r1-stapel-acceptance"
+      ]
+    },
+    {
+      "id": "gate-m1",
+      "blockId": "M1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-m1-reestr-launch",
+        "gate-m1-polden-two-audiences"
+      ]
+    },
+    {
+      "id": "gate-g1",
+      "blockId": "G1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-g1-vetka-four-ideas",
+        "gate-g1-tyaga-no-sample",
+        "gate-g1-skoba-smb-churn"
+      ]
+    },
+    {
+      "id": "gate-s1",
+      "blockId": "S1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-s1-kedr-stuck-deals",
+        "gate-s1-obod-new-segment"
+      ]
+    },
+    {
+      "id": "gate-d2",
+      "blockId": "D2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-d2-smena-retention-drop",
+        "gate-d2-tropa-no-switch",
+        "gate-d2-grifel-unused-feature"
+      ]
+    },
+    {
+      "id": "gate-v2",
+      "blockId": "V2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-v2-dispatcher-empty-mileage",
+        "gate-v2-pirs-partial-receipt",
+        "gate-v2-slyuda-dashboard-confusing"
+      ]
+    },
+    {
+      "id": "gate-r2",
+      "blockId": "R2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-r2-polka-gastronom-deadline",
+        "gate-r2-klen-legacy-switch",
+        "gate-r2-prichal-scope-cut"
+      ]
+    },
+    {
+      "id": "gate-m2",
+      "blockId": "M2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-m2-reestr-registrations-no-payments",
+        "gate-m2-lozhka-cac-doubled",
+        "gate-m2-veer-mobile-signup"
+      ]
+    },
+    {
+      "id": "gate-g2",
+      "blockId": "G2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-g2-vetka-early-win",
+        "gate-g2-soyka-no-traffic",
+        "gate-g2-pyltsa-flat-result"
+      ]
+    },
+    {
+      "id": "gate-s2",
+      "blockId": "S2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-s2-kedr-price-war",
+        "gate-s2-veha-new-market",
+        "gate-s2-tavro-enterprise-request"
+      ]
+    },
+    {
+      "id": "gate-d3",
+      "blockId": "D3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-d3-smena-research-plan",
+        "gate-d3-parus-metric-went-up",
+        "gate-d3-svod-activation-metric"
+      ]
+    },
+    {
+      "id": "gate-v3",
+      "blockId": "V3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-v3-surma-internal-to-product",
+        "gate-v3-orbita-new-tech",
+        "gate-v3-konspekt-quality-bar"
+      ]
+    },
+    {
+      "id": "gate-r3",
+      "blockId": "R3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-r3-polka-slower-with-more-people",
+        "gate-r3-ostrov-two-teams",
+        "gate-r3-zaslon-after-the-outage"
+      ]
+    },
+    {
+      "id": "gate-m3",
+      "blockId": "M3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-m3-reestr-year-plan",
+        "gate-m3-zvod-shutdown",
+        "gate-m3-mayak-launch-slips"
+      ]
+    },
+    {
+      "id": "gate-g3",
+      "blockId": "G3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-g3-vetka-strategy-year",
+        "gate-g3-yakor-goals-gone-wrong",
+        "gate-g3-razvoz-supply-shortage"
+      ]
+    },
+    {
+      "id": "gate-s3",
+      "blockId": "S3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "gate-s3-kedr-cash-runs-out",
+        "gate-s3-nerpa-pricing-model",
+        "gate-s3-gryada-platform-rewrite"
+      ]
+    }
+  ]
+}

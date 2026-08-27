@@ -1,0 +1,213 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pm-thinking-coach.app/schemas/tree.schema.json",
+  "title": "PM Thinking Coach skill tree",
+  "description": "Domains, blocks and nodes of the skill map (spec v0.2 §6). Blocks are the unit of unlocking; nodes are the unit of learning. Lessons and gates live in their own files and point back here by id.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "sourceAttribution",
+    "tiers",
+    "domains",
+    "blocks"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sourceAttribution": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tiers": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tier",
+          "title",
+          "subtitle"
+        ],
+        "properties": {
+          "tier": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subtitle": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "title",
+          "titleEn",
+          "order"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "titleEn": {
+            "type": "string",
+            "minLength": 1
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "keyQuestion": {
+            "type": "string",
+            "maxLength": 200
+          }
+        }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "domainKey",
+          "tier",
+          "title",
+          "prerequisiteBlockIds",
+          "status",
+          "nodes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z]{1,2}[0-9]$"
+          },
+          "domainKey": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          },
+          "tier": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "prerequisiteBlockIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z]{1,2}[0-9]$"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "published",
+              "coming_soon"
+            ]
+          },
+          "nodes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "title",
+                "keyQuestion",
+                "models",
+                "aiImpact",
+                "order"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "keyQuestion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "models": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "aiImpact": {
+                  "description": "Per-node AI impact from the source map. Null until transcribed — never guessed, because it is attributed editorial work.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "speed",
+                        "quality",
+                        "substitution",
+                        "delegation",
+                        "indirect",
+                        "not_applicable"
+                      ]
+                    }
+                  ]
+                },
+                "order": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "pmDecision": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 400,
+                  "description": "Решение, которое принимает продакт. Обязательно для system_design (спека SD §2.5)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "product",
+        "system_design"
+      ]
+    }
+  }
+}

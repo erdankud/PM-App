@@ -24,6 +24,7 @@ final class SessionStore: ObservableObject {
     private let keychain: KeychainStore
     private let localStore: LocalStore
     private let analytics: any AnalyticsTracking
+    private let language: LanguageStore
 
     private var accessToken: String?
     private var refreshTokenValue: String?
@@ -33,12 +34,14 @@ final class SessionStore: ObservableObject {
         client: APIClient,
         keychain: KeychainStore,
         localStore: LocalStore,
-        analytics: any AnalyticsTracking
+        analytics: any AnalyticsTracking,
+        language: LanguageStore
     ) {
         self.client = client
         self.keychain = keychain
         self.localStore = localStore
         self.analytics = analytics
+        self.language = language
         self.accessToken = keychain.string(for: .accessToken)
         self.refreshTokenValue = keychain.string(for: .refreshToken)
         client.attach(tokenProvider: self)
@@ -115,7 +118,33 @@ final class SessionStore: ObservableObject {
 
     func apply(_ profile: MeResponse) {
         me = profile
+        reconcileLanguage(with: profile)
         route = profile.status == .complete ? .main : .onboarding
+    }
+
+    /// The account and the device can disagree — a language picked here before signing
+    /// in, or picked on another device. A deliberate choice on this device wins and is
+    /// pushed up; otherwise the account's preference is adopted. The server copy is
+    /// what the evaluation worker reads when it writes coaching, so it cannot be left
+    /// stale.
+    private func reconcileLanguage(with profile: MeResponse) {
+        let remote = AppLanguage(rawValue: profile.language) ?? .english
+        guard language.hasExplicitChoice else {
+            language.adoptFromServer(remote)
+            return
+        }
+        guard remote != language.language else { return }
+        pushLanguage(language.language)
+    }
+
+    /// Fire and forget: the header on every request already carries the language, so a
+    /// failed push costs nothing visible and is retried on the next profile load.
+    func pushLanguage(_ newValue: AppLanguage) {
+        Task { [client] in
+            _ = try? await client.updateProfile(
+                ProfileUpdateRequest(language: newValue.rawValue)
+            )
+        }
     }
 
     func signOut() async {

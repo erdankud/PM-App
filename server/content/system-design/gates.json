@@ -1,0 +1,166 @@
+{
+  "gates": [
+    {
+      "id": "gate-ai1",
+      "blockId": "AI1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "ai1-g-a",
+        "ai1-g-b"
+      ]
+    },
+    {
+      "id": "gate-ai2",
+      "blockId": "AI2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "ai2-g-a",
+        "ai2-g-b"
+      ]
+    },
+    {
+      "id": "gate-ai3",
+      "blockId": "AI3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "ai3-g-a",
+        "ai3-g-b"
+      ]
+    },
+    {
+      "id": "gate-ds1",
+      "blockId": "DS1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "ds1-g-a",
+        "ds1-g-b"
+      ]
+    },
+    {
+      "id": "gate-ds2",
+      "blockId": "DS2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "ds2-g-a",
+        "ds2-g-b"
+      ]
+    },
+    {
+      "id": "gate-ds3",
+      "blockId": "DS3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "ds3-g-a",
+        "ds3-g-b"
+      ]
+    },
+    {
+      "id": "gate-in1",
+      "blockId": "IN1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "in1-g-a",
+        "in1-g-b"
+      ]
+    },
+    {
+      "id": "gate-in2",
+      "blockId": "IN2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "in2-g-a",
+        "in2-g-b"
+      ]
+    },
+    {
+      "id": "gate-in3",
+      "blockId": "IN3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "in3-g-a",
+        "in3-g-b"
+      ]
+    },
+    {
+      "id": "gate-pf1",
+      "blockId": "PF1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "pf1-g-a",
+        "pf1-g-b"
+      ]
+    },
+    {
+      "id": "gate-pf2",
+      "blockId": "PF2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "pf2-g-a",
+        "pf2-g-b"
+      ]
+    },
+    {
+      "id": "gate-pf3",
+      "blockId": "PF3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "pf3-g-a",
+        "pf3-g-b"
+      ]
+    },
+    {
+      "id": "gate-sc1",
+      "blockId": "SC1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "sc1-g-a",
+        "sc1-g-b"
+      ]
+    },
+    {
+      "id": "gate-sc2",
+      "blockId": "SC2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "sc2-g-a",
+        "sc2-g-b"
+      ]
+    },
+    {
+      "id": "gate-sc3",
+      "blockId": "SC3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "sc3-g-a",
+        "sc3-g-b"
+      ]
+    },
+    {
+      "id": "gate-se1",
+      "blockId": "SE1",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "se1-g-a",
+        "se1-g-b"
+      ]
+    },
+    {
+      "id": "gate-se2",
+      "blockId": "SE2",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "se2-g-a",
+        "se2-g-b"
+      ]
+    },
+    {
+      "id": "gate-se3",
+      "blockId": "SE3",
+      "passThreshold": 70,
+      "scenarioIds": [
+        "se3-g-a",
+        "se3-g-b"
+      ]
+    }
+  ]
+}

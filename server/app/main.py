@@ -11,7 +11,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.db import engine
 from app.models import Base
-from app.routers import assessment, attempts, auth, events, me, progress, today
+from app.routers import (
+    attempts,
+    auth,
+    events,
+    me,
+    progress,
+    system_design,
+    tree,
+)
 from app.worker import start_background_worker
 
 logging.basicConfig(
@@ -66,11 +74,11 @@ app.add_middleware(
 for router in (
     auth.router,
     me.router,
-    assessment.router,
-    today.router,
+    tree.router,
     attempts.router,
     progress.router,
     events.router,
+    system_design.router,
 ):
     app.include_router(router, prefix=settings.api_prefix)
 

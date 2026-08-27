@@ -118,7 +118,15 @@ Targets are hypotheses for the first 30 days after a usable beta; revise after i
 ### Assumptions (non-blocking; use for MVP)
 
 - iPhone-only, portrait orientation, iOS 17+.
-- App language is English for v1, even if future localisation is expected.
+- ~~App language is English for v1, even if future localisation is expected.~~
+  **Superseded 2026-08-23 at the product owner's request.** The app ships English and
+  Russian. The switch is in Profile and on the welcome screen and covers everything a
+  learner reads: app chrome, scenario briefs, evidence, decision options, authored
+  consequences, and AI coaching. Both languages are authored and checked in; nothing is
+  machine-translated at request time, so the authored consequence stays independent of
+  provider availability (§10.9). Rubrics, skill weights and QA fixtures stay in the
+  authoring language — they are internal and feed the evaluation prompt. A published
+  scenario is not valid until it is complete in every offered language.
 - Users authenticate with Sign in with Apple; anonymous/local preview is not required.
 - Initial scenario library is editor-created and shipped/seeded by the product team; users do not create scenarios.
 - A scenario has one recommended learning path, but several answers may be defensible.

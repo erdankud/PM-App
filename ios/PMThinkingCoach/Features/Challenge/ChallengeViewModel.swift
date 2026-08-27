@@ -25,7 +25,11 @@ final class ChallengeViewModel: ObservableObject {
     @Published var submissionError: APIError?
     @Published var ratingSubmitted: String?
 
-    let assignmentId: String
+    /// The gate payload comes from `POST /gates/{id}/start`, which is also where
+    /// availability is enforced — the client never opens a gate on its own say-so.
+    let gateId: String
+    let blockId: String
+    private let initialChallenge: ChallengeResponse
 
     private let client: any APIClientProtocol
     private let localStore: LocalStore
@@ -35,12 +39,14 @@ final class ChallengeViewModel: ObservableObject {
     private var submittedAt: Date?
 
     init(
-        assignmentId: String,
+        challenge: ChallengeResponse,
         client: any APIClientProtocol,
         localStore: LocalStore,
         analytics: any AnalyticsTracking
     ) {
-        self.assignmentId = assignmentId
+        self.gateId = challenge.gateId
+        self.blockId = challenge.blockId
+        self.initialChallenge = challenge
         self.client = client
         self.localStore = localStore
         self.analytics = analytics
@@ -54,7 +60,9 @@ final class ChallengeViewModel: ObservableObject {
     func load() async {
         phase = .loading
         do {
-            let response = try await client.challenge(assignmentId: assignmentId)
+            // Re-entering a gate returns the same open attempt, so this is safe to
+            // call again after a background/foreground round trip.
+            let response = try await client.startGate(id: gateId)
             challenge = response
 
             var state = ChallengeFormState(
@@ -84,9 +92,10 @@ final class ChallengeViewModel: ObservableObject {
                 await refreshFeedback()
             }
         } catch let error as APIError {
-            phase = .failed(error)
+            // The payload we were handed still works offline; only a cold start fails.
+            if challenge == nil { phase = .failed(error) } else { phase = .ready }
         } catch {
-            phase = .failed(.server(status: -1, code: "unknown"))
+            if challenge == nil { phase = .failed(.server(status: -1, code: "unknown")) }
         }
     }
 
@@ -141,7 +150,7 @@ final class ChallengeViewModel: ObservableObject {
         guard let attemptId, !form.isSubmitted else { return }
         let draft = LocalStore.Draft(
             attemptId: attemptId,
-            assignmentId: assignmentId,
+            assignmentId: gateId,
             selectedOptionId: form.selectedOptionId,
             rationale: form.rationale,
             reviewedEvidenceIds: Array(form.reviewedEvidenceIds),

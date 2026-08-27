@@ -55,9 +55,9 @@ class SkillView(ApiModel):
 class MeResponse(ApiModel):
     user_id: str
     onboarding_status: str
-    goal: str | None
+    target_role: str | None
     timezone: str
-    starting_level: str | None
+    language: str
     current_level: str | None
     level: int
     total_xp: int
@@ -76,67 +76,11 @@ class AuthResponse(ApiModel):
 
 
 class ProfileUpdateRequest(ApiModel):
-    goal: Literal["break_into_pm", "grow_in_first_role", "practise_product_thinking"] | None = None
+    # Only a highlight filter over the map in this version (spec v0.2 §7).
+    target_role: str | None = Field(default=None, max_length=48)
     timezone: str | None = Field(default=None, max_length=64)
+    language: Literal["en", "ru"] | None = None
     complete_onboarding: bool | None = None
-
-
-# --- Assessment -------------------------------------------------------------
-
-
-class AssessmentOption(ApiModel):
-    id: str
-    label: str
-
-
-class AssessmentItem(ApiModel):
-    id: str
-    index: int
-    total: int
-    prompt: str
-    context: str
-    question: str
-    options: list[AssessmentOption]
-
-
-class AssessmentStateResponse(ApiModel):
-    notice: str
-    total_items: int
-    completed_items: int
-    completed: bool
-    next_item: AssessmentItem | None
-
-
-class AssessmentAnswerRequest(ApiModel):
-    item_id: str = Field(max_length=64)
-    choice_id: str = Field(max_length=64)
-    rationale: str | None = Field(default=None, max_length=600)
-
-
-class PathPreviewDay(ApiModel):
-    local_date: str
-    day_index: int
-    scenario_id: str
-    title: str
-    primary_skill: str
-    primary_skill_label: str
-    level: str
-    estimated_minutes: int
-    is_today: bool
-
-
-class AssessmentResultResponse(ApiModel):
-    starting_level: str
-    focus_skills: list[SkillView]
-    skills: list[SkillView]
-    path: list[PathPreviewDay]
-    disclaimer: str
-
-
-class AssessmentAnswerResponse(ApiModel):
-    completed: bool
-    next_item: AssessmentItem | None
-    result: AssessmentResultResponse | None
 
 
 # --- Today / challenge ------------------------------------------------------
@@ -223,8 +167,11 @@ class AttemptView(ApiModel):
 
 
 class ChallengeResponse(ApiModel):
-    assignment_id: str
-    local_date: str
+    gate_id: str
+    block_id: str
+    block_title: str
+    attempt_index: int
+    pass_threshold: int
     state: ChallengeState
     scenario: ScenarioView
     attempt: AttemptView
@@ -318,6 +265,12 @@ class FeedbackBody(ApiModel):
     needs_retry: bool
 
 
+class RemediationLink(ApiModel):
+    gap: str
+    lesson_id: str
+    lesson_title: str
+
+
 class FeedbackResponse(ApiModel):
     attempt_id: str
     status: Literal["pending", "complete", "failed"]
@@ -327,6 +280,15 @@ class FeedbackResponse(ApiModel):
     retry_available: bool
     scenario_title: str
     learn_takeaway_title: str | None = None
+    # Gate outcome. `passed` is None while the evaluation is still pending.
+    gate_id: str | None = None
+    block_id: str | None = None
+    block_title: str | None = None
+    passed: bool | None = None
+    pass_threshold: int | None = None
+    attempt_index: int | None = None
+    unlocked_block_ids: list[str] = []
+    remediation: list[RemediationLink] = []
 
 
 class RatingRequest(ApiModel):
@@ -336,31 +298,32 @@ class RatingRequest(ApiModel):
 # --- Progress / history -----------------------------------------------------
 
 
-class ActivityDay(ApiModel):
-    local_date: str
-    state: Literal["completed", "missed", "today", "upcoming"]
-
-
 class ProgressResponse(ApiModel):
     level: int
     total_xp: int
     xp_for_next_level: int | None
-    completed_count: int
-    streak_count: int
-    activity: list[ActivityDay]
+    blocks_passed: int
+    blocks_total: int
+    lessons_completed: int
+    lessons_total: int
+    gates_attempted: int
     skills: list[SkillView]
     footnote: str
 
 
 class HistoryItem(ApiModel):
+    """One gate sitting. History is by attempt now, not by calendar day."""
+
     attempt_id: str
+    gate_id: str
+    block_id: str
+    block_title: str
     scenario_id: str
     title: str
-    local_date: str
-    primary_skill: str
-    primary_skill_label: str
-    level: str
+    attempt_index: int
+    submitted_at: str | None
     score: int | None
+    passed: bool | None
     feedback_status: Literal["pending", "complete", "failed"]
 
 
@@ -386,3 +349,222 @@ class AnalyticsBatch(ApiModel):
 
 class SimpleOk(ApiModel):
     ok: bool = True
+
+
+# --- Skill tree (spec v0.2 §12) ----------------------------------------------
+
+
+class TierView(ApiModel):
+    tier: int
+    title: str
+    subtitle: str
+
+
+class DomainView(ApiModel):
+    key: str
+    title: str
+    order: int
+
+
+class NodeView(ApiModel):
+    id: str
+    title: str
+    key_question: str
+    models: list[str]
+    ai_impact: str | None = None
+    order: int
+
+
+class BlockSummary(ApiModel):
+    id: str
+    domain_key: str
+    tier: int
+    title: str
+    # Whether the content exists yet. Orthogonal to the learner's own progress.
+    content_status: str
+    # locked | available | in_progress | gate_ready | passed
+    status: str
+    prerequisite_block_ids: list[str]
+    node_count: int
+    lessons_total: int
+    lessons_completed: int
+    gate_id: str | None
+    attempt_count: int
+
+
+class TreeSummary(ApiModel):
+    """Одна карта в переключателе «Продукт» / «Системы» (спека SD §6.1)."""
+
+    kind: str
+    title: str
+    subtitle: str
+    blocks_total: int
+    blocks_passed: int
+    blocks_available: int
+
+
+class TreesResponse(ApiModel):
+    trees: list[TreeSummary]
+
+
+class TreeResponse(ApiModel):
+    kind: str = "product"
+    version: int
+    source_attribution: str
+    tiers: list[TierView]
+    domains: list[DomainView]
+    blocks: list[BlockSummary]
+
+
+class LessonSummary(ApiModel):
+    id: str
+    title: str
+    estimated_minutes: int
+    order: int
+    completed: bool
+
+
+class NodeDetail(ApiModel):
+    node: NodeView
+    lessons: list[LessonSummary]
+
+
+class BlockDetailResponse(ApiModel):
+    block: BlockSummary
+    domain_title: str
+    tier_title: str
+    nodes: list[NodeDetail]
+    gate_available: bool
+    gate_blocked_reason: str | None = None
+    pass_threshold: int
+
+
+class LessonBlockView(ApiModel):
+    """One rendered element of a lesson. Shape depends on `type`."""
+
+    type: str
+    text: str | None = None
+    title: str | None = None
+    subtitle: str | None = None
+    tone: str | None = None
+    ordered: bool | None = None
+    items: list[str] | None = None
+    header: list[str] | None = None
+    rows: list[list[str]] | None = None
+    diagram_id: str | None = None
+
+
+class TermView(ApiModel):
+    id: str
+    term: str
+    term_en: str
+    definition: str
+    block_id: str
+    source_lesson_id: str | None = None
+    related_ids: list[str] = []
+    seen: bool = False
+
+
+class DiagramNodeView(ApiModel):
+    id: str
+    type: str
+    label: str
+
+
+class DiagramEdgeView(ApiModel):
+    from_: str = Field(alias="from")
+    to: str
+    type: str
+    label: str | None = None
+
+
+class DiagramView(ApiModel):
+    id: str
+    title: str
+    nodes: list[DiagramNodeView]
+    edges: list[DiagramEdgeView]
+    text_description: str
+
+
+class LessonSectionView(ApiModel):
+    kind: str
+    blocks: list[LessonBlockView]
+
+
+class LessonResponse(ApiModel):
+    id: str
+    node_id: str
+    block_id: str
+    node_title: str
+    title: str
+    estimated_minutes: int
+    key_takeaway: str
+    check_question: str | None = None
+    blocks: list[LessonBlockView] = []
+    sections: list[LessonSectionView] = []
+    terms: list[TermView] = []
+    # Схемы едут вместе с уроком: их одна-две, и лишний проход по мобильной сети
+    # дороже размера структуры (спека SD §5.2).
+    diagrams: list[DiagramView] = []
+    exercise_id: str | None = None
+    cross_refs: list[str] = []
+    completed: bool
+    next_lesson_id: str | None = None
+
+
+class LessonCompleteResponse(ApiModel):
+    lesson_id: str
+    xp_awarded: int
+    block_status: str
+    lessons_completed: int
+    lessons_total: int
+    gate_available: bool
+
+
+
+
+# --- System Design: упражнения и глоссарий -----------------------------------
+
+
+class ExerciseInputView(ApiModel):
+    id: str
+    label: str
+    unit: str | None = None
+    type: str
+    choices: list[str] = []
+
+
+class ExerciseResponse(ApiModel):
+    id: str
+    node_id: str
+    block_id: str
+    type: str
+    title: str
+    estimated_minutes: int
+    prompt_blocks: list[LessonBlockView]
+    inputs: list[ExerciseInputView]
+    submitted_values: dict[str, str] = {}
+    diagrams: list[DiagramView] = []
+
+
+class ExerciseInputResult(ApiModel):
+    input_id: str
+    within_range: bool | None = None
+    expected_hint: str | None = None
+
+
+class ExerciseSubmitRequest(ApiModel):
+    values: dict[str, str] = {}
+
+
+class ExerciseSubmitResponse(ApiModel):
+    exercise_id: str
+    results: list[ExerciseInputResult]
+    # Эталон приходит всегда, даже на пустой ответ: упражнение формирующее,
+    # и человек, не знающий, как подступиться, должен увидеть разбор (спека SD §5.2).
+    reference_reasoning_blocks: list[LessonBlockView]
+
+
+class GlossaryResponse(ApiModel):
+    version: int
+    terms: list[TermView]

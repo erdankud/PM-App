@@ -1,0 +1,57 @@
+{
+  "id": "ds1-n1-l1-schema",
+  "title": "Ядро «Полки»",
+  "nodes": [
+    {
+      "id": "user",
+      "type": "store",
+      "label": "Пользователь"
+    },
+    {
+      "id": "order",
+      "type": "store",
+      "label": "Заказ"
+    },
+    {
+      "id": "item",
+      "type": "store",
+      "label": "Позиция заказа"
+    },
+    {
+      "id": "prod",
+      "type": "store",
+      "label": "Товар"
+    },
+    {
+      "id": "shop",
+      "type": "store",
+      "label": "Магазин"
+    }
+  ],
+  "edges": [
+    {
+      "from": "order",
+      "to": "user",
+      "type": "data",
+      "label": "многие → один"
+    },
+    {
+      "from": "item",
+      "to": "order",
+      "type": "data",
+      "label": "многие → один"
+    },
+    {
+      "from": "item",
+      "to": "prod",
+      "type": "data",
+      "label": "многие → один"
+    },
+    {
+      "from": "prod",
+      "to": "shop",
+      "type": "data",
+      "label": "многие → один"
+    }
+  ]
+}

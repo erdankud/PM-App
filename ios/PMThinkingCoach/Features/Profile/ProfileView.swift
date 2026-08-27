@@ -1,19 +1,15 @@
 import SwiftUI
 
-/// Profile (spec §10.12). Goal, privacy, sign out, account deletion.
+/// Profile (spec §10.12). Goal, language, privacy, sign out, account deletion.
 /// No paywall and no upgrade call to action in the MVP (spec §20, §24).
 struct ProfileView: View {
     @EnvironmentObject private var session: SessionStore
+    @EnvironmentObject private var container: AppContainer
+    @EnvironmentObject private var language: LanguageStore
     @StateObject private var viewModel: ProfileViewModel
     @State private var showingPrivacy = false
     @State private var showingDeleteConfirmation = false
     @State private var showingSignOutConfirmation = false
-
-    private let goals: [(id: String, title: String)] = [
-        ("break_into_pm", "Break into PM"),
-        ("grow_in_first_role", "Grow in my first PM role"),
-        ("practise_product_thinking", "Practise product thinking")
-    ]
 
     init(viewModel: @autoclosure @escaping () -> ProfileViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -23,33 +19,63 @@ struct ProfileView: View {
         NavigationStack {
             Form {
                 if let me = session.me {
-                    Section("Your practice") {
-                        LabeledContent("Level", value: "\(me.level)")
-                        LabeledContent("Total XP", value: "\(me.totalXp)")
+                    Section(S.Profile.practiceSection) {
+                        LabeledContent(S.Profile.level, value: "\(me.level)")
+                        LabeledContent(S.Profile.totalXp, value: "\(me.totalXp)")
                         LabeledContent(
-                            "Starting level",
-                            value: Theme.levelLabel(me.startingLevel ?? "foundation")
+                            S.Profile.targetRole,
+                            value: S.Roles.title(me.targetRole)
                         )
                     }
                 }
 
                 Section {
-                    Picker("Goal", selection: goalBinding) {
-                        ForEach(goals, id: \.id) { goal in
-                            Text(goal.title).tag(goal.id)
+                    // Глоссарий доступен и из урока, и отсюда: для новичка это
+                    // условие читаемости домена, а не украшение.
+                    NavigationLink {
+                        GlossaryView(
+                            viewModel: GlossaryViewModel(
+                                client: container.apiClient,
+                                analytics: container.analytics,
+                                source: "profile"
+                            )
+                        )
+                    } label: {
+                        Label(S.Glossary.title, systemImage: "character.book.closed")
+                    }
+                }
+
+                Section {
+                    Picker(S.Profile.targetRole, selection: roleBinding) {
+                        Text(S.Roles.none).tag("")
+                        ForEach(S.Roles.keys, id: \.self) { key in
+                            Text(S.Roles.title(key)).tag(key)
                         }
                     }
                 } header: {
-                    Text("Goal")
+                    Text(S.Profile.roleSection)
                 } footer: {
-                    Text("Changing your goal affects future challenges only. Your past results and skill scores stay as they are.")
+                    Text(S.Profile.roleFooter)
                 }
 
-                Section("Privacy") {
+                Section {
+                    Picker(S.Profile.languageLabel, selection: languageBinding) {
+                        ForEach(AppLanguage.allCases) { option in
+                            Text(option.displayName).tag(option)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text(S.Profile.languageSection)
+                } footer: {
+                    Text(S.Profile.languageFooter)
+                }
+
+                Section(S.Profile.privacySection) {
                     Button {
                         showingPrivacy = true
                     } label: {
-                        Label("Privacy notice", systemImage: "hand.raised")
+                        Label(S.Profile.privacyNotice, systemImage: "hand.raised")
                     }
                     .frame(minHeight: Theme.minimumTapTarget)
                 }
@@ -60,12 +86,12 @@ struct ProfileView: View {
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
                             .keyboardType(.URL)
-                        Button("Apply") { viewModel.applyBaseURLOverride() }
+                        Button(S.Profile.apply) { viewModel.applyBaseURLOverride() }
                             .frame(minHeight: Theme.minimumTapTarget)
                     } header: {
-                        Text("Developer")
+                        Text(S.Profile.developerSection)
                     } footer: {
-                        Text("Point the app at a different API host. Debug builds only. Restart the app after changing this.")
+                        Text(S.Profile.developerFooter)
                     }
                 }
 
@@ -73,18 +99,18 @@ struct ProfileView: View {
                     Button(role: .destructive) {
                         showingSignOutConfirmation = true
                     } label: {
-                        Label("Sign out", systemImage: "rectangle.portrait.and.arrow.right")
+                        Label(S.Profile.signOut, systemImage: "rectangle.portrait.and.arrow.right")
                     }
                     .frame(minHeight: Theme.minimumTapTarget)
 
                     Button(role: .destructive) {
                         showingDeleteConfirmation = true
                     } label: {
-                        Label("Delete account", systemImage: "trash")
+                        Label(S.Profile.deleteAccount, systemImage: "trash")
                     }
                     .frame(minHeight: Theme.minimumTapTarget)
                 } footer: {
-                    Text("Deleting your account removes your written responses, your feedback, and your identity link. This cannot be undone.")
+                    Text(S.Profile.deleteFooter)
                 }
 
                 if let error = viewModel.error {
@@ -96,48 +122,64 @@ struct ProfileView: View {
                 }
 
                 Section {
-                    Text("Version \(AppConfig.appVersion) (\(AppConfig.buildNumber))")
+                    Text(S.Profile.version(AppConfig.appVersion, AppConfig.buildNumber))
                         .font(.footnote)
                         .foregroundStyle(Theme.Palette.tertiaryText)
                 }
             }
-            .navigationTitle("Profile")
+            .animation(Motion.standard, value: viewModel.error)
+            .navigationTitle(S.Profile.title)
             .sheet(isPresented: $showingPrivacy) { PrivacyNoticeView() }
             .confirmationDialog(
-                "Sign out?", isPresented: $showingSignOutConfirmation, titleVisibility: .visible
+                S.Profile.signOutQuestion,
+                isPresented: $showingSignOutConfirmation,
+                titleVisibility: .visible
             ) {
-                Button("Sign out", role: .destructive) {
+                Button(S.Profile.signOut, role: .destructive) {
                     Task { await viewModel.signOut() }
                 }
-                Button("Cancel", role: .cancel) {}
+                Button(S.Common.cancel, role: .cancel) {}
             } message: {
-                Text("Any draft that hasn't synced yet will be cleared from this device.")
+                Text(S.Profile.signOutMessage)
             }
             .confirmationDialog(
-                "Delete your account?",
+                S.Profile.deleteQuestion,
                 isPresented: $showingDeleteConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("Delete permanently", role: .destructive) {
+                Button(S.Profile.deletePermanently, role: .destructive) {
                     Task { await viewModel.deleteAccount() }
                 }
-                Button("Cancel", role: .cancel) {}
+                Button(S.Common.cancel, role: .cancel) {}
             } message: {
-                Text("This removes your responses, feedback and identity link. It cannot be undone.")
+                Text(S.Profile.deleteMessage)
             }
             .overlay {
                 if viewModel.isDeleting {
-                    LoadingState(message: "Deleting your account…")
+                    LoadingState(message: S.Profile.deleting)
                         .background(.ultraThinMaterial)
+                        .transition(.opacity)
                 }
             }
         }
     }
 
-    private var goalBinding: Binding<String> {
+    private var roleBinding: Binding<String> {
         Binding(
-            get: { session.me?.goal ?? "break_into_pm" },
-            set: { newValue in Task { await viewModel.changeGoal(newValue) } }
+            get: { session.me?.targetRole ?? "" },
+            set: { newValue in Task { await viewModel.changeRole(newValue) } }
+        )
+    }
+
+    /// Applies immediately — the whole view tree is keyed on the language at the app
+    /// root, and the next request already asks the server for content in the new one.
+    private var languageBinding: Binding<AppLanguage> {
+        Binding(
+            get: { language.language },
+            set: { newValue in
+                Haptics.selection()
+                container.setLanguage(newValue)
+            }
         )
     }
 }

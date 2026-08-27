@@ -20,36 +20,17 @@ os.environ["JWT_SECRET"] = "test-secret"
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 
-from app.content import load_all_scenarios  # noqa: E402
+from app import tree_content  # noqa: E402
 from app.db import SessionLocal, engine  # noqa: E402
 from app.main import app  # noqa: E402
-from app.models import Base, Scenario  # noqa: E402
+from app.models import Base  # noqa: E402
 
 
 @pytest.fixture(scope="session", autouse=True)
 def _database():
+    # Tree, lessons and gate scenarios live in validated files, so there is nothing
+    # to seed: creating the schema is the whole setup.
     Base.metadata.create_all(bind=engine)
-    db = SessionLocal()
-    try:
-        for data in load_all_scenarios():
-            db.add(
-                Scenario(
-                    scenario_id=data["id"],
-                    version=data["version"],
-                    status=data["status"],
-                    title=data["title"],
-                    summary=data["summary"],
-                    estimated_minutes=data["estimatedMinutes"],
-                    level=data["level"],
-                    primary_skill=data["primarySkill"],
-                    secondary_skills=data["secondarySkills"],
-                    tags=data["tags"],
-                    content=data,
-                )
-            )
-        db.commit()
-    finally:
-        db.close()
     yield
     engine.dispose()
     TEST_DB.unlink(missing_ok=True)
@@ -73,30 +54,28 @@ def db():
 
 
 def onboard(client: TestClient) -> tuple[dict, dict]:
-    """Sign in, answer the assessment, complete onboarding. Returns (headers, me)."""
+    """Sign in and finish onboarding. There is no diagnostic any more (spec v0.2 §10)."""
     auth = client.post(
         "/v1/auth/dev",
-        json={"deviceId": f"test-{uuid.uuid4()}", "timezone": "Europe/London"},
+        json={"deviceId": f"test-{uuid.uuid4()}", "timezone": "Europe/Moscow"},
     ).json()
     headers = {"Authorization": f"Bearer {auth['accessToken']}"}
-    client.patch("/v1/me/profile", headers=headers, json={"goal": "break_into_pm"})
-    for _ in range(4):
-        state = client.get("/v1/assessment", headers=headers).json()
-        if state["completed"]:
-            break
-        item = state["nextItem"]
-        client.post(
-            "/v1/assessment/responses",
-            headers=headers,
-            json={"itemId": item["id"], "choiceId": item["options"][0]["id"]},
-        )
     me = client.patch(
         "/v1/me/profile", headers=headers, json={"completeOnboarding": True}
     ).json()
     return headers, me
 
 
-def start_challenge(client: TestClient, headers: dict) -> dict:
-    today = client.get("/v1/today", headers=headers).json()
-    assignment_id = today["assignment"]["assignmentId"]
-    return client.get(f"/v1/challenges/{assignment_id}", headers=headers).json()
+def block_lessons(block_id: str) -> list[str]:
+    return [lesson["id"] for lesson in tree_content.lessons_for_block(block_id)]
+
+
+def read_all_lessons(client: TestClient, headers: dict, block_id: str) -> None:
+    for lesson_id in block_lessons(block_id):
+        client.post(f"/v1/lessons/{lesson_id}/complete", headers=headers)
+
+
+def start_gate(client: TestClient, headers: dict, gate_id: str = "gate-d1") -> dict:
+    response = client.post(f"/v1/gates/{gate_id}/start", headers=headers)
+    assert response.status_code == 200, response.json()
+    return response.json()

@@ -23,12 +23,12 @@ struct BriefStepView: View {
                                 systemImage: "chart.bar"
                             )
                             Chip(
-                                text: scenario.primarySkillLabel,
+                                text: scenario.localizedPrimarySkill,
                                 systemImage: "target",
                                 tint: Theme.Palette.accent
                             )
                             Chip(
-                                text: "\(scenario.estimatedMinutes) min",
+                                text: S.Common.minutes(scenario.estimatedMinutes),
                                 systemImage: "clock"
                             )
                         }
@@ -36,17 +36,15 @@ struct BriefStepView: View {
                             .font(.title.weight(.bold))
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    .appear(0)
 
-                    briefRow("Your role", scenario.brief.role, "person.crop.circle")
-                    briefRow("The company", scenario.brief.company, "building.2")
-                    briefRow("What's happening", scenario.brief.context, "doc.text")
-                    briefRow("The objective", scenario.brief.objective, "scope")
-                    briefRow("Constraints", scenario.brief.constraints, "lock")
-                    briefRow("Your task", scenario.brief.task, "checkmark.circle")
+                    ForEach(Array(rows(scenario).enumerated()), id: \.element.title) { index, row in
+                        briefRow(row.title, row.body, row.symbol).appear(index + 1)
+                    }
 
-                    CardContainer {
+                    CardContainer(isHighlighted: true) {
                         VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
-                            Text("What good looks like")
+                            Text(S.Challenge.whatGoodLooksLike)
                                 .font(.footnote.weight(.semibold))
                                 .foregroundStyle(Theme.Palette.accent)
                             Text(scenario.brief.whatGoodLooksLike)
@@ -54,16 +52,28 @@ struct BriefStepView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
+                    .appear(7)
                 }
                 .padding(Theme.Spacing.l)
             }
 
-            PrimaryButton(title: "Investigate", systemImage: "magnifyingglass") {
+            PrimaryButton(title: S.Challenge.Step.investigate, systemImage: "magnifyingglass") {
                 viewModel.advance()
             }
             .padding(Theme.Spacing.l)
             .background(.bar)
         }
+    }
+
+    private func rows(_ scenario: ScenarioView) -> [(title: String, body: String, symbol: String)] {
+        [
+            (S.Challenge.yourRole, scenario.brief.role, "person.crop.circle"),
+            (S.Challenge.theCompany, scenario.brief.company, "building.2"),
+            (S.Challenge.whatsHappening, scenario.brief.context, "doc.text"),
+            (S.Challenge.theObjective, scenario.brief.objective, "scope"),
+            (S.Challenge.constraints, scenario.brief.constraints, "lock"),
+            (S.Challenge.yourTask, scenario.brief.task, "checkmark.circle")
+        ]
     }
 
     private func briefRow(_ title: String, _ body: String, _ symbol: String) -> some View {

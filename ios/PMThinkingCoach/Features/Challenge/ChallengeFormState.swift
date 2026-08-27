@@ -15,11 +15,11 @@ struct ChallengeFormState: Equatable {
 
         var title: String {
             switch self {
-            case .brief: return "The situation"
-            case .investigate: return "Investigate"
-            case .decide: return "Decide & defend"
-            case .consequence: return "What happens next"
-            case .feedback: return "Coaching"
+            case .brief: return S.Challenge.Step.situation
+            case .investigate: return S.Challenge.Step.investigate
+            case .decide: return S.Challenge.Step.decide
+            case .consequence: return S.Challenge.Step.consequence
+            case .feedback: return S.Challenge.Step.feedback
             }
         }
 
@@ -43,7 +43,7 @@ struct ChallengeFormState: Equatable {
     var reviewedCount: Int { reviewedEvidenceIds.count }
 
     var evidenceCounterText: String {
-        "\(reviewedCount) of \(totalEvidenceCards) signals reviewed"
+        S.Challenge.evidenceCounter(reviewedCount, totalEvidenceCards)
     }
 
     var trimmedRationale: String {
@@ -71,10 +71,10 @@ struct ChallengeFormState: Equatable {
         let count = trimmedRationale.count
         if count == 0 { return nil }
         if count < Self.rationaleMinimum {
-            return "\(Self.rationaleMinimum - count) more characters to go."
+            return S.Challenge.charactersToGo(Self.rationaleMinimum - count)
         }
         if count > Self.rationaleMaximum {
-            return "\(count - Self.rationaleMaximum) characters over the limit."
+            return S.Challenge.charactersOver(count - Self.rationaleMaximum)
         }
         return nil
     }

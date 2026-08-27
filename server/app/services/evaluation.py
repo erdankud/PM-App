@@ -11,27 +11,25 @@ import logging
 import time
 from datetime import datetime, timedelta, timezone
 
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.ai.base import EvaluationRequest, ProviderError
-from app.ai.prompt import SYSTEM_PROMPT, build_user_prompt, prompt_version
+from app.ai.prompt import build_user_prompt, prompt_version, system_prompt
 from app.ai.registry import get_provider
 from app.ai.validation import Evaluation, InvalidEvaluation, parse_evaluation
 from app.config import settings
+from app import tree_content
+from app.i18n import Language
 from app.models import (
     ChallengeAttempt,
     EvidenceInteraction,
     FeedbackEvaluation,
-    LearningPathAssignment,
-    Scenario,
-    User,
     UserProfile,
     XpLedgerEntry,
     utcnow,
 )
-from app.services import path as path_service
 from app.services import skills as skills_service
+from app.services import tree as tree_service
 from app.services.scoring import build_breakdown, evidence_points, level_for_xp, xp_for_score
 
 logger = logging.getLogger("pmcoach.evaluation")
@@ -41,19 +39,10 @@ class RateLimited(RuntimeError):
     pass
 
 
-def scenario_for_attempt(db: Session, attempt: ChallengeAttempt) -> Scenario:
-    scenario = (
-        db.query(Scenario)
-        .filter(
-            Scenario.scenario_id == attempt.scenario_id,
-            Scenario.version == attempt.scenario_version,
-        )
-        .first()
-    )
+def scenario_for_attempt(db: Session, attempt: ChallengeAttempt) -> dict:
+    scenario = tree_content.scenario(attempt.scenario_id)
     if scenario is None:
-        raise LookupError(
-            f"scenario {attempt.scenario_id} v{attempt.scenario_version} not found"
-        )
+        raise LookupError(f"gate scenario {attempt.scenario_id} not found")
     return scenario
 
 
@@ -157,7 +146,13 @@ def process_evaluation(db: Session, evaluation: FeedbackEvaluation) -> str:
         db.commit()
         return "failed"
 
-    content = scenario.content
+    # The worker runs after the request that queued it, so the language comes from the
+    # stored profile. The model is shown the same wording the learner read, so a Russian
+    # rationale is evaluated against Russian evidence rather than against a translation
+    # the learner never saw.
+    profile = db.get(UserProfile, attempt.user_id)
+    language = Language.coerce(profile.language if profile else None)
+    content = scenario
     reviewed = reviewed_evidence_ids(db, attempt.id)
     selected_option = next(
         (o for o in content["decisionOptions"] if o["id"] == attempt.selected_option_id),
@@ -165,14 +160,16 @@ def process_evaluation(db: Session, evaluation: FeedbackEvaluation) -> str:
     )
 
     request = EvaluationRequest(
-        scenario_id=scenario.scenario_id,
-        scenario_version=scenario.version,
-        system_prompt=SYSTEM_PROMPT,
+        scenario_id=content["id"],
+        scenario_version=content["version"],
+        system_prompt=system_prompt(language),
         user_prompt=build_user_prompt(
             scenario=content,
             selected_option_id=attempt.selected_option_id or "",
             reviewed_evidence_ids=reviewed,
             rationale=attempt.rationale or "",
+            language=language,
+            lessons=tree_content.lessons_for_block(attempt.block_id),
         ),
         context={
             "rationale": attempt.rationale or "",
@@ -181,6 +178,7 @@ def process_evaluation(db: Session, evaluation: FeedbackEvaluation) -> str:
             "decision_points": (selected_option or {}).get("decisionPoints", 0),
             "primary_skill": content["primarySkill"],
             "secondary_skills": content.get("secondarySkills", []),
+            "language": language.value,
         },
     )
 
@@ -192,9 +190,6 @@ def process_evaluation(db: Session, evaluation: FeedbackEvaluation) -> str:
         evaluation.provider_attempts = settings.evaluator_max_attempts
         evaluation.updated_at = utcnow()
         attempt.status = "feedback_failed"
-        assignment = db.get(LearningPathAssignment, attempt.assignment_id)
-        if assignment is not None:
-            assignment.status = "feedback_failed"
         db.commit()
         logger.error("evaluation failed for attempt %s: %s", attempt.id, exc.code)
         return "failed"
@@ -218,7 +213,7 @@ def _commit_success(
     *,
     attempt: ChallengeAttempt,
     evaluation: FeedbackEvaluation,
-    scenario: Scenario,
+    scenario: dict,
     result: Evaluation,
     reviewed_count: int,
     provider_name: str,
@@ -226,7 +221,7 @@ def _commit_success(
     latency_ms: float,
 ) -> None:
     """Single transaction: feedback + skills + XP + profile (spec §15)."""
-    content = scenario.content
+    content = scenario
     breakdown = build_breakdown(
         evidence=evidence_points(reviewed_count, len(content["evidenceCards"])),
         decision=next(
@@ -249,10 +244,6 @@ def _commit_success(
     attempt.status = "complete"
     attempt.completed_at = utcnow()
 
-    assignment = db.get(LearningPathAssignment, attempt.assignment_id)
-    if assignment is not None:
-        assignment.status = "evaluated"
-
     evaluation.status = "complete"
     evaluation.ai_json = result.as_dict()
     evaluation.prompt_version = prompt_version()
@@ -268,54 +259,30 @@ def _commit_success(
         db,
         user_id=attempt.user_id,
         attempt_id=attempt.id,
-        scenario_id=scenario.scenario_id,
+        scenario_id=content["id"],
         deltas=result.skill_deltas,
     )
 
-    base_xp, bonus_xp = xp_for_score(breakdown.total)
-    awarded = 0
-    for amount, reason in ((base_xp, "daily_completion"), (bonus_xp, "quality_bonus")):
-        if amount <= 0:
-            continue
-        entry = XpLedgerEntry(
-            user_id=attempt.user_id,
-            attempt_id=attempt.id,
-            amount=amount,
-            reason=reason,
-        )
-        db.add(entry)
-        try:
-            db.flush()
-            awarded += amount
-        except IntegrityError:
-            # Already awarded for this attempt/reason - idempotent by construction.
-            db.rollback()
-            db.refresh(attempt)
-            logger.info("duplicate XP award suppressed for attempt %s", attempt.id)
-            return
+    # Pass/fail and the resulting unlock are written in this same transaction, so a
+    # block can never be open without the score that opened it (spec v0.2 §9, §11).
+    tree_service.record_gate_result(db, attempt, breakdown.total)
 
+    awarded = 0
+    if attempt.passed:
+        base_xp, bonus_xp = xp_for_score(breakdown.total)
+        for amount, reason in (
+            (base_xp, "gate_passed"),
+            (bonus_xp, "gate_quality_bonus"),
+        ):
+            awarded += tree_service.award_xp(
+                db,
+                user_id=attempt.user_id,
+                amount=amount,
+                reason=reason,
+                ref_id=attempt.block_id,
+                attempt_id=attempt.id,
+            )
     attempt.xp_awarded = awarded
 
-    profile = db.get(UserProfile, attempt.user_id)
-    if profile is not None:
-        total = (
-            db.query(XpLedgerEntry)
-            .filter(XpLedgerEntry.user_id == attempt.user_id)
-            .with_entities(XpLedgerEntry.amount)
-            .all()
-        )
-        profile.total_xp = sum(row[0] for row in total)
-        profile.level = level_for_xp(profile.total_xp)
-        profile.updated_at = utcnow()
-
+    tree_service.refresh_totals(db, attempt.user_id)
     db.commit()
-
-    # Future assignments only; historical ones are immutable (spec §12 rule 6).
-    user = db.get(User, attempt.user_id)
-    if user is not None and profile is not None:
-        try:
-            path_service.recalculate_future(db, user, profile)
-            db.commit()
-        except path_service.NoEligibleScenario:
-            db.rollback()
-            logger.warning("no eligible scenario while recalculating path for %s", user.id)

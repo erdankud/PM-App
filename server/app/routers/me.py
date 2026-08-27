@@ -6,7 +6,6 @@ from fastapi import APIRouter, HTTPException, status
 
 from app.deps import CurrentUser, DbSession
 from app.models import (
-    AssessmentResponse,
     ChallengeAttempt,
     EvidenceInteraction,
     FeedbackEvaluation,
@@ -14,9 +13,10 @@ from app.models import (
     UserProfile,
     utcnow,
 )
+from app.i18n import Language
 from app.schemas import MeResponse, ProfileUpdateRequest, SimpleOk
 from app.security import revoke_all_refresh_tokens
-from app.services.path import resolve_timezone
+from app.services.timezones import resolve_timezone
 from app.views import me_response
 
 router = APIRouter(tags=["me"])
@@ -46,17 +46,18 @@ def update_profile(
     if payload.timezone:
         user.timezone = str(resolve_timezone(payload.timezone))
 
-    if payload.goal is not None:
-        profile.goal = payload.goal
-        if user.onboarding_status == "signed_in":
-            user.onboarding_status = "goal_set"
+    if payload.language is not None:
+        # Everything the API renders — scenario text, coaching, labels — follows this,
+        # including evaluations queued later by the worker.
+        profile.language = Language.coerce(payload.language).value
+
+    if payload.target_role is not None:
+        # Purely a highlight over the map in this version; it changes no routing.
+        profile.target_role = payload.target_role or None
 
     if payload.complete_onboarding:
-        if user.onboarding_status != "assessed":
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail={"code": "assessment_incomplete"},
-            )
+        # There is no diagnostic to gate on any more: learning starts at the root
+        # (spec v0.2 §10). Onboarding is finished when the learner says it is.
         user.onboarding_status = "complete"
 
     profile.updated_at = utcnow()
@@ -94,12 +95,6 @@ def delete_account(user: CurrentUser, db: DbSession) -> SimpleOk:
         )
     for attempt in attempts:
         attempt.rationale = None
-
-    (
-        db.query(AssessmentResponse)
-        .filter(AssessmentResponse.user_id == user.id)
-        .delete(synchronize_session=False)
-    )
 
     revoke_all_refresh_tokens(db, user.id)
 

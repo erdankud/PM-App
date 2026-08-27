@@ -17,7 +17,7 @@ server/
 │   ├── services/          scoring, skills, path assignment, evaluation
 │   └── routers/           auth, me, assessment, today, attempts, progress, events
 ├── content/               Authored scenarios + assessment + JSON schema
-├── scripts/               validate_content, seed, smoke, qa_evaluate
+├── scripts/               content pipeline, validate_content, smoke, qa_evaluate
 ├── alembic/               Migrations
 └── tests/                 pytest
 ```
@@ -32,7 +32,7 @@ server/
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
 cp .env.example .env
-python -m scripts.validate_content && python -m scripts.seed
+python -m scripts.validate_content
 uvicorn app.main:app --reload
 ```
 
@@ -44,7 +44,7 @@ SQLite by default, tables created on startup, worker running in-process.
 docker compose up --build
 ```
 
-Runs migrations, seeds content, and starts the API on `:8000` with the worker as its
+Runs migrations and starts the API on `:8000` with the worker as its
 own service — closer to how you would deploy it.
 
 ---
@@ -103,32 +103,34 @@ never from a client-supplied user id.
 | POST | `/auth/refresh` | Rotates the refresh token |
 | POST | `/auth/signout` | Revokes all refresh tokens |
 | GET | `/me` | Profile, onboarding state, XP/level, skills |
-| PATCH | `/me/profile` | Goal, timezone, complete onboarding |
+| PATCH | `/me/profile` | Target role, timezone, language, complete onboarding |
 | DELETE | `/me` | Anonymises the account, deletes rationales and feedback |
-| GET | `/assessment` | Next diagnostic item |
-| POST | `/assessment/responses` | Final answer computes baselines and the 7-day path |
-| GET | `/assessment/result` | Path reveal payload |
-| GET | `/today` | Resolves one assignment for the device-local date |
-| GET | `/challenges/{assignmentId}` | Scenario content; creates the draft attempt |
+| GET | `/tree` | The whole map with this learner's status on every block |
+| GET | `/blocks/{id}` | Nodes, lessons, progress, whether the gate is open |
+| GET | `/lessons/{id}` | Lesson content |
+| POST | `/lessons/{id}/complete` | Idempotent; awards lesson XP once |
+| POST | `/gates/{id}/start` | **409 unless the block is `gate_ready`**; creates the attempt |
 | PUT | `/attempts/{id}/draft` | Autosave; 409 once submitted |
 | POST | `/attempts/{id}/evidence` | Idempotent by unique constraint |
 | POST | `/attempts/{id}/submit` | Accepts `Idempotency-Key`; returns the consequence |
 | GET | `/attempts/{id}/feedback` | `pending` / `complete` / `failed` |
 | POST | `/attempts/{id}/feedback/retry` | Subject to the daily evaluation limit |
 | POST | `/attempts/{id}/feedback-rating` | `useful` / `not_useful` |
-| GET | `/progress` | XP, level, streak, 7-day activity, six skills |
-| GET | `/history` | Paginated completed attempts |
+| GET | `/progress` | XP, level, blocks passed, lessons read, seven competencies |
+| GET | `/history` | Paginated gate sittings |
 | POST | `/events` | Analytics sink; free-text properties are dropped |
 
 Interactive docs at `/docs` when the server is running.
 
 ### What the client is never sent
 
-`GET /challenges/{id}` returns the brief, evidence, decision prompt and option
+`POST /gates/{id}/start` returns the brief, evidence, decision prompt and option
 labels — and deliberately omits the authored rubric, each option's consequence text,
-and its `decisionPoints` weight. The consequence appears only in the submit response,
-from a server-side snapshot. A test asserts this
-(`test_challenge_payload_withholds_rubric_and_consequences`).
+and its `decisionPoints` weight. The consequence appears only in the submit response.
+
+Availability is the same kind of guarantee: the client is told the status of every
+block, but it is the server that refuses `start` when the block is not `gate_ready`.
+A test drives that path directly rather than through the UI.
 
 ---
 
@@ -153,23 +155,81 @@ validator rejects anything outside it, and `apply_deltas` clamps again before wr
 
 ## Content authoring
 
-Scenarios live in `content/scenarios/*.json` and are validated against
-`content/scenario.schema.json` plus editorial rules in `app/content.py`:
+All authored content lives in `content/` as validated JSON. There is no seed
+step and no content in the database: the tree, its lessons and its gate
+scenarios are read from files and cached, so an edit takes effect on reload.
 
-- evidence card `order` must be 1..n with no gaps
-- at least one option must be a strong choice (≥20 points)
-- at least one **non-reference** option must earn meaningful partial credit (≥8)
-- QA fixtures must include strong, weak, and defensible-alternative
-- QA rationales must fit the product's own 30–600 character limit, so every fixture is
-  something a real user could have typed
-
-```bash
-python -m scripts.validate_content   # gate this in CI
-python -m scripts.seed               # inserts new (id, version) pairs only
+```
+content/
+├── tree.schema.json           map structure
+├── lesson.schema.json         lesson blocks
+├── gate-scenario.schema.json  gate exam (scenario + lesson links)
+├── tree/
+│   ├── tree.json              6 domains × 3 rings = 18 blocks, 71 nodes
+│   ├── gates.json             which scenarios close which block
+│   ├── lessons/*.json         one file per lesson
+│   └── scenarios/*.json       gate scenarios
+├── exercise.schema.json       formative exercise
+├── glossary.schema.json       glossary of the System Design domain
+├── diagram.schema.json        diagram as structure, not a picture
+└── system-design/
+    ├── tree.json              6 areas × 3 rings = 18 blocks, 96 nodes
+    ├── gates.json             gates of the published blocks
+    ├── glossary.json          489 terms, Russian and English
+    ├── lessons/*.json         158 lessons, six sections each
+    ├── exercises/*.json       96 formative exercises
+    ├── diagrams/*.json        diagrams the client renders itself
+    ├── scenarios/*.json       gate scenarios ready to publish
+    └── scenarios-draft/*.json what the importer produces, before the authoring
 ```
 
-Published content is immutable per `(id, version)`. Editing a live scenario requires a
-version bump so historical attempts keep the content they were evaluated against.
+The System Design tree is generated from the authored corpus, not edited by hand. The
+importer is only the first of four steps: option weights, QA fixtures and exercise
+acceptance cannot be derived from prose, so they are authored in scripts of their own
+and applied on top. Run all four, in this order, after editing the corpus:
+
+```bash
+python -m scripts.import_system_design ../docs/system-design-course.md
+python -m scripts.publish_system_design   # weights, fixtures, remediation
+python -m scripts.type_exercises          # exercise inputs and acceptance
+python -m scripts.validate_content        # gate this in CI
+```
+
+Importing without the rest silently loses the authoring: every gate falls back to a
+draft and every exercise back to `open`.
+
+The validator enforces the schemas plus the rules they cannot express:
+
+- the unlock graph is acyclic and every block is reachable from `D1`;
+- a `published` block has a lesson for every node and a gate;
+- a gate has **at least two scenarios** — with one, a retake becomes memorising
+  which option was right, which is the quiz this product must not be;
+- every positive signal in a rubric names the `lessonId` whose concept it
+  checks, and every covered lesson has a `remediation` entry to send a failed
+  learner back to;
+- the v0.1 editorial rules still apply: evidence `order` is 1..n with no gaps,
+  one option scores ≥20, at least one non-reference option earns ≥8, and the QA
+  fixtures cover strong / weak / defensible-alternative.
+
+All 18 blocks are `published`: 90 lessons, 18 gates, 36 gate scenarios. The
+`coming_soon` status is still supported and still enforced by the validator —
+a block whose lessons are not written yet appears on the map with its nodes and
+says so rather than pretending to be locked — but nothing uses it right now.
+
+### Languages
+
+Content is authored in Russian (v0.2 §16): the source map and the ICP are both
+Russian-speaking. The app's own chrome is still bilingual, and the language a
+request renders in is resolved in `app/deps.py`:
+
+1. the `X-Content-Language` header, if the client sent one — this closes the gap
+   between switching language in the app and the profile update landing;
+2. otherwise `user_profiles.language`, the durable preference.
+
+`Accept-Language` is deliberately ignored: HTTP clients set it from the device
+locale, so honouring it would let the phone override a deliberate in-app choice.
+The profile copy is also the only one the evaluation worker can read, since it
+runs long after the request that queued it.
 
 ---
 
@@ -225,7 +285,15 @@ python -m pytest tests -q
 ```
 
 Covers score bounds and XP arithmetic, provider-output validation (out-of-range,
-unknown skill keys, code fences, empty coaching), path determinism and the
-one-assignment-per-day constraint, and over HTTP: onboarding gates, evidence and
-rationale validation, draft immutability after submit, single XP award under repeated
-submits, ownership rejection, analytics free-text stripping, and account deletion.
+unknown skill keys, code fences, empty coaching), and over HTTP the whole v0.2 loop:
+
+- a new account sees all 18 blocks with exactly one open, and a locked block still
+  opens and explains what has to be passed to reach it;
+- a gate cannot be started while lessons remain — asserted against the API, not the UI;
+- passing writes `passed`, XP and the unlock in one transaction, and failing takes no
+  XP, locks nothing, and returns `remediation` pointing at named lessons;
+- a retake serves a different scenario, and re-passing a block awards nothing;
+- picking an option without reasoning cannot reach 70, because evidence plus decision
+  caps at 40;
+- ownership rejection, analytics free-text stripping, account deletion;
+- the unlock graph is acyclic and reachable, and every gate has two scenarios.

@@ -5,6 +5,10 @@ import Foundation
 final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
 
     var challengeResponse: ChallengeResponse?
+    var treeResponse: TreeResponse?
+    var blockResponse: BlockDetailResponse?
+    var lessonResponse: LessonResponse?
+    var lessonCompleteResponse: LessonCompleteResponse?
     var submitResponse: SubmitResponse?
     var feedbackResponses: [FeedbackResponse] = []
     var challengeError: APIError?
@@ -15,10 +19,67 @@ final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
     private(set) var submitCalls: [(request: SubmitRequest, key: String)] = []
     private(set) var ratings: [String] = []
     private(set) var feedbackFetches = 0
+    private(set) var completedLessonIds: [String] = []
+    private(set) var gateStarts: [String] = []
 
     // MARK: - Challenge
 
-    func challenge(assignmentId: String) async throws -> ChallengeResponse {
+    // MARK: - Skill tree
+
+    func tree() async throws -> TreeResponse {
+        guard let treeResponse else { throw APIError.notFound }
+        return treeResponse
+    }
+
+    var treesResponse: TreesResponse?
+    var glossaryResponse: GlossaryResponse?
+    var exerciseResponse: ExerciseResponse?
+    var exerciseSubmitResponse: ExerciseSubmitResponse?
+
+    func trees() async throws -> TreesResponse {
+        guard let treesResponse else { throw APIError.notFound }
+        return treesResponse
+    }
+
+    func tree(kind: String) async throws -> TreeResponse {
+        try await tree()
+    }
+
+    func glossary(query: String?, blockId: String?) async throws -> GlossaryResponse {
+        guard let glossaryResponse else { throw APIError.notFound }
+        return glossaryResponse
+    }
+
+    func exercise(id: String) async throws -> ExerciseResponse {
+        guard let exerciseResponse else { throw APIError.notFound }
+        return exerciseResponse
+    }
+
+    func submitExercise(
+        id: String, values: [String: String]
+    ) async throws -> ExerciseSubmitResponse {
+        guard let exerciseSubmitResponse else { throw APIError.notFound }
+        return exerciseSubmitResponse
+    }
+
+    func block(id: String) async throws -> BlockDetailResponse {
+        guard let blockResponse else { throw APIError.notFound }
+        return blockResponse
+    }
+
+    func lesson(id: String) async throws -> LessonResponse {
+        guard let lessonResponse else { throw APIError.notFound }
+        return lessonResponse
+    }
+
+    func completeLesson(id: String) async throws -> LessonCompleteResponse {
+        completedLessonIds.append(id)
+        guard let lessonCompleteResponse else { throw APIError.notFound }
+        return lessonCompleteResponse
+    }
+
+    func startGate(id: String) async throws -> ChallengeResponse {
+        gateStarts.append(id)
         if let challengeError { throw challengeError }
         guard let challengeResponse else { throw APIError.notFound }
         return challengeResponse
@@ -84,12 +145,6 @@ final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
         throw APIError.notFound
     }
     func deleteAccount() async throws {}
-    func assessment() async throws -> AssessmentState { throw APIError.notFound }
-    func answerAssessment(_ request: AssessmentAnswerRequest) async throws -> AssessmentAnswerResponse {
-        throw APIError.notFound
-    }
-    func assessmentResult() async throws -> AssessmentResult { throw APIError.notFound }
-    func today() async throws -> TodayResponse { throw APIError.notFound }
     func progress() async throws -> ProgressResponse { throw APIError.notFound }
     func history(limit: Int, offset: Int) async throws -> HistoryResponse { throw APIError.notFound }
     func sendEvents(_ batch: AnalyticsBatch) async throws {}
@@ -107,8 +162,8 @@ enum Fixture {
             summary: "A redesigned signup flow lifted completion but week-one retention fell.",
             estimatedMinutes: 8,
             level: "foundation",
-            primarySkill: "product_sense",
-            primarySkillLabel: "Product Sense",
+            primarySkill: "discovery",
+            primarySkillLabel: "Дискавери и исследования",
             tags: ["onboarding", "retention"],
             brief: BriefView(
                 role: "You are the PM for growth.",
@@ -142,8 +197,11 @@ enum Fixture {
     static func challenge(state: ChallengeState = .notStarted) -> ChallengeResponse {
         let scenario = scenario()
         return ChallengeResponse(
-            assignmentId: "assignment-1",
-            localDate: "2026-08-23",
+            gateId: "gate-d1",
+            blockId: "D1",
+            blockTitle: "Услышать клиента",
+            attemptIndex: 1,
+            passThreshold: 70,
             state: state,
             scenario: scenario,
             attempt: AttemptView(
@@ -193,7 +251,9 @@ enum Fixture {
                     strengths: [FeedbackPoint(title: "Named the trade-off", detail: "You said what you gave up.")],
                     improvements: [FeedbackPoint(title: "Add a measure", detail: "Say what you would watch next.")],
                     sharperApproach: "Lead with the recommendation, then the strongest evidence.",
-                    skillImpact: [SkillImpact(key: "product_sense", label: "Product Sense", delta: 4, score: 58)],
+                    skillImpact: [
+                        SkillImpact(key: "discovery", label: "Дискавери", delta: 4, score: 58)
+                    ],
                     xpAwarded: 78,
                     needsRetry: false
                 )
@@ -201,7 +261,15 @@ enum Fixture {
             rating: nil,
             retryAvailable: status == .failed,
             scenarioTitle: "Retention drops after an onboarding redesign",
-            learnTakeawayTitle: "Look for the mechanism, not the trade-off"
+            learnTakeawayTitle: "Look for the mechanism, not the trade-off",
+            gateId: "gate-d1",
+            blockId: "D1",
+            blockTitle: "Услышать клиента",
+            passed: status == .complete ? score >= 70 : nil,
+            passThreshold: 70,
+            attemptIndex: 1,
+            unlockedBlockIds: status == .complete && score >= 70 ? ["V1"] : [],
+            remediation: []
         )
     }
 }

@@ -1,0 +1,4406 @@
+{
+  "version": 1,
+  "terms": [
+    {
+      "id": "entity",
+      "term": "Сущность",
+      "termEn": "Entity",
+      "definition": "Тип объекта, о котором продукт хранит данные: пользователь, заказ, товар",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "field",
+      "term": "Атрибут",
+      "termEn": "Field, Column",
+      "definition": "Отдельное свойство сущности: у заказа — сумма, статус, время создания",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "relation",
+      "term": "Связь",
+      "termEn": "Relation",
+      "definition": "Правило, соединяющее сущности: заказ принадлежит пользователю",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "schema",
+      "term": "Схема данных",
+      "termEn": "Schema",
+      "definition": "Описание всех сущностей, их атрибутов и связей — устройство хранилища",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "row",
+      "term": "Запись",
+      "termEn": "Row, Record",
+      "definition": "Один конкретный экземпляр сущности: заказ №4471",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cardinality",
+      "term": "Кардинальность",
+      "termEn": "Cardinality",
+      "definition": "Сколько записей одной сущности может относиться к одной записи другой",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "one-to-many",
+      "term": "Один-ко-многим",
+      "termEn": "One-to-many",
+      "definition": "У одного пользователя много заказов, у заказа один пользователь",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "many-to-many",
+      "term": "Многие-ко-многим",
+      "termEn": "Many-to-many",
+      "definition": "Товар лежит во многих заказах, в заказе много товаров",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "join-table",
+      "term": "Связующая таблица",
+      "termEn": "Join table",
+      "definition": "Отдельная сущность, реализующая связь многие-ко-многим",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "relational-database",
+      "term": "Реляционная база",
+      "termEn": "Relational database, RDBMS",
+      "definition": "Хранилище, где данные лежат в таблицах со строгой схемой и связями",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "sql",
+      "term": "SQL",
+      "termEn": "SQL",
+      "definition": "Язык запросов к реляционным базам",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "document-database",
+      "term": "Документная база",
+      "termEn": "Document database",
+      "definition": "Хранилище, где единица — документ произвольной структуры",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "key-value-store",
+      "term": "Key-value",
+      "termEn": "Key-value store",
+      "definition": "Хранилище «ключ → значение», без структуры внутри значения",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "schemaless",
+      "term": "Гибкая схема",
+      "termEn": "Schemaless",
+      "definition": "Свойство хранилища не требовать одинаковой структуры у всех записей",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "denormalization",
+      "term": "Денормализация",
+      "termEn": "Denormalization",
+      "definition": "Осознанное дублирование данных ради скорости чтения",
+      "blockId": "DS1",
+      "sourceLessonId": "ds2-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "migration",
+      "term": "Миграция",
+      "termEn": "Migration",
+      "definition": "Изменение схемы существующей базы вместе с уже накопленными данными",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "backward-compatibility",
+      "term": "Обратная совместимость",
+      "termEn": "Backward compatibility",
+      "definition": "Свойство изменения не ломать то, что работало раньше",
+      "blockId": "DS1",
+      "sourceLessonId": "in3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "nullable",
+      "term": "Nullable",
+      "termEn": "Nullable",
+      "definition": "Атрибут, который допускает отсутствие значения",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "backfill",
+      "term": "Бэкфилл",
+      "termEn": "Backfill",
+      "definition": "Заполнение нового атрибута для уже существующих записей",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "downtime",
+      "term": "Даунтайм",
+      "termEn": "Downtime",
+      "definition": "Промежуток, когда продукт недоступен пользователю",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "primary-key",
+      "term": "Первичный ключ",
+      "termEn": "Primary key",
+      "definition": "Атрибут, однозначно определяющий запись",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "foreign-key",
+      "term": "Внешний ключ",
+      "termEn": "Foreign key",
+      "definition": "Атрибут, ссылающийся на первичный ключ другой сущности",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "surrogate-key",
+      "term": "Суррогатный ключ",
+      "termEn": "Surrogate key",
+      "definition": "Искусственный идентификатор без смысла для бизнеса",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "natural-key",
+      "term": "Натуральный ключ",
+      "termEn": "Natural key",
+      "definition": "Идентификатор со смыслом: email, ИНН, артикул",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "uuid",
+      "term": "UUID",
+      "termEn": "UUID",
+      "definition": "128-битный идентификатор, который можно сгенерировать где угодно без согласования",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "index",
+      "term": "Индекс",
+      "termEn": "Index",
+      "definition": "Дополнительная структура, ускоряющая поиск по атрибуту",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "full-scan",
+      "term": "Полный перебор",
+      "termEn": "Full scan",
+      "definition": "Просмотр всех записей подряд, потому что подходящего индекса нет",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "composite-index",
+      "term": "Составной индекс",
+      "termEn": "Composite index",
+      "definition": "Индекс по нескольким атрибутам сразу; порядок в нём важен",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "selectivity",
+      "term": "Селективность",
+      "termEn": "Selectivity",
+      "definition": "Насколько сильно значение атрибута сужает выборку",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "transaction",
+      "term": "Транзакция",
+      "termEn": "Transaction",
+      "definition": "Группа изменений, применяемых целиком или не применяемых вовсе",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "acid",
+      "term": "ACID",
+      "termEn": "ACID",
+      "definition": "Четыре гарантии транзакции: атомарность, согласованность, изоляция, долговечность",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "atomicity",
+      "term": "Атомарность",
+      "termEn": "Atomicity",
+      "definition": "Либо выполнились все изменения группы, либо ни одно",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "isolation",
+      "term": "Изоляция",
+      "termEn": "Isolation",
+      "definition": "Параллельные транзакции не видят промежуточных состояний друг друга",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rollback",
+      "term": "Откат",
+      "termEn": "Rollback",
+      "definition": "Отмена всех изменений транзакции при сбое",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "race-condition",
+      "term": "Гонка",
+      "termEn": "Race condition",
+      "definition": "Ошибка, возникающая, когда два действия происходят одновременно",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "lock",
+      "term": "Блокировка",
+      "termEn": "Lock",
+      "definition": "Временный запрет другим менять те же данные",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "deadlock",
+      "term": "Дедлок",
+      "termEn": "Deadlock",
+      "definition": "Взаимная блокировка: две операции ждут друг друга вечно",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "idempotency",
+      "term": "Идемпотентность",
+      "termEn": "Idempotency",
+      "definition": "Свойство повторного выполнения не менять результат",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "compensating-transaction",
+      "term": "Компенсирующая операция",
+      "termEn": "Compensating transaction",
+      "definition": "Действие, отменяющее последствия, когда откат невозможен",
+      "blockId": "DS1",
+      "sourceLessonId": "ds1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "eventual-consistency",
+      "term": "Согласованность в итоге",
+      "termEn": "Eventual consistency",
+      "definition": "Данные сойдутся, но не мгновенно",
+      "blockId": "DS1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "normalization",
+      "term": "Нормализация",
+      "termEn": "Normalization",
+      "definition": "Организация схемы так, чтобы каждый факт хранился ровно в одном месте",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "normal-form",
+      "term": "Нормальная форма",
+      "termEn": "Normal form",
+      "definition": "Уровень строгости нормализации; на практике обсуждают третью",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "update-anomaly",
+      "term": "Аномалия обновления",
+      "termEn": "Update anomaly",
+      "definition": "Ситуация, когда факт изменён в одном месте и не изменён в другом",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "materialized-view",
+      "term": "Материализованное представление",
+      "termEn": "Materialized view",
+      "definition": "Заранее посчитанный результат запроса, хранящийся как таблица",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "trigger",
+      "term": "Триггер",
+      "termEn": "Trigger",
+      "definition": "Код, который база выполняет автоматически при изменении данных",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "covering-index",
+      "term": "Покрывающий индекс",
+      "termEn": "Covering index",
+      "definition": "Индекс, содержащий все нужные запросу поля, так что сама таблица не читается",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "write-amplification",
+      "term": "Усиление записи",
+      "termEn": "Write amplification",
+      "definition": "Рост числа физических операций записи на одно логическое изменение",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "term",
+      "term": "Бюджет индексов",
+      "termEn": "—",
+      "definition": "Осознанный предел числа индексов на таблице, за которым запись деградирует",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "replica",
+      "term": "Реплика",
+      "termEn": "Replica",
+      "definition": "Копия базы, поддерживаемая в актуальном состоянии автоматически",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "primary-replica",
+      "term": "Ведущая и ведомая",
+      "termEn": "Primary / Replica",
+      "definition": "Роли: в ведущую пишут, из ведомых читают",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "replication-lag",
+      "term": "Лаг репликации",
+      "termEn": "Replication lag",
+      "definition": "Задержка, с которой реплика догоняет ведущую",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "strong-consistency",
+      "term": "Сильная консистентность",
+      "termEn": "Strong consistency",
+      "definition": "Любое чтение сразу после записи возвращает записанное",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "eventual-consistency-2",
+      "term": "Итоговая консистентность",
+      "termEn": "Eventual consistency",
+      "definition": "Данные сойдутся, но не мгновенно",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "read-your-writes",
+      "term": "Чтение своих записей",
+      "termEn": "Read-your-writes",
+      "definition": "Гарантия, что человек видит собственное изменение сразу",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "monotonic-reads",
+      "term": "Монотонное чтение",
+      "termEn": "Monotonic reads",
+      "definition": "Гарантия, что данные не «откатываются назад» при повторном чтении",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cap-theorem",
+      "term": "CAP-теорема",
+      "termEn": "CAP theorem",
+      "definition": "При разрыве сети система выбирает между согласованностью и доступностью",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "network-partition",
+      "term": "Разрыв сети",
+      "termEn": "Network partition",
+      "definition": "Ситуация, когда части системы перестали видеть друг друга",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "quorum",
+      "term": "Кворум",
+      "termEn": "Quorum",
+      "definition": "Минимальное число узлов, обязанных подтвердить операцию",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "oltp",
+      "term": "OLTP",
+      "termEn": "OLTP",
+      "definition": "Транзакционная нагрузка: много коротких операций над отдельными записями",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "olap",
+      "term": "OLAP",
+      "termEn": "OLAP",
+      "definition": "Аналитическая нагрузка: редкие тяжёлые запросы над множеством записей",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-warehouse",
+      "term": "Хранилище данных",
+      "termEn": "Data warehouse",
+      "definition": "Отдельная база, устроенная под аналитические запросы",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-mart",
+      "term": "Витрина данных",
+      "termEn": "Data mart",
+      "definition": "Подготовленный срез хранилища под конкретную задачу",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "etl-elt",
+      "term": "ETL / ELT",
+      "termEn": "ETL / ELT",
+      "definition": "Процесс переноса данных из продуктовых баз в аналитическое хранилище",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "batch",
+      "term": "Пакетная обработка",
+      "termEn": "Batch",
+      "definition": "Перенос и расчёт порциями по расписанию",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "streaming",
+      "term": "Потоковая обработка",
+      "termEn": "Streaming",
+      "definition": "Перенос и расчёт по мере поступления событий",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "partitioning",
+      "term": "Партиционирование",
+      "termEn": "Partitioning",
+      "definition": "Разрезание одной таблицы на части по признаку внутри одной базы",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "partition",
+      "term": "Партиция",
+      "termEn": "Partition",
+      "definition": "Одна такая часть, обычно по диапазону дат",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "partition-pruning",
+      "term": "Отсечение партиций",
+      "termEn": "Partition pruning",
+      "definition": "Пропуск партиций, заведомо не содержащих нужных данных",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "sharding",
+      "term": "Шардирование",
+      "termEn": "Sharding",
+      "definition": "Разнесение данных по нескольким независимым базам",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "shard-key",
+      "term": "Ключ шардирования",
+      "termEn": "Shard key",
+      "definition": "Атрибут, по которому определяется, в какой шард попадает запись",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "hot-shard",
+      "term": "Горячий шард",
+      "termEn": "Hot shard",
+      "definition": "Шард, на который приходится непропорционально много нагрузки",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "rebalancing",
+      "term": "Ребалансировка",
+      "termEn": "Rebalancing",
+      "definition": "Перераспределение данных между шардами",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cross-shard-query",
+      "term": "Кросс-шардовый запрос",
+      "termEn": "Cross-shard query",
+      "definition": "Запрос, требующий данных из нескольких шардов; дорог и медленен",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "retention",
+      "term": "Срок хранения",
+      "termEn": "Retention",
+      "definition": "Правило, определяющее, как долго данные живут",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-lifecycle",
+      "term": "Жизненный цикл данных",
+      "termEn": "Data lifecycle",
+      "definition": "Путь данных от создания через остывание к удалению",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "cold-storage",
+      "term": "Холодное хранилище",
+      "termEn": "Cold storage",
+      "definition": "Дешёвое медленное хранилище для редко читаемых данных",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "soft-delete",
+      "term": "Мягкое удаление",
+      "termEn": "Soft delete",
+      "definition": "Пометка записи удалённой без физического стирания",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "hard-delete",
+      "term": "Жёсткое удаление",
+      "termEn": "Hard delete",
+      "definition": "Физическое стирание записи",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cascade-delete",
+      "term": "Каскадное удаление",
+      "termEn": "Cascade delete",
+      "definition": "Автоматическое удаление связанных записей",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "anonymization",
+      "term": "Анонимизация",
+      "termEn": "Anonymization",
+      "definition": "Необратимое удаление связи данных с человеком",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "pseudonymization",
+      "term": "Псевдонимизация",
+      "termEn": "Pseudonymization",
+      "definition": "Замена идентификатора на условный, обратимая при наличии ключа",
+      "blockId": "DS2",
+      "sourceLessonId": "ds2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "right-to-erasure",
+      "term": "Право на забвение",
+      "termEn": "Right to erasure",
+      "definition": "Право человека потребовать удаления своих данных",
+      "blockId": "DS2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "reversible-decision",
+      "term": "Обратимое решение",
+      "termEn": "Reversible decision",
+      "definition": "Решение, которое можно переиграть за сопоставимую с исходной цену",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "one-way-door",
+      "term": "Необратимое решение",
+      "termEn": "One-way door",
+      "definition": "Решение, отмена которого стоит на порядок дороже принятия",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "extensibility",
+      "term": "Расширяемость модели",
+      "termEn": "Extensibility",
+      "definition": "Свойство схемы допускать новые типы данных без перестройки",
+      "blockId": "DS3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "polymorphic-entity",
+      "term": "Полиморфная сущность",
+      "termEn": "Polymorphic entity",
+      "definition": "Сущность, ссылающаяся на записи разных типов",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "entity-attribute-value",
+      "term": "EAV",
+      "termEn": "Entity-Attribute-Value",
+      "definition": "Хранение произвольных атрибутов парами «название — значение»",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "extension-table",
+      "term": "Таблица расширений",
+      "termEn": "Extension table",
+      "definition": "Отдельная сущность для необязательных или клиентских атрибутов",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "granularity",
+      "term": "Гранулярность",
+      "termEn": "Granularity",
+      "definition": "Уровень детализации, на котором фиксируется факт",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "expand-contract",
+      "term": "Expand-contract",
+      "termEn": "Expand-contract",
+      "definition": "Приём изменения схемы в четыре фазы без остановки продукта",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "dual-write",
+      "term": "Двойная запись",
+      "termEn": "Dual write",
+      "definition": "Временная запись данных и в старое, и в новое место",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "shadow-read",
+      "term": "Теневое чтение",
+      "termEn": "Shadow read",
+      "definition": "Чтение из нового места с проверкой против старого, без показа пользователю",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "feature-flag",
+      "term": "Флаг функциональности",
+      "termEn": "Feature flag",
+      "definition": "Переключатель, позволяющий включать поведение без релиза",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "schema-debt",
+      "term": "Долг в модели данных",
+      "termEn": "Schema debt",
+      "definition": "Накопленное расхождение между тем, как устроены данные, и тем, что нужно продукту",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "multi-tenancy",
+      "term": "Мультитенантность",
+      "termEn": "Multi-tenancy",
+      "definition": "Обслуживание нескольких клиентов-организаций одной системой",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tenant",
+      "term": "Тенант",
+      "termEn": "Tenant",
+      "definition": "Клиент-организация как единица изоляции данных",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "shared-schema",
+      "term": "Общая схема",
+      "termEn": "Shared schema",
+      "definition": "Все тенанты в одних таблицах, разделены признаком",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "schema-per-tenant",
+      "term": "Схема на тенанта",
+      "termEn": "Schema per tenant",
+      "definition": "У каждого тенанта свой набор таблиц в общей базе",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "database-per-tenant",
+      "term": "База на тенанта",
+      "termEn": "Database per tenant",
+      "definition": "У каждого тенанта отдельная база",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cross-tenant-leak",
+      "term": "Утечка между тенантами",
+      "termEn": "Cross-tenant leak",
+      "definition": "Показ данных одного клиента другому из-за забытого фильтра",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-residency",
+      "term": "Резидентность данных",
+      "termEn": "Data residency",
+      "definition": "Требование хранить данные в определённой юрисдикции",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "noisy-neighbour",
+      "term": "Шумный сосед",
+      "termEn": "Noisy neighbour",
+      "definition": "Тенант, чья нагрузка мешает остальным на общей инфраструктуре",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "custom-fields",
+      "term": "Кастомные поля",
+      "termEn": "Custom fields",
+      "definition": "Атрибуты, которые клиент заводит сам под свои процессы",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "source-of-truth",
+      "term": "Источник истины",
+      "termEn": "Source of truth",
+      "definition": "Система, чьё значение считается верным при расхождении",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-owner",
+      "term": "Владелец данных",
+      "termEn": "Data owner",
+      "definition": "Роль, отвечающая за определение, качество и доступ к данным",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "golden-record",
+      "term": "Мастер-запись",
+      "termEn": "Golden record",
+      "definition": "Сведённая запись о сущности, собранная из нескольких систем",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-lineage",
+      "term": "Происхождение данных",
+      "termEn": "Data lineage",
+      "definition": "Путь данных от места возникновения до места использования",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "data-contract",
+      "term": "Контракт данных",
+      "termEn": "Data contract",
+      "definition": "Зафиксированное соглашение о структуре и смысле передаваемых данных",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "schema-drift",
+      "term": "Дрейф схемы",
+      "termEn": "Schema drift",
+      "definition": "Незаметное расхождение структуры данных между системами",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "reconciliation",
+      "term": "Сверка",
+      "termEn": "Reconciliation",
+      "definition": "Регулярная проверка совпадения данных в разных системах",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "deduplication",
+      "term": "Дедупликация",
+      "termEn": "Deduplication",
+      "definition": "Сведение записей, описывающих один и тот же объект",
+      "blockId": "DS3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "entity-resolution",
+      "term": "Разрешение сущностей",
+      "termEn": "Entity resolution",
+      "definition": "Определение, что две записи описывают одного человека или объект",
+      "blockId": "DS3",
+      "sourceLessonId": "ds3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "client",
+      "term": "Клиент",
+      "termEn": "Client",
+      "definition": "Программа, которая запрашивает: приложение, браузер, другой сервис",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "server",
+      "term": "Сервер",
+      "termEn": "Server",
+      "definition": "Программа, которая принимает запросы и отвечает",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "backend",
+      "term": "Бэкенд",
+      "termEn": "Backend",
+      "definition": "Часть системы, работающая на серверах компании",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "frontend",
+      "term": "Фронтенд",
+      "termEn": "Frontend",
+      "definition": "Часть системы, работающая на устройстве пользователя",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "request",
+      "term": "Запрос",
+      "termEn": "Request",
+      "definition": "Обращение клиента к серверу с просьбой что-то сделать или отдать",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "response",
+      "term": "Ответ",
+      "termEn": "Response",
+      "definition": "То, что сервер возвращает на запрос",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "endpoint",
+      "term": "Эндпоинт",
+      "termEn": "Endpoint",
+      "definition": "Конкретный адрес, по которому доступна операция API",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "api",
+      "term": "API",
+      "termEn": "API",
+      "definition": "Набор операций, которые одна система предоставляет другой",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "contract",
+      "term": "Контракт",
+      "termEn": "Contract",
+      "definition": "Договорённость о том, что принимает и что возвращает операция",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "http",
+      "term": "HTTP",
+      "termEn": "HTTP",
+      "definition": "Протокол, по которому чаще всего общаются клиент и сервер",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "http-method",
+      "term": "Метод",
+      "termEn": "HTTP method",
+      "definition": "Тип действия: получить, создать, изменить, удалить",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "term-2",
+      "term": "GET / POST / PATCH / DELETE",
+      "termEn": "—",
+      "definition": "Получить, создать, частично изменить, удалить",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "query-parameter",
+      "term": "Параметр запроса",
+      "termEn": "Query parameter",
+      "definition": "Уточнение в адресе: фильтр, страница, сортировка",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "request-body",
+      "term": "Тело запроса",
+      "termEn": "Request body",
+      "definition": "Данные, отправляемые вместе с запросом",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "json",
+      "term": "JSON",
+      "termEn": "JSON",
+      "definition": "Текстовый формат представления данных, общий язык большинства API",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "header",
+      "term": "Заголовок",
+      "termEn": "Header",
+      "definition": "Служебное поле запроса или ответа: авторизация, формат, версия",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "status-code",
+      "term": "Код ответа",
+      "termEn": "Status code",
+      "definition": "Трёхзначное число, сообщающее исход запроса",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "pagination",
+      "term": "Пагинация",
+      "termEn": "Pagination",
+      "definition": "Выдача длинного списка порциями",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "access-token",
+      "term": "Токен доступа",
+      "termEn": "Access token",
+      "definition": "Строка, подтверждающая право клиента на операцию",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "timeout",
+      "term": "Таймаут",
+      "termEn": "Timeout",
+      "definition": "Предел ожидания ответа, после которого клиент прекращает ждать",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "synchronous",
+      "term": "Синхронная операция",
+      "termEn": "Synchronous",
+      "definition": "Клиент ждёт результата в том же запросе",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "asynchronous",
+      "term": "Асинхронная операция",
+      "termEn": "Asynchronous",
+      "definition": "Сервер подтверждает приём, результат появляется позже",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "background-job",
+      "term": "Фоновая задача",
+      "termEn": "Background job",
+      "definition": "Работа, выполняемая после ответа клиенту",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "polling",
+      "term": "Опрос состояния",
+      "termEn": "Polling",
+      "definition": "Периодические запросы клиента «уже готово?»",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "optimistic-ui",
+      "term": "Оптимистичный интерфейс",
+      "termEn": "Optimistic UI",
+      "definition": "Показ результата до подтверждения сервером",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "retry",
+      "term": "Повтор",
+      "termEn": "Retry",
+      "definition": "Повторная отправка запроса после неудачи",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "duplicate",
+      "term": "Дубль",
+      "termEn": "Duplicate",
+      "definition": "Второй экземпляр операции, созданный повтором",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "idempotency-key",
+      "term": "Ключ идемпотентности",
+      "termEn": "Idempotency key",
+      "definition": "Метка, по которой сервер узнаёт повтор и не выполняет операцию дважды",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "integration",
+      "term": "Интеграция",
+      "termEn": "Integration",
+      "definition": "Связь продукта с внешней системой",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "external-dependency",
+      "term": "Внешняя зависимость",
+      "termEn": "External dependency",
+      "definition": "Чужая система, без которой часть продукта не работает",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rate-limit",
+      "term": "Ограничение частоты",
+      "termEn": "Rate limit",
+      "definition": "Предел числа запросов за интервал",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "quota",
+      "term": "Квота",
+      "termEn": "Quota",
+      "definition": "Предел объёма использования за период",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "sandbox",
+      "term": "Песочница",
+      "termEn": "Sandbox",
+      "definition": "Тестовая среда внешней системы",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "graceful-degradation",
+      "term": "Деградация",
+      "termEn": "Graceful degradation",
+      "definition": "Работа продукта в урезанном виде при отказе части системы",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "fallback",
+      "term": "План Б",
+      "termEn": "Fallback",
+      "definition": "Заранее спроектированное поведение при недоступности зависимости",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "response-cache",
+      "term": "Кэш ответа",
+      "termEn": "Response cache",
+      "definition": "Сохранённый ответ, используемый вместо повторного запроса",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "api-version",
+      "term": "Версия API",
+      "termEn": "API version",
+      "definition": "Обозначение поколения контракта",
+      "blockId": "IN1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "deprecation",
+      "term": "Устаревание",
+      "termEn": "Deprecation",
+      "definition": "Объявленное прекращение поддержки версии или операции",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "webhook",
+      "term": "Вебхук",
+      "termEn": "Webhook",
+      "definition": "Запрос от внешней системы к нам при наступлении события",
+      "blockId": "IN1",
+      "sourceLessonId": "in1-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "sla",
+      "term": "Соглашение об уровне сервиса",
+      "termEn": "SLA",
+      "definition": "Обещание провайдера о доступности и скорости ответа",
+      "blockId": "IN1",
+      "sourceLessonId": "in3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "api-style",
+      "term": "Стиль API",
+      "termEn": "API style",
+      "definition": "Общий подход к устройству контракта: REST, GraphQL, gRPC",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rest",
+      "term": "REST",
+      "termEn": "REST",
+      "definition": "Стиль, где операции строятся вокруг ресурсов и стандартных методов",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "resource",
+      "term": "Ресурс",
+      "termEn": "Resource",
+      "definition": "Объект, которым оперирует API: заказ, товар, магазин",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "graphql",
+      "term": "GraphQL",
+      "termEn": "GraphQL",
+      "definition": "Стиль, где клиент сам описывает, какие поля ему нужны",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "grpc",
+      "term": "gRPC",
+      "termEn": "gRPC",
+      "definition": "Стиль для быстрого обмена между сервисами, с бинарным форматом",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "over-fetching",
+      "term": "Избыточная выборка",
+      "termEn": "Over-fetching",
+      "definition": "Приходит больше данных, чем нужно экрану",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "under-fetching",
+      "term": "Недостаточная выборка",
+      "termEn": "Under-fetching",
+      "definition": "Для одного экрана приходится делать несколько запросов",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "query-schema",
+      "term": "Схема запроса",
+      "termEn": "Query schema",
+      "definition": "Описание доступных полей и типов в GraphQL",
+      "blockId": "IN2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "n1-problem",
+      "term": "Проблема N+1",
+      "termEn": "N+1 problem",
+      "definition": "Один запрос порождает по запросу на каждый элемент списка",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "breaking-change",
+      "term": "Ломающее изменение",
+      "termEn": "Breaking change",
+      "definition": "Изменение, после которого существующие клиенты перестают работать",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "additive-change",
+      "term": "Аддитивное изменение",
+      "termEn": "Additive change",
+      "definition": "Добавление, не ломающее существующих клиентов",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "migration-window",
+      "term": "Окно миграции",
+      "termEn": "Migration window",
+      "definition": "Период, когда старая и новая версии работают одновременно",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "tolerant-reader",
+      "term": "Толерантный читатель",
+      "termEn": "Tolerant reader",
+      "definition": "Клиент, игнорирующий незнакомые поля вместо падения",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "safe-idempotent-method",
+      "term": "Идемпотентный метод",
+      "termEn": "Safe / idempotent method",
+      "definition": "Метод, безопасный к повтору по своей природе: GET, PUT, DELETE",
+      "blockId": "IN2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "key-retention-window",
+      "term": "Окно ключа",
+      "termEn": "Key retention window",
+      "definition": "Срок, в течение которого сервер помнит ключ",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "queue",
+      "term": "Очередь",
+      "termEn": "Queue",
+      "definition": "Хранилище задач, которые будут обработаны позже",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "message",
+      "term": "Сообщение",
+      "termEn": "Message",
+      "definition": "Единица работы или уведомления в очереди",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "publisher-subscriber",
+      "term": "Издатель и подписчик",
+      "termEn": "Publisher / Subscriber",
+      "definition": "Тот, кто публикует событие, и тот, кто на него реагирует",
+      "blockId": "IN2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "event",
+      "term": "Событие",
+      "termEn": "Event",
+      "definition": "Сообщение о том, что нечто произошло",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "command",
+      "term": "Команда",
+      "termEn": "Command",
+      "definition": "Сообщение с указанием сделать нечто",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "at-most-once",
+      "term": "Не более одного раза",
+      "termEn": "At-most-once",
+      "definition": "Гарантия: сообщение может потеряться, но не продублируется",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "at-least-once",
+      "term": "Не менее одного раза",
+      "termEn": "At-least-once",
+      "definition": "Гарантия: сообщение не потеряется, но может прийти дважды",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "exactly-once",
+      "term": "Ровно один раз",
+      "termEn": "Exactly-once",
+      "definition": "Иллюзия, достижимая только идемпотентностью получателя",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "message-ordering",
+      "term": "Порядок сообщений",
+      "termEn": "Message ordering",
+      "definition": "Гарантия, что события придут в порядке возникновения",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "dead-letter-queue",
+      "term": "Очередь неудач",
+      "termEn": "Dead letter queue",
+      "definition": "Место для сообщений, которые не удалось обработать",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "queue-lag",
+      "term": "Отставание очереди",
+      "termEn": "Queue lag",
+      "definition": "Число необработанных сообщений и время их ожидания",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "backpressure",
+      "term": "Обратное давление",
+      "termEn": "Backpressure",
+      "definition": "Механизм замедления производителя, когда потребитель не успевает",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "polling-2",
+      "term": "Опрос",
+      "termEn": "Polling",
+      "definition": "Периодические запросы «что нового»",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "long-polling",
+      "term": "Длинный опрос",
+      "termEn": "Long polling",
+      "definition": "Запрос, который сервер держит открытым до появления новости",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "webhook-signature",
+      "term": "Подпись вебхука",
+      "termEn": "Webhook signature",
+      "definition": "Криптографическая подпись, подтверждающая отправителя",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "leaky-bucket",
+      "term": "Дырявое ведро",
+      "termEn": "Leaky bucket",
+      "definition": "Алгоритм сглаживания всплесков запросов",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "burst",
+      "term": "Всплеск",
+      "termEn": "Burst",
+      "definition": "Кратковременное превышение обычной частоты",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "throttling",
+      "term": "Троттлинг",
+      "termEn": "Throttling",
+      "definition": "Замедление вместо отказа при превышении лимита",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rate-limit-headers",
+      "term": "Заголовки лимита",
+      "termEn": "Rate limit headers",
+      "definition": "Поля ответа, сообщающие остаток лимита и время сброса",
+      "blockId": "IN2",
+      "sourceLessonId": "in2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "platform",
+      "term": "Платформа",
+      "termEn": "Platform",
+      "definition": "Продукт, ценность которого создаётся в том числе третьими сторонами",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "public-api",
+      "term": "Публичный API",
+      "termEn": "Public API",
+      "definition": "API, доступный сторонним разработчикам, а не только партнёрам по договору",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "ecosystem",
+      "term": "Экосистема",
+      "termEn": "Ecosystem",
+      "definition": "Совокупность внешних продуктов, построенных вокруг платформы",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "developer-experience",
+      "term": "Разработчик как пользователь",
+      "termEn": "Developer experience",
+      "definition": "Опыт интегратора: документация, песочница, ошибки, поддержка",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "api-key",
+      "term": "Ключ приложения",
+      "termEn": "API key",
+      "definition": "Идентификатор стороннего приложения, выдаваемый платформой",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "oauth",
+      "term": "OAuth",
+      "termEn": "OAuth",
+      "definition": "Механизм, позволяющий пользователю разрешить приложению действовать от его имени",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "scope",
+      "term": "Область доступа",
+      "termEn": "Scope",
+      "definition": "Ограниченный набор прав, которые запрашивает приложение",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "app-directory",
+      "term": "Каталог приложений",
+      "termEn": "App directory",
+      "definition": "Витрина сторонних интеграций для пользователей платформы",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "event-driven-architecture",
+      "term": "Событийная архитектура",
+      "termEn": "Event-driven architecture",
+      "definition": "Стиль, где компоненты реагируют на события, а не вызывают друг друга напрямую",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "event-bus",
+      "term": "Шина событий",
+      "termEn": "Event bus",
+      "definition": "Общий канал, через который публикуются и разбираются события",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "choreography",
+      "term": "Хореография",
+      "termEn": "Choreography",
+      "definition": "Каждый компонент сам решает, как реагировать на событие",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "orchestration",
+      "term": "Оркестрация",
+      "termEn": "Orchestration",
+      "definition": "Отдельный компонент управляет последовательностью шагов",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "traceability",
+      "term": "Прослеживаемость",
+      "termEn": "Traceability",
+      "definition": "Возможность восстановить цепочку событий по одному действию",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "correlation-id",
+      "term": "Сквозной идентификатор",
+      "termEn": "Correlation ID",
+      "definition": "Метка, проходящая через все шаги одной операции",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "observability",
+      "term": "Наблюдаемость",
+      "termEn": "Observability",
+      "definition": "Возможность понять состояние системы по её внешним сигналам",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "monolith",
+      "term": "Монолит",
+      "termEn": "Monolith",
+      "definition": "Приложение, разворачиваемое и выпускаемое целиком",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "microservice",
+      "term": "Микросервис",
+      "termEn": "Microservice",
+      "definition": "Отдельно разворачиваемый сервис с собственной зоной ответственности",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "bounded-context",
+      "term": "Ограниченный контекст",
+      "termEn": "Bounded context",
+      "definition": "Область, внутри которой термины имеют одно определённое значение",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "service-boundary",
+      "term": "Граница сервиса",
+      "termEn": "Service boundary",
+      "definition": "Линия, по которой система разделена на независимые части",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "distributed-monolith",
+      "term": "Распределённый монолит",
+      "termEn": "Distributed monolith",
+      "definition": "Сервисы, которые нельзя выпускать независимо друг от друга",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "coupling",
+      "term": "Связанность",
+      "termEn": "Coupling",
+      "definition": "Степень взаимозависимости частей системы",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "team-autonomy",
+      "term": "Автономность команды",
+      "termEn": "Team autonomy",
+      "definition": "Способность команды выпускать изменения, не согласуя с другими",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "conways-law",
+      "term": "Закон Конвея",
+      "termEn": "Conway's law",
+      "definition": "Архитектура системы повторяет структуру организации",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "forward-compatibility",
+      "term": "Прямая совместимость",
+      "termEn": "Forward compatibility",
+      "definition": "Свойство старых клиентов пережить будущие изменения",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "public-commitment",
+      "term": "Публичное обязательство",
+      "termEn": "Public commitment",
+      "definition": "Обещание не менять часть контракта, данное потребителям",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "deprecation-policy",
+      "term": "Политика устаревания",
+      "termEn": "Deprecation policy",
+      "definition": "Правила и сроки прекращения поддержки, объявленные заранее",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "service-credits",
+      "term": "Штрафные условия",
+      "termEn": "Service credits",
+      "definition": "Компенсация клиенту при нарушении SLA",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "security-review",
+      "term": "Аудит безопасности",
+      "termEn": "Security review",
+      "definition": "Проверка продукта службой безопасности клиента перед покупкой",
+      "blockId": "IN3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "vendor-questionnaire",
+      "term": "Опросник поставщика",
+      "termEn": "Vendor questionnaire",
+      "definition": "Список требований, который клиент присылает перед сделкой",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "subprocessor",
+      "term": "Субпроцессор",
+      "termEn": "Subprocessor",
+      "definition": "Третья сторона, обрабатывающая данные клиента по нашему поручению",
+      "blockId": "IN3",
+      "sourceLessonId": "in3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "load",
+      "term": "Нагрузка",
+      "termEn": "Load",
+      "definition": "Объём работы, приходящийся на систему за единицу времени",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rps",
+      "term": "Запросов в секунду",
+      "termEn": "RPS",
+      "definition": "Основная единица измерения нагрузки",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "concurrency",
+      "term": "Конкурентность",
+      "termEn": "Concurrency",
+      "definition": "Число операций, выполняющихся одновременно",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "peak",
+      "term": "Пик",
+      "termEn": "Peak",
+      "definition": "Период максимальной нагрузки",
+      "blockId": "SC1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "peak-to-average-ratio",
+      "term": "Коэффициент пика",
+      "termEn": "Peak-to-average ratio",
+      "definition": "Во сколько раз пик выше среднего",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "load-profile",
+      "term": "Профиль нагрузки",
+      "termEn": "Load profile",
+      "definition": "Форма распределения нагрузки во времени",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "spike",
+      "term": "Всплеск",
+      "termEn": "Spike",
+      "definition": "Резкий кратковременный рост нагрузки",
+      "blockId": "SC1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "thundering-herd",
+      "term": "Эффект грозди",
+      "termEn": "Thundering herd",
+      "definition": "Одновременный наплыв запросов после события или сбоя",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "scaling-up",
+      "term": "Вертикальное масштабирование",
+      "termEn": "Scaling up",
+      "definition": "Увеличение мощности одного сервера",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "scaling-out",
+      "term": "Горизонтальное масштабирование",
+      "termEn": "Scaling out",
+      "definition": "Добавление серверов",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "stateless",
+      "term": "Без состояния",
+      "termEn": "Stateless",
+      "definition": "Свойство сервиса не хранить данные между запросами",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "stateful",
+      "term": "С состоянием",
+      "termEn": "Stateful",
+      "definition": "Сервис, хранящий данные между запросами",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "bottleneck",
+      "term": "Узкое место",
+      "termEn": "Bottleneck",
+      "definition": "Компонент, ограничивающий пропускную способность всей системы",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "single-point-of-failure",
+      "term": "Единая точка отказа",
+      "termEn": "Single point of failure",
+      "definition": "Компонент, отказ которого останавливает всю систему",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "redundancy",
+      "term": "Резервирование",
+      "termEn": "Redundancy",
+      "definition": "Дублирование компонента для устойчивости к отказу",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cascading-failure",
+      "term": "Каскадный отказ",
+      "termEn": "Cascading failure",
+      "definition": "Отказ, распространяющийся от компонента к компоненту",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "bulkhead",
+      "term": "Отсечка",
+      "termEn": "Bulkhead",
+      "definition": "Изоляция частей системы, чтобы отказ не расползался",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cache",
+      "term": "Кэш",
+      "termEn": "Cache",
+      "definition": "Быстрая копия данных, чтобы не пересчитывать и не перезапрашивать",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cache-hit",
+      "term": "Попадание в кэш",
+      "termEn": "Cache hit",
+      "definition": "Данные нашлись в кэше",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cache-miss",
+      "term": "Промах",
+      "termEn": "Cache miss",
+      "definition": "Данных в кэше нет, идём к источнику",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "hit-rate",
+      "term": "Доля попаданий",
+      "termEn": "Hit rate",
+      "definition": "Доля запросов, обслуженных кэшем",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "invalidation",
+      "term": "Инвалидация",
+      "termEn": "Invalidation",
+      "definition": "Признание кэшированных данных устаревшими",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "ttl",
+      "term": "Время жизни",
+      "termEn": "TTL",
+      "definition": "Срок, после которого запись в кэше считается устаревшей",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cache-warming",
+      "term": "Прогрев",
+      "termEn": "Cache warming",
+      "definition": "Заполнение кэша заранее, до прихода нагрузки",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cache-stampede",
+      "term": "Лавина кэша",
+      "termEn": "Cache stampede",
+      "definition": "Одновременный промах у множества запросов при истечении TTL",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "kill-switch",
+      "term": "Аварийный переключатель",
+      "termEn": "Kill switch",
+      "definition": "Механизм быстрого отключения функции",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "traffic-prioritization",
+      "term": "Приоритет трафика",
+      "termEn": "Traffic prioritization",
+      "definition": "Обслуживание важных запросов за счёт второстепенных",
+      "blockId": "SC1",
+      "sourceLessonId": "sc1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "sli",
+      "term": "Индикатор уровня сервиса",
+      "termEn": "SLI",
+      "definition": "Измеряемая величина: доля успешных ответов, время ответа",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "slo",
+      "term": "Цель уровня сервиса",
+      "termEn": "SLO",
+      "definition": "Внутренняя цель по индикатору",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "error-budget",
+      "term": "Бюджет ошибок",
+      "termEn": "Error budget",
+      "definition": "Допустимая доля неуспеха, вытекающая из SLO",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "measurement-window",
+      "term": "Окно измерения",
+      "termEn": "Measurement window",
+      "definition": "Период, за который считается соблюдение цели",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "nines",
+      "term": "Девятки",
+      "termEn": "Nines",
+      "definition": "Разговорное обозначение уровня доступности",
+      "blockId": "SC2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "availability",
+      "term": "Доступность",
+      "termEn": "Availability",
+      "definition": "Доля времени, когда сервис выполняет свою функцию",
+      "blockId": "SC2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "successful-request",
+      "term": "Успешный запрос",
+      "termEn": "Successful request",
+      "definition": "Определение, что считается успехом; основа любого SLI",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "exponential-backoff",
+      "term": "Экспоненциальная задержка",
+      "termEn": "Exponential backoff",
+      "definition": "Рост паузы между повторами",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "jitter",
+      "term": "Разброс",
+      "termEn": "Jitter",
+      "definition": "Случайная добавка к задержке, чтобы повторы не совпали",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "circuit-breaker",
+      "term": "Размыкатель",
+      "termEn": "Circuit breaker",
+      "definition": "Механизм прекращения вызовов к отказавшему компоненту",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "half-open",
+      "term": "Полуоткрытое состояние",
+      "termEn": "Half-open",
+      "definition": "Пробные вызовы для проверки, восстановился ли компонент",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "retry-storm",
+      "term": "Шторм повторов",
+      "termEn": "Retry storm",
+      "definition": "Лавина повторов, добивающая и без того перегруженный сервис",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "load-balancer",
+      "term": "Балансировщик",
+      "termEn": "Load balancer",
+      "definition": "Компонент, распределяющий запросы между экземплярами",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "health-check",
+      "term": "Проверка здоровья",
+      "termEn": "Health check",
+      "definition": "Регулярный опрос экземпляра на предмет работоспособности",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "graceful-shutdown",
+      "term": "Плавное выведение",
+      "termEn": "Graceful shutdown",
+      "definition": "Завершение работы экземпляра без обрыва текущих запросов",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "autoscaling",
+      "term": "Автомасштабирование",
+      "termEn": "Autoscaling",
+      "definition": "Автоматическое изменение числа экземпляров под нагрузку",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "scaling-threshold",
+      "term": "Порог масштабирования",
+      "termEn": "Scaling threshold",
+      "definition": "Условие, при котором добавляются или убираются экземпляры",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "warm-up-time",
+      "term": "Время подъёма",
+      "termEn": "Warm-up time",
+      "definition": "Срок от решения добавить экземпляр до его готовности",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "headroom",
+      "term": "Резерв мощности",
+      "termEn": "Headroom",
+      "definition": "Запас, оставляемый сверх текущей нагрузки",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n4-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "load-shedding",
+      "term": "Сброс нагрузки",
+      "termEn": "Load shedding",
+      "definition": "Осознанный отказ части запросов ради работоспособности остальных",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "waiting-queue",
+      "term": "Очередь ожидания",
+      "termEn": "Waiting queue",
+      "definition": "Буфер запросов перед обработкой",
+      "blockId": "SC2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "incident",
+      "term": "Инцидент",
+      "termEn": "Incident",
+      "definition": "Событие, нарушающее работу продукта для пользователей",
+      "blockId": "SC2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "severity",
+      "term": "Уровень серьёзности",
+      "termEn": "Severity",
+      "definition": "Классификация инцидента по масштабу последствий",
+      "blockId": "SC2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "time-to-detect",
+      "term": "Время обнаружения",
+      "termEn": "Time to detect",
+      "definition": "От начала проблемы до её обнаружения",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "time-to-recover",
+      "term": "Время восстановления",
+      "termEn": "Time to recover",
+      "definition": "От обнаружения до восстановления работы",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "postmortem",
+      "term": "Постмортем",
+      "termEn": "Postmortem",
+      "definition": "Разбор инцидента с выводами и действиями",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "blameless-postmortem",
+      "term": "Разбор без обвинений",
+      "termEn": "Blameless postmortem",
+      "definition": "Практика разбора, направленная на систему, а не на людей",
+      "blockId": "SC2",
+      "sourceLessonId": "sc2-n6-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "on-call",
+      "term": "Дежурство",
+      "termEn": "On-call",
+      "definition": "Организованная готовность реагировать на инциденты",
+      "blockId": "SC2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "criticality",
+      "term": "Критичность сценария",
+      "termEn": "Criticality",
+      "definition": "Мера того, насколько отказ сценария вредит пользователю и бизнесу",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "perceptibility-threshold",
+      "term": "Порог заметности",
+      "termEn": "Perceptibility threshold",
+      "definition": "Уровень сбоя, ниже которого пользователь не замечает",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "disaster-recovery",
+      "term": "Восстановление после катастрофы",
+      "termEn": "Disaster recovery",
+      "definition": "Возвращение к работе после потери инфраструктуры или данных",
+      "blockId": "SC3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "rto",
+      "term": "Целевое время восстановления",
+      "termEn": "RTO",
+      "definition": "За сколько обязаны восстановиться",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rpo",
+      "term": "Целевая точка восстановления",
+      "termEn": "RPO",
+      "definition": "Сколько данных допустимо потерять",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "backup",
+      "term": "Резервная копия",
+      "termEn": "Backup",
+      "definition": "Снимок данных для восстановления",
+      "blockId": "SC3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "restore-drill",
+      "term": "Проверка восстановления",
+      "termEn": "Restore drill",
+      "definition": "Учебное восстановление из копии",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "wal",
+      "term": "Журнал упреждающей записи",
+      "termEn": "WAL",
+      "definition": "Журнал изменений, позволяющий восстановиться на момент времени",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "point-in-time-recovery",
+      "term": "Восстановление на момент",
+      "termEn": "Point-in-time recovery",
+      "definition": "Возврат состояния базы к произвольной минуте прошлого",
+      "blockId": "SC3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "availability-zone",
+      "term": "Зона доступности",
+      "termEn": "Availability zone",
+      "definition": "Изолированный сегмент инфраструктуры внутри региона",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "region",
+      "term": "Регион",
+      "termEn": "Region",
+      "definition": "Географически обособленная инфраструктура",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "active-passive",
+      "term": "Активный-пассивный",
+      "termEn": "Active-passive",
+      "definition": "Вторая площадка в резерве, включается при отказе",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "active-active",
+      "term": "Активный-активный",
+      "termEn": "Active-active",
+      "definition": "Обе площадки обслуживают трафик одновременно",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "failover",
+      "term": "Переключение",
+      "termEn": "Failover",
+      "definition": "Перевод нагрузки на резервную площадку",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "failback",
+      "term": "Возврат",
+      "termEn": "Failback",
+      "definition": "Возвращение на основную площадку",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "split-brain",
+      "term": "Расщепление",
+      "termEn": "Split-brain",
+      "definition": "Обе площадки считают себя главными и расходятся в данных",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "capacity-planning",
+      "term": "Планирование мощности",
+      "termEn": "Capacity planning",
+      "definition": "Расчёт ресурсов под ожидаемую нагрузку",
+      "blockId": "SC3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "load-testing",
+      "term": "Нагрузочное тестирование",
+      "termEn": "Load testing",
+      "definition": "Проверка поведения системы под заданной нагрузкой",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "stress-testing",
+      "term": "Стресс-тестирование",
+      "termEn": "Stress testing",
+      "definition": "Поиск точки, где система ломается",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "game-day",
+      "term": "Проверка в бою",
+      "termEn": "Game day",
+      "definition": "Учебный отказ на реальной системе",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "chaos-engineering",
+      "term": "Хаос-инжиниринг",
+      "termEn": "Chaos engineering",
+      "definition": "Практика намеренного внесения отказов для проверки устойчивости",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cost-of-downtime",
+      "term": "Стоимость простоя",
+      "termEn": "Cost of downtime",
+      "definition": "Ущерб за единицу времени недоступности",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "term-3",
+      "term": "Точка окупаемости надёжности",
+      "termEn": "—",
+      "definition": "Уровень, выше которого вложения в надёжность дороже предотвращаемого ущерба",
+      "blockId": "SC3",
+      "sourceLessonId": "sc3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "latency",
+      "term": "Задержка",
+      "termEn": "Latency",
+      "definition": "Время от запроса до ответа",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "throughput",
+      "term": "Пропускная способность",
+      "termEn": "Throughput",
+      "definition": "Сколько работы система выполняет за единицу времени",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "percentile",
+      "term": "Перцентиль",
+      "termEn": "Percentile",
+      "definition": "Значение, ниже которого лежит заданная доля измерений",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "median",
+      "term": "p50, медиана",
+      "termEn": "Median",
+      "definition": "Половина запросов быстрее, половина медленнее",
+      "blockId": "PF1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "term-4",
+      "term": "p95 / p99",
+      "termEn": "—",
+      "definition": "95% и 99% запросов быстрее этого значения",
+      "blockId": "PF1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "tail-latency",
+      "term": "Хвост распределения",
+      "termEn": "Tail latency",
+      "definition": "Самые медленные запросы, обычно 1–5%",
+      "blockId": "PF1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "mean",
+      "term": "Среднее",
+      "termEn": "Mean",
+      "definition": "Сумма делить на количество; для времени ответа обманчиво",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "histogram",
+      "term": "Гистограмма",
+      "termEn": "Histogram",
+      "definition": "Распределение времени ответа по интервалам",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "request-path",
+      "term": "Путь запроса",
+      "termEn": "Request path",
+      "definition": "Последовательность шагов от действия до результата",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "distributed-tracing",
+      "term": "Трассировка",
+      "termEn": "Distributed tracing",
+      "definition": "Запись пути запроса через все компоненты с таймингами",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "ttfb",
+      "term": "Время до первого байта",
+      "termEn": "TTFB",
+      "definition": "От запроса до начала получения ответа",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "time-to-render",
+      "term": "Время до отрисовки",
+      "termEn": "Time to render",
+      "definition": "До появления содержимого на экране",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "time-to-interactive",
+      "term": "Время до интерактивности",
+      "termEn": "Time to interactive",
+      "definition": "До момента, когда с экраном можно работать",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "round-trip-time",
+      "term": "Круговая задержка",
+      "termEn": "Round trip time, RTT",
+      "definition": "Время прохождения сигнала туда и обратно",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "connection-setup",
+      "term": "Установление соединения",
+      "termEn": "Connection setup",
+      "definition": "Затраты на открытие соединения до передачи данных",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cold-start",
+      "term": "Холодный старт",
+      "termEn": "Cold start",
+      "definition": "Первый запуск, когда кэши пусты и соединения не установлены",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "perceived-performance",
+      "term": "Восприятие скорости",
+      "termEn": "Perceived performance",
+      "definition": "Насколько быстрым продукт кажется, а не является",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "skeleton-screen",
+      "term": "Скелетон",
+      "termEn": "Skeleton screen",
+      "definition": "Заглушка формы контента во время загрузки",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "responsiveness",
+      "term": "Отзывчивость",
+      "termEn": "Responsiveness",
+      "definition": "Скорость реакции интерфейса на действие",
+      "blockId": "PF1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "jank",
+      "term": "Заикание",
+      "termEn": "Jank",
+      "definition": "Рывки анимации из-за пропущенных кадров",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "bandwidth",
+      "term": "Полоса пропускания",
+      "termEn": "Bandwidth",
+      "definition": "Объём данных, передаваемых за секунду",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cellular-network",
+      "term": "Мобильная сеть",
+      "termEn": "Cellular network",
+      "definition": "Сеть с высокой и нестабильной задержкой",
+      "blockId": "PF1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "proximity",
+      "term": "Географическая близость",
+      "termEn": "Proximity",
+      "definition": "Расстояние между пользователем и сервером",
+      "blockId": "PF1",
+      "sourceLessonId": "pf1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "latency-budget",
+      "term": "Бюджет задержки",
+      "termEn": "Latency budget",
+      "definition": "Распределение целевого времени по компонентам пути",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "amdahls-law",
+      "term": "Закон Амдала",
+      "termEn": "Amdahl's law",
+      "definition": "Ускорение части ограничено долей этой части в целом",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "profiling",
+      "term": "Профилирование",
+      "termEn": "Profiling",
+      "definition": "Измерение, на что расходуется время внутри компонента",
+      "blockId": "PF2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "parallelism",
+      "term": "Параллельное выполнение",
+      "termEn": "Parallelism",
+      "definition": "Одновременное выполнение независимых шагов",
+      "blockId": "PF2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "critical-path",
+      "term": "Критический путь",
+      "termEn": "Critical path",
+      "definition": "Самая длинная цепочка зависимых шагов",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cdn",
+      "term": "Сеть доставки содержимого",
+      "termEn": "CDN",
+      "definition": "Сеть серверов, отдающих статику ближе к пользователю",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "pop",
+      "term": "Точка присутствия",
+      "termEn": "PoP",
+      "definition": "Узел CDN в конкретной географии",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "static-assets",
+      "term": "Статика",
+      "termEn": "Static assets",
+      "definition": "Файлы, не меняющиеся между запросами",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "back-of-the-envelope",
+      "term": "Оценка на салфетке",
+      "termEn": "Back-of-the-envelope",
+      "definition": "Быстрая прикидка порядка величины",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "order-of-magnitude",
+      "term": "Порядок величины",
+      "termEn": "Order of magnitude",
+      "definition": "Степень десяти, к которой относится результат",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "unit-cost",
+      "term": "Единичная стоимость",
+      "termEn": "Unit cost",
+      "definition": "Стоимость одной единицы: запроса, пользователя, заказа",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cost-per-active-user",
+      "term": "Стоимость на активного пользователя",
+      "termEn": "Cost per active user",
+      "definition": "Инфраструктурные расходы, делённые на активных",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "gross-margin",
+      "term": "Валовая маржа",
+      "termEn": "Gross margin",
+      "definition": "Доля выручки, остающаяся после прямых затрат",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "fixed-variable-costs",
+      "term": "Постоянные и переменные затраты",
+      "termEn": "Fixed / variable costs",
+      "definition": "Не зависящие и зависящие от объёма",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "economies-of-scale",
+      "term": "Эффект масштаба",
+      "termEn": "Economies of scale",
+      "definition": "Снижение единичной стоимости с ростом объёма",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "premature-optimization",
+      "term": "Преждевременная оптимизация",
+      "termEn": "Premature optimization",
+      "definition": "Ускорение того, что не является проблемой",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "significance-threshold",
+      "term": "Порог значимости",
+      "termEn": "Significance threshold",
+      "definition": "Уровень улучшения, ниже которого оно не окупает работы",
+      "blockId": "PF2",
+      "sourceLessonId": "pf2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cost-model",
+      "term": "Модель затрат",
+      "termEn": "Cost model",
+      "definition": "Разложение расходов по драйверам, позволяющее прогнозировать",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cost-driver",
+      "term": "Драйвер затрат",
+      "termEn": "Cost driver",
+      "definition": "Величина, от которой расходы зависят напрямую",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cost-allocation",
+      "term": "Аллокация затрат",
+      "termEn": "Cost allocation",
+      "definition": "Отнесение общих расходов на команды, фичи или клиентов",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tagging",
+      "term": "Разметка ресурсов",
+      "termEn": "Tagging",
+      "definition": "Пометки на ресурсах, позволяющие разложить счёт",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "finops",
+      "term": "Финансовое управление облаком",
+      "termEn": "FinOps",
+      "definition": "Практика совместного управления облачными расходами",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "reserved-capacity",
+      "term": "Зарезервированная мощность",
+      "termEn": "Reserved capacity",
+      "definition": "Предоплаченные ресурсы по сниженной цене",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "spot-instances",
+      "term": "Прерываемые ресурсы",
+      "termEn": "Spot instances",
+      "definition": "Дешёвые ресурсы, которые могут быть отобраны",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "utilization",
+      "term": "Утилизация",
+      "termEn": "Utilization",
+      "definition": "Доля используемой мощности от оплаченной",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "idle-resources",
+      "term": "Простаивающие ресурсы",
+      "termEn": "Idle resources",
+      "definition": "Оплаченное и не используемое",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cost-to-serve",
+      "term": "Стоимость обслуживания клиента",
+      "termEn": "Cost to serve",
+      "definition": "Полные затраты на обслуживание одного клиента",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "build-vs-buy",
+      "term": "Своё или купить",
+      "termEn": "Build vs buy",
+      "definition": "Выбор между собственной разработкой и готовым решением",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tco",
+      "term": "Совокупная стоимость владения",
+      "termEn": "TCO",
+      "definition": "Все затраты за срок жизни решения, а не только внедрение",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "vendor-lock-in",
+      "term": "Привязка к поставщику",
+      "termEn": "Vendor lock-in",
+      "definition": "Зависимость, делающая смену поставщика дорогой",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "switching-cost",
+      "term": "Стоимость переключения",
+      "termEn": "Switching cost",
+      "definition": "Цена перехода на другое решение",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "technical-debt",
+      "term": "Технический долг",
+      "termEn": "Technical debt",
+      "definition": "Накопленное отставание реализации от потребностей",
+      "blockId": "PF3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "interest-on-debt",
+      "term": "Процент по долгу",
+      "termEn": "Interest on debt",
+      "definition": "Постоянная переплата, вызванная долгом",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "nfr",
+      "term": "Нефункциональные требования",
+      "termEn": "NFR",
+      "definition": "Требования к свойствам системы, а не к её функциям",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "performance-acceptance-criteria",
+      "term": "Критерий приёмки по производительности",
+      "termEn": "Performance acceptance criteria",
+      "definition": "Проверяемое условие, при котором фича считается готовой",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "performance-regression",
+      "term": "Регрессия производительности",
+      "termEn": "Performance regression",
+      "definition": "Ухудшение скорости после изменения",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "performance-budget-in-ci",
+      "term": "Бюджет в конвейере",
+      "termEn": "Performance budget in CI",
+      "definition": "Автоматическая проверка, не превышены ли лимиты",
+      "blockId": "PF3",
+      "sourceLessonId": "pf3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "llm",
+      "term": "Языковая модель",
+      "termEn": "LLM",
+      "definition": "Модель, предсказывающая продолжение текста",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "token",
+      "term": "Токен",
+      "termEn": "Token",
+      "definition": "Единица текста для модели: часть слова, слово или знак",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tokenization",
+      "term": "Токенизация",
+      "termEn": "Tokenization",
+      "definition": "Разбиение текста на токены",
+      "blockId": "AI1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "prompt",
+      "term": "Промпт",
+      "termEn": "Prompt",
+      "definition": "Всё, что подано модели на вход",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "system-prompt",
+      "term": "Системная инструкция",
+      "termEn": "System prompt",
+      "definition": "Часть промпта, задающая роль и правила",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "context",
+      "term": "Контекст",
+      "termEn": "Context",
+      "definition": "Совокупность текста, который модель видит при генерации",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "context-window",
+      "term": "Контекстное окно",
+      "termEn": "Context window",
+      "definition": "Максимальный объём контекста в токенах",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "training",
+      "term": "Обучение",
+      "termEn": "Training",
+      "definition": "Настройка весов модели на данных",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "inference",
+      "term": "Инференс",
+      "termEn": "Inference",
+      "definition": "Выполнение модели для получения ответа",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "weights",
+      "term": "Веса",
+      "termEn": "Weights",
+      "definition": "Параметры модели, полученные при обучении",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "fine-tuning",
+      "term": "Дообучение",
+      "termEn": "Fine-tuning",
+      "definition": "Дополнительная настройка модели на своих данных",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "temperature",
+      "term": "Температура",
+      "termEn": "Temperature",
+      "definition": "Параметр, влияющий на разнообразие ответов",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "non-determinism",
+      "term": "Недетерминированность",
+      "termEn": "Non-determinism",
+      "definition": "Свойство давать разные ответы на одинаковый вход",
+      "blockId": "AI1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "sampling",
+      "term": "Сэмплирование",
+      "termEn": "Sampling",
+      "definition": "Выбор следующего токена из распределения вероятностей",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "streaming-2",
+      "term": "Стриминг",
+      "termEn": "Streaming",
+      "definition": "Выдача ответа по мере генерации, а не целиком",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "ttft",
+      "term": "Время до первого токена",
+      "termEn": "TTFT",
+      "definition": "От запроса до появления первого фрагмента ответа",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tokens-per-second",
+      "term": "Токенов в секунду",
+      "termEn": "Tokens per second",
+      "definition": "Скорость генерации после первого токена",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "prefill",
+      "term": "Предзаполнение",
+      "termEn": "Prefill",
+      "definition": "Обработка входного промпта перед генерацией",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "decode",
+      "term": "Декодирование",
+      "termEn": "Decode",
+      "definition": "Пошаговая генерация ответа",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "kv-cache",
+      "term": "Кэш ключей и значений",
+      "termEn": "KV cache",
+      "definition": "Промежуточное состояние, ускоряющее продолжение генерации",
+      "blockId": "AI1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "prompt-caching",
+      "term": "Кэширование промпта",
+      "termEn": "Prompt caching",
+      "definition": "Переиспользование обработанной части промпта между запросами",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "batching",
+      "term": "Пакетирование",
+      "termEn": "Batching",
+      "definition": "Обработка нескольких запросов вместе для эффективности",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "truncation",
+      "term": "Обрезка контекста",
+      "termEn": "Truncation",
+      "definition": "Удаление части контекста при превышении окна",
+      "blockId": "AI1",
+      "sourceLessonId": "ai1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "multimodality",
+      "term": "Мультимодальность",
+      "termEn": "Multimodality",
+      "definition": "Способность принимать не только текст: изображения, звук",
+      "blockId": "AI1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "model-provider",
+      "term": "Провайдер модели",
+      "termEn": "Model provider",
+      "definition": "Компания, предоставляющая доступ к модели через API",
+      "blockId": "AI1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "rag",
+      "term": "Поиск с дополнением",
+      "termEn": "RAG",
+      "definition": "Подход, при котором релевантные данные находятся и кладутся в контекст",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "indexing",
+      "term": "Индексация",
+      "termEn": "Indexing",
+      "definition": "Подготовка корпуса данных для поиска",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "chunk",
+      "term": "Фрагмент",
+      "termEn": "Chunk",
+      "definition": "Кусок документа, помещаемый в индекс и в контекст",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "chunking",
+      "term": "Нарезка",
+      "termEn": "Chunking",
+      "definition": "Разбиение документов на фрагменты",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "embedding",
+      "term": "Эмбеддинг",
+      "termEn": "Embedding",
+      "definition": "Числовое представление текста, отражающее его смысл",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "vector-search",
+      "term": "Векторный поиск",
+      "termEn": "Vector search",
+      "definition": "Поиск по близости эмбеддингов",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "vector-database",
+      "term": "Векторная база",
+      "termEn": "Vector database",
+      "definition": "Хранилище эмбеддингов с поиском по близости",
+      "blockId": "AI2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "hybrid-search",
+      "term": "Гибридный поиск",
+      "termEn": "Hybrid search",
+      "definition": "Сочетание векторного и обычного текстового поиска",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "reranking",
+      "term": "Переранжирование",
+      "termEn": "Reranking",
+      "definition": "Уточнение порядка найденного отдельной моделью",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "recall",
+      "term": "Полнота",
+      "termEn": "Recall",
+      "definition": "Доля релевантного, которое удалось найти",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "precision",
+      "term": "Точность",
+      "termEn": "Precision",
+      "definition": "Доля релевантного среди найденного",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "evaluation",
+      "term": "Оценка качества",
+      "termEn": "Evaluation, eval",
+      "definition": "Систематическая проверка качества ответов",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "eval-set",
+      "term": "Набор для оценки",
+      "termEn": "Eval set",
+      "definition": "Фиксированный набор примеров с ожидаемыми свойствами",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "llm-as-judge",
+      "term": "Модель-судья",
+      "termEn": "LLM-as-judge",
+      "definition": "Использование модели для оценки ответов другой модели",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "golden-answer",
+      "term": "Золотой ответ",
+      "termEn": "Golden answer",
+      "definition": "Эталон, с которым сравнивается результат",
+      "blockId": "AI2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "quality-regression",
+      "term": "Регрессия качества",
+      "termEn": "Quality regression",
+      "definition": "Ухудшение после изменения промпта или модели",
+      "blockId": "AI2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "hallucination",
+      "term": "Галлюцинация",
+      "termEn": "Hallucination",
+      "definition": "Уверенное утверждение, не подкреплённое данными",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "grounding",
+      "term": "Заземление",
+      "termEn": "Grounding",
+      "definition": "Привязка ответа к предоставленным данным",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "guardrails",
+      "term": "Ограждения",
+      "termEn": "Guardrails",
+      "definition": "Правила и проверки, ограничивающие поведение модели",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "prompt-injection",
+      "term": "Инъекция в промпт",
+      "termEn": "Prompt injection",
+      "definition": "Попытка управлять моделью через данные, которые она читает",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n5-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "tool-use",
+      "term": "Вызов инструмента",
+      "termEn": "Tool use, function calling",
+      "definition": "Способность модели вызвать функцию продукта",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "agent",
+      "term": "Агент",
+      "termEn": "Agent",
+      "definition": "Система, где модель планирует и выполняет цепочку действий",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "human-in-the-loop",
+      "term": "Человек в контуре",
+      "termEn": "Human in the loop",
+      "definition": "Обязательное подтверждение человеком перед действием",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n6-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "price-per-1k-tokens",
+      "term": "Стоимость на тысячу токенов",
+      "termEn": "Price per 1K tokens",
+      "definition": "Единица тарификации моделей",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "routing",
+      "term": "Маршрутизация",
+      "termEn": "Routing",
+      "definition": "Выбор модели под конкретный запрос",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "distillation",
+      "term": "Дистилляция",
+      "termEn": "Distillation",
+      "definition": "Получение маленькой модели, повторяющей поведение большой",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "quantization",
+      "term": "Квантизация",
+      "termEn": "Quantization",
+      "definition": "Уменьшение точности весов ради скорости и памяти",
+      "blockId": "AI2",
+      "sourceLessonId": "ai2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "quality-cost-latency-triangle",
+      "term": "Треугольник компромисса",
+      "termEn": "Quality-cost-latency triangle",
+      "definition": "Взаимный размен качества, стоимости и скорости",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "model-tier",
+      "term": "Класс модели",
+      "termEn": "Model tier",
+      "definition": "Условный уровень: малая, средняя, флагманская",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "reasoning-model",
+      "term": "Рассуждающая модель",
+      "termEn": "Reasoning model",
+      "definition": "Модель, тратящая дополнительные токены на обдумывание перед ответом",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "reasoning-budget",
+      "term": "Бюджет рассуждения",
+      "termEn": "Reasoning budget",
+      "definition": "Ограничение на объём внутреннего обдумывания",
+      "blockId": "AI3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "model-cascade",
+      "term": "Каскад моделей",
+      "termEn": "Model cascade",
+      "definition": "Сначала дешёвая, при неуверенности — дорогая",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "ai-fallback",
+      "term": "Деградация AI",
+      "termEn": "AI fallback",
+      "definition": "Поведение продукта при недоступности или отказе модели",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "refusal",
+      "term": "Отказ модели",
+      "termEn": "Refusal",
+      "definition": "Отказ модели отвечать на запрос",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "self-hosting",
+      "term": "Собственный инференс",
+      "termEn": "Self-hosting",
+      "definition": "Запуск модели на своей инфраструктуре",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "open-weights",
+      "term": "Открытые веса",
+      "termEn": "Open weights",
+      "definition": "Модель, веса которой доступны для скачивания",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "gpu-accelerator",
+      "term": "Ускоритель",
+      "termEn": "GPU / accelerator",
+      "definition": "Оборудование для выполнения моделей",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "gpu-utilization",
+      "term": "Утилизация ускорителя",
+      "termEn": "GPU utilization",
+      "definition": "Доля используемой мощности оборудования",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "training-on-customer-data",
+      "term": "Обучение на данных клиента",
+      "termEn": "Training on customer data",
+      "definition": "Использование данных пользователей для улучшения модели",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "opt-out",
+      "term": "Отказ от использования данных",
+      "termEn": "Opt-out",
+      "definition": "Возможность запретить использование своих данных",
+      "blockId": "AI3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "zero-data-retention",
+      "term": "Нулевое хранение",
+      "termEn": "Zero data retention",
+      "definition": "Режим, при котором провайдер не сохраняет запросы",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "dpa",
+      "term": "Соглашение об обработке данных",
+      "termEn": "DPA",
+      "definition": "Договор об условиях обработки персональных данных",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "model-version",
+      "term": "Версия модели",
+      "termEn": "Model version",
+      "definition": "Конкретная зафиксированная версия, влияющая на поведение",
+      "blockId": "AI3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "version-pinning",
+      "term": "Закрепление версии",
+      "termEn": "Version pinning",
+      "definition": "Явное указание версии вместо автоматического обновления",
+      "blockId": "AI3",
+      "sourceLessonId": "ai3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "authentication",
+      "term": "Аутентификация",
+      "termEn": "Authentication",
+      "definition": "Установление того, кто перед нами",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "authorization",
+      "term": "Авторизация",
+      "termEn": "Authorization",
+      "definition": "Определение, что этому субъекту разрешено",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "authentication-factor",
+      "term": "Фактор",
+      "termEn": "Authentication factor",
+      "definition": "Способ подтверждения: знание, владение, свойство",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "2fa-mfa",
+      "term": "Двухфакторная аутентификация",
+      "termEn": "2FA / MFA",
+      "definition": "Подтверждение двумя разными факторами",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "session",
+      "term": "Сессия",
+      "termEn": "Session",
+      "definition": "Состояние авторизованного присутствия пользователя",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "refresh-token",
+      "term": "Токен обновления",
+      "termEn": "Refresh token",
+      "definition": "Долгоживущий ключ для получения новых токенов доступа",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "sso",
+      "term": "Единый вход",
+      "termEn": "SSO",
+      "definition": "Вход в несколько систем через один центральный",
+      "blockId": "SE1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "revocation",
+      "term": "Отзыв доступа",
+      "termEn": "Revocation",
+      "definition": "Прекращение действия выданного доступа",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "encryption-in-transit",
+      "term": "Шифрование в транзите",
+      "termEn": "Encryption in transit",
+      "definition": "Защита данных при передаче",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "encryption-at-rest",
+      "term": "Шифрование на диске",
+      "termEn": "Encryption at rest",
+      "definition": "Защита сохранённых данных",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tls",
+      "term": "TLS",
+      "termEn": "TLS",
+      "definition": "Протокол защиты передачи данных",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "end-to-end-encryption",
+      "term": "Сквозное шифрование",
+      "termEn": "End-to-end encryption",
+      "definition": "Данные читаемы только отправителю и получателю",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "hashing",
+      "term": "Хеширование",
+      "termEn": "Hashing",
+      "definition": "Необратимое преобразование, применяется к паролям",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "salt",
+      "term": "Соль",
+      "termEn": "Salt",
+      "definition": "Случайная добавка к паролю перед хешированием",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "personal-data",
+      "term": "Персональные данные",
+      "termEn": "Personal data",
+      "definition": "Данные, относящиеся к определённому человеку",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "special-categories",
+      "term": "Специальные категории",
+      "termEn": "Special categories",
+      "definition": "Данные о здоровье, убеждениях и подобное, с повышенной защитой",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "identifiability",
+      "term": "Идентифицируемость",
+      "termEn": "Identifiability",
+      "definition": "Возможность связать данные с конкретным человеком",
+      "blockId": "SE1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "quasi-identifiers",
+      "term": "Косвенные идентификаторы",
+      "termEn": "Quasi-identifiers",
+      "definition": "Данные, вместе позволяющие узнать человека",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "re-identification",
+      "term": "Деанонимизация",
+      "termEn": "Re-identification",
+      "definition": "Восстановление личности из обезличенных данных",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "data-breach",
+      "term": "Утечка",
+      "termEn": "Data breach",
+      "definition": "Несанкционированный доступ к данным",
+      "blockId": "SE1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "attack-vector",
+      "term": "Вектор атаки",
+      "termEn": "Attack vector",
+      "definition": "Путь, которым злоумышленник получает доступ",
+      "blockId": "SE1",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "social-engineering",
+      "term": "Социальная инженерия",
+      "termEn": "Social engineering",
+      "definition": "Получение доступа обманом человека",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "excessive-privileges",
+      "term": "Избыточные права",
+      "termEn": "Excessive privileges",
+      "definition": "Доступ шире необходимого",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "secret",
+      "term": "Секрет",
+      "termEn": "Secret",
+      "definition": "Ключ, пароль, токен, дающий доступ к системе",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "secret-manager",
+      "term": "Хранилище секретов",
+      "termEn": "Secret manager",
+      "definition": "Система хранения и выдачи секретов",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rotation",
+      "term": "Ротация",
+      "termEn": "Rotation",
+      "definition": "Регулярная замена секретов",
+      "blockId": "SE1",
+      "sourceLessonId": "se1-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "rbac",
+      "term": "Ролевая модель",
+      "termEn": "RBAC",
+      "definition": "Права выдаются через роли",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "abac",
+      "term": "Атрибутная модель",
+      "termEn": "ABAC",
+      "definition": "Права вычисляются по атрибутам субъекта и объекта",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "delegation",
+      "term": "Делегирование",
+      "termEn": "Delegation",
+      "definition": "Передача части своих прав другому",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "guest-access",
+      "term": "Гостевой доступ",
+      "termEn": "Guest access",
+      "definition": "Ограниченный доступ для внешнего участника",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "privilege-escalation",
+      "term": "Повышение прав",
+      "termEn": "Privilege escalation",
+      "definition": "Получение доступа шире назначенного",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "just-in-time-access",
+      "term": "Временный доступ",
+      "termEn": "Just-in-time access",
+      "definition": "Права, выдаваемые на срок под задачу",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "separation-of-duties",
+      "term": "Разделение обязанностей",
+      "termEn": "Separation of duties",
+      "definition": "Запрет одному лицу выполнять весь чувствительный процесс",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "audit-log",
+      "term": "Журнал действий",
+      "termEn": "Audit log",
+      "definition": "Неизменяемая запись о том, кто что сделал",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "tamper-evidence",
+      "term": "Неизменяемость журнала",
+      "termEn": "Tamper-evidence",
+      "definition": "Свойство журнала, при котором правка обнаруживается",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "access-traceability",
+      "term": "Прослеживаемость доступа",
+      "termEn": "Access traceability",
+      "definition": "Возможность восстановить, кто видел данные",
+      "blockId": "SE2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "data-minimisation",
+      "term": "Минимизация данных",
+      "termEn": "Data minimisation",
+      "definition": "Сбор и хранение только необходимого",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "purpose-limitation",
+      "term": "Ограничение цели",
+      "termEn": "Purpose limitation",
+      "definition": "Использование данных только для заявленной цели",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "pseudonymisation",
+      "term": "Псевдонимизация",
+      "termEn": "Pseudonymisation",
+      "definition": "Замена идентификатора условным, обратимая при наличии ключа",
+      "blockId": "SE2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "anonymisation",
+      "term": "Анонимизация",
+      "termEn": "Anonymisation",
+      "definition": "Необратимый разрыв связи с человеком",
+      "blockId": "SE2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "k-anonymity",
+      "term": "k-анонимность",
+      "termEn": "k-anonymity",
+      "definition": "Свойство, при котором запись неотличима от k−1 других",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "aggregation",
+      "term": "Агрегация",
+      "termEn": "Aggregation",
+      "definition": "Замена отдельных записей сводными показателями",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "aggregation-threshold",
+      "term": "Порог агрегации",
+      "termEn": "Aggregation threshold",
+      "definition": "Минимальный размер группы, ниже которого показатель не показывается",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n3-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "tombstone",
+      "term": "Тумбстоун",
+      "termEn": "Tombstone",
+      "definition": "Запись о факте удаления, остающаяся после стирания",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "cascade-delete-2",
+      "term": "Каскад удаления",
+      "termEn": "Cascade delete",
+      "definition": "Автоматическое удаление связанных записей",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n4-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "controller-processor",
+      "term": "Оператор и обработчик",
+      "termEn": "Controller / Processor",
+      "definition": "Тот, кто определяет цели обработки, и тот, кто обрабатывает по поручению",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "third-party-sharing",
+      "term": "Передача третьим лицам",
+      "termEn": "Third-party sharing",
+      "definition": "Предоставление данных внешней стороне",
+      "blockId": "SE2",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "dpa-2",
+      "term": "Договор об обработке",
+      "termEn": "DPA",
+      "definition": "Соглашение об условиях обработки данных",
+      "blockId": "SE2",
+      "sourceLessonId": "se2-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "compliance",
+      "term": "Соответствие",
+      "termEn": "Compliance",
+      "definition": "Выполнение требований законов, стандартов и договоров",
+      "blockId": "SE3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "gdpr",
+      "term": "Регламент о защите данных",
+      "termEn": "GDPR",
+      "definition": "Европейский регламент о защите персональных данных",
+      "blockId": "SE3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "data-localisation",
+      "term": "Локализация данных",
+      "termEn": "Data localisation",
+      "definition": "Требование хранить данные в определённой стране",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "cross-border-transfer",
+      "term": "Трансграничная передача",
+      "termEn": "Cross-border transfer",
+      "definition": "Передача данных за пределы юрисдикции",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "dpia",
+      "term": "Оценка воздействия",
+      "termEn": "DPIA",
+      "definition": "Оценка рисков обработки для прав людей",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "privacy-by-default",
+      "term": "Защита по умолчанию",
+      "termEn": "Privacy by default",
+      "definition": "Наиболее защищённые настройки без действий пользователя",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "privacy-by-design",
+      "term": "Защита на этапе проектирования",
+      "termEn": "Privacy by design",
+      "definition": "Учёт приватности при проектировании, а не после",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "threat-modeling",
+      "term": "Моделирование угроз",
+      "termEn": "Threat modeling",
+      "definition": "Систематический поиск способов навредить системе",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "attack-surface",
+      "term": "Поверхность атаки",
+      "termEn": "Attack surface",
+      "definition": "Совокупность точек, через которые возможно воздействие",
+      "blockId": "SE3",
+      "sourceLessonId": null,
+      "relatedIds": []
+    },
+    {
+      "id": "adversary-model",
+      "term": "Модель нарушителя",
+      "termEn": "Adversary model",
+      "definition": "Предположение о том, кто и с какими возможностями атакует",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n2-l2",
+      "relatedIds": []
+    },
+    {
+      "id": "stride",
+      "term": "STRIDE",
+      "termEn": "STRIDE",
+      "definition": "Схема категорий угроз для систематического разбора",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "mitigation",
+      "term": "Снижение риска",
+      "termEn": "Mitigation",
+      "definition": "Мера, уменьшающая вероятность или ущерб",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "risk-acceptance",
+      "term": "Принятие риска",
+      "termEn": "Risk acceptance",
+      "definition": "Осознанное решение жить с риском",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n2-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "security-review-2",
+      "term": "Проверка безопасности",
+      "termEn": "Security review",
+      "definition": "Оценка решения специалистом до реализации",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n3-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "certification",
+      "term": "Сертификация",
+      "termEn": "Certification",
+      "definition": "Подтверждение соответствия стандарту внешним аудитором",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "term-5",
+      "term": "SOC 2 / ISO 27001",
+      "termEn": "—",
+      "definition": "Распространённые стандарты информационной безопасности",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n5-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "records-of-processing",
+      "term": "Реестр обработки",
+      "termEn": "Records of processing",
+      "definition": "Документ, описывающий все виды обработки данных",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l1",
+      "relatedIds": []
+    },
+    {
+      "id": "breach-notification",
+      "term": "Уведомление об утечке",
+      "termEn": "Breach notification",
+      "definition": "Обязанность сообщить регулятору и людям",
+      "blockId": "SE3",
+      "sourceLessonId": "se3-n1-l1",
+      "relatedIds": []
+    }
+  ]
+}

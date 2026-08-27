@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Glossary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "terms"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "term",
+          "termEn",
+          "definition",
+          "blockId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "term": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "termEn": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 400
+          },
+          "blockId": {
+            "type": "string"
+          },
+          "sourceLessonId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "relatedIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

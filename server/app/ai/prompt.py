@@ -11,6 +11,8 @@ import json
 from typing import Any
 
 from app.ai.base import PROMPT_VERSION
+from app.i18n import Language
+from app.models import SKILL_KEYS
 
 SYSTEM_PROMPT = """\
 You are a constructive Product Management practice evaluator.
@@ -45,16 +47,19 @@ RESPONSE_SCHEMA_TEXT = """\
   "improvements": [{"title": <string, max 60 chars>, "detail": <string, max 320 chars>}],
   "sharper_approach": <string, 2-4 sentences, max 700 chars>,
   "skill_deltas": {
-    "product_sense": <integer -3..8>,
-    "analytics": <integer -3..8>,
-    "user_research": <integer -3..8>,
-    "prioritization": <integer -3..8>,
-    "execution": <integer -3..8>,
-    "communication": <integer -3..8>
+__SKILL_DELTA_KEYS__
   },
   "needs_retry": <boolean>
 }\
 """
+
+# The key list is generated from the model so the prompt cannot drift away from
+# SKILL_KEYS — it did once already, when six competencies became seven.
+RESPONSE_SCHEMA_TEXT = RESPONSE_SCHEMA_TEXT.replace(
+    "__SKILL_DELTA_KEYS__",
+    ",\n".join(f'    "{key}": <integer -3..8>' for key in SKILL_KEYS),
+)
+
 
 SCORING_ANCHORS = """\
 rationale_score anchors (0-45) - framing, evidence use, trade-offs, next step:
@@ -81,12 +86,29 @@ skill_deltas guidance:
 """
 
 
+LANGUAGE_RULE = """\
+Language: write every learner-facing string you produce — each "title", each "detail" \
+and "sharper_approach" — in {name}. JSON keys, option ids and skill keys are identifiers: \
+leave them exactly as given. The scenario material and the learner's rationale may be in \
+a different language from your output; translate your own wording rather than switching \
+language mid-sentence. When you quote the learner's own words back to them, keep their \
+wording as they wrote it.
+"""
+
+
+def system_prompt(language: Language = Language.EN) -> str:
+    """The system prompt for one evaluation, pinned to the learner's language."""
+    return SYSTEM_PROMPT + "\n" + LANGUAGE_RULE.format(name=language.name_for_model)
+
+
 def build_user_prompt(
     *,
     scenario: dict[str, Any],
     selected_option_id: str,
     reviewed_evidence_ids: list[str],
     rationale: str,
+    language: Language = Language.EN,
+    lessons: list[dict[str, Any]] | None = None,
 ) -> str:
     evidence_reviewed = [
         card
@@ -125,6 +147,14 @@ def build_user_prompt(
         ],
         "evidence_the_learner_reviewed": [c["id"] for c in evidence_reviewed],
         "evidence_the_learner_did_not_review": [c["id"] for c in evidence_not_reviewed],
+        # What the learner was taught before this gate. Naming the concepts lets the
+        # coaching say "you did not apply X" in the words the lesson used, instead of
+        # inventing its own vocabulary. It does not relax any rule above.
+        "concepts_taught_before_this_gate": [
+            {"id": lesson["id"], "title": lesson["title"],
+             "key_takeaway": lesson["keyTakeaway"]}
+            for lesson in (lessons or [])
+        ],
         "authored_rubric": scenario["rubric"],
         "learner_submission": {
             "selected_option_id": selected_option_id,
@@ -153,6 +183,7 @@ HOW TO EVALUATE
 {SCORING_ANCHORS}
 
 OUTPUT
+Write all learner-facing text in {language.name_for_model}.
 Return one JSON object and nothing else, matching this shape exactly:
 {RESPONSE_SCHEMA_TEXT}
 """

@@ -27,7 +27,7 @@ from app.security import (
     revoke_all_refresh_tokens,
     rotate_refresh_token,
 )
-from app.services.path import resolve_timezone
+from app.services.timezones import resolve_timezone
 from app.views import me_response
 
 router = APIRouter(prefix="/auth", tags=["auth"])

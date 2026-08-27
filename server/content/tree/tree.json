@@ -1,0 +1,998 @@
+{
+  "version": 1,
+  "sourceAttribution": "Карта навыков — Skill Map of Product Management, часть Product Architecture Framework, Сергей Тихомиров (productframework.ru).",
+  "tiers": [
+    {
+      "tier": 1,
+      "title": "Junior",
+      "subtitle": "Атомарная задача"
+    },
+    {
+      "tier": 2,
+      "title": "Middle",
+      "subtitle": "Анализ и обоснованные выводы"
+    },
+    {
+      "tier": 3,
+      "title": "Senior",
+      "subtitle": "Цели, процессы, стратегия"
+    }
+  ],
+  "domains": [
+    {
+      "key": "discovery",
+      "title": "Дискавери и исследования",
+      "titleEn": "Discovery & Researches",
+      "order": 1
+    },
+    {
+      "key": "value_design",
+      "title": "Ценность и проектирование",
+      "titleEn": "Value & Solution Design",
+      "order": 2
+    },
+    {
+      "key": "delivery",
+      "title": "Разработка и поставка",
+      "titleEn": "Development & Delivery",
+      "order": 3
+    },
+    {
+      "key": "marketing",
+      "title": "Продуктовый маркетинг",
+      "titleEn": "Product Marketing",
+      "order": 4
+    },
+    {
+      "key": "growth",
+      "title": "Рост и эксперименты",
+      "titleEn": "Growth & Experiments",
+      "order": 5
+    },
+    {
+      "key": "economics",
+      "title": "Продажи и экономика",
+      "titleEn": "Sales & Economics",
+      "order": 6
+    }
+  ],
+  "blocks": [
+    {
+      "id": "D1",
+      "domainKey": "discovery",
+      "tier": 1,
+      "title": "Услышать клиента",
+      "prerequisiteBlockIds": [],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "d1-sbor-i-obrabotka-obratnoy-svyazi",
+          "title": "Сбор и обработка обратной связи",
+          "keyQuestion": "Какие проблемы возникают у клиентов при использовании продукта?",
+          "models": [
+            "Feedback Matrix"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "d1-provedenie-intervyu",
+          "title": "Проведение интервью",
+          "keyQuestion": "Почему для клиентов важно именно это, а не что-то другое?",
+          "models": [
+            "5 Whys"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "d1-sostavlenie-skripta-intervyu",
+          "title": "Составление скрипта интервью",
+          "keyQuestion": "Какие вопросы и как задавать, чтобы отвалидировать гипотезы?",
+          "models": [
+            "Скрипт от гипотез",
+            "Best Practice вопросов"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "d1-monitoring-pokazateley-produkta",
+          "title": "Мониторинг показателей продукта",
+          "keyQuestion": "Что сейчас происходит в продукте?",
+          "models": [
+            "HEART Metrics",
+            "Frequency / Adoption Analysis"
+          ],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "domainKey": "discovery",
+      "tier": 2,
+      "title": "Понять поведение",
+      "prerequisiteBlockIds": [
+        "D1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "d2-formirovanie-konteksta-potrebitelya",
+          "title": "Формирование контекста потребителя",
+          "keyQuestion": "Что из себя представляет наш клиент?",
+          "models": [
+            "Customer Profile",
+            "Карта эмпатии",
+            "Job Stories",
+            "Four Product Forces"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "d2-kachestvennyy-analiz-povedeniya-potrebiteley",
+          "title": "Качественный анализ поведения потребителей",
+          "keyQuestion": "Как клиент решает свои задачи сейчас?",
+          "models": [
+            "JTBD Canvas",
+            "Service Blueprint",
+            "CJM",
+            "Experience Mapping"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "d2-analiz-prichin-izmeneniy-pokazateley",
+          "title": "Анализ причин изменений показателей",
+          "keyQuestion": "Почему произошли эти изменения? Где точка роста?",
+          "models": [
+            "Root Cause Analysis",
+            "Cohort Analysis",
+            "корреляционный анализ"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "d2-modelirovanie-izmeneniy",
+          "title": "Моделирование изменений",
+          "keyQuestion": "Что произойдёт, если изменятся показатели?",
+          "models": [],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "domainKey": "discovery",
+      "tier": 3,
+      "title": "Спроектировать исследования",
+      "prerequisiteBlockIds": [
+        "D2"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "d3-opredelenie-celey-issledovaniya",
+          "title": "Определение целей исследования",
+          "keyQuestion": "Какие исследования нужны для целей компании?",
+          "models": [],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "d3-formirovanie-sistemy-metrik",
+          "title": "Формирование системы метрик",
+          "keyQuestion": "За какими метриками наблюдать?",
+          "models": [
+            "Иерархия метрик"
+          ],
+          "aiImpact": null,
+          "order": 2
+        }
+      ]
+    },
+    {
+      "id": "V1",
+      "domainKey": "value_design",
+      "tier": 1,
+      "title": "Собрать требования",
+      "prerequisiteBlockIds": [
+        "D1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "v1-vyyavlenie-potrebnostey",
+          "title": "Выявление потребностей",
+          "keyQuestion": "Какие цели и проблемы есть в компании?",
+          "models": [
+            "Stakeholder Matrix"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "v1-analiz-alternativnyh-resheniy",
+          "title": "Анализ альтернативных решений",
+          "keyQuestion": "В чём ключевая ценность сторонних продуктов?",
+          "models": [
+            "Strategy Canvas"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "v1-formalizaciya-scenariev-ispolzovaniya",
+          "title": "Формализация сценариев использования",
+          "keyQuestion": "Какие задачи будут решать потребители?",
+          "models": [
+            "Story Mapping",
+            "User Story",
+            "Use Case"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "v1-formalizaciya-trebovaniy",
+          "title": "Формализация требований",
+          "keyQuestion": "Какими функциями и свойствами должен обладать продукт?",
+          "models": [
+            "Acceptance and Evaluation Criteria"
+          ],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "V2",
+      "domainKey": "value_design",
+      "tier": 2,
+      "title": "Спроектировать решение",
+      "prerequisiteBlockIds": [
+        "V1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "v2-formirovanie-resheniya-i-cennostnyh-predlozheniy",
+          "title": "Формирование решения и ценностных предложений",
+          "keyQuestion": "Какие ценностные предложения решают задачи потребителей?",
+          "models": [
+            "Value Proposition Canvas",
+            "Lean UX Canvas",
+            "Feature Canvas",
+            "Impact Mapping"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "v2-formirovanie-biznes-logiki",
+          "title": "Формирование бизнес-логики",
+          "keyQuestion": "Из каких объектов состоит система продукта?",
+          "models": [
+            "Entities Analysis"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "v2-formirovanie-interfeysa",
+          "title": "Формирование интерфейса",
+          "keyQuestion": "Как строится взаимодействие пользователя с продуктом?",
+          "models": [
+            "User Flow",
+            "Screen Map"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "v2-formirovanie-dizayn-sistemy-i-metafor",
+          "title": "Формирование дизайн-системы и метафор",
+          "keyQuestion": "Из каких элементов строится интерфейс?",
+          "models": [
+            "Design System"
+          ],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "V3",
+      "domainKey": "value_design",
+      "tier": 3,
+      "title": "Сформировать концепцию",
+      "prerequisiteBlockIds": [
+        "V2"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "v3-formirovanie-koncepcii-produkta",
+          "title": "Формирование концепции продукта",
+          "keyQuestion": "Что из себя должен представлять продукт?",
+          "models": [
+            "Lean Canvas"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "v3-analiz-tehnologiy-i-trendov",
+          "title": "Анализ технологий и трендов",
+          "keyQuestion": "Какие тенденции рынка можно использовать?",
+          "models": [
+            "Technology Adoption Life Cycle",
+            "Gartner Hype Cycle"
+          ],
+          "aiImpact": null,
+          "order": 2
+        }
+      ]
+    },
+    {
+      "id": "R1",
+      "domainKey": "delivery",
+      "tier": 1,
+      "title": "Довести до релиза",
+      "prerequisiteBlockIds": [
+        "V1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "r1-formirovanie-bekloga",
+          "title": "Формирование беклога",
+          "keyQuestion": "Какие изменения произойдут в продукте?",
+          "models": [
+            "Product Backlog",
+            "User Story Conversation Canvas"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "r1-soprovozhdenie-processa-razrabotki",
+          "title": "Сопровождение процесса разработки",
+          "keyQuestion": "Насколько реальное состояние отличается от плана?",
+          "models": [
+            "Standup",
+            "Kanban Board",
+            "Sprint Work"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "r1-priemka-rezultatov-izmeneniy",
+          "title": "Приёмка результатов изменений",
+          "keyQuestion": "Насколько результат соответствует требованиям?",
+          "models": [
+            "Definition-of-Done",
+            "Sprint Demo",
+            "Test Case"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "r1-formirovanie-instrukciy-ispolzovaniya",
+          "title": "Формирование инструкций использования",
+          "keyQuestion": "Как использовать продукт для решения задач?",
+          "models": [],
+          "aiImpact": null,
+          "order": 4
+        },
+        {
+          "id": "r1-sbor-i-analiz-rezultatov-izmeneniy",
+          "title": "Сбор и анализ результатов изменений",
+          "keyQuestion": "Насколько изменения повлияли на ценность?",
+          "models": [
+            "HEART Metrics"
+          ],
+          "aiImpact": null,
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "domainKey": "delivery",
+      "tier": 2,
+      "title": "Спланировать поставку",
+      "prerequisiteBlockIds": [
+        "R1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "r2-prioritizaciya-bekloga",
+          "title": "Приоритизация беклога",
+          "keyQuestion": "Какие задачи передать в реализацию первыми?",
+          "models": [
+            "Impact / Effort Matrix",
+            "GIST Planning",
+            "WSJF"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "r2-planirovanie-relizov",
+          "title": "Планирование релизов",
+          "keyQuestion": "Когда внедрять изменения для пользователей?",
+          "models": [
+            "Story Mapping",
+            "Release Scope"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "r2-formirovanie-proektov-razrabotki",
+          "title": "Формирование проектов разработки",
+          "keyQuestion": "Какие ресурсы нужны для изменений?",
+          "models": [
+            "Risk Analysis & Management",
+            "Project Canvas",
+            "Gantt"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "r2-soprovozhdenie-integraciy",
+          "title": "Сопровождение интеграций",
+          "keyQuestion": "Как будет происходить интеграция продукта?",
+          "models": [],
+          "aiImpact": null,
+          "order": 4
+        },
+        {
+          "id": "r2-podgotovka-migraciy",
+          "title": "Подготовка миграций",
+          "keyQuestion": "Как перейти с одной версии на другую?",
+          "models": [
+            "Four Product Forces"
+          ],
+          "aiImpact": null,
+          "order": 5
+        },
+        {
+          "id": "r2-obuchenie-ispolzovaniyu-produkta",
+          "title": "Обучение использованию продукта",
+          "keyQuestion": "Как научить пользователей достигать целей?",
+          "models": [],
+          "aiImpact": null,
+          "order": 6
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "domainKey": "delivery",
+      "tier": 3,
+      "title": "Настроить процесс",
+      "prerequisiteBlockIds": [
+        "R2"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "r3-optimizaciya-processov-postavki-na-rynok",
+          "title": "Оптимизация процессов поставки на рынок",
+          "keyQuestion": "Как оптимизировать процесс разработки ценности?",
+          "models": [
+            "Retrospective Meeting",
+            "Team Canvas"
+          ],
+          "aiImpact": null,
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "M1",
+      "domainKey": "marketing",
+      "tier": 1,
+      "title": "Рассказать о продукте",
+      "prerequisiteBlockIds": [
+        "R1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "m1-monitoring-pokazateley-voronki-prodazh",
+          "title": "Мониторинг показателей воронки продаж",
+          "keyQuestion": "Достигаем ли желаемых показателей привлечения?",
+          "models": [
+            "Сквозная аналитика",
+            "AARRR Metrics",
+            "Sales Funnel"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "m1-formulirovanie-cennosti-produkta-i-svoystv",
+          "title": "Формулирование ценности продукта и свойств",
+          "keyQuestion": "В чём именно польза для потребителей?",
+          "models": [
+            "B2B Messaging Canvas",
+            "AIDA(s)"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "m1-monitoring-smi-i-liderov-mneniy",
+          "title": "Мониторинг СМИ и лидеров мнений",
+          "keyQuestion": "Что произошло на рынке и влияет на планы?",
+          "models": [],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "m1-monitoring-otraslevyh-sobytiy",
+          "title": "Мониторинг отраслевых событий",
+          "keyQuestion": "Какие мероприятия важны для продвижения?",
+          "models": [],
+          "aiImpact": null,
+          "order": 4
+        },
+        {
+          "id": "m1-formirovanie-release-notes",
+          "title": "Формирование Release Notes",
+          "keyQuestion": "О каких изменениях сообщить пользователям?",
+          "models": [],
+          "aiImpact": null,
+          "order": 5
+        },
+        {
+          "id": "m1-formirovanie-case-study",
+          "title": "Формирование Case Study",
+          "keyQuestion": "О каких результатах рассказать потребителям?",
+          "models": [],
+          "aiImpact": null,
+          "order": 6
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "domainKey": "marketing",
+      "tier": 2,
+      "title": "Построить привлечение",
+      "prerequisiteBlockIds": [
+        "M1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "m2-opredelenie-kanalov-privlecheniya-i-offerov",
+          "title": "Определение каналов привлечения и офферов",
+          "keyQuestion": "Откуда и как привлекать потребителей?",
+          "models": [],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "m2-poisk-i-privlechenie-potrebiteley",
+          "title": "Поиск и привлечение потребителей",
+          "keyQuestion": "Как привлекать с заданной стоимостью?",
+          "models": [],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "m2-optimizaciya-voronki-prodazh",
+          "title": "Оптимизация воронки продаж",
+          "keyQuestion": "Как превратить бутылочные горлышки в точки роста?",
+          "models": [],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "m2-aktivaciya-i-onbording-vnutri-produkta",
+          "title": "Активация и онбординг внутри продукта",
+          "keyQuestion": "Как превратить потенциальных в активных?",
+          "models": [
+            "Aha Moment"
+          ],
+          "aiImpact": null,
+          "order": 4
+        },
+        {
+          "id": "m2-opredelenie-mehanik-uderzhaniya",
+          "title": "Определение механик удержания",
+          "keyQuestion": "Как удерживать до окупаемости?",
+          "models": [
+            "Hook Model"
+          ],
+          "aiImpact": null,
+          "order": 5
+        },
+        {
+          "id": "m2-formirovanie-pozicionirovaniya-i-strategii-konkurencii",
+          "title": "Формирование позиционирования и стратегии конкуренции",
+          "keyQuestion": "В чём преимущество перед конкурентами?",
+          "models": [
+            "Strategy Canvas",
+            "Perceptual Map"
+          ],
+          "aiImpact": null,
+          "order": 6
+        }
+      ]
+    },
+    {
+      "id": "M3",
+      "domainKey": "marketing",
+      "tier": 3,
+      "title": "Стратегия маркетинга",
+      "prerequisiteBlockIds": [
+        "M2"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "m3-strategiya-privlecheniya-klientov",
+          "title": "Стратегия привлечения клиентов",
+          "keyQuestion": "Какие сегменты и как привлекать?",
+          "models": [],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "m3-strategiya-uderzhaniya-klientov",
+          "title": "Стратегия удержания клиентов",
+          "keyQuestion": "Какие процессы обеспечат план по активным?",
+          "models": [],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "m3-strategiya-vyhoda-na-rynok",
+          "title": "Стратегия выхода на рынок",
+          "keyQuestion": "Что нужно для успешного запуска?",
+          "models": [
+            "Матрица Ансоффа",
+            "ADL Matrix"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "m3-strategiya-zakrytiya-produkta",
+          "title": "Стратегия закрытия продукта",
+          "keyQuestion": "Как снизить риски ухода с рынка?",
+          "models": [],
+          "aiImpact": null,
+          "order": 4
+        },
+        {
+          "id": "m3-pr-strategiya-produkta",
+          "title": "PR-стратегия продукта",
+          "keyQuestion": "Как коммуницировать с потребителями вне продукта?",
+          "models": [],
+          "aiImpact": null,
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": "G1",
+      "domainKey": "growth",
+      "tier": 1,
+      "title": "Проверять гипотезы",
+      "prerequisiteBlockIds": [
+        "M1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "g1-generaciya-i-upravlenie-ideyami",
+          "title": "Генерация и управление идеями",
+          "keyQuestion": "Как получить новую качественную идею?",
+          "models": [
+            "SCAMPER",
+            "Brainstorming",
+            "морфологический анализ",
+            "Six Thinking Hats",
+            "Mindmap"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "g1-formulirovanie-gipotez",
+          "title": "Формулирование гипотез",
+          "keyQuestion": "Как упаковать идею в гипотезу?",
+          "models": [
+            "Шаблоны и типология гипотез"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "g1-ocenka-i-sravnenie-idey",
+          "title": "Оценка и сравнение идей",
+          "keyQuestion": "Какие идеи брать в проработку?",
+          "models": [
+            "Матрица Декарта"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "g1-provedenie-eksperimentov",
+          "title": "Проведение экспериментов",
+          "keyQuestion": "Каким должен быть эксперимент, чтобы проверить гипотезу?",
+          "models": [
+            "A/A Testing",
+            "A/B Testing",
+            "Prototyping",
+            "Experiment Card",
+            "Deprivation Testing"
+          ],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "G2",
+      "domainKey": "growth",
+      "tier": 2,
+      "title": "Управлять экспериментами",
+      "prerequisiteBlockIds": [
+        "G1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "g2-prioritizaciya-eksperimentov",
+          "title": "Приоритизация экспериментов",
+          "keyQuestion": "Какую гипотезу проверять первой?",
+          "models": [
+            "ICE Scoring",
+            "RICE Scoring"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "g2-organizaciya-processa-eksperimentov",
+          "title": "Организация процесса экспериментов",
+          "keyQuestion": "Как происходит проведение экспериментов?",
+          "models": [
+            "Validation Board",
+            "HADI Canvas"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "g2-upravlenie-znaniyami",
+          "title": "Управление знаниями",
+          "keyQuestion": "Что нового мы узнали?",
+          "models": [
+            "Learning Card"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "g2-prioritizaciya-razvitiya-produkta",
+          "title": "Приоритизация развития продукта",
+          "keyQuestion": "Какую ценность усилить первой?",
+          "models": [
+            "Roadmap"
+          ],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "G3",
+      "domainKey": "growth",
+      "tier": 3,
+      "title": "Стратегия роста",
+      "prerequisiteBlockIds": [
+        "G2"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "g3-formirovanie-celey-razvitiya-produkta",
+          "title": "Формирование целей развития продукта",
+          "keyQuestion": "Каких показателей достичь?",
+          "models": [
+            "SMART Goals",
+            "OKR"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "g3-formirovanie-strategii-razvitiya-produkta",
+          "title": "Формирование стратегии развития продукта",
+          "keyQuestion": "Какие решения реализуют видение?",
+          "models": [
+            "7P Marketing Mix"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "g3-strategiya-upravleniya-portfelem-produktov",
+          "title": "Стратегия управления портфелем продуктов",
+          "keyQuestion": "Какие продукты нужны компании?",
+          "models": [
+            "BCG Matrix"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "g3-formirovanie-videniya",
+          "title": "Формирование видения",
+          "keyQuestion": "Как компания изменит рынок?",
+          "models": [
+            "Product Evolution Canvas"
+          ],
+          "aiImpact": null,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "domainKey": "economics",
+      "tier": 1,
+      "title": "Продавать и считать рынок",
+      "prerequisiteBlockIds": [
+        "G1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "s1-podgotovka-skripta-prodazh-i-rabota",
+          "title": "Подготовка скрипта продаж и работа с возражениями",
+          "keyQuestion": "Какие аргументы и контраргументы использовать?",
+          "models": [
+            "Buyer Persona"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "s1-presale-produkta",
+          "title": "Presale продукта",
+          "keyQuestion": "Как продемонстрировать продукт, чтобы повысить вероятность сделки?",
+          "models": [],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "s1-analiz-obema-rynka",
+          "title": "Анализ объёма рынка",
+          "keyQuestion": "Какие ограничения роста есть, если ничего не менять?",
+          "models": [
+            "TAM / SAM / SOM"
+          ],
+          "aiImpact": null,
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "domainKey": "economics",
+      "tier": 2,
+      "title": "Анализировать рынок",
+      "prerequisiteBlockIds": [
+        "S1"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "s2-analiz-makrosredy-rynka",
+          "title": "Анализ макросреды рынка",
+          "keyQuestion": "Какие возможности и ограничения на рынке?",
+          "models": [
+            "PESTEL Analysis",
+            "Business Consolidation Model"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "s2-analiz-deyatelnosti-kompanii",
+          "title": "Анализ деятельности компании",
+          "keyQuestion": "Какие возможности и ограничения внутри?",
+          "models": [
+            "SWOT Analysis",
+            "жизненный цикл по Адизесу"
+          ],
+          "aiImpact": null,
+          "order": 2
+        },
+        {
+          "id": "s2-analiz-konkurentov",
+          "title": "Анализ конкурентов",
+          "keyQuestion": "За счёт чего конкуренты масштабируются?",
+          "models": [
+            "5 сил Портера",
+            "Competition Map"
+          ],
+          "aiImpact": null,
+          "order": 3
+        },
+        {
+          "id": "s2-opredelenie-segmentov-klientov-dlya-strategii",
+          "title": "Определение сегментов клиентов для стратегии продаж",
+          "keyQuestion": "Каким сегментам выгоднее продавать?",
+          "models": [
+            "ABCDX-сегментация",
+            "RFM",
+            "ABC Analysis",
+            "Segment Scoring"
+          ],
+          "aiImpact": null,
+          "order": 4
+        },
+        {
+          "id": "s2-optimizaciya-modeli-monetizacii",
+          "title": "Оптимизация модели монетизации",
+          "keyQuestion": "Как увеличить LTV?",
+          "models": [],
+          "aiImpact": null,
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "domainKey": "economics",
+      "tier": 3,
+      "title": "Бизнес-модель",
+      "prerequisiteBlockIds": [
+        "S2"
+      ],
+      "status": "published",
+      "nodes": [
+        {
+          "id": "s3-formirovanie-biznes-modeli-i-shemy",
+          "title": "Формирование бизнес-модели и схемы монетизации",
+          "keyQuestion": "Как продукт монетизирует ценность?",
+          "models": [
+            "Business Model Canvas",
+            "юнит-экономика"
+          ],
+          "aiImpact": null,
+          "order": 1
+        },
+        {
+          "id": "s3-finansovoe-planirovanie-i-upravlenie-p",
+          "title": "Финансовое планирование и управление P&L",
+          "keyQuestion": "Как будут достигнуты финансовые цели?",
+          "models": [],
+          "aiImpact": null,
+          "order": 2
+        }
+      ]
+    }
+  ]
+}

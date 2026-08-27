@@ -19,12 +19,12 @@ final class ProfileViewModel: ObservableObject {
 
     var me: MeResponse? { session.me }
 
-    func changeGoal(_ goal: String) async {
+    func changeRole(_ role: String) async {
         do {
-            // Changing the goal affects future path assignment only. Historical scores
-            // are never rewritten (spec §10.12).
+            // The role only highlights part of the map; it changes no unlock order and
+            // rewrites no history (spec v0.2 §7).
             let profile = try await client.updateProfile(
-                ProfileUpdateRequest(goal: goal, timezone: nil, completeOnboarding: nil)
+                ProfileUpdateRequest(targetRole: role, timezone: nil, completeOnboarding: nil)
             )
             session.apply(profile)
         } catch let apiError as APIError {

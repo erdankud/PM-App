@@ -9,7 +9,8 @@ from fastapi import Depends, Header, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.models import User, utcnow
+from app.i18n import Language
+from app.models import User, UserProfile, utcnow
 from app.security import decode_access_token
 
 DbSession = Annotated[Session, Depends(get_db)]
@@ -50,6 +51,29 @@ def current_user(
 
 
 CurrentUser = Annotated[User, Depends(current_user)]
+
+
+def content_language(
+    db: DbSession,
+    user: CurrentUser,
+    x_content_language: Annotated[str | None, Header()] = None,
+) -> Language:
+    """The language every payload for this request is rendered in.
+
+    Deliberately not `Accept-Language`: HTTP clients set that from the device locale,
+    so honouring it would let the phone's language quietly override a choice the user
+    made in the app. A custom header carries the client's current choice and wins for
+    this request, which removes the window between switching language and the profile
+    update landing. The profile is the durable preference and the only thing the
+    evaluation worker can read, since it runs long after the request that queued it.
+    """
+    if x_content_language:
+        return Language.coerce(x_content_language)
+    profile = db.get(UserProfile, user.id)
+    return Language.coerce(profile.language if profile else None)
+
+
+ContentLanguage = Annotated[Language, Depends(content_language)]
 
 
 def idempotency_key(

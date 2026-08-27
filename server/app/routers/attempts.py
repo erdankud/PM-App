@@ -5,21 +5,21 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException, status
 from sqlalchemy.exc import IntegrityError
 
-from app.deps import CurrentUser, DbSession, IdempotencyKey
+from app import tree_content
+from app.deps import ContentLanguage, CurrentUser, DbSession, IdempotencyKey
 from app.models import (
     ChallengeAttempt,
     EvidenceInteraction,
     FeedbackEvaluation,
     FeedbackRating,
     IdempotencyRecord,
-    LearningPathAssignment,
-    Scenario,
     SkillAssessment,
     User,
     utcnow,
 )
 from app.schemas import (
     ConsequenceView,
+    RemediationLink,
     DraftRequest,
     DraftResponse,
     EvidenceRequest,
@@ -34,7 +34,9 @@ from app.schemas import (
     SubmitRequest,
     SubmitResponse,
 )
+from app.i18n import Language
 from app.services import evaluation as evaluation_service
+from app.services import tree as tree_service
 from app.services import skills as skills_service
 from app.services.scoring import (
     COMMUNICATION_MAX,
@@ -59,15 +61,8 @@ def _attempt(db: DbSession, attempt_id: str, user: User) -> ChallengeAttempt:
     return attempt
 
 
-def _scenario(db: DbSession, attempt: ChallengeAttempt) -> Scenario:
-    scenario = (
-        db.query(Scenario)
-        .filter(
-            Scenario.scenario_id == attempt.scenario_id,
-            Scenario.version == attempt.scenario_version,
-        )
-        .first()
-    )
+def _scenario(db: DbSession, attempt: ChallengeAttempt) -> dict:
+    scenario = tree_content.scenario(attempt.scenario_id)
     if scenario is None:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -86,11 +81,33 @@ def _reviewed_ids(db: DbSession, attempt_id: str) -> list[str]:
     ]
 
 
-def _consequence_view(evaluation: FeedbackEvaluation, attempt: ChallengeAttempt) -> ConsequenceView:
+def _consequence_view(
+    evaluation: FeedbackEvaluation,
+    attempt: ChallengeAttempt,
+    content: dict | None = None,
+) -> ConsequenceView:
+    """The authored consequence, in the reader's current language.
+
+    The snapshot taken at submit time stays the durable record — it is what survives a
+    scenario being unpublished or re-versioned — but when the content is still available
+    the localised text wins, so switching language also translates results a learner
+    submitted earlier. Neither path involves a model, so this stays independent of
+    provider availability (spec §10.9).
+    """
+    option = None
+    if content is not None:
+        option = next(
+            (
+                o
+                for o in content["decisionOptions"]
+                if o["id"] == attempt.selected_option_id
+            ),
+            None,
+        )
     return ConsequenceView(
         option_id=attempt.selected_option_id or "",
-        option_label=evaluation.option_label_snapshot,
-        text=evaluation.consequence_snapshot,
+        option_label=(option or {}).get("label") or evaluation.option_label_snapshot,
+        text=(option or {}).get("consequence") or evaluation.consequence_snapshot,
     )
 
 
@@ -106,7 +123,7 @@ def save_draft(
 
     if payload.selected_option_id is not None:
         scenario = _scenario(db, attempt)
-        valid = {o["id"] for o in scenario.content["decisionOptions"]}
+        valid = {o["id"] for o in scenario["decisionOptions"]}
         if payload.selected_option_id not in valid:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -134,7 +151,7 @@ def record_evidence(
 ) -> EvidenceResponse:
     attempt = _attempt(db, attempt_id, user)
     scenario = _scenario(db, attempt)
-    cards = scenario.content["evidenceCards"]
+    cards = scenario["evidenceCards"]
     if payload.evidence_card_id not in {c["id"] for c in cards}:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail={"code": "unknown_evidence_card"}
@@ -166,11 +183,11 @@ def submit_attempt(
     payload: SubmitRequest,
     user: CurrentUser,
     db: DbSession,
+    language: ContentLanguage,
     idempotency_key: IdempotencyKey = None,
 ) -> SubmitResponse:
     attempt = _attempt(db, attempt_id, user)
-    scenario = _scenario(db, attempt)
-    content = scenario.content
+    content = _scenario(db, attempt)
 
     # Repeat submissions return the original result rather than creating a second
     # attempt or awarding XP twice (spec §14, §18).
@@ -184,7 +201,7 @@ def submit_attempt(
         return SubmitResponse(
             attempt_id=attempt.id,
             status=attempt.status,
-            consequence=_consequence_view(evaluation, attempt),
+            consequence=_consequence_view(evaluation, attempt, content),
             feedback_status=_feedback_status(evaluation),
         )
 
@@ -238,10 +255,6 @@ def submit_attempt(
     attempt.status = "awaiting_feedback"
     attempt.submitted_at = utcnow()
 
-    assignment = db.get(LearningPathAssignment, attempt.assignment_id)
-    if assignment is not None:
-        assignment.status = "submitted"
-
     evaluation = evaluation_service.enqueue(
         db, attempt, consequence=option["consequence"], option_label=option["label"]
     )
@@ -250,7 +263,7 @@ def submit_attempt(
     return SubmitResponse(
         attempt_id=attempt.id,
         status=attempt.status,
-        consequence=_consequence_view(evaluation, attempt),
+        consequence=_consequence_view(evaluation, attempt, content),
         feedback_status="pending",
     )
 
@@ -264,7 +277,10 @@ def _feedback_status(evaluation: FeedbackEvaluation) -> str:
 
 
 def _feedback_body(
-    db: DbSession, attempt: ChallengeAttempt, evaluation: FeedbackEvaluation
+    db: DbSession,
+    attempt: ChallengeAttempt,
+    evaluation: FeedbackEvaluation,
+    language: Language,
 ) -> FeedbackBody | None:
     if evaluation.status != "complete" or not evaluation.ai_json:
         return None
@@ -281,7 +297,7 @@ def _feedback_body(
     impact = [
         SkillImpact(
             key=row.skill_key,
-            label=skills_service.SKILL_LABELS.get(row.skill_key, row.skill_key),
+            label=skills_service.label(row.skill_key, language),
             delta=row.delta,
             score=current.get(row.skill_key, 50),
         )
@@ -290,7 +306,7 @@ def _feedback_body(
     score = attempt.final_score or 0
     return FeedbackBody(
         score=score,
-        band=score_band(score),
+        band=score_band(score, language),
         breakdown=ScoreBreakdownView(
             evidence=attempt.evidence_points or 0,
             evidence_max=EVIDENCE_MAX,
@@ -311,30 +327,72 @@ def _feedback_body(
 
 
 @router.get("/{attempt_id}/feedback", response_model=FeedbackResponse)
-def get_feedback(attempt_id: str, user: CurrentUser, db: DbSession) -> FeedbackResponse:
+def get_feedback(
+    attempt_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> FeedbackResponse:
     attempt = _attempt(db, attempt_id, user)
     evaluation = db.get(FeedbackEvaluation, attempt.id)
     if evaluation is None:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail={"code": "attempt_not_submitted"}
         )
-    scenario = _scenario(db, attempt)
+    content = _scenario(db, attempt)
     rating = db.get(FeedbackRating, attempt.id)
-    body = _feedback_body(db, attempt, evaluation)
+    body = _feedback_body(db, attempt, evaluation, language)
+    gate = tree_content.gate(attempt.gate_id)
+    block = tree_content.block(attempt.block_id)
+    threshold = tree_service.pass_threshold(gate) if gate else None
+
+    # A failed gate is only useful if it points at the lesson that would have helped.
+    # Sending someone back to "the block" is the same as sending them nowhere.
+    remediation: list[RemediationLink] = []
+    if attempt.passed is False:
+        for entry in content["rubric"]["remediation"]:
+            lesson = tree_content.lesson(entry["lessonId"])
+            if lesson is None:
+                continue
+            remediation.append(
+                RemediationLink(
+                    gap=entry["gap"],
+                    lesson_id=entry["lessonId"],
+                    lesson_title=lesson["title"],
+                )
+            )
+
+    unlocked: list[str] = []
+    if attempt.passed:
+        rows = tree_service.recompute(db, user.id)
+        db.commit()
+        unlocked = [
+            candidate
+            for candidate in tree_content.dependents(attempt.block_id)
+            if rows[candidate].status != tree_service.LOCKED
+        ]
+
     return FeedbackResponse(
         attempt_id=attempt.id,
         status=_feedback_status(evaluation),
-        consequence=_consequence_view(evaluation, attempt),
+        consequence=_consequence_view(evaluation, attempt, content),
         feedback=body,
         rating=rating.rating if rating else None,
         retry_available=evaluation.status == "failed",
-        scenario_title=scenario.title,
-        learn_takeaway_title=(scenario.content.get("learnTakeaway") or {}).get("title"),
+        scenario_title=content["title"],
+        learn_takeaway_title=(content.get("learnTakeaway") or {}).get("title"),
+        gate_id=attempt.gate_id,
+        block_id=attempt.block_id,
+        block_title=block["title"] if block else attempt.block_id,
+        passed=attempt.passed,
+        pass_threshold=threshold,
+        attempt_index=attempt.attempt_index,
+        unlocked_block_ids=unlocked,
+        remediation=remediation,
     )
 
 
 @router.post("/{attempt_id}/feedback/retry", response_model=FeedbackResponse)
-def retry_feedback(attempt_id: str, user: CurrentUser, db: DbSession) -> FeedbackResponse:
+def retry_feedback(
+    attempt_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> FeedbackResponse:
     attempt = _attempt(db, attempt_id, user)
     evaluation = db.get(FeedbackEvaluation, attempt.id)
     if evaluation is None:
@@ -342,7 +400,7 @@ def retry_feedback(attempt_id: str, user: CurrentUser, db: DbSession) -> Feedbac
             status_code=status.HTTP_409_CONFLICT, detail={"code": "attempt_not_submitted"}
         )
     if evaluation.status == "complete":
-        return get_feedback(attempt_id, user, db)
+        return get_feedback(attempt_id, user, db, language)
     if evaluation.status == "running":
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail={"code": "evaluation_in_progress"}
@@ -360,11 +418,8 @@ def retry_feedback(attempt_id: str, user: CurrentUser, db: DbSession) -> Feedbac
     evaluation.error_code = None
     evaluation.updated_at = utcnow()
     attempt.status = "awaiting_feedback"
-    assignment = db.get(LearningPathAssignment, attempt.assignment_id)
-    if assignment is not None:
-        assignment.status = "submitted"
     db.commit()
-    return get_feedback(attempt_id, user, db)
+    return get_feedback(attempt_id, user, db, language)
 
 
 @router.post("/{attempt_id}/feedback-rating", response_model=SimpleOk)

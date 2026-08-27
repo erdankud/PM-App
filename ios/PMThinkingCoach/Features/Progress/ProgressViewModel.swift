@@ -23,7 +23,7 @@ final class ProgressViewModel: ObservableObject {
             progress = response
             error = nil
             analytics.track(
-                .progressViewed(level: response.level, completedCount: response.completedCount)
+                .progressViewed(level: response.level, completedCount: response.blocksPassed)
             )
         } catch let apiError as APIError {
             if progress == nil { error = apiError }

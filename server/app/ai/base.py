@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Protocol
 
-PROMPT_VERSION = "eval-2026-08-01"
+PROMPT_VERSION = "eval-2026-08-23"  # adds the output-language rule
 
 
 @dataclass(frozen=True)

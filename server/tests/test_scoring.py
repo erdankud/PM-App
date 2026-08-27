@@ -92,8 +92,10 @@ def test_xp_bonus_never_exceeds_cap():
 
 
 @pytest.mark.parametrize(
+    # Recalibrated in v0.2 for ~140 lessons and 18 gates rather than a daily challenge.
     ("xp", "level"),
-    [(0, 1), (199, 1), (200, 2), (499, 2), (500, 3), (899, 3), (900, 4), (1400, 5), (1900, 6)],
+    [(0, 1), (149, 1), (150, 2), (399, 2), (400, 3), (799, 3), (800, 4),
+     (1400, 5), (2200, 6), (3000, 7)],
 )
 def test_level_thresholds(xp, level):
     assert level_for_xp(xp) == level

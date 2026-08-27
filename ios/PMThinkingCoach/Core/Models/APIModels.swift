@@ -30,22 +30,20 @@ struct SkillView: Codable, Identifiable, Hashable, Sendable {
         }
     }
 
+    /// The server sends an English label alongside the key; the key is what the client
+    /// translates from, with the server string as the fallback for an unknown skill.
+    var localizedLabel: String { S.Labels.skill(key, fallback: label) }
+
     /// Trend is also stated in words so meaning never depends on colour alone (spec §16).
-    var trendDescription: String {
-        switch trend {
-        case "up": return "trending up"
-        case "down": return "trending down"
-        default: return "steady"
-        }
-    }
+    var trendDescription: String { S.Labels.trendDescription(trend) }
 }
 
 struct MeResponse: Codable, Sendable {
     let userId: String
     let onboardingStatus: String
-    let goal: String?
+    let targetRole: String?
     let timezone: String
-    let startingLevel: String?
+    let language: String
     let currentLevel: String?
     let level: Int
     let totalXp: Int
@@ -70,59 +68,6 @@ struct MeResponse: Codable, Sendable {
 
 // MARK: - Assessment
 
-struct AssessmentOption: Codable, Identifiable, Sendable {
-    let id: String
-    let label: String
-}
-
-struct AssessmentItem: Codable, Identifiable, Sendable {
-    let id: String
-    let index: Int
-    let total: Int
-    let prompt: String
-    let context: String
-    let question: String
-    let options: [AssessmentOption]
-}
-
-struct AssessmentState: Codable, Sendable {
-    let notice: String
-    let totalItems: Int
-    let completedItems: Int
-    let completed: Bool
-    let nextItem: AssessmentItem?
-}
-
-struct PathPreviewDay: Codable, Identifiable, Sendable {
-    let localDate: String
-    let dayIndex: Int
-    let scenarioId: String
-    let title: String
-    let primarySkill: String
-    let primarySkillLabel: String
-    let level: String
-    let estimatedMinutes: Int
-    let isToday: Bool
-
-    var id: String { localDate }
-}
-
-struct AssessmentResult: Codable, Sendable {
-    let startingLevel: String
-    let focusSkills: [SkillView]
-    let skills: [SkillView]
-    let path: [PathPreviewDay]
-    let disclaimer: String
-}
-
-struct AssessmentAnswerResponse: Codable, Sendable {
-    let completed: Bool
-    let nextItem: AssessmentItem?
-    let result: AssessmentResult?
-}
-
-// MARK: - Today & challenge
-
 enum ChallengeState: String, Codable, Sendable {
     case notStarted = "not_started"
     case inProgress = "in_progress"
@@ -133,49 +78,23 @@ enum ChallengeState: String, Codable, Sendable {
 
     var callToAction: String {
         switch self {
-        case .notStarted: return "Start"
-        case .inProgress: return "Continue"
-        case .submitted, .awaitingFeedback: return "See coaching"
-        case .complete: return "Review"
-        case .feedbackFailed: return "Retry coaching"
+        case .notStarted: return S.Labels.State.start
+        case .inProgress: return S.Labels.State.resume
+        case .submitted, .awaitingFeedback: return S.Challenge.seeCoaching
+        case .complete: return S.Labels.State.review
+        case .feedbackFailed: return S.Challenge.retryCoaching
         }
     }
 
     var statusLabel: String? {
         switch self {
         case .notStarted: return nil
-        case .inProgress: return "Continue later"
-        case .submitted, .awaitingFeedback: return "Coaching in progress"
-        case .complete: return "Completed"
-        case .feedbackFailed: return "Coaching didn't finish"
+        case .inProgress: return S.Labels.State.continueLater
+        case .submitted, .awaitingFeedback: return S.Labels.State.coachingInProgress
+        case .complete: return S.Labels.State.completed
+        case .feedbackFailed: return S.Challenge.coachingDidntFinish
         }
     }
-}
-
-struct TodayAssignment: Codable, Sendable {
-    let assignmentId: String
-    let localDate: String
-    let scenarioId: String
-    let title: String
-    let summary: String
-    let estimatedMinutes: Int
-    let level: String
-    let primarySkill: String
-    let primarySkillLabel: String
-    let contextLabel: String
-    let state: ChallengeState
-    let attemptId: String?
-    let score: Int?
-}
-
-struct TodayResponse: Codable, Sendable {
-    let localDate: String
-    let assignment: TodayAssignment
-    let upcoming: [PathPreviewDay]
-    let level: Int
-    let totalXp: Int
-    let streakCount: Int
-    let focusSkills: [SkillView]
 }
 
 struct BriefView: Codable, Sendable {
@@ -195,15 +114,7 @@ struct EvidenceCard: Codable, Identifiable, Sendable {
     let order: Int
     let content: String
 
-    var typeLabel: String {
-        switch type {
-        case "quantitative": return "Data"
-        case "qualitative": return "Voices"
-        case "technical": return "Technical"
-        case "business": return "Business"
-        default: return type.capitalized
-        }
-    }
+    var typeLabel: String { S.Labels.evidenceType(type) }
 
     var symbolName: String {
         switch type {
@@ -236,6 +147,10 @@ struct ScenarioView: Codable, Sendable {
     let evidenceCards: [EvidenceCard]
     let decisionPrompt: String
     let decisionOptions: [DecisionOption]
+
+    var localizedPrimarySkill: String {
+        S.Labels.skill(primarySkill, fallback: primarySkillLabel)
+    }
 }
 
 struct AttemptView: Codable, Sendable {
@@ -248,12 +163,17 @@ struct AttemptView: Codable, Sendable {
     let rationaleMax: Int
 }
 
-struct ChallengeResponse: Codable, Sendable {
-    let assignmentId: String
-    let localDate: String
+struct ChallengeResponse: Codable, Identifiable, Sendable {
+    let gateId: String
+    let blockId: String
+    let blockTitle: String
+    let attemptIndex: Int
+    let passThreshold: Int
     let state: ChallengeState
     let scenario: ScenarioView
     let attempt: AttemptView
+
+    var id: String { attempt.attemptId }
 }
 
 struct DraftResponse: Codable, Sendable {
@@ -303,6 +223,8 @@ struct SkillImpact: Codable, Identifiable, Sendable {
     let score: Int
     var id: String { key }
 
+    var localizedLabel: String { S.Labels.skill(key, fallback: label) }
+
     var deltaText: String { delta > 0 ? "+\(delta)" : "\(delta)" }
 }
 
@@ -318,10 +240,10 @@ struct ScoreBreakdown: Codable, Sendable {
 
     var rows: [(label: String, value: Int, max: Int)] {
         [
-            ("Evidence engagement", evidence, evidenceMax),
-            ("Decision quality", decision, decisionMax),
-            ("Rationale quality", rationale, rationaleMax),
-            ("Communication clarity", communication, communicationMax)
+            (S.Labels.Breakdown.evidence, evidence, evidenceMax),
+            (S.Labels.Breakdown.decision, decision, decisionMax),
+            (S.Labels.Breakdown.rationale, rationale, rationaleMax),
+            (S.Labels.Breakdown.communication, communication, communicationMax)
         ]
     }
 }
@@ -338,6 +260,14 @@ struct FeedbackBody: Codable, Sendable {
     let needsRetry: Bool
 }
 
+struct RemediationLink: Codable, Identifiable, Sendable {
+    let gap: String
+    let lessonId: String
+    let lessonTitle: String
+
+    var id: String { lessonId + gap }
+}
+
 struct FeedbackResponse: Codable, Sendable {
     let attemptId: String
     let status: FeedbackStatus
@@ -347,36 +277,42 @@ struct FeedbackResponse: Codable, Sendable {
     let retryAvailable: Bool
     let scenarioTitle: String
     let learnTakeawayTitle: String?
+    let gateId: String?
+    let blockId: String?
+    let blockTitle: String?
+    let passed: Bool?
+    let passThreshold: Int?
+    let attemptIndex: Int?
+    let unlockedBlockIds: [String]
+    let remediation: [RemediationLink]
 }
 
 // MARK: - Progress & history
-
-struct ActivityDay: Codable, Identifiable, Sendable {
-    let localDate: String
-    let state: String
-    var id: String { localDate }
-}
 
 struct ProgressResponse: Codable, Sendable {
     let level: Int
     let totalXp: Int
     let xpForNextLevel: Int?
-    let completedCount: Int
-    let streakCount: Int
-    let activity: [ActivityDay]
+    let blocksPassed: Int
+    let blocksTotal: Int
+    let lessonsCompleted: Int
+    let lessonsTotal: Int
+    let gatesAttempted: Int
     let skills: [SkillView]
     let footnote: String
 }
 
 struct HistoryItem: Codable, Identifiable, Sendable {
     let attemptId: String
+    let gateId: String
+    let blockId: String
+    let blockTitle: String
     let scenarioId: String
     let title: String
-    let localDate: String
-    let primarySkill: String
-    let primarySkillLabel: String
-    let level: String
+    let attemptIndex: Int
+    let submittedAt: String?
     let score: Int?
+    let passed: Bool?
     let feedbackStatus: FeedbackStatus
 
     var id: String { attemptId }
@@ -399,15 +335,10 @@ struct RefreshRequest: Encodable { let refreshToken: String }
 struct SignOutRequest: Encodable { let refreshToken: String? }
 
 struct ProfileUpdateRequest: Encodable {
-    var goal: String?
+    var targetRole: String?
     var timezone: String?
+    var language: String?
     var completeOnboarding: Bool?
-}
-
-struct AssessmentAnswerRequest: Encodable {
-    let itemId: String
-    let choiceId: String
-    let rationale: String?
 }
 
 struct DraftRequest: Encodable {

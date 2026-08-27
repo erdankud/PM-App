@@ -1,0 +1,315 @@
+"""Skill tree, blocks, lessons and gate entry (spec v0.2 §12).
+
+Availability is decided here, not in the UI. `start_gate` re-checks it on every call so
+a client that shows the wrong button cannot get a learner into a gate they have not
+earned (spec v0.2 §14).
+"""
+
+from __future__ import annotations
+
+from fastapi import APIRouter, HTTPException, status
+
+from app import tree_content
+from app.deps import ContentLanguage, CurrentUser, DbSession
+from app.schemas import (
+    LessonSectionView,
+    TermView,
+    TreeSummary,
+    TreesResponse,
+    BlockDetailResponse,
+    BlockSummary,
+    ChallengeResponse,
+    DomainView,
+    LessonBlockView,
+    LessonCompleteResponse,
+    LessonResponse,
+    LessonSummary,
+    NodeDetail,
+    NodeView,
+    TierView,
+    TreeResponse,
+)
+from app.services import glossary as glossary_service
+from app.services import tree as tree_service
+from app.views import challenge_response
+
+router = APIRouter(tags=["tree"])
+
+
+def _summary(block: dict, progress, completed: set[str]) -> BlockSummary:
+    lessons = tree_content.lessons_for_block(block["id"])
+    gate = tree_content.gate_for_block(block["id"])
+    return BlockSummary(
+        id=block["id"],
+        domain_key=block["domainKey"],
+        tier=block["tier"],
+        title=block["title"],
+        content_status=block["status"],
+        status=progress.status,
+        prerequisite_block_ids=list(block["prerequisiteBlockIds"]),
+        node_count=len(block["nodes"]),
+        lessons_total=len(lessons),
+        lessons_completed=sum(1 for l in lessons if l["id"] in completed),
+        gate_id=gate["id"] if gate else None,
+        attempt_count=progress.attempt_count,
+    )
+
+
+TREE_TITLES = {
+    "product": ("Продукт", "Карта навыков продакт-менеджера"),
+    "system_design": ("Системы", "Как устроен продукт изнутри"),
+}
+
+
+@router.get("/trees", response_model=TreesResponse)
+def get_trees(user: CurrentUser, db: DbSession) -> TreesResponse:
+    """Обе карты одной грамматики — для переключателя в табе «Дерево» (спека SD §6.1)."""
+    rows = tree_service.recompute(db, user.id)
+    db.commit()
+    summaries = []
+    for kind in tree_content.kinds():
+        blocks = tree_content.blocks_of(kind)
+        statuses = [rows[block["id"]].status for block in blocks]
+        title, subtitle = TREE_TITLES[kind]
+        summaries.append(TreeSummary(
+            kind=kind,
+            title=title,
+            subtitle=subtitle,
+            blocks_total=len(blocks),
+            blocks_passed=sum(1 for s in statuses if s == tree_service.PASSED),
+            blocks_available=sum(
+                1 for s in statuses
+                if s in (tree_service.AVAILABLE, tree_service.IN_PROGRESS,
+                         tree_service.GATE_READY)
+            ),
+        ))
+    return TreesResponse(trees=summaries)
+
+
+def _tree_response(kind: str, user, db) -> TreeResponse:
+    content = tree_content.tree_content(kind)
+    rows = tree_service.recompute(db, user.id)
+    db.commit()
+    completed = tree_service.completed_lesson_ids(db, user.id)
+    return TreeResponse(
+        kind=kind,
+        version=content["tree"]["version"],
+        source_attribution=content["tree"]["sourceAttribution"],
+        tiers=[TierView(**tier) for tier in content["tiers"]],
+        domains=[
+            DomainView(key=d["key"], title=d["title"], order=d["order"])
+            for d in content["domains"]
+        ],
+        blocks=[
+            _summary(block, rows[block["id"]], completed)
+            for block in content["tree"]["blocks"]
+        ],
+    )
+
+
+@router.get("/tree", response_model=TreeResponse)
+def get_tree(user: CurrentUser, db: DbSession) -> TreeResponse:
+    """Псевдоним основного дерева: клиенты v0.2 обновляются не мгновенно."""
+    return _tree_response("product", user, db)
+
+
+@router.get("/tree/{kind}", response_model=TreeResponse)
+def get_tree_of_kind(kind: str, user: CurrentUser, db: DbSession) -> TreeResponse:
+    if kind not in tree_content.kinds():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "tree_not_found"}
+        )
+    return _tree_response(kind, user, db)
+
+
+@router.get("/blocks/{block_id}", response_model=BlockDetailResponse)
+def get_block(block_id: str, user: CurrentUser, db: DbSession) -> BlockDetailResponse:
+    block = tree_content.block(block_id)
+    if block is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "block_not_found"}
+        )
+    # Домен и круг берутся из того дерева, которому блок принадлежит: их два.
+    content = tree_content.tree_content(tree_content.kind_of_block(block_id))
+
+    rows = tree_service.recompute(db, user.id)
+    db.commit()
+    progress = rows[block_id]
+    completed = tree_service.completed_lesson_ids(db, user.id)
+    lessons = tree_content.lessons_for_block(block_id)
+    by_node: dict[str, list[dict]] = {}
+    for lesson in lessons:
+        by_node.setdefault(lesson["nodeId"], []).append(lesson)
+
+    gate = tree_content.gate_for_block(block_id)
+    remaining = len(lessons) - sum(1 for l in lessons if l["id"] in completed)
+    if progress.status == tree_service.LOCKED:
+        reason = "locked"
+    elif block["status"] != "published":
+        reason = "coming_soon"
+    elif remaining > 0:
+        reason = "lessons_remaining"
+    else:
+        reason = None
+
+    domain_title = next(
+        d["title"] for d in content["domains"] if d["key"] == block["domainKey"]
+    )
+    tier_title = next(t["title"] for t in content["tiers"] if t["tier"] == block["tier"])
+
+    return BlockDetailResponse(
+        block=_summary(block, progress, completed),
+        domain_title=domain_title,
+        tier_title=tier_title,
+        nodes=[
+            NodeDetail(
+                node=NodeView(
+                    id=node["id"],
+                    title=node["title"],
+                    key_question=node["keyQuestion"],
+                    models=node["models"],
+                    ai_impact=node["aiImpact"],
+                    order=node["order"],
+                ),
+                lessons=[
+                    LessonSummary(
+                        id=lesson["id"],
+                        title=lesson["title"],
+                        estimated_minutes=lesson["estimatedMinutes"],
+                        order=lesson["order"],
+                        completed=lesson["id"] in completed,
+                    )
+                    for lesson in sorted(
+                        by_node.get(node["id"], []), key=lambda item: item["order"]
+                    )
+                ],
+            )
+            for node in sorted(block["nodes"], key=lambda item: item["order"])
+        ],
+        gate_available=reason is None and gate is not None,
+        gate_blocked_reason=reason,
+        pass_threshold=tree_service.pass_threshold(gate) if gate else 0,
+    )
+
+
+def _term_view(term: dict, *, seen: bool = False) -> TermView:
+    return TermView(
+        id=term["id"],
+        term=term["term"],
+        term_en=term["termEn"],
+        definition=term["definition"],
+        block_id=term["blockId"],
+        source_lesson_id=term.get("sourceLessonId"),
+        related_ids=term.get("relatedIds", []),
+        seen=seen,
+    )
+
+
+def _lesson_or_404(lesson_id: str) -> dict:
+    lesson = tree_content.lesson(lesson_id)
+    if lesson is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "lesson_not_found"}
+        )
+    return lesson
+
+
+@router.get("/lessons/{lesson_id}", response_model=LessonResponse)
+def get_lesson(lesson_id: str, user: CurrentUser, db: DbSession) -> LessonResponse:
+    lesson = _lesson_or_404(lesson_id)
+    block = tree_content.block(lesson["blockId"])
+    node = next(n for n in block["nodes"] if n["id"] == lesson["nodeId"])
+
+    ordered = tree_content.lessons_for_block(lesson["blockId"])
+    index = next(i for i, item in enumerate(ordered) if item["id"] == lesson_id)
+    next_id = ordered[index + 1]["id"] if index + 1 < len(ordered) else None
+
+    completed = tree_service.completed_lesson_ids(db, user.id)
+    # Термины урока считаются встреченными: отметка в глоссарии ставится сама.
+    if lesson.get("termIds"):
+        glossary_service.mark_seen(db, user.id, lesson["termIds"])
+        db.commit()
+    return LessonResponse(
+        id=lesson["id"],
+        node_id=lesson["nodeId"],
+        block_id=lesson["blockId"],
+        node_title=node["title"],
+        title=lesson["title"],
+        estimated_minutes=lesson["estimatedMinutes"],
+        key_takeaway=lesson["keyTakeaway"],
+        check_question=lesson.get("checkQuestion"),
+        blocks=[LessonBlockView(**item) for item in lesson.get("blocks", [])],
+        sections=[
+            LessonSectionView(
+                kind=section["kind"],
+                blocks=[LessonBlockView(**item) for item in section["blocks"]],
+            )
+            for section in lesson.get("sections", [])
+        ],
+        terms=[
+            _term_view(term, seen=True)
+            for term in (tree_content.glossary_term(t) for t in lesson.get("termIds", []))
+            if term is not None
+        ],
+        diagrams=[
+            glossary_service.diagram_view(diagram)
+            for diagram in (tree_content.diagram(d) for d in lesson.get("diagramIds", []))
+            if diagram is not None
+        ],
+        exercise_id=lesson.get("exerciseId")
+        or (tree_content.exercise_for_node(lesson["nodeId"]) or {}).get("id"),
+        cross_refs=lesson.get("crossRefs", []),
+        completed=lesson_id in completed,
+        next_lesson_id=next_id,
+    )
+
+
+@router.post("/lessons/{lesson_id}/complete", response_model=LessonCompleteResponse)
+def complete_lesson(
+    lesson_id: str, user: CurrentUser, db: DbSession
+) -> LessonCompleteResponse:
+    lesson = _lesson_or_404(lesson_id)
+    block_id = lesson["blockId"]
+
+    progress = tree_service.block_progress(db, user.id, block_id)
+    if progress.status == tree_service.LOCKED:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail={"code": "block_locked"}
+        )
+
+    _, awarded = tree_service.complete_lesson(db, user.id, lesson_id)
+    rows = tree_service.recompute(db, user.id)
+    db.commit()
+
+    completed = tree_service.completed_lesson_ids(db, user.id)
+    lessons = tree_content.lessons_for_block(block_id)
+    done = sum(1 for item in lessons if item["id"] in completed)
+    return LessonCompleteResponse(
+        lesson_id=lesson_id,
+        xp_awarded=awarded,
+        block_status=rows[block_id].status,
+        lessons_completed=done,
+        lessons_total=len(lessons),
+        gate_available=rows[block_id].status == tree_service.GATE_READY,
+    )
+
+
+@router.post("/gates/{gate_id}/start", response_model=ChallengeResponse)
+def start_gate(
+    gate_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> ChallengeResponse:
+    try:
+        attempt = tree_service.start_gate(db, user.id, gate_id)
+    except LookupError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "gate_not_found"}
+        ) from exc
+    except tree_service.BlockNotReady as exc:
+        # The client should not have offered this. Refusing here is the guarantee.
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail={"code": "block_not_ready", "status": str(exc)},
+        ) from exc
+
+    db.commit()
+    return challenge_response(db, attempt, language)

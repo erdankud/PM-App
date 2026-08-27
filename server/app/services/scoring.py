@@ -14,6 +14,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from app.config import settings
+from app.i18n import Language
 
 EVIDENCE_MAX = 15
 DECISION_MAX = 25
@@ -111,14 +112,34 @@ def xp_for_next_level(total_xp: int) -> int | None:
     return thresholds[-1] + steps * settings.level_step_after_thresholds
 
 
-def score_band(score: int) -> str:
-    """Plain-language band shown next to the numeric score (spec §10.10)."""
+_BANDS: dict[str, dict[Language, str]] = {
+    "strong": {Language.EN: "Strong reasoning", Language.RU: "Сильная аргументация"},
+    "solid": {Language.EN: "Solid reasoning", Language.RU: "Уверенная аргументация"},
+    "developing": {
+        Language.EN: "Developing reasoning",
+        Language.RU: "Растущая аргументация",
+    },
+    "early": {Language.EN: "Early reasoning", Language.RU: "Ранняя аргументация"},
+    "thin": {
+        Language.EN: "Needs a fuller argument",
+        Language.RU: "Нужна более полная аргументация",
+    },
+}
+
+
+def band_key(score: int) -> str:
     if score >= 85:
-        return "Strong reasoning"
+        return "strong"
     if score >= 70:
-        return "Solid reasoning"
+        return "solid"
     if score >= 55:
-        return "Developing reasoning"
+        return "developing"
     if score >= 40:
-        return "Early reasoning"
-    return "Needs a fuller argument"
+        return "early"
+    return "thin"
+
+
+def score_band(score: int, language: Language = Language.EN) -> str:
+    """Plain-language band shown next to the numeric score (spec §10.10)."""
+    entry = _BANDS[band_key(score)]
+    return entry.get(language, entry[Language.EN])

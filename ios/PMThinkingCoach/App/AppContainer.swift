@@ -9,6 +9,7 @@ final class AppContainer: ObservableObject {
     let keychain: KeychainStore
     let localStore: LocalStore
     let analytics: any AnalyticsTracking
+    let language: LanguageStore
     let session: SessionStore
 
     init() {
@@ -21,27 +22,53 @@ final class AppContainer: ObservableObject {
         let keychain = KeychainStore()
         let localStore = LocalStore()
         let analytics = AnalyticsService(client: client)
+        let language = LanguageStore()
 
         self.apiClient = client
         self.keychain = keychain
         self.localStore = localStore
         self.analytics = analytics
+        self.language = language
         self.session = SessionStore(
-            client: client, keychain: keychain, localStore: localStore, analytics: analytics
+            client: client,
+            keychain: keychain,
+            localStore: localStore,
+            analytics: analytics,
+            language: language
         )
+    }
+
+    /// Switching language changes both the app's own text and the content the server
+    /// sends back. The header on the next request already carries the new value, so the
+    /// view tree can rebuild immediately; the profile push only has to land before the
+    /// evaluation worker next runs.
+    func setLanguage(_ newValue: AppLanguage) {
+        guard newValue != language.language else { return }
+        language.select(newValue)
+        if session.me != nil {
+            session.pushLanguage(newValue)
+        }
     }
 
     func makeOnboardingViewModel() -> OnboardingViewModel {
         OnboardingViewModel(client: apiClient, session: session, analytics: analytics)
     }
 
-    func makeTodayViewModel() -> TodayViewModel {
-        TodayViewModel(client: apiClient, localStore: localStore, analytics: analytics)
+    func makeTreeViewModel() -> TreeViewModel {
+        TreeViewModel(client: apiClient, localStore: localStore, analytics: analytics)
     }
 
-    func makeChallengeViewModel(assignmentId: String) -> ChallengeViewModel {
+    func makeBlockViewModel(blockId: String) -> BlockViewModel {
+        BlockViewModel(blockId: blockId, client: apiClient, analytics: analytics)
+    }
+
+    func makeLessonViewModel(lessonId: String) -> LessonViewModel {
+        LessonViewModel(lessonId: lessonId, client: apiClient, analytics: analytics)
+    }
+
+    func makeChallengeViewModel(challenge: ChallengeResponse) -> ChallengeViewModel {
         ChallengeViewModel(
-            assignmentId: assignmentId,
+            challenge: challenge,
             client: apiClient,
             localStore: localStore,
             analytics: analytics

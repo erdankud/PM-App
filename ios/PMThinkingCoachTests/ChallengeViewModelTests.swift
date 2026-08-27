@@ -8,7 +8,7 @@ final class ChallengeViewModelTests: XCTestCase {
         client: StubAPIClient
     ) -> ChallengeViewModel {
         ChallengeViewModel(
-            assignmentId: "assignment-1",
+            challenge: client.challengeResponse ?? Fixture.challenge(),
             client: client,
             localStore: LocalStore(filename: "test-store-\(UUID().uuidString).json"),
             analytics: NoopAnalytics()
@@ -83,7 +83,7 @@ final class ChallengeViewModelTests: XCTestCase {
         client.submitResponse = Fixture.submitted()
         let store = LocalStore(filename: "test-store-\(UUID().uuidString).json")
         let viewModel = ChallengeViewModel(
-            assignmentId: "assignment-1", client: client, localStore: store,
+            challenge: client.challengeResponse!, client: client, localStore: store,
             analytics: NoopAnalytics()
         )
         await viewModel.load()

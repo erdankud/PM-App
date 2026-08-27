@@ -20,12 +20,16 @@ protocol APIClientProtocol: Sendable {
     func updateProfile(_ request: ProfileUpdateRequest) async throws -> MeResponse
     func deleteAccount() async throws
 
-    func assessment() async throws -> AssessmentState
-    func answerAssessment(_ request: AssessmentAnswerRequest) async throws -> AssessmentAnswerResponse
-    func assessmentResult() async throws -> AssessmentResult
-
-    func today() async throws -> TodayResponse
-    func challenge(assignmentId: String) async throws -> ChallengeResponse
+    func tree() async throws -> TreeResponse
+    func trees() async throws -> TreesResponse
+    func tree(kind: String) async throws -> TreeResponse
+    func glossary(query: String?, blockId: String?) async throws -> GlossaryResponse
+    func exercise(id: String) async throws -> ExerciseResponse
+    func submitExercise(id: String, values: [String: String]) async throws -> ExerciseSubmitResponse
+    func block(id: String) async throws -> BlockDetailResponse
+    func lesson(id: String) async throws -> LessonResponse
+    func completeLesson(id: String) async throws -> LessonCompleteResponse
+    func startGate(id: String) async throws -> ChallengeResponse
 
     func saveDraft(attemptId: String, request: DraftRequest) async throws -> DraftResponse
     func recordEvidence(attemptId: String, cardId: String) async throws -> EvidenceResponse
@@ -90,6 +94,12 @@ final class APIClient: APIClientProtocol, @unchecked Sendable {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        // Deliberately not `Accept-Language`: URLSession sets that from the device
+        // locale, which would silently override the language chosen in the app. The
+        // server treats this header as the language for this response only; the
+        // durable preference lives on the profile and is what the evaluation worker
+        // reads when it writes coaching later.
+        request.setValue(L10n.current.rawValue, forHTTPHeaderField: "X-Content-Language")
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
@@ -221,29 +231,54 @@ final class APIClient: APIClientProtocol, @unchecked Sendable {
         let _: EmptyResponse = try await perform(.delete, "/me")
     }
 
-    // MARK: - Assessment
+    // MARK: - Skill tree
 
-    func assessment() async throws -> AssessmentState {
-        try await perform(.get, "/assessment")
+    func tree() async throws -> TreeResponse {
+        try await perform(.get, "/tree")
     }
 
-    func answerAssessment(_ request: AssessmentAnswerRequest) async throws -> AssessmentAnswerResponse {
-        try await perform(.post, "/assessment/responses", body: request)
+    func trees() async throws -> TreesResponse {
+        try await perform(.get, "/trees")
     }
 
-    func assessmentResult() async throws -> AssessmentResult {
-        try await perform(.get, "/assessment/result")
+    func tree(kind: String) async throws -> TreeResponse {
+        try await perform(.get, "/tree/\(kind)")
     }
 
-    // MARK: - Today & challenge
-
-    func today() async throws -> TodayResponse {
-        try await perform(.get, "/today")
+    func glossary(query: String?, blockId: String?) async throws -> GlossaryResponse {
+        var items: [URLQueryItem] = []
+        if let query, !query.isEmpty { items.append(URLQueryItem(name: "q", value: query)) }
+        if let blockId { items.append(URLQueryItem(name: "block_id", value: blockId)) }
+        return try await perform(.get, "/glossary", query: items)
     }
 
-    func challenge(assignmentId: String) async throws -> ChallengeResponse {
-        try await perform(.get, "/challenges/\(assignmentId)")
+    func exercise(id: String) async throws -> ExerciseResponse {
+        try await perform(.get, "/exercises/\(id)")
     }
+
+    func submitExercise(
+        id: String, values: [String: String]
+    ) async throws -> ExerciseSubmitResponse {
+        try await perform(.post, "/exercises/\(id)/submit", body: ["values": values])
+    }
+
+    func block(id: String) async throws -> BlockDetailResponse {
+        try await perform(.get, "/blocks/\(id)")
+    }
+
+    func lesson(id: String) async throws -> LessonResponse {
+        try await perform(.get, "/lessons/\(id)")
+    }
+
+    func completeLesson(id: String) async throws -> LessonCompleteResponse {
+        try await perform(.post, "/lessons/\(id)/complete")
+    }
+
+    func startGate(id: String) async throws -> ChallengeResponse {
+        try await perform(.post, "/gates/\(id)/start")
+    }
+
+    // MARK: - Gate attempt
 
     func saveDraft(attemptId: String, request: DraftRequest) async throws -> DraftResponse {
         try await perform(.put, "/attempts/\(attemptId)/draft", body: request)

@@ -4,25 +4,35 @@ import SwiftUI
 /// Welcome / sign-in (spec §10.1).
 struct WelcomeView: View {
     @EnvironmentObject private var session: SessionStore
+    @EnvironmentObject private var container: AppContainer
+    @EnvironmentObject private var language: LanguageStore
     @State private var showingPrivacy = false
 
     var body: some View {
         VStack(spacing: Theme.Spacing.xl) {
+            languageToggle
+                .padding(.horizontal, Theme.Spacing.l)
+                .padding(.top, Theme.Spacing.s)
+                .appear(0)
+
             Spacer()
 
             VStack(spacing: Theme.Spacing.l) {
-                Image(systemName: "brain.head.profile")
-                    .font(.system(size: 56))
+                Image(systemName: "arrow.triangle.branch")
+                    .font(.system(size: 56, weight: .semibold))
                     .foregroundStyle(Theme.Palette.accent)
+                    .appear(1)
 
-                Text("Practise thinking like a Product Manager.")
+                Text(S.Welcome.headline)
                     .font(.largeTitle.weight(.bold))
                     .multilineTextAlignment(.center)
+                    .appear(2)
 
-                Text("A short daily product scenario. Your decision. Clear feedback.")
+                Text(S.Welcome.subheadline)
                     .font(.title3)
                     .foregroundStyle(Theme.Palette.secondaryText)
                     .multilineTextAlignment(.center)
+                    .appear(3)
             }
             .padding(.horizontal, Theme.Spacing.l)
 
@@ -36,11 +46,12 @@ struct WelcomeView: View {
                 }
                 .signInWithAppleButtonStyle(.black)
                 .frame(height: 50)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.control))
                 .disabled(session.isAuthenticating)
-                .accessibilityLabel("Continue with Apple")
+                .accessibilityLabel(S.Welcome.continueWithApple)
 
                 if AppConfig.allowsDeveloperSignIn {
-                    Button("Continue without Apple (development)") {
+                    Button(S.Welcome.developerSignIn) {
                         Task { await session.signInAsDeveloper() }
                     }
                     .font(.footnote)
@@ -58,19 +69,43 @@ struct WelcomeView: View {
                     .padding(.horizontal, Theme.Spacing.s)
                 }
 
-                Button("Privacy notice") { showingPrivacy = true }
+                Button(S.Welcome.privacyNotice) { showingPrivacy = true }
                     .font(.footnote)
                     .frame(minHeight: Theme.minimumTapTarget)
             }
+            .animation(Motion.standard, value: session.authError)
             .padding(.horizontal, Theme.Spacing.xl)
             .padding(.bottom, Theme.Spacing.xl)
+            .appear(4)
 
             if session.isAuthenticating {
-                ProgressView().padding(.bottom, Theme.Spacing.l)
+                ProgressView()
+                    .padding(.bottom, Theme.Spacing.l)
+                    .transition(.opacity)
             }
         }
+        .animation(Motion.quick, value: session.isAuthenticating)
         .background(Theme.Palette.background)
         .sheet(isPresented: $showingPrivacy) { PrivacyNoticeView() }
+    }
+
+    /// Offered before sign-in as well as in Profile: someone who cannot read the
+    /// welcome copy should not have to sign in to fix that.
+    private var languageToggle: some View {
+        HStack {
+            Spacer()
+            Picker(S.Profile.languageLabel, selection: Binding(
+                get: { language.language },
+                set: { container.setLanguage($0) }
+            )) {
+                ForEach(AppLanguage.allCases) { option in
+                    Text(option.shortName).tag(option)
+                }
+            }
+            .pickerStyle(.segmented)
+            .frame(width: 120)
+            .accessibilityLabel(S.Profile.languageLabel)
+        }
     }
 
     private func handle(_ result: Result<ASAuthorization, Error>) {
@@ -95,52 +130,36 @@ struct WelcomeView: View {
 struct PrivacyNoticeView: View {
     @Environment(\.dismiss) private var dismiss
 
+    private var items: [(title: String, body: String)] {
+        [
+            (S.Privacy.accountTitle, S.Privacy.accountBody),
+            (S.Privacy.writingTitle, S.Privacy.writingBody),
+            (S.Privacy.analyticsTitle, S.Privacy.analyticsBody),
+            (S.Privacy.deletionTitle, S.Privacy.deletionBody),
+            (S.Privacy.scoresTitle, S.Privacy.scoresBody)
+        ]
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Spacing.l) {
-                    Text("What we collect and why")
+                    Text(S.Privacy.heading)
                         .font(.title2.weight(.bold))
+                        .appear(0)
 
-                    privacyItem(
-                        title: "Your account",
-                        body: "Signing in with Apple gives us a stable identifier for your "
-                            + "account. We do not ask for your name, email, employer, or any "
-                            + "demographic information."
-                    )
-                    privacyItem(
-                        title: "What you write",
-                        body: "The reasoning you write for each challenge is sent to our "
-                            + "server and to our AI provider for the sole purpose of "
-                            + "generating your feedback. It is never sent to analytics, "
-                            + "crash reporting, or notifications."
-                    )
-                    privacyItem(
-                        title: "Product analytics",
-                        body: "We record which screens you reach and which options you "
-                            + "select so we can improve the product. These events never "
-                            + "include what you wrote or the feedback you received."
-                    )
-                    privacyItem(
-                        title: "Deleting your account",
-                        body: "You can delete your account from Profile at any time. This "
-                            + "removes your written responses, your feedback, and your "
-                            + "identity link."
-                    )
-                    privacyItem(
-                        title: "What scores mean",
-                        body: "Skill scores are practice signals based on your in-app work. "
-                            + "They are not an assessment of job readiness and they do not "
-                            + "predict hiring outcomes."
-                    )
+                    ForEach(Array(items.enumerated()), id: \.element.title) { index, item in
+                        privacyItem(title: item.title, body: item.body)
+                            .appear(index + 1)
+                    }
                 }
                 .padding(Theme.Spacing.l)
             }
-            .navigationTitle("Privacy")
+            .navigationTitle(S.Privacy.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { dismiss() }
+                    Button(S.Common.done) { dismiss() }
                 }
             }
         }

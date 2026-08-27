@@ -4,83 +4,48 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from app.content import assessment_content
+from app.i18n import Language
 from app.models import SKILL_KEYS, SkillAssessment, SkillScore, utcnow
 
 SKILL_LABELS: dict[str, str] = {
-    "product_sense": "Product Sense",
-    "analytics": "Analytics",
-    "user_research": "User Research",
-    "prioritization": "Prioritisation",
-    "execution": "Execution",
+    "discovery": "Discovery & Research",
+    "value_design": "Value & Solution Design",
+    "delivery": "Development & Delivery",
+    "marketing": "Product Marketing",
+    "growth": "Growth & Experiments",
+    "economics": "Sales & Economics",
     "communication": "Communication",
+    "system_design": "System Design",
 }
+
+SKILL_LABELS_RU: dict[str, str] = {
+    "discovery": "Дискавери и исследования",
+    "value_design": "Ценность и проектирование",
+    "delivery": "Разработка и поставка",
+    "marketing": "Продуктовый маркетинг",
+    "growth": "Рост и эксперименты",
+    "economics": "Продажи и экономика",
+    "communication": "Коммуникация",
+    "system_design": "Системный дизайн",
+}
+
+_LABELS_BY_LANGUAGE = {
+    Language.EN: SKILL_LABELS,
+    Language.RU: SKILL_LABELS_RU,
+}
+
+
+def label(key: str, language: Language = Language.EN) -> str:
+    """Display name for a skill key. Unknown keys are returned as-is."""
+    return _LABELS_BY_LANGUAGE.get(language, SKILL_LABELS).get(
+        key, SKILL_LABELS.get(key, key)
+    )
 
 
 def get_scores(db: Session, user_id: str) -> dict[str, int]:
     rows = db.query(SkillScore).filter(SkillScore.user_id == user_id).all()
     scores = {row.skill_key: row.score for row in rows}
     return {key: scores.get(key, 50) for key in SKILL_KEYS}
-
-
-def initialise_from_assessment(
-    db: Session, user_id: str, responses: dict[str, str]
-) -> dict[str, int]:
-    """Compute baselines from author-defined option weights.
-
-    `responses` maps assessment item id -> chosen option id. No AI call is made
-    during onboarding (spec §10.3).
-    """
-    content = assessment_content()
-    base = int(content["baselineScore"])
-    low = int(content["baselineMin"])
-    high = int(content["baselineMax"])
-
-    totals = {key: 0 for key in SKILL_KEYS}
-    for item in content["items"]:
-        choice_id = responses.get(item["id"])
-        if choice_id is None:
-            continue
-        option = next((o for o in item["options"] if o["id"] == choice_id), None)
-        if option is None:
-            continue
-        for key, weight in option["skillWeights"].items():
-            totals[key] += int(weight)
-
-    baselines: dict[str, int] = {}
-    for key in SKILL_KEYS:
-        baselines[key] = max(low, min(high, base + totals[key]))
-
-    existing = {
-        row.skill_key: row
-        for row in db.query(SkillScore).filter(SkillScore.user_id == user_id).all()
-    }
-    for key, value in baselines.items():
-        row = existing.get(key)
-        if row is None:
-            db.add(SkillScore(user_id=user_id, skill_key=key, score=value))
-        else:
-            row.score = value
-            row.updated_at = utcnow()
-        db.add(
-            SkillAssessment(
-                user_id=user_id,
-                source="onboarding_assessment",
-                skill_key=key,
-                delta=value - base,
-                reason_code="assessment_baseline",
-            )
-        )
-    return baselines
-
-
-def starting_level(baselines: dict[str, int]) -> str:
-    content = assessment_content()
-    average = sum(baselines.values()) / max(1, len(baselines))
-    for band in content["levelBands"]:
-        if average <= band["maxAverage"]:
-            return str(band["level"])
-    return "developing"
 
 
 def focus_skills(scores: dict[str, int]) -> list[str]:

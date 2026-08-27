@@ -1,88 +1,107 @@
 #!/usr/bin/env python3
-"""Validate authored content against the schema and the editorial rules.
+"""Validate authored content: the skill tree, its lessons and its gate scenarios.
 
     python -m scripts.validate_content
 
-Exits non-zero if anything fails, so it can gate a build.
+Exits non-zero if anything fails, so it can gate a build (spec v0.2 §14).
 """
 
 from __future__ import annotations
 
+import json
 import sys
 from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app.content import (  # noqa: E402
-    ContentError,
-    assessment_content,
-    load_scenario_file,
-    scenario_paths,
-    validate_scenario,
-)
+from app import tree_content  # noqa: E402
+from app.content import ContentError  # noqa: E402
 
-MIN_PUBLISHED = 12  # spec §21 quality acceptance
+
+def _read(path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def check(kind: str) -> tuple[list[str], dict]:
+    """Один вид дерева: контент, ошибки и цифры для сводки."""
+    tree = tree_content.load_tree_file(kind)
+    lessons = [_read(p) for p in tree_content.lesson_paths(kind)]
+    gates = tree_content.load_gates_file(kind)["gates"]
+    scenarios = [_read(p) for p in tree_content.gate_scenario_paths(kind)]
+    exercises = [_read(p) for p in tree_content.exercise_paths(kind)]
+    diagrams = [_read(p) for p in tree_content.diagram_paths(kind)]
+    glossary = tree_content.load_glossary_file(kind)
+
+    errors = tree_content.validate_tree(
+        tree, lessons, gates, scenarios,
+        root_block_id=tree_content.TREES[kind]["root"],
+        exercises=exercises, glossary=glossary, diagrams=diagrams,
+    )
+    return errors, {
+        "tree": tree, "lessons": lessons, "gates": gates, "scenarios": scenarios,
+        "exercises": exercises, "diagrams": diagrams, "glossary": glossary,
+    }
 
 
 def main() -> int:
-    paths = scenario_paths()
-    if not paths:
-        print("No scenario files found.")
+    product_errors, product = check("product")
+    sd_errors, sd = check("system_design")
+    tree = product["tree"]
+    lessons = product["lessons"]
+    gates = product["gates"]
+    scenarios = product["scenarios"]
+
+    roles_doc = tree_content.load_roles_file()
+
+    errors = product_errors + tree_content.validate_roles(roles_doc, tree)
+    errors += [f"system_design: {error}" for error in sd_errors]
+    if errors:
+        print(f"FAIL {len(errors)} problem(s):")
+        for error in errors:
+            print(f"   - {error}")
         return 1
 
-    failures = 0
-    published = 0
-    levels: Counter[str] = Counter()
-    primary_skills: Counter[str] = Counter()
+    lessons_by_block: Counter[str] = Counter(item["blockId"] for item in lessons)
+    published = [b for b in tree["blocks"] if b["status"] == "published"]
 
-    for path in paths:
-        try:
-            data = load_scenario_file(path)
-        except Exception as exc:  # noqa: BLE001
-            print(f"FAIL {path.name}: could not parse JSON ({exc})")
-            failures += 1
-            continue
-        errors = validate_scenario(data)
-        if errors:
-            failures += 1
-            print(f"FAIL {path.name}")
-            for error in errors:
-                print(f"     - {error}")
-            continue
-        if data["status"] == "published":
-            published += 1
-            levels[data["level"]] += 1
-            primary_skills[data["primarySkill"]] += 1
-        print(f"ok   {path.name}  [{data['level']}/{data['primarySkill']}]")
-
-    try:
-        assessment = assessment_content()
-        print(f"ok   assessment.json  [{len(assessment['items'])} items]")
-    except ContentError as exc:
-        print(f"FAIL assessment.json: {exc}")
-        failures += 1
+    for block in tree["blocks"]:
+        mark = "ok  " if block["status"] == "published" else "soon"
+        print(
+            f"{mark} {block['id']:<3} {block['title']:<28} "
+            f"{len(block['nodes'])} узлов, {lessons_by_block.get(block['id'], 0)} уроков"
+        )
 
     print()
-    print(f"Published scenarios: {published}")
-    print(f"  by level:  {dict(levels)}")
-    print(f"  by skill:  {dict(primary_skills)}")
-
-    if published < MIN_PUBLISHED:
-        print(f"FAIL fewer than {MIN_PUBLISHED} published scenarios (spec §21)")
-        failures += 1
-
-    missing_levels = {"foundation", "developing", "advanced"} - set(levels)
-    if missing_levels:
-        print(f"FAIL no published scenarios at level(s): {sorted(missing_levels)}")
-        failures += 1
-
-    if failures:
-        print(f"\n{failures} problem(s) found.")
-        return 1
-    print("\nAll content valid.")
+    print(f"Блоков: {len(tree['blocks'])} ({len(published)} опубликовано)")
+    print(f"Узлов: {sum(len(b['nodes']) for b in tree['blocks'])}")
+    print(f"Уроков: {len(lessons)}  Гейтов: {len(gates)}  Сценариев: {len(scenarios)}")
+    print(f"QA-фикстур: {sum(len(s['qaSubmissions']) for s in scenarios)}")
+    specialised = [r for r in roles_doc["roles"] if r["key"] != "product_manager"]
+    print(
+        f"Ролей: {len(roles_doc['roles'])} "
+        f"(узлов в специализированных: {min(len(r['nodeIds']) for r in specialised)}"
+        f"–{max(len(r['nodeIds']) for r in specialised)})"
+    )
+    print()
+    sd_tree = sd["tree"]
+    sd_published = [b for b in sd_tree["blocks"] if b["status"] == "published"]
+    print()
+    print(f"System Design: блоков {len(sd_tree['blocks'])} ({len(sd_published)} опубликовано), "
+          f"узлов {sum(len(b['nodes']) for b in sd_tree['blocks'])}")
+    print(f"Уроков: {len(sd['lessons'])}  Упражнений: {len(sd['exercises'])}  "
+          f"Сценариев: {len(sd['scenarios'])}")
+    print(f"Терминов: {len(sd['glossary']['terms'])}  Схем: {len(sd['diagrams'])}")
+    print()
+    print("Графы разблокировки ацикличны, всё достижимо из "
+          f"{tree_content.TREES['product']['root']} и {tree_content.TREES['system_design']['root']}. "
+          "Контент валиден.")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except ContentError as exc:
+        print(exc)
+        raise SystemExit(1) from exc
