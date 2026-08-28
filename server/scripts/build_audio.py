@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """Готовит аудиоверсии уроков заранее.
 
-Синтез идёт примерно в 25 раз быстрее реального времени, но урок на 12 минут — это
-всё равно полминуты ожидания, и делать это в момент запроса значит показать
-человеку спиннер вместо кнопки. Поэтому файлы собираются заранее, а раздача
-становится отдачей статики.
+Синтез идёт по сети и занимает около минуты на урок, поэтому делать его в момент
+запроса значит показать человеку спиннер вместо кнопки. Файлы собираются заранее,
+а раздача становится отдачей статики — и тогда недоступность сервиса синтеза
+ломает только сборку новых обзоров, а не выдачу уже собранных.
 
-    python -m scripts.build_audio --download   # голос, 63 МБ, один раз
     python -m scripts.build_audio              # весь корпус
     python -m scripts.build_audio ds1-n1-l1    # один урок
 
@@ -25,16 +24,6 @@ from pathlib import Path
 from app import tree_content
 from app.config import settings
 from app.services import audio
-
-
-def download_voice() -> None:
-    target = Path(settings.audio_voice_dir)
-    target.mkdir(parents=True, exist_ok=True)
-    from piper.download_voices import download_voice as fetch
-
-    print(f"качаю голос {audio.VOICE} в {target}")
-    fetch(audio.VOICE, target)
-    print("готово")
 
 
 def lessons_for(names: list[str]) -> list[dict]:
@@ -56,7 +45,6 @@ def lessons_for(names: list[str]) -> list[dict]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("lessons", nargs="*", help="идентификаторы уроков; пусто — все")
-    parser.add_argument("--download", action="store_true", help="скачать голос и выйти")
     parser.add_argument(
         "--keep-stale",
         action="store_true",
@@ -64,16 +52,11 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    if args.download:
-        download_voice()
-        return
-
-    if not audio.voice_available():
-        raise SystemExit(
-            f"нет голоса {audio.VOICE}. Сначала: python -m scripts.build_audio --download"
-        )
-
     targets = lessons_for(args.lessons)
+    # Урок без сценария обзора пропускается молча: сценарии пишутся отдельным
+    # шагом, и отсутствие — это «ещё не сгенерирован», а не поломка.
+    without_script = [l for l in targets if not audio.has_script(l)]
+    targets = [l for l in targets if audio.has_script(l)]
     wanted = {audio.audio_path(lesson).name for lesson in targets}
     built = skipped = 0
     started = time.time()
@@ -107,6 +90,11 @@ def main() -> None:
         f"\nсобрано: {built}  уже было: {skipped}  удалено устаревших: {removed}  "
         f"время: {time.time() - started:.0f} с  каталог: {total / 1024 / 1024:.0f} МБ"
     )
+    if without_script:
+        print(
+            f"без сценария обзора: {len(without_script)} — "
+            "их аудио не собирается (python -m scripts.generate_audio_scripts)"
+        )
 
 
 if __name__ == "__main__":

@@ -44,6 +44,39 @@ def check(kind: str) -> tuple[list[str], dict]:
     }
 
 
+
+def check_audio_scripts() -> list[str]:
+    """Сценарии обзоров: заглушки не публикуются, отставшие от урока — тоже.
+
+    Проверяется здесь, а не в тестах аудио, потому что это свойство контента: в
+    релиз не должен уехать обзор, который дословно зачитывает урок или рассказывает
+    про его прошлую редакцию.
+    """
+    from app import tree_content
+    from app.services import audio, audio_script
+
+    problems: list[str] = []
+    total = stale = 0
+    for kind in tree_content.KINDS:
+        for lesson in tree_content.tree_content(kind)["lessons"].values():
+            path = audio.script_path(lesson)
+            if not path.exists():
+                continue
+            total += 1
+            if audio.load_script(lesson) is None:
+                stale += 1
+                continue
+            script = json.loads(path.read_text(encoding="utf-8"))
+            provider = script["generator"]["provider"]
+            if provider == "mock":
+                problems.append(f"{lesson['id']}: обзор-заглушка (provider=mock)")
+                continue
+            for problem in audio_script.validate_script(script["turns"], lesson):
+                problems.append(f"{lesson['id']}: {problem}")
+
+    print(f"\nОбзоров: {total} (устарело к тексту урока: {stale})")
+    return problems
+
 def main() -> int:
     product_errors, product = check("product")
     sd_errors, sd = check("system_design")
@@ -92,6 +125,16 @@ def main() -> int:
     print(f"Уроков: {len(sd['lessons'])}  Упражнений: {len(sd['exercises'])}  "
           f"Сценариев: {len(sd['scenarios'])}")
     print(f"Терминов: {len(sd['glossary']['terms'])}  Схем: {len(sd['diagrams'])}")
+    audio_problems = check_audio_scripts()
+    if audio_problems:
+        print()
+        for problem in audio_problems[:20]:
+            print(f"  ! {problem}")
+        if len(audio_problems) > 20:
+            print(f"  ... и ещё {len(audio_problems) - 20}")
+        print("\nОбзоры не проходят проверку — контент невалиден.")
+        return 1
+
     print()
     print("Графы разблокировки ацикличны, всё достижимо из "
           f"{tree_content.TREES['product']['root']} и {tree_content.TREES['system_design']['root']}. "

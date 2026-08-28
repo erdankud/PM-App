@@ -145,31 +145,54 @@ boundaries it explains are unchanged).
   scenarios are validated content files. iOS `API_BASE_URL` points at the
   Mac's LAN IP, not localhost, because a physical device cannot reach it.
 
-## Lesson audio
+## Lesson audio overview
 
-- Every lesson has an audio version. The narration is **assembled from the authored
-  sections, never written**: same text, same order, plus spoken section markers.
-  `tests/test_audio.py` asserts that no word reaches the listener that is not in the
-  lesson (or in the closed list of spoken frames) — that test is what keeps audio and
-  text from drifting into two different lessons.
-- Synthesis is Piper, local, on CPU, ~25× real time; MP3 via `lameenc`, so no ffmpeg.
-  Dependencies live in `requirements-audio.txt` and are **not** in the runtime image:
-  the API serves prebuilt files and never synthesizes.
+- Each lesson can carry an **audio overview** — two hosts talking about the lesson,
+  in the NotebookLM sense. It is deliberately not the lesson read aloud: reading
+  written prose out loud always sounds like reading, which is the thing this replaces.
+- Roles are fixed corpus-wide: `guide` asks the questions a listener would ask,
+  `expert` answers as a practising PM. Two voices (Светлана / Дмитрий), because one
+  voice for both speakers collapses the dialogue back into a monologue.
+- The dialogue is **written once, at build time**, and stored as content in
+  `content/<tree>/audio-scripts/<lessonId>.json`. The runtime never calls a provider;
+  a script can be read, reviewed and hand-edited like any other content file.
 
-      pip install -r requirements-audio.txt
-      python -m scripts.build_audio --download   # голос, 63 МБ, один раз
-      python -m scripts.build_audio              # весь корпус, ~20 минут
+      export EVALUATOR_API_KEY=...                      # Google AI Studio, free tier
+      python -m scripts.generate_audio_scripts          # пишет диалоги
+      python -m scripts.build_audio                     # синтез, ~27 с на урок
+      python -m scripts.validate_content
 
-- Files are built ahead of time, not on request: half a minute of synthesis behind a
-  play button is worse than no button. No file means `audio.available == false` and no
-  player — a state, not an error.
-- The file name and the URL carry a hash of the script, so editing a lesson
-  invalidates its audio by itself and only changed lessons are rebuilt.
-- Tables are not read aloud (a grid as a list of cells is unfollowable) — the script
-  points at the screen instead. Diagrams *are* read, through `describe_diagram`.
-- A Russian voice reads `SLA` as «сла»: new Latin abbreviations need an entry in
-  `PRONUNCIATION` in `app/services/audio.py`.
-- `server/var/` (voice + built mp3) is generated and gitignored.
+- **The model is checked, not trusted.** `validate_script` rejects a draft whose
+  numbers or Latin terms do not occur in the lesson, which is what stops the overview
+  from teaching invented figures. It also rejects a monologue, a verbatim quote of the
+  lesson, and radio-host openings. A rejected draft is retried with the complaints fed
+  back into the prompt.
+- `--mock` exists only to exercise the pipeline without a key. Its output is a stub
+  that fails validation on purpose, and `validate_content` fails on any script with
+  `provider: "mock"` so a stub can never ship.
+- `sourceDigest` in each script is the digest of the lesson text. Edit the lesson and
+  its overview stops counting as current: `load_script` returns None, the lesson has
+  no audio until the script is regenerated. Silently voicing a previous edition is worse.
+- The mp3 name and the URL carry a hash of the dialogue, so only changed overviews are
+  rebuilt and a client cache can never serve a stale edition.
+- Tables are not read aloud (a grid as a list of cells is unfollowable); diagrams are,
+  through `describe_diagram`. `PRONUNCIATION` in `app/services/audio.py` spells Latin
+  abbreviations out; it was written for Piper, whose espeak backend read `SLA` as «сла»,
+  and is worth re-checking against the neural voices before adding to it.
+- Synthesis is `edge-tts` — Microsoft's neural voices, the ones the Edge browser reads
+  pages with. Free, no key, ~27 s per lesson (whole corpus ≈ 2 h). Piper was tried first
+  and rejected: fully offline and twenty times faster, but its prosody is flat enough
+  that the result sounds robotic, which defeats the point of an overview.
+- **Know what this leans on.** `edge-tts` reaches an undocumented endpoint. Microsoft
+  grants no right to use it outside the browser, access can be withdrawn, and stale
+  clients are already rejected — 7.0.2 gets a 403 where 7.2.8 works, so expect to bump
+  the pin. Because synthesis happens at build time, an outage stops new overviews from
+  being built and never touches the ones already serving.
+- `WORDS_PER_MINUTE` is measured, not looked up, and depends on the voices and
+  `SPEECH_RATE` — re-measure it if either changes.
+- Synthesis dependencies live in `requirements-audio.txt` and are **not** in the runtime
+  image: the API serves prebuilt files and never synthesizes. `server/var/audio` is
+  generated and gitignored.
 
 ## Before making changes
 

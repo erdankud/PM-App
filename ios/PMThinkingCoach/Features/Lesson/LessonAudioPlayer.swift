@@ -33,7 +33,10 @@ struct LessonAudioPlayer: View {
         case .failed: return S.Lesson.audioFailed
         case .ready: return "\(time(viewModel.position)) / \(time(viewModel.duration))"
         default:
-            return viewModel.duration > 0 ? time(viewModel.duration) : S.Lesson.audioPlay
+            // До загрузки полезнее сказать, что это вообще такое, и сколько идёт.
+            return viewModel.duration > 0
+                ? "\(S.Lesson.audioSubtitle) · \(time(viewModel.duration))"
+                : S.Lesson.audioSubtitle
         }
     }
 

@@ -86,6 +86,44 @@ class GeminiEvaluator:
         return ProviderResponse(raw_text=text, model_id=model)
 
 
+def gemini_text(
+    system_prompt: str,
+    user_prompt_text: str,
+    *,
+    model: str | None = None,
+    max_output_tokens: int = 4096,
+    temperature: float = 0.9,
+) -> tuple[str, str]:
+    """Свободная генерация текста через Gemini: возвращает (текст, id модели).
+
+    Отдельно от `GeminiEvaluator`, потому что задачи разные. Оценка обязана быть
+    воспроизводимой и короткой, а сценарий обзора — наоборот, живым и длинным:
+    отсюда высокая температура и большой лимит вывода.
+    """
+    key = _require_key()
+    model_id = model or settings.audio_script_model or "gemini-2.5-flash"
+    base = settings.evaluator_base_url or "https://generativelanguage.googleapis.com"
+    url = f"{base}/v1beta/models/{model_id}:generateContent"
+    body = {
+        "systemInstruction": {"parts": [{"text": system_prompt}]},
+        "contents": [{"role": "user", "parts": [{"text": user_prompt_text}]}],
+        "generationConfig": {
+            "temperature": temperature,
+            "maxOutputTokens": max_output_tokens,
+            "responseMimeType": "application/json",
+        },
+    }
+    payload = _post(url, headers={"x-goog-api-key": key}, json_body=body)
+    try:
+        parts = payload["candidates"][0]["content"]["parts"]
+        text = "".join(part.get("text", "") for part in parts)
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ProviderError("provider_empty_response", retryable=True) from exc
+    if not text.strip():
+        raise ProviderError("provider_empty_response", retryable=True)
+    return text, model_id
+
+
 class OpenAICompatibleEvaluator:
     """Chat Completions shape: OpenAI, Groq, OpenRouter, and most local servers."""
 

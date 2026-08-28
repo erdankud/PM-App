@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AudioScript",
+  "description": "Диалог двух ведущих по одному уроку. Пишется один раз на этапе сборки и хранится как контент: рантайм к провайдеру не ходит, а сценарий можно вычитать и поправить руками.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lessonId", "sourceDigest", "generator", "turns"],
+  "properties": {
+    "lessonId": { "type": "string" },
+    "sourceDigest": {
+      "type": "string",
+      "description": "Отпечаток текста урока на момент генерации. Не совпал — сценарий устарел и должен быть перегенерирован.",
+      "pattern": "^[0-9a-f]{12}$"
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "promptVersion"],
+      "properties": {
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "promptVersion": { "type": "string" },
+        "generatedAt": { "type": "string" }
+      }
+    },
+    "turns": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 60,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["speaker", "text"],
+        "properties": {
+          "speaker": {
+            "type": "string",
+            "description": "guide ведёт и задаёт вопросы, expert отвечает. Роли постоянны во всём корпусе, иначе слушатель теряет, кто есть кто.",
+            "enum": ["guide", "expert"]
+          },
+          "text": { "type": "string", "minLength": 2, "maxLength": 900 }
+        }
+      }
+    }
+  }
+}

@@ -153,40 +153,40 @@ validator rejects anything outside it, and `apply_deltas` clamps again before wr
 
 ---
 
-## Lesson audio
+## Lesson audio overview
 
-Every lesson can be listened to. The narration is **assembled from the authored
-sections, not written**: the same text the reader sees, in the same order, with
-spoken section markers so the structure survives without a screen. Nothing is
-generated, so the listener and the reader never get different lessons.
+A lesson can carry an **audio overview**: two hosts discussing it, the way NotebookLM
+does. It is explicitly not the lesson read aloud — prose read out loud sounds like
+prose read out loud, and that is what this replaced.
 
-Synthesis is [Piper](https://github.com/OHF-Voice/piper1-gpl) running locally — no
-key, no network, no per-request cost, about 25× faster than real time on CPU. MP3
-encoding goes through `lameenc`, so there is no ffmpeg dependency.
+The dialogue is written once, at build time, by a model, and then stored as content in
+`content/<tree>/audio-scripts/`. Nothing calls a provider at runtime, and a script is a
+reviewable file like any other: read it, edit it, see it in a diff.
 
 ```bash
-pip install -r requirements-audio.txt
-python -m scripts.build_audio --download   # voice, 63 MB, once
-python -m scripts.build_audio              # whole corpus, ~20 min, ~200 MB
+export EVALUATOR_API_KEY=...                 # Google AI Studio, free tier
+python -m scripts.generate_audio_scripts     # write the dialogues
+python -m scripts.build_audio --download     # two voices, 126 MB, once
+python -m scripts.build_audio                # synthesize
 ```
 
-Files are built ahead of time rather than on request: a twelve-minute lesson takes
-about half a minute to synthesize, and a button that does not play is worse than no
-button. A lesson with no file simply reports `audio.available == false` and the
-client hides the player — that is a state, not an error.
+**The model is checked, not trusted.** A draft is rejected when its numbers or Latin
+terms do not appear in the lesson — the guard against an overview that teaches invented
+figures — and also when it is a monologue, a verbatim quote, or opens like a radio show.
+Rejections are retried with the complaints appended to the prompt. `--mock` produces a
+deliberately invalid stub so the pipeline can be exercised without a key;
+`validate_content` fails on any stub, so one cannot ship.
 
-The file name carries a hash of the script, so editing a lesson invalidates its
-audio automatically and `build_audio` rebuilds only what changed. The same hash
-rides in the URL (`?v=…`), which is what makes the client's cache safe.
+Each script records a `sourceDigest` of the lesson text. Edit the lesson and the
+overview stops counting as current: the lesson simply has no audio until the script is
+regenerated. Voicing a previous edition silently would be worse than no audio.
 
-Two things are deliberately not read aloud. A table becomes a pointer to the screen,
-because a grid read as a list of cells is unfollowable. Code identifiers are skipped.
-Diagrams, on the other hand, *are* read: `describe_diagram` already turns their
-structure into a sentence for VoiceOver.
-
-Latin abbreviations need a pronunciation dictionary (`PRONUNCIATION` in
-`app/services/audio.py`): a Russian voice reads `SLA` as "сла" and `RPS` as "рпс".
-Add an entry when a new abbreviation enters the corpus.
+Synthesis is [Piper](https://github.com/OHF-Voice/piper1-gpl) locally on CPU, about 25×
+faster than real time, with `lameenc` for MP3 so there is no ffmpeg dependency. Files
+are built ahead of time; a lesson with no file reports `audio.available == false` and
+the client hides the player. Tables become a pointer to the screen, diagrams are read
+through `describe_diagram`, and Latin abbreviations go through `PRONUNCIATION` because
+a Russian voice reads `SLA` as "сла".
 
 ---
 

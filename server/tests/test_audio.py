@@ -12,55 +12,100 @@ import re
 from conftest import onboard
 
 from app import tree_content
-from app.services import audio
+from app.services import audio, audio_script
 
 
-def test_script_is_assembled_from_the_authored_text_only():
-    """В сценарии нет ни одного слова, которого нет в уроке.
+def test_dialogue_never_invents_numbers_or_terms():
+    """Главная гарантия обзора: разговор свой, факты — урока.
 
-    Это главное свойство: аудио — тот же урок вслух. Если сюда просочится
-    сгенерированный текст, слушатель и читатель получат разные уроки.
+    Слова в обзоре новые по замыслу: это пересказ живой речью, а не чтение вслух.
+    Проверять поэтому надо не лексику, а факты — числа и латинские термины. Курс,
+    в котором ведущий округлил цифру или придумал аббревиатуру, учит выдуманному.
     """
+    checked = stubs = 0
+    for kind in tree_content.KINDS:
+        for lesson in tree_content.tree_content(kind)["lessons"].values():
+            script = audio.load_script(lesson)
+            if script is None:
+                continue
+            if script["generator"]["provider"] == "mock":
+                # Заглушка разговором не является и проверку не проходит — этим
+                # и занят следующий тест. Публиковаться она не может.
+                stubs += 1
+                continue
+            problems = audio_script.validate_script(script["turns"], lesson)
+            assert not problems, f"{lesson['id']}: {problems}"
+            checked += 1
+    assert checked or stubs, "нет ни одного сценария обзора — проверять нечего"
+
+
+def test_stub_overviews_are_never_publishable():
+    """`--mock` нужен, чтобы прогнать конвейер без ключа, и только для этого.
+
+    Заглушка раздаёт абзацы урока двум голосам, то есть делает ровно то, чем обзор
+    быть не должен. Проверка обязана её отклонять — иначе она однажды уедет в релиз.
+    """
+    from scripts.generate_audio_scripts import mock_turns
+
     lesson = tree_content.lesson("ds1-n1-l1")
-    from app.services.glossary import describe_diagram
+    problems = audio_script.validate_script(mock_turns(lesson), lesson)
+    assert problems, "заглушка прошла проверку — значит проверка ничего не значит"
 
-    # Авторский материал урока — его текст и структура его схем. Описание схемы
-    # словами строится из той же структуры (`describe_diagram`), поэтому считается
-    # авторским: там нет ничего, чего нет в самой схеме.
-    # Разметка глоссария оборачивает основу слова, а окончание остаётся снаружи —
-    # `[[relation|связь]]ю`. Поэтому сравнивать надо с текстом после снятия разметки,
-    # то есть ровно с тем, что видит читатель.
-    def shown(text: str) -> str:
-        return re.sub(r"\[\[[^|\]]*\|([^\]]+)\]\]", r"\1", text)
 
-    source = " ".join(
-        [
-            shown(block.get("text", "") + " ".join(block.get("items", [])))
-            for section in lesson["sections"]
-            for block in section["blocks"]
-        ]
-        + [describe_diagram(tree_content.diagram(d)) for d in lesson.get("diagramIds", [])]
-    ).lower()
-
-    # Служебные слова, которые добавляет сама озвучка: названия секций и отсылки
-    # к экрану. Их список закрыт и лежит в модуле — выдумать реплику нельзя.
-    spoken_frames = {
-        word
-        for phrase in list(audio.SECTION_LEADS.values())
-        + list(audio.CALLOUT_LEADS.values())
-        + ["Дальше в уроке таблица — её лучше посмотреть на экране.", lesson["title"]]
-        for word in re.findall(r"\w+", phrase.lower())
-    }
-    spoken_frames |= {w for phrase in audio.PRONUNCIATION.values() for w in phrase.lower().split()}
-    spoken_frames |= {w for phrase in audio.SYMBOLS.values() for w in phrase.lower().split()}
-    spoken_frames |= {"схема", "элементы", "связи", "ведёт", "к"}
-
-    unknown = [
-        word
-        for word in re.findall(r"[а-яё]+", audio.script_text(lesson).lower())
-        if word not in source and word not in spoken_frames
+def test_validator_catches_an_invented_number():
+    """Тест на сам проверяльщик: без этого предыдущий тест ничего не значит."""
+    lesson = tree_content.lesson("ds1-n1-l1")
+    turns = [
+        {"speaker": "guide", "text": "И насколько это дорого?"},
+        {"speaker": "expert", "text": "Миграция 999 миллионов записей, вот насколько."},
     ]
-    assert not unknown, f"в озвучке появились слова, которых нет в уроке: {unknown[:10]}"
+    problems = audio_script.validate_script(turns, lesson)
+    assert any("числа" in problem for problem in problems), problems
+
+
+def test_validator_catches_an_invented_term():
+    lesson = tree_content.lesson("ds1-n1-l1")
+    turns = [
+        {"speaker": "guide", "text": "А что с этим делать?"},
+        {"speaker": "expert", "text": "Тут выручает GraphQL, как обычно."},
+    ]
+    assert any("термины" in p for p in audio_script.validate_script(turns, lesson))
+
+
+def test_validator_rejects_a_monologue_and_a_read_aloud():
+    """Один говорящий — не разговор; дословный абзац — озвученный текст."""
+    lesson = tree_content.lesson("ds1-n1-l1")
+    solo = [{"speaker": "expert", "text": "Так и живём."}] * 8
+    assert any("разговор" in p for p in audio_script.validate_script(solo, lesson))
+
+    quoted = audio.block_lines_for_prompt(lesson)[0]
+    turns = [
+        {"speaker": "guide", "text": "С чего начнём?"},
+        {"speaker": "expert", "text": quoted},
+    ] * 4
+    assert any("цитата" in p for p in audio_script.validate_script(turns, lesson))
+
+
+def test_validator_rejects_radio_host_openings():
+    """«Здравствуйте, в этом уроке...» — ровно то, чем обзор быть не должен."""
+    lesson = tree_content.lesson("ds1-n1-l1")
+    turns = [
+        {"speaker": "guide", "text": "Здравствуйте! Сегодня мы поговорим о схемах."},
+        {"speaker": "expert", "text": "Именно так."},
+    ] * 3
+    assert any("обороты" in p for p in audio_script.validate_script(turns, lesson))
+
+
+def test_edited_lesson_invalidates_its_overview(tmp_path, monkeypatch):
+    """Урок переписали — старый обзор перестаёт считаться действующим.
+
+    Это не ошибка, а состояние «сценарий отстал»: у урока просто нет аудио, пока
+    обзор не перегенерируют. Молча озвучивать прошлую редакцию — хуже.
+    """
+    lesson = dict(tree_content.lesson("ds1-n1-l1"))
+    assert audio.load_script(lesson) is not None
+    lesson["title"] = lesson["title"] + " (правка)"
+    assert audio.load_script(lesson) is None
 
 
 def test_markup_never_reaches_the_listener():
@@ -81,17 +126,22 @@ def test_latin_abbreviations_are_spelled_for_a_russian_voice():
     assert "эс эл эй" in spoken and "девяносто пятый перцентиль" in spoken
 
 
-def test_both_lesson_shapes_produce_a_script():
+def test_both_lesson_shapes_reach_the_scriptwriter():
     """Уроки основного дерева — плоские блоки, System Design — секции."""
     product = tree_content.lesson("d1-feedback-matrix")
     assert product.get("sections") in (None, [])
-    script = audio.script_text(product)
-    assert product["keyTakeaway"][:40] in script
-    assert product["checkQuestion"][:40] in script
+    assert len(audio_script.lesson_body(product)) > 200
 
     sd = tree_content.lesson("ds1-n1-l1")
     assert sd["sections"]
-    assert "Вывод." in audio.script_text(sd)
+    assert len(audio_script.lesson_body(sd)) > 200
+
+
+def test_prompt_text_keeps_terms_unspoken():
+    """Сценаристу урок отдаётся как есть: «эс эл эй» вместо `SLA` сбило бы его."""
+    spoken = audio._speakable("Цель по SLA", pronounce=True)
+    written = audio._speakable("Цель по SLA", pronounce=False)
+    assert "эс эл эй" in spoken and "SLA" in written
 
 
 def test_digest_changes_with_the_lesson():
