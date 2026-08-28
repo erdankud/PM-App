@@ -311,6 +311,14 @@ enum S {
         static var audioForward15: String { t("Forward 15 seconds", "Вперёд на 15 секунд") }
         static var audioSpeed: String { t("Speed", "Скорость") }
         static var audioPosition: String { t("Position", "Позиция") }
+        // Сборка обзора — авторский режим, в релизной сборке этих строк не видно.
+        static var audioBuild: String { t("Generate overview", "Сгенерировать обзор") }
+        static var audioBuilding: String {
+            t("Writing and voicing… about a minute", "Пишу и озвучиваю… около минуты")
+        }
+        static var audioBuildFailed: String {
+            t("Generation failed. Tap to retry.", "Не получилось. Нажмите, чтобы повторить.")
+        }
         static var nextLesson: String { t("Next lesson", "Следующий урок") }
         static var backToBlock: String { t("Back to the block", "Вернуться к блоку") }
     }

@@ -492,11 +492,15 @@ class LessonSectionView(ApiModel):
 
 
 class LessonAudioView(ApiModel):
-    """Аудиоверсия урока. Её может не быть — это не ошибка, а отсутствие файла."""
+    """Аудиообзор урока. Его может не быть — это не ошибка, а отсутствие файла."""
 
     available: bool
     url: str | None = None
     duration_seconds: int | None = None
+    # absent — обзора нет; generating — собирается; ready — готов; failed — не вышло.
+    status: str = "absent"
+    # Кнопка сборки есть только в дев-сборке; клиент не решает это сам.
+    can_generate: bool = False
 
 
 class LessonResponse(ApiModel):

@@ -18,7 +18,7 @@ final class LessonAudioViewModelTests: XCTestCase {
 
     func testLessonWithoutAudioOffersNoPlayer() {
         let (viewModel, _, _) = makeViewModel()
-        viewModel.configure(with: LessonAudioView(available: false, url: nil, durationSeconds: nil))
+        viewModel.configure(with: LessonAudioView(available: false, url: nil, durationSeconds: nil, status: "absent", canGenerate: false))
         XCTAssertEqual(viewModel.state, .unavailable)
     }
 
@@ -31,9 +31,7 @@ final class LessonAudioViewModelTests: XCTestCase {
     func testAvailableAudioShowsTheServerEstimateBeforeAnythingIsDownloaded() {
         let (viewModel, client, _) = makeViewModel()
         viewModel.configure(
-            with: LessonAudioView(
-                available: true, url: "/v1/lessons/ds1-n1-l1/audio?v=abc123", durationSeconds: 261
-            )
+            with: LessonAudioView(available: true, url: "/v1/lessons/ds1-n1-l1/audio?v=abc123", durationSeconds: 261, status: "ready", canGenerate: false)
         )
         XCTAssertEqual(viewModel.state, .idle)
         XCTAssertEqual(viewModel.duration, 261)
@@ -48,9 +46,7 @@ final class LessonAudioViewModelTests: XCTestCase {
         client.audioFileURL = URL(fileURLWithPath: "/tmp/does-not-exist.mp3")
         let (viewModel, _, _) = makeViewModel(client)
         viewModel.configure(
-            with: LessonAudioView(
-                available: true, url: "/v1/lessons/ds1-n1-l1/audio?v=c94dcfe184d3", durationSeconds: 261
-            )
+            with: LessonAudioView(available: true, url: "/v1/lessons/ds1-n1-l1/audio?v=c94dcfe184d3", durationSeconds: 261, status: "ready", canGenerate: false)
         )
         await viewModel.toggle()
         XCTAssertEqual(client.downloadedAudioPaths, ["/v1/lessons/ds1-n1-l1/audio?v=c94dcfe184d3"])
@@ -59,9 +55,7 @@ final class LessonAudioViewModelTests: XCTestCase {
     func testFailedDownloadCanBeRetried() async {
         let (viewModel, _, _) = makeViewModel()  // audioFileURL не задан — загрузка падает
         viewModel.configure(
-            with: LessonAudioView(
-                available: true, url: "/v1/lessons/ds1-n1-l1/audio?v=abc123", durationSeconds: 261
-            )
+            with: LessonAudioView(available: true, url: "/v1/lessons/ds1-n1-l1/audio?v=abc123", durationSeconds: 261, status: "ready", canGenerate: false)
         )
         await viewModel.toggle()
         XCTAssertEqual(viewModel.state, .failed)
@@ -74,5 +68,28 @@ final class LessonAudioViewModelTests: XCTestCase {
     func testRatesAreOfferedForListening() {
         XCTAssertEqual(LessonAudioViewModel.rates.first, 1.0)
         XCTAssertTrue(LessonAudioViewModel.rates.contains(1.5))
+    }
+
+    /// Обзора нет, но собрать можно — это авторский режим. Обычный пользователь
+    /// в том же случае не видит ничего: разрешение приходит с сервера.
+    func testBuildableOnlyWhenTheServerAllowsIt() {
+        let (author, _, _) = makeViewModel()
+        author.configure(with: LessonAudioView(
+            available: false, url: nil, durationSeconds: nil, status: "absent", canGenerate: true))
+        XCTAssertEqual(author.state, .buildable)
+
+        let learner = LessonAudioViewModel(
+            lessonId: "x", client: StubAPIClient(), analytics: NoopAnalytics())
+        learner.configure(with: LessonAudioView(
+            available: false, url: nil, durationSeconds: nil, status: "absent", canGenerate: false))
+        XCTAssertEqual(learner.state, .unavailable)
+    }
+
+    func testGenerationInProgressIsShownAsBuilding() {
+        let (viewModel, _, _) = makeViewModel()
+        viewModel.configure(with: LessonAudioView(
+            available: false, url: nil, durationSeconds: nil,
+            status: "generating", canGenerate: true))
+        XCTAssertEqual(viewModel.state, .building)
     }
 }

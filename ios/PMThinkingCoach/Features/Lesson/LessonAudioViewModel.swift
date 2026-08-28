@@ -13,6 +13,10 @@ final class LessonAudioViewModel: NSObject, ObservableObject {
 
     enum State: Equatable {
         case unavailable
+        /// Обзора нет, но собрать его можно — это авторский режим.
+        case buildable
+        case building
+        case buildFailed
         case idle
         case loading
         case ready
@@ -54,18 +58,52 @@ final class LessonAudioViewModel: NSObject, ObservableObject {
 
     func configure(with audio: LessonAudioView?) {
         self.audio = audio
-        guard let audio, audio.available, audio.url != nil else {
+        guard let audio else {
             state = .unavailable
             return
         }
+        guard audio.available, audio.url != nil else {
+            // Обзора нет. Для автора это приглашение собрать, для всех остальных —
+            // просто отсутствие плеера.
+            switch audio.status {
+            case "generating": state = .building
+            case "failed": state = audio.canGenerate ? .buildFailed : .unavailable
+            default: state = audio.canGenerate ? .buildable : .unavailable
+            }
+            return
+        }
         duration = Double(audio.durationSeconds ?? 0)
-        if state == .unavailable { state = .idle }
+        if state != .ready { state = .idle }
+    }
+
+    /// Просит сервер собрать обзор и ждёт результата, переспрашивая урок.
+    ///
+    /// Сборка занимает около минуты, поэтому это опрос, а не одно ожидание ответа:
+    /// запрос, висящий минуту, оборвётся на первом же переключении сети.
+    func build(reload: @escaping () async -> LessonAudioView?) async {
+        guard state == .buildable || state == .buildFailed else { return }
+        state = .building
+        do {
+            _ = try await client.generateAudio(lessonId: lessonId)
+        } catch {
+            state = .buildFailed
+            return
+        }
+        for _ in 0..<60 {
+            try? await Task.sleep(nanoseconds: 3_000_000_000)
+            let fresh = await reload()
+            if fresh?.available == true || fresh?.status == "failed" {
+                configure(with: fresh)
+                return
+            }
+        }
+        state = .buildFailed
     }
 
     /// Одна кнопка на все состояния: не загружено — загрузит и заиграет.
     func toggle() async {
         switch state {
-        case .unavailable, .loading:
+        case .unavailable, .loading, .buildable, .building, .buildFailed:
             return
         case .idle, .failed:
             await load()

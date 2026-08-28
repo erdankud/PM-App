@@ -271,6 +271,10 @@ struct LessonAudioView: Codable, Sendable {
     let available: Bool
     let url: String?
     let durationSeconds: Int?
+    /// absent — обзора нет; generating — собирается; ready — готов; failed — не вышло.
+    let status: String
+    /// Разрешение приходит с сервера: клиент не решает сам, можно ли собирать.
+    let canGenerate: Bool
 }
 
 struct LessonCompleteResponse: Codable, Sendable {

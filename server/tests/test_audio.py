@@ -45,10 +45,8 @@ def test_stub_overviews_are_never_publishable():
     Заглушка раздаёт абзацы урока двум голосам, то есть делает ровно то, чем обзор
     быть не должен. Проверка обязана её отклонять — иначе она однажды уедет в релиз.
     """
-    from scripts.generate_audio_scripts import mock_turns
-
     lesson = tree_content.lesson("ds1-n1-l1")
-    problems = audio_script.validate_script(mock_turns(lesson), lesson)
+    problems = audio_script.validate_script(audio_script.mock_turns(lesson), lesson)
     assert problems, "заглушка прошла проверку — значит проверка ничего не значит"
 
 
@@ -157,7 +155,9 @@ def test_lesson_without_audio_does_not_offer_a_player(client, monkeypatch, tmp_p
     monkeypatch.setattr(audio.settings, "audio_dir", str(tmp_path))
     headers, _ = onboard(client)
     body = client.get("/v1/lessons/ds1-n1-l1", headers=headers).json()
-    assert body["audio"] == {"available": False, "url": None, "durationSeconds": None}
+    assert body["audio"]["available"] is False
+    assert body["audio"]["status"] == "absent"
+    assert body["audio"]["url"] is None
     assert client.get("/v1/lessons/ds1-n1-l1/audio", headers=headers).status_code == 404
 
 
@@ -181,3 +181,43 @@ def test_lesson_with_audio_serves_the_file(client, monkeypatch, tmp_path):
 def test_audio_requires_a_signed_in_user(client):
     """Аудио — часть урока, а урок за входом."""
     assert client.get("/v1/lessons/ds1-n1-l1/audio").status_code == 401
+
+
+def test_generation_button_is_off_unless_enabled(client, monkeypatch, tmp_path):
+    """В релизной сборке кнопки нет, и запуск отклоняется на сервере.
+
+    Клиент её и не покажет, но полагаться на это нельзя: разрешение — свойство
+    сервера, ровно как со статусом разблокировки блоков.
+    """
+    monkeypatch.setattr(audio.settings, "audio_dir", str(tmp_path))
+    monkeypatch.setattr(audio.settings, "allow_audio_generation", False)
+    headers, _ = onboard(client)
+
+    body = client.get("/v1/lessons/ds1-n1-l1", headers=headers).json()
+    assert body["audio"]["canGenerate"] is False
+
+    started = client.post("/v1/lessons/ds1-n1-l1/audio/generate", headers=headers)
+    assert started.status_code == 403
+    assert started.json()["detail"]["code"] == "audio_generation_disabled"
+
+
+def test_generation_reports_progress_without_blocking(client, monkeypatch, tmp_path):
+    """Запуск отвечает «принято», а не ждёт минуту синтеза."""
+    from app.services import audio_jobs
+
+    monkeypatch.setattr(audio.settings, "audio_dir", str(tmp_path))
+    monkeypatch.setattr(audio.settings, "allow_audio_generation", True)
+    # Задачу не выполняем: проверяется контракт запуска, а не работа провайдера.
+    monkeypatch.setattr(audio_jobs.threading, "Thread", lambda **kw: type(
+        "Stub", (), {"start": lambda self: None}
+    )())
+    headers, _ = onboard(client)
+
+    started = client.post("/v1/lessons/ds1-n1-l1/audio/generate", headers=headers)
+    assert started.status_code == 202
+    assert started.json()["status"] == "generating"
+
+    body = client.get("/v1/lessons/ds1-n1-l1", headers=headers).json()
+    assert body["audio"]["status"] == "generating"
+    assert body["audio"]["available"] is False
+    audio_jobs._jobs.clear()

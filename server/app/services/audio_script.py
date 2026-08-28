@@ -133,3 +133,81 @@ def build_request(lesson: dict) -> EvaluationRequest:
 
 
 PROMPT = PROMPT_VERSION
+
+
+# --- Генерация ---------------------------------------------------------------
+#
+# Живёт в сервисе, а не в скрипте, потому что генерацию запускает и скрипт сборки,
+# и — в дев-сборке — кнопка в приложении. Провайдер вызывается только отсюда.
+
+MAX_ATTEMPTS = 3
+
+
+def mock_turns(lesson: dict) -> list[dict]:
+    """Заглушка без провайдера: разговором не является и не притворяется им.
+
+    Нужна ровно для одного — прогнать конвейер там, где ключа нет. Всё, что она
+    делает, это раздаёт авторский текст двум голосам по очереди, поэтому проверку
+    она намеренно не проходит.
+    """
+    from app.services.audio import block_lines_for_prompt
+
+    lines = block_lines_for_prompt(lesson)[:8]
+    turns = [{"speaker": "guide", "text": f"Разберём урок «{lesson['title']}». С чего начать?"}]
+    for index, line in enumerate(lines):
+        turns.append({"speaker": "expert" if index % 2 == 0 else "guide", "text": line[:880]})
+    if lesson.get("keyTakeaway"):
+        turns.append({"speaker": "expert", "text": lesson["keyTakeaway"][:880]})
+    return turns
+
+
+def generate(lesson: dict, *, mock: bool = False, log=None) -> tuple[list[dict], str, str]:
+    """Пишет диалог и проверяет его. Возвращает (реплики, провайдер, модель).
+
+    Претензии проверки возвращаются модели следующей попыткой: без них вторая
+    попытка повторяет ту же ошибку.
+    """
+    if mock:
+        return mock_turns(lesson), "mock", "mock"
+
+    from app.ai.providers import gemini_text
+
+    problems: list[str] = []
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        prompt = user_prompt(
+            title=lesson.get("title", ""),
+            body=lesson_body(lesson),
+            takeaway=lesson.get("keyTakeaway", ""),
+        )
+        if problems:
+            prompt += "\n\nПрошлая попытка отклонена: " + "; ".join(problems) + ". Исправь."
+        raw, model_id = gemini_text(SYSTEM_PROMPT, prompt)
+        turns = parse_turns(raw)
+        problems = validate_script(turns, lesson)
+        if not problems:
+            return turns, "gemini", model_id
+        if log:
+            log(f"попытка {attempt}: {'; '.join(problems)}")
+    raise ProviderError("script_rejected", "; ".join(problems), retryable=False)
+
+
+def write_script(lesson: dict, turns: list[dict], provider: str, model: str):
+    from datetime import datetime, timezone
+
+    from app.services.audio import script_path, source_digest
+
+    path = script_path(lesson)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "lessonId": lesson["id"],
+        "sourceDigest": source_digest(lesson),
+        "generator": {
+            "provider": provider,
+            "model": model,
+            "promptVersion": PROMPT_VERSION,
+            "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        },
+        "turns": turns,
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path

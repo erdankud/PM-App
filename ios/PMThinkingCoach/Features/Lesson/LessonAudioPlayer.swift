@@ -7,13 +7,16 @@ import SwiftUI
 /// попросил звук, качать полтора мегабайта незачем.
 struct LessonAudioPlayer: View {
     @ObservedObject var viewModel: LessonAudioViewModel
+    /// Перечитывает урок, пока идёт сборка. Владелец урока знает, как это сделать.
+    var reloadAudio: (() async -> LessonAudioView?)?
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.s) {
             HStack(spacing: Theme.Spacing.m) {
                 playButton
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(S.Lesson.audioTitle).font(.subheadline.weight(.semibold))
+                    Text(needsBuild ? S.Lesson.audioBuild : S.Lesson.audioTitle)
+                        .font(.subheadline.weight(.semibold))
                     Text(caption)
                         .font(.caption)
                         .foregroundStyle(Theme.Palette.secondaryText)
@@ -29,6 +32,9 @@ struct LessonAudioPlayer: View {
 
     private var caption: String {
         switch viewModel.state {
+        case .buildable: return S.Lesson.audioSubtitle
+        case .building: return S.Lesson.audioBuilding
+        case .buildFailed: return S.Lesson.audioBuildFailed
         case .loading: return S.Lesson.audioLoading
         case .failed: return S.Lesson.audioFailed
         case .ready: return "\(time(viewModel.position)) / \(time(viewModel.duration))"
@@ -40,24 +46,47 @@ struct LessonAudioPlayer: View {
         }
     }
 
+    private var isBuilding: Bool { viewModel.state == .building }
+
+    private var needsBuild: Bool {
+        viewModel.state == .buildable || viewModel.state == .buildFailed
+    }
+
     private var playButton: some View {
         Button {
-            Task { await viewModel.toggle() }
+            Task {
+                if needsBuild {
+                    await viewModel.build(reload: reloadAudio ?? { nil })
+                } else {
+                    await viewModel.toggle()
+                }
+            }
         } label: {
             ZStack {
                 Circle().fill(Theme.Palette.accent).frame(width: 44, height: 44)
-                if viewModel.state == .loading {
+                if viewModel.state == .loading || isBuilding {
                     ProgressView().tint(.white)
                 } else {
-                    Image(systemName: viewModel.isPlaying ? "pause.fill" : "play.fill")
+                    Image(systemName: symbol)
                         .font(.system(size: 17, weight: .bold))
                         .foregroundStyle(.white)
                 }
             }
         }
         .buttonStyle(.plain)
-        .disabled(viewModel.state == .loading)
-        .accessibilityLabel(viewModel.isPlaying ? S.Lesson.audioPause : S.Lesson.audioPlay)
+        .disabled(viewModel.state == .loading || isBuilding)
+        .accessibilityLabel(buttonLabel)
+    }
+
+    private var symbol: String {
+        if viewModel.state == .buildFailed { return "arrow.clockwise" }
+        if needsBuild { return "wand.and.stars" }
+        return viewModel.isPlaying ? "pause.fill" : "play.fill"
+    }
+
+    private var buttonLabel: String {
+        if needsBuild { return S.Lesson.audioBuild }
+        return viewModel.isPlaying ? S.Lesson.audioPause : S.Lesson.audioPlay
     }
 
     private var speedMenu: some View {

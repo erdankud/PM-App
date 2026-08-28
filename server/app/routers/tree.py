@@ -33,6 +33,7 @@ from app.schemas import (
     TreeResponse,
 )
 from app.services import audio as audio_service
+from app.services import audio_jobs
 from app.services import glossary as glossary_service
 from app.services import tree as tree_service
 from app.views import challenge_response
@@ -219,7 +220,12 @@ def _audio_view(lesson: dict) -> LessonAudioView:
     """
     ready = audio_service.audio_path(lesson).exists()
     if not ready:
-        return LessonAudioView(available=False)
+        job = audio_jobs.status_of(lesson["id"])
+        return LessonAudioView(
+            available=False,
+            status=job.status if job else "absent",
+            can_generate=audio_jobs.generation_allowed(),
+        )
     # Отпечаток сценария в адресе: путь урока постоянен, а файл за ним меняется при
     # правке текста. Без него клиент, закешировавший mp3 по адресу, продолжал бы
     # проигрывать прошлую редакцию урока.
@@ -228,7 +234,31 @@ def _audio_view(lesson: dict) -> LessonAudioView:
         available=True,
         url=f"{settings.api_prefix}/lessons/{lesson['id']}/audio?v={version}",
         duration_seconds=audio_service.duration_seconds(lesson),
+        status="ready",
+        can_generate=audio_jobs.generation_allowed(),
     )
+
+
+@router.post(
+    "/lessons/{lesson_id}/audio/generate",
+    response_model=LessonAudioView,
+    status_code=status.HTTP_202_ACCEPTED,
+)
+def generate_lesson_audio(lesson_id: str, user: CurrentUser) -> LessonAudioView:
+    """Запускает сборку обзора и сразу отвечает.
+
+    Сборка занимает около минуты, поэтому ответ означает «принято», а не «готово»:
+    состояние клиент дочитывает из обычного ответа урока. Такой контракт не
+    изменится, если однажды за ним встанет настоящая очередь.
+    """
+    lesson = _lesson_or_404(lesson_id)
+    if not audio_jobs.generation_allowed():
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail={"code": "audio_generation_disabled"}
+        )
+    audio_jobs.forget(lesson_id)
+    audio_jobs.start(lesson)
+    return _audio_view(lesson)
 
 
 @router.get("/lessons/{lesson_id}/audio")

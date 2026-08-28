@@ -101,7 +101,7 @@ def gemini_text(
     отсюда высокая температура и большой лимит вывода.
     """
     key = _require_key()
-    model_id = model or settings.audio_script_model or "gemini-2.5-flash"
+    model_id = model or settings.audio_script_model or "gemini-3.6-flash"
     base = settings.evaluator_base_url or "https://generativelanguage.googleapis.com"
     url = f"{base}/v1beta/models/{model_id}:generateContent"
     body = {

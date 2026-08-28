@@ -30,6 +30,7 @@ protocol APIClientProtocol: Sendable {
     func lesson(id: String) async throws -> LessonResponse
     func completeLesson(id: String) async throws -> LessonCompleteResponse
     func downloadAudio(path: String, cacheKey: String) async throws -> URL
+    func generateAudio(lessonId: String) async throws -> LessonAudioView
     func startGate(id: String) async throws -> ChallengeResponse
 
     func saveDraft(attemptId: String, request: DraftRequest) async throws -> DraftResponse
@@ -269,6 +270,12 @@ final class APIClient: APIClientProtocol, @unchecked Sendable {
 
     func lesson(id: String) async throws -> LessonResponse {
         try await perform(.get, "/lessons/\(id)")
+    }
+
+    /// Просит сервер собрать обзор. Ответ означает «принято», а не «готово»:
+    /// сборка идёт около минуты, и её состояние читается из ответа урока.
+    func generateAudio(lessonId: String) async throws -> LessonAudioView {
+        try await perform(.post, "/lessons/\(lessonId)/audio/generate")
     }
 
     /// Скачивает аудио урока в кэш и возвращает локальный файл.

@@ -39,6 +39,14 @@ final class LessonViewModel: ObservableObject {
         }
     }
 
+    /// Тихо перечитывает урок: используется при опросе, пока собирается обзор.
+    /// Отдельно от `load()`, чтобы не показывать состояние загрузки на весь экран.
+    func reload() async {
+        if let response = try? await client.lesson(id: lessonId) {
+            lesson = response
+        }
+    }
+
     /// Marking a lesson read is idempotent on the server, so a double tap is harmless
     /// and a retry after a dropped connection costs nothing.
     func complete() async {

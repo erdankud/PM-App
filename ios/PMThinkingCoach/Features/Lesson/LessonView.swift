@@ -59,7 +59,11 @@ struct LessonView: View {
                     header(lesson).appear(0)
 
                     if audio.state != .unavailable {
-                        LessonAudioPlayer(viewModel: audio).appear(1)
+                        LessonAudioPlayer(viewModel: audio) {
+                            await viewModel.reload()
+                            return viewModel.lesson?.audio
+                        }
+                        .appear(1)
                     }
 
                     let body = renderedBlocks(lesson)
