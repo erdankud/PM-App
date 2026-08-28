@@ -26,6 +26,11 @@ struct TreeView: View {
             .animation(Motion.standard, value: viewModel.state)
             .background(Theme.Palette.background)
             .navigationTitle(S.Tab.tree)
+            // Компактный заголовок обязателен: с крупным вместе с `safeAreaInset`
+            // система резервирует под него место, но текст не рисует — шапка выходит
+            // пустой на 100pt. Компактный к тому же возвращает эту высоту карте,
+            // которая на этом экране и есть содержание.
+            .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .top) { treeSwitcher }
             .navigationDestination(item: $viewModel.selectedBlockId) { blockId in
                 BlockDetailView(viewModel: container.makeBlockViewModel(blockId: blockId))
