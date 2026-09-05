@@ -1,0 +1,14 @@
+,признак,важность,std
+6,log_est,0.1577,0.0078
+4,person,0.0281,0.0057
+3,SubCategory,0.0277,0.0046
+1,ProjectBreakdownCode,0.0148,0.0026
+11,summary_len,0.0048,0.0033
+5,Priority,0.0035,0.0018
+8,month,0.0033,0.0028
+10,est_is_workday,0.0017,0.0015
+9,dow,0.0011,0.0025
+12,summary_words,0.0006,0.002
+2,Category,-0.0003,0.0003
+0,ProjectCode,-0.002,0.0009
+7,dev_seq,-0.0049,0.0033
