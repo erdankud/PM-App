@@ -320,3 +320,26 @@ def test_unlock_graph_is_acyclic_and_fully_reachable():
 def test_every_gate_has_at_least_two_scenarios():
     for gate in tree_content.tree_content()["gates"].values():
         assert len(gate["scenarioIds"]) >= 2
+
+
+def test_first_map_read_survives_two_requests_at_once(client):
+    """Веб-клиент и iOS запрашивают `/tree` и `/trees` одновременно.
+
+    У нового аккаунта строк прогресса ещё нет, и оба запроса пытаются их завести.
+    Раньше второй падал с нарушением уникальности — то есть карта не открывалась
+    с первого раза.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
+    headers, _ = onboard(client)
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        responses = [
+            future.result()
+            for future in [
+                pool.submit(client.get, "/v1/tree/product", headers=headers),
+                pool.submit(client.get, "/v1/trees", headers=headers),
+            ]
+        ]
+
+    assert [response.status_code for response in responses] == [200, 200]

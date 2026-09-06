@@ -52,6 +52,30 @@ def completed_lesson_ids(db: Session, user_id: str) -> set[str]:
     }
 
 
+def _ensure_rows(db: Session, user_id: str) -> dict[str, BlockProgress]:
+    """Заводит недостающие строки прогресса, переживая гонку двух запросов.
+
+    Первое чтение карты у нового аккаунта идёт двумя запросами сразу — `/tree` и
+    `/trees`, — и оба видят пустой прогресс. Без этого второй падал с нарушением
+    уникальности, то есть карта не открывалась с первого раза.
+    """
+    rows = _progress_rows(db, user_id)
+    missing = [
+        block["id"] for block in tree_content.all_blocks() if block["id"] not in rows
+    ]
+    if not missing:
+        return rows
+
+    for block_id in missing:
+        db.add(BlockProgress(user_id=user_id, block_id=block_id, status=LOCKED))
+    try:
+        db.flush()
+    except IntegrityError:
+        # Строки создал соседний запрос — это и есть нужный результат.
+        db.rollback()
+    return _progress_rows(db, user_id)
+
+
 def recompute(db: Session, user_id: str) -> dict[str, BlockProgress]:
     """Bring every block's status in line with lessons read and gates passed.
 
@@ -60,18 +84,14 @@ def recompute(db: Session, user_id: str) -> dict[str, BlockProgress]:
     after anything that could change availability, and on first read so a new account
     starts with the root open.
     """
-    rows = _progress_rows(db, user_id)
+    rows = _ensure_rows(db, user_id)
     completed = completed_lesson_ids(db, user_id)
     now = utcnow()
 
     # Обе карты сразу: у System Design свой корень, и он открыт с первого дня
     # (спека SD §2.3), поэтому пересчёт идёт по объединённому списку блоков.
     for block in tree_content.all_blocks():
-        row = rows.get(block["id"])
-        if row is None:
-            row = BlockProgress(user_id=user_id, block_id=block["id"], status=LOCKED)
-            db.add(row)
-            rows[block["id"]] = row
+        row = rows[block["id"]]
 
         if row.status == PASSED:
             continue
