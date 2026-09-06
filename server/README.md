@@ -38,6 +38,15 @@ uvicorn app.main:app --reload
 
 SQLite by default, tables created on startup, worker running in-process.
 
+### The web client
+
+The desktop web client is served by this same process, from `../web`, at
+`http://localhost:8000/app/` (`/` redirects there). It has no build step — plain ES
+modules, served as they are — so nothing extra has to run. Outside production those
+files go out with `Cache-Control: no-cache`: without a version in the filename, a
+browser holding a module in memory would keep running the previous edition after an
+edit. See `web/README.md`.
+
 ### Docker (Postgres, separate worker)
 
 ```bash
@@ -256,8 +265,9 @@ says so rather than pretending to be locked — but nothing uses it right now.
 ### Languages
 
 Content is authored in Russian (v0.2 §16): the source map and the ICP are both
-Russian-speaking. The app's own chrome is still bilingual, and the language a
-request renders in is resolved in `app/deps.py`:
+Russian-speaking. English is a translation **overlay** on top of it — see
+"Translating the corpus" below. The language a request renders in is resolved in
+`app/deps.py`:
 
 1. the `X-Content-Language` header, if the client sent one — this closes the gap
    between switching language in the app and the profile update landing;
@@ -267,6 +277,33 @@ request renders in is resolved in `app/deps.py`:
 locale, so honouring it would let the phone override a deliberate in-app choice.
 The profile copy is also the only one the evaluation worker can read, since it
 runs long after the request that queued it.
+
+### Translating the corpus
+
+The authored Russian files are the only source of structure. A translation lives in
+`content/i18n/<lang>/` under the same relative path and holds a flat map of
+`path -> translated text`, merged over the authored file when it is read.
+
+    export EVALUATOR_API_KEY=...
+    python -m scripts.translate_content        # resumable; skips what is current
+    python -m scripts.validate_content
+
+Two things are deliberate. The overlay is a separate directory, so a translation run
+writes nowhere near the authored corpus. And the rubric, the option weights and the QA
+fixtures are absent from the translatable paths in `app/i18n_content.py`, so they exist
+in exactly one copy — a learner's language cannot move their score because there is
+nothing language-specific to move.
+
+The model is checked rather than trusted (`app/services/translation.py`): a missing
+field, a lost or invented number, broken `[[term]]` markup, leftover Cyrillic or an
+exercise reference that stops matching its own choices rejects the attempt, and the
+complaints are fed back into the retry. Every overlay carries
+`translationStatus: "machine"` until a human reviews it and sets `"reviewed"`.
+
+Files are batched across files into a single request: free provider tiers meter
+requests rather than volume, and the whole corpus is about 62 requests. When the daily
+quota runs out the run stops with a clear message instead of walking the rest of the
+corpus; the same command continues it later.
 
 ---
 

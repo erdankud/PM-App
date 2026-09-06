@@ -31,7 +31,11 @@ boundaries it explains are unchanged).
 - The server owns score, XP, skill deltas **and unlock status**. The client
   renders `locked / available / in_progress / gate_ready / passed` and never
   derives availability. `POST /gates/{id}/start` re-checks it, so a UI bug
-  cannot open a gate early.
+  cannot open a gate early. **Staged unlocking is currently off**
+  (`UNLOCK_ALL_BLOCKS=true`): every block is open from day one. That is a policy
+  flag, not a move of ownership — the server still decides and still re-checks,
+  and `tests/test_tree_flow.py` exercises both settings so the unlock graph stays
+  working for when the route comes back.
 - No AI provider key or call ever goes in the iOS client. Evaluation is
   server-side only (`server/app/ai/`).
 - The authored consequence (shown right after submit) is separate from AI
@@ -193,6 +197,92 @@ boundaries it explains are unchanged).
 - Synthesis dependencies live in `requirements-audio.txt` and are **not** in the runtime
   image: the API serves prebuilt files and never synthesizes. `server/var/audio` is
   generated and gitignored.
+
+## Signing in
+
+- Four identity paths, and **the server says which of them exist**: `GET
+  /v1/auth/methods` reports `password / google / apple / developer` plus the Google
+  Client ID. A client never decides this for itself — a Google button with no Client
+  ID behind it is a promise the server cannot keep.
+- **Email and password** (`/auth/signup`, `/auth/signin`) is the path that works with
+  no console setup. Hashing is `hashlib.scrypt` from the standard library, not bcrypt
+  or argon2: it is a real KDF and it does not add a natively-built dependency for one
+  operation. Cost parameters live inside the hash string, so they can be raised
+  without invalidating stored passwords.
+- **Google** (`/auth/google`) verifies the ID token against Google's JWKS exactly the
+  way `app/apple.py` verifies Apple's, and links by `sub`, never by email — an address
+  on a Google account can change. A verified address does link an account created by
+  password to the same person rather than making a second one. Google OAuth is free;
+  it needs a Client ID from Google Cloud Console and no billing.
+- Sign-in errors never distinguish "no such account" from "wrong password": that
+  difference is how you enumerate someone's registered addresses. Signing **up** on a
+  taken address does say so, because there the person needs to be told to sign in.
+
+## Languages
+
+- The interface has always been bilingual; **content is now bilingual too**. Russian is
+  the authored corpus and the only source of structure. English is an **overlay**:
+  `content/i18n/en/<same relative path>.json` holds a flat map of `path -> English
+  text` and is merged over the authored file when it is read.
+- The overlay exists so that a translation run cannot damage the source — it writes to
+  a different directory — and so that **the rubric, option weights and QA fixtures live
+  in exactly one copy**. They are not in `SPECS` in `app/i18n_content.py`, so there is
+  nothing to translate: "language never changes the score" is a property of the
+  construction, not of discipline. The one exception is `rubric.remediation[].gap`,
+  which the learner reads after a failed gate.
+- `sourceDigest` works like the audio scripts': edit a lesson and its translation stops
+  counting as current, so the reader gets today's Russian rather than last week's
+  English. A half-translated file is an error in `validate_content`, not a warning —
+  mixed language reads as a broken app, not as "not translated yet".
+- `titleEn` (domains) and `termEn` (glossary) were written by the author. They are used
+  as they are and applied **after** the overlay, so authored English always beats
+  machine English. The five terms whose `termEn` is a dash get translated instead.
+- Producing the English corpus:
+
+      export EVALUATOR_API_KEY=...
+      python -m scripts.translate_content            # весь корпус, возобновляемо
+      python -m scripts.validate_content
+
+  The run is resumable: a file whose overlay matches the source digest is skipped, so a
+  run stopped by quota is continued by the same command. Files are batched **across**
+  files into one request — free tiers meter requests, not volume — so the corpus is
+  ~62 requests rather than ~450.
+- **The translation is checked, not trusted** (`app/services/translation.py`): a missing
+  field, a lost or invented number, broken `[[term]]` markup, leftover Cyrillic, or an
+  exercise reference that no longer matches its own choices all reject the attempt and
+  retry with the complaints fed back. Every overlay is marked `translationStatus:
+  "machine"`; a human-reviewed file sets `"reviewed"` by hand.
+- Audio is per language: `content/i18n/en/<tree>/audio-scripts/`, English voices, its
+  own prompt (the overview is written in English, not translated from Russian — a
+  translated conversation sounds translated), and its own measured `WORDS_PER_MINUTE`
+  (172 for English, 110 for Russian). The mp3 name carries the language.
+
+## Web client
+
+- `web/` is the same product for the desktop, on **the same backend**: same account,
+  same map, same lessons, same gates. Nothing about ownership changes — the server still
+  decides score, XP and unlock status, and the client only renders them.
+- It is served by the API process itself from `/app` (`server/app/main.py`), so there is
+  one origin: no CORS, no second address to configure, and `Authorization` works on the
+  audio files. There is **no build step** — plain ES modules, no npm, no bundler. Adding
+  a toolchain for twenty screens would put a second build system into a repo that has
+  none. The price is no version in the filenames, so outside production the files go out
+  with `Cache-Control: no-cache`.
+- `web/src/strings.js` is **generated** from the iOS string table and must never be
+  hand-edited:
+
+      python3 web/tools/port_strings.py
+
+  Both translations live on one line in `ios/.../Strings.swift` precisely so drift is
+  visible in review; a second hand-written copy would diverge on the first edit. Add UI
+  copy there, then regenerate. The transpiler is not a toy — it already caught three
+  places where a parameter name collided with a sibling key.
+- The three root tabs are three sidebar items. A desktop bottom tab bar would be wrong,
+  but the rule is about how many roots there are, not where they sit.
+- Sign in with Apple is not wired up on the web: it needs a Services ID and a verified
+  domain, which the free personal Apple account does not have. The dev path is used
+  instead, and the button only appears when `/health` reports `devAuthEnabled` — the
+  server decides, not the client.
 
 ## Before making changes
 
