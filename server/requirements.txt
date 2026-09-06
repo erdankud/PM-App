@@ -10,3 +10,5 @@ httpx==0.28.1
 psycopg2-binary==2.9.10
 alembic==1.14.0
 jsonschema==4.23.0
+# Проверка почтового адреса в схемах входа (pydantic[email]).
+email-validator==2.3.0

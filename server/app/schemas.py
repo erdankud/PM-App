@@ -11,6 +11,11 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+try:  # pragma: no cover - зависит от того, установлен ли email-validator
+    from pydantic import EmailStr
+except ImportError:  # pragma: no cover
+    EmailStr = str  # type: ignore[misc, assignment]
+
 
 def _camel(name: str) -> str:
     head, *rest = name.split("_")
@@ -27,6 +32,33 @@ class ApiModel(BaseModel):
 class AppleSignInRequest(ApiModel):
     identity_token: str = Field(min_length=16, max_length=4096)
     timezone: str | None = Field(default=None, max_length=64)
+
+
+class GoogleSignInRequest(ApiModel):
+    id_token: str = Field(min_length=16, max_length=4096)
+    timezone: str | None = Field(default=None, max_length=64)
+
+
+class EmailPasswordRequest(ApiModel):
+    """Регистрация и вход отличаются только тем, что делает сервер, — не формой."""
+
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=128)
+    timezone: str | None = Field(default=None, max_length=64)
+
+
+class AuthMethodsResponse(ApiModel):
+    """Что клиент имеет право показать на экране входа.
+
+    Решает сервер: кнопка Google без настроенного Client ID — это обещание, которого
+    он не сможет выполнить.
+    """
+
+    password: bool
+    google: bool
+    apple: bool
+    developer: bool
+    google_client_id: str | None = None
 
 
 class DevSignInRequest(ApiModel):

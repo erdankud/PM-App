@@ -11,6 +11,10 @@ protocol TokenProviding: AnyObject, Sendable {
 /// The one place that talks to the server. Injected as a protocol so features can be
 /// tested against a stub (spec §16).
 protocol APIClientProtocol: Sendable {
+    func authMethods() async throws -> AuthMethodsResponse
+    func signUp(email: String, password: String, timezone: String) async throws -> AuthResponse
+    func signIn(email: String, password: String, timezone: String) async throws -> AuthResponse
+    func signInWithGoogle(idToken: String, timezone: String) async throws -> AuthResponse
     func signInWithApple(identityToken: String, timezone: String) async throws -> AuthResponse
     func signInDeveloper(deviceId: String, timezone: String) async throws -> AuthResponse
     func refresh(refreshToken: String) async throws -> AuthResponse
@@ -188,6 +192,34 @@ final class APIClient: APIClientProtocol, @unchecked Sendable {
     }
 
     // MARK: - Auth
+
+    func authMethods() async throws -> AuthMethodsResponse {
+        try await perform(.get, "/auth/methods", authenticated: false)
+    }
+
+    func signUp(email: String, password: String, timezone: String) async throws -> AuthResponse {
+        try await perform(
+            .post, "/auth/signup",
+            body: EmailPasswordRequest(email: email, password: password, timezone: timezone),
+            authenticated: false
+        )
+    }
+
+    func signIn(email: String, password: String, timezone: String) async throws -> AuthResponse {
+        try await perform(
+            .post, "/auth/signin",
+            body: EmailPasswordRequest(email: email, password: password, timezone: timezone),
+            authenticated: false
+        )
+    }
+
+    func signInWithGoogle(idToken: String, timezone: String) async throws -> AuthResponse {
+        try await perform(
+            .post, "/auth/google",
+            body: GoogleSignInRequest(idToken: idToken, timezone: timezone),
+            authenticated: false
+        )
+    }
 
     func signInWithApple(identityToken: String, timezone: String) async throws -> AuthResponse {
         try await perform(

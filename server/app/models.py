@@ -68,7 +68,15 @@ class User(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     apple_subject: Mapped[str | None] = mapped_column(String(255), unique=True)
+    # Устойчивый идентификатор аккаунта Google. Связка идёт по нему, а не по почте:
+    # адрес у аккаунта меняется, `sub` — нет.
+    google_subject: Mapped[str | None] = mapped_column(String(255), unique=True)
     dev_subject: Mapped[str | None] = mapped_column(String(255), unique=True)
+    # Почта: логин при входе по паролю и просто подпись в профиле, когда вход был
+    # через Google. Уникальна, чтобы два аккаунта не спорили за один адрес.
+    email: Mapped[str | None] = mapped_column(String(320), unique=True)
+    # scrypt-хеш. Пусто у аккаунта без пароля — вход по паролю в него невозможен.
+    password_hash: Mapped[str | None] = mapped_column(String(255))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     last_active_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow

@@ -150,6 +150,20 @@ final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
 
     // MARK: - Unused in these tests
 
+    func authMethods() async throws -> AuthMethodsResponse {
+        AuthMethodsResponse(
+            password: true, google: false, apple: false, developer: true, googleClientId: nil
+        )
+    }
+    func signUp(email: String, password: String, timezone: String) async throws -> AuthResponse {
+        throw APIError.notFound
+    }
+    func signIn(email: String, password: String, timezone: String) async throws -> AuthResponse {
+        throw APIError.notFound
+    }
+    func signInWithGoogle(idToken: String, timezone: String) async throws -> AuthResponse {
+        throw APIError.notFound
+    }
     func signInWithApple(identityToken: String, timezone: String) async throws -> AuthResponse {
         throw APIError.notFound
     }

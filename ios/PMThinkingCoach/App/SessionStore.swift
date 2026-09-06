@@ -86,6 +86,30 @@ final class SessionStore: ObservableObject {
         }
     }
 
+    func signUp(email: String, password: String) async {
+        await signIn(method: "password") {
+            try await self.client.signUp(
+                email: email, password: password, timezone: TimeZone.current.identifier
+            )
+        }
+    }
+
+    func signInWithPassword(email: String, password: String) async {
+        await signIn(method: "password") {
+            try await self.client.signIn(
+                email: email, password: password, timezone: TimeZone.current.identifier
+            )
+        }
+    }
+
+    func signInWithGoogle(idToken: String) async {
+        await signIn(method: "google") {
+            try await self.client.signInWithGoogle(
+                idToken: idToken, timezone: TimeZone.current.identifier
+            )
+        }
+    }
+
     func signInAsDeveloper() async {
         let deviceId = keychain.deviceIdentifier()
         await signIn(method: "dev") {

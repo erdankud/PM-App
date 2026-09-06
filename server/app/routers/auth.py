@@ -12,17 +12,24 @@ from fastapi import APIRouter, HTTPException, status
 from app.apple import AppleAuthError, verify_identity_token
 from app.config import settings
 from app.deps import CurrentUser, DbSession
+from app.google import GoogleAuthError, verify_id_token
 from app.models import SKILL_KEYS, SkillScore, User, UserProfile, utcnow
 from app.schemas import (
     AppleSignInRequest,
+    AuthMethodsResponse,
     AuthResponse,
     DevSignInRequest,
+    EmailPasswordRequest,
+    GoogleSignInRequest,
     RefreshRequest,
     SignOutRequest,
     SimpleOk,
 )
 from app.security import (
     create_access_token,
+    hash_password,
+    normalise_email,
+    verify_password,
     issue_refresh_token,
     revoke_all_refresh_tokens,
     rotate_refresh_token,
@@ -65,6 +72,115 @@ def _issue(db: DbSession, user: User) -> AuthResponse:
 def _apply_timezone(user: User, timezone_name: str | None) -> None:
     if timezone_name:
         user.timezone = str(resolve_timezone(timezone_name))
+
+
+@router.get("/methods", response_model=AuthMethodsResponse)
+def methods() -> AuthMethodsResponse:
+    """Какие способы входа сервер действительно умеет прямо сейчас.
+
+    Клиент не решает это сам: кнопка Google без настроенного Client ID — обещание,
+    которое сервер не сможет выполнить, а «Продолжить без Apple» в продакшене не
+    должно даже появляться.
+    """
+    return AuthMethodsResponse(
+        password=settings.allow_password_auth,
+        google=bool(settings.google_client_id),
+        apple=bool(settings.apple_client_id),
+        developer=settings.allow_dev_auth and not settings.is_production,
+        google_client_id=settings.google_client_id,
+    )
+
+
+@router.post("/signup", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
+def sign_up(payload: EmailPasswordRequest, db: DbSession) -> AuthResponse:
+    """Заводит аккаунт по почте и паролю."""
+    if not settings.allow_password_auth:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "not_found"}
+        )
+    email = normalise_email(str(payload.email))
+    existing = (
+        db.query(User).filter(User.email == email, User.deleted_at.is_(None)).first()
+    )
+    if existing is not None:
+        # Отдельный код, а не «неверные данные»: человек, у которого уже есть
+        # аккаунт, должен увидеть «войдите», а не гадать, что он забыл пароль.
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail={"code": "email_taken"}
+        )
+
+    user = User(email=email, password_hash=hash_password(payload.password))
+    db.add(user)
+    db.flush()
+    _apply_timezone(user, payload.timezone)
+    user.last_active_at = utcnow()
+    return _issue(db, user)
+
+
+@router.post("/signin", response_model=AuthResponse)
+def sign_in(payload: EmailPasswordRequest, db: DbSession) -> AuthResponse:
+    """Вход по почте и паролю."""
+    if not settings.allow_password_auth:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "not_found"}
+        )
+    email = normalise_email(str(payload.email))
+    user = db.query(User).filter(User.email == email, User.deleted_at.is_(None)).first()
+
+    # Проверка идёт всегда, даже когда такого адреса нет: иначе по времени ответа
+    # видно, какие адреса зарегистрированы.
+    stored = user.password_hash if user is not None else None
+    if not verify_password(payload.password, stored) or user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"code": "invalid_credentials"},
+        )
+
+    _apply_timezone(user, payload.timezone)
+    user.last_active_at = utcnow()
+    return _issue(db, user)
+
+
+@router.post("/google", response_model=AuthResponse)
+def sign_in_with_google(payload: GoogleSignInRequest, db: DbSession) -> AuthResponse:
+    if not settings.google_client_id:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail={
+                "code": "google_not_configured",
+                "message": "Set GOOGLE_CLIENT_ID on the server to enable Sign in with Google.",
+            },
+        )
+    try:
+        identity = verify_id_token(payload.id_token)
+    except GoogleAuthError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail={"code": exc.args[0]}
+        ) from exc
+
+    user = (
+        db.query(User)
+        .filter(User.google_subject == identity.subject, User.deleted_at.is_(None))
+        .first()
+    )
+    if user is None and identity.email:
+        # Тот же человек, заводивший аккаунт по паролю, входит через Google:
+        # связываем по подтверждённой почте, а не заводим второй аккаунт.
+        user = (
+            db.query(User)
+            .filter(User.email == identity.email.lower(), User.deleted_at.is_(None))
+            .first()
+        )
+        if user is not None:
+            user.google_subject = identity.subject
+    if user is None:
+        user = User(google_subject=identity.subject, email=identity.email)
+        db.add(user)
+        db.flush()
+
+    _apply_timezone(user, payload.timezone)
+    user.last_active_at = utcnow()
+    return _issue(db, user)
 
 
 @router.post("/apple", response_model=AuthResponse)

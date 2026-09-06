@@ -7,6 +7,28 @@ import Foundation
 
 // MARK: - Auth & profile
 
+/// Регистрация и вход отличаются только тем, что делает сервер, — не формой.
+struct EmailPasswordRequest: Codable, Sendable {
+    let email: String
+    let password: String
+    let timezone: String
+}
+
+struct GoogleSignInRequest: Codable, Sendable {
+    let idToken: String
+    let timezone: String
+}
+
+/// Что сервер действительно умеет прямо сейчас. Решает он, а не клиент: кнопка
+/// Google без настроенного Client ID — обещание, которое некому выполнить.
+struct AuthMethodsResponse: Codable, Sendable {
+    let password: Bool
+    let google: Bool
+    let apple: Bool
+    let developer: Bool
+    let googleClientId: String?
+}
+
 struct AuthResponse: Codable, Sendable {
     let accessToken: String
     let refreshToken: String

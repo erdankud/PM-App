@@ -49,6 +49,19 @@ class Settings(BaseSettings):
     apple_issuer: str = "https://appleid.apple.com"
     apple_jwks_url: str = "https://appleid.apple.com/auth/keys"
 
+    # Sign in with Google. Бесплатен: нужен только Client ID из Google Cloud
+    # Console, биллинг не требуется. Без него `/auth/google` отвечает 503 —
+    # проверять подпись нечем, и делать вид, что проверили, нельзя.
+    google_client_id: str | None = None
+    # У мобильного клиента Client ID свой, а аккаунт тот же: обе аудитории
+    # принимаются одним эндпоинтом.
+    google_ios_client_id: str | None = None
+    google_jwks_url: str = "https://www.googleapis.com/oauth2/v3/certs"
+
+    # Вход по почте и паролю. Существует потому, что Google Client ID заводится
+    # руками в консоли, а продукт должен работать и до этого.
+    allow_password_auth: bool = True
+
     # Dev-only identity path so the client can be exercised before Apple auth is
     # configured. MUST be false in production.
     allow_dev_auth: bool = True

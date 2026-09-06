@@ -62,6 +62,9 @@ enum AppConfig {
     static let feedbackPollAttempts = 5
     static let feedbackPollInterval: Duration = .seconds(2)
 
+    /// Совпадает с проверкой сервера: короче он не примет, и просить незачем.
+    static let passwordMinimum = 8
+
     static let rationaleMinimum = 30
     static let rationaleMaximum = 600
 }

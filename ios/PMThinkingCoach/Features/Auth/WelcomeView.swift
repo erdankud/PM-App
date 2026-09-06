@@ -7,6 +7,16 @@ struct WelcomeView: View {
     @EnvironmentObject private var container: AppContainer
     @EnvironmentObject private var language: LanguageStore
     @State private var showingPrivacy = false
+    @State private var methods: AuthMethodsResponse?
+    @State private var mode: Mode = .signIn
+    @State private var email = ""
+    @State private var password = ""
+    @State private var formError: String?
+
+    /// Вход и регистрация — один экран: поля одинаковые, разное только то, что
+    /// делает сервер. Отдельный экран регистрации заставлял бы вспоминать, заводил
+    /// ты уже аккаунт или нет, — а этого человек как раз и не помнит.
+    private enum Mode { case signIn, signUp }
 
     var body: some View {
         VStack(spacing: Theme.Spacing.xl) {
@@ -39,18 +49,26 @@ struct WelcomeView: View {
             Spacer()
 
             VStack(spacing: Theme.Spacing.m) {
-                SignInWithAppleButton(.continue) { request in
-                    request.requestedScopes = []
-                } onCompletion: { result in
-                    handle(result)
+                // Способы входа перечисляет сервер: кнопка, за которой ничего нет,
+                // хуже отсутствующей кнопки.
+                if methods?.apple == true {
+                    SignInWithAppleButton(.continue) { request in
+                        request.requestedScopes = []
+                    } onCompletion: { result in
+                        handle(result)
+                    }
+                    .signInWithAppleButtonStyle(.black)
+                    .frame(height: 50)
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.control))
+                    .disabled(session.isAuthenticating)
+                    .accessibilityLabel(S.Welcome.continueWithApple)
                 }
-                .signInWithAppleButtonStyle(.black)
-                .frame(height: 50)
-                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.control))
-                .disabled(session.isAuthenticating)
-                .accessibilityLabel(S.Welcome.continueWithApple)
 
-                if AppConfig.allowsDeveloperSignIn {
+                if methods?.password ?? true {
+                    passwordForm
+                }
+
+                if AppConfig.allowsDeveloperSignIn, methods?.developer ?? true {
                     Button(S.Welcome.developerSignIn) {
                         Task { await session.signInAsDeveloper() }
                     }
@@ -60,9 +78,9 @@ struct WelcomeView: View {
                     .disabled(session.isAuthenticating)
                 }
 
-                if let error = session.authError {
+                if let error = formError ?? session.authError?.userMessage {
                     InlineNotice(
-                        text: error.userMessage,
+                        text: error,
                         systemImage: "exclamationmark.circle",
                         tint: Theme.Palette.negative
                     )
@@ -74,8 +92,6 @@ struct WelcomeView: View {
                     .frame(minHeight: Theme.minimumTapTarget)
             }
             .animation(Motion.standard, value: session.authError)
-            .padding(.horizontal, Theme.Spacing.xl)
-            .padding(.bottom, Theme.Spacing.xl)
             .appear(4)
 
             if session.isAuthenticating {
@@ -87,6 +103,65 @@ struct WelcomeView: View {
         .animation(Motion.quick, value: session.isAuthenticating)
         .background(Theme.Palette.background)
         .sheet(isPresented: $showingPrivacy) { PrivacyNoticeView() }
+        .task { methods = try? await container.apiClient.authMethods() }
+    }
+
+    private var passwordForm: some View {
+        VStack(spacing: Theme.Spacing.s) {
+            TextField(S.Auth.emailPlaceholder, text: $email)
+                .textContentType(.emailAddress)
+                .keyboardType(.emailAddress)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .textFieldStyle(.roundedBorder)
+                .accessibilityLabel(S.Auth.email)
+
+            SecureField(S.Auth.password, text: $password)
+                .textContentType(mode == .signUp ? .newPassword : .password)
+                .textFieldStyle(.roundedBorder)
+                .accessibilityLabel(S.Auth.password)
+
+            if mode == .signUp {
+                Text(S.Auth.passwordRule(AppConfig.passwordMinimum))
+                    .font(.caption)
+                    .foregroundStyle(Theme.Palette.tertiaryText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
+            PrimaryButton(
+                title: mode == .signUp ? S.Auth.signUp : S.Auth.signIn,
+                isLoading: session.isAuthenticating
+            ) {
+                Task { await submit() }
+            }
+
+            Button(mode == .signUp ? S.Auth.haveAccount : S.Auth.needAccount) {
+                withAnimation(Motion.quick) {
+                    mode = mode == .signUp ? .signIn : .signUp
+                    formError = nil
+                }
+            }
+            .font(.footnote)
+            .foregroundStyle(Theme.Palette.secondaryText)
+            .frame(minHeight: Theme.minimumTapTarget)
+        }
+    }
+
+    private func submit() async {
+        formError = nil
+        guard email.contains("@") else {
+            formError = S.Auth.emailInvalid
+            return
+        }
+        guard password.count >= AppConfig.passwordMinimum else {
+            formError = S.Auth.passwordRule(AppConfig.passwordMinimum)
+            return
+        }
+        if mode == .signUp {
+            await session.signUp(email: email, password: password)
+        } else {
+            await session.signInWithPassword(email: email, password: password)
+        }
     }
 
     /// Offered before sign-in as well as in Profile: someone who cannot read the

@@ -66,6 +66,65 @@ enum S {
         static var privacyNotice: String { t("Privacy notice", "О приватности") }
     }
 
+    // MARK: - Sign in / sign up
+
+    enum Auth {
+        static var signIn: String { t("Sign in", "Вход") }
+        static var signUp: String { t("Create account", "Регистрация") }
+        static var email: String { t("Email", "Почта") }
+        static var password: String { t("Password", "Пароль") }
+        static var emailPlaceholder: String { t("you@example.com", "you@example.com") }
+        static var continueWithGoogle: String {
+            t("Continue with Google", "Продолжить с Google")
+        }
+        static var or: String { t("or", "или") }
+
+        static var haveAccount: String {
+            t("Already have an account? Sign in", "Уже есть аккаунт? Войти")
+        }
+        static var needAccount: String {
+            t("No account yet? Create one", "Нет аккаунта? Создать")
+        }
+
+        static func passwordRule(_ minimum: Int) -> String {
+            t(
+                "At least \(minimum) characters.",
+                "Не меньше \(minimum) символов."
+            )
+        }
+
+        // Ошибки входа названы так, чтобы человек понял, что делать дальше, а не
+        // угадывал. «Такой почты нет» мы не говорим осознанно: по этому ответу
+        // перебирают чужие адреса.
+        static var invalidCredentials: String {
+            t(
+                "That email and password don't match an account.",
+                "Такая пара почты и пароля не подходит."
+            )
+        }
+        static var emailTaken: String {
+            t(
+                "That email already has an account. Sign in instead.",
+                "На эту почту уже есть аккаунт. Войдите."
+            )
+        }
+        static var emailInvalid: String {
+            t("That doesn't look like an email address.", "Это не похоже на адрес почты.")
+        }
+        static var googleUnavailable: String {
+            t(
+                "Google sign-in isn't set up on this server yet.",
+                "Вход через Google на этом сервере пока не настроен."
+            )
+        }
+        static var noMethods: String {
+            t(
+                "This server has no sign-in method enabled.",
+                "На этом сервере не включён ни один способ входа."
+            )
+        }
+    }
+
     enum Privacy {
         static var title: String { t("Privacy", "Приватность") }
         static var heading: String {
