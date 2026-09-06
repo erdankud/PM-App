@@ -104,6 +104,12 @@ class Settings(BaseSettings):
     run_inline_worker: bool = True
     worker_poll_seconds: float = 1.5
 
+    # Постепенное открытие блоков временно выключено: весь материал доступен с
+    # первого дня. Это политика, а не перенос ответственности — доступность
+    # по-прежнему считает сервер, и `POST /gates/{id}/start` по-прежнему её
+    # перепроверяет. Вернуть маршрут = поставить false.
+    unlock_all_blocks: bool = True
+
     # --- Product rules (server-owned, spec §12) -----------------------------
     xp_base_completion: int = 50
     xp_quality_bonus_cap: int = 50

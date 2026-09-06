@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import uuid
 
+import pytest
+
 from conftest import block_lessons, onboard, read_all_lessons, start_gate
 
 from app import tree_content
@@ -56,7 +58,21 @@ def pass_gate(client, headers) -> dict:
 # --- The map -----------------------------------------------------------------
 
 
-def test_new_user_sees_the_whole_map_with_one_block_open(client):
+@pytest.fixture
+def staged_unlocking(monkeypatch):
+    """Возвращает постепенное открытие блоков на время одного теста.
+
+    Сейчас весь материал открыт (`UNLOCK_ALL_BLOCKS`), но граф разблокировки никуда
+    не делся и должен оставаться рабочим: политику включают обратно одной строкой, и
+    выяснять в этот момент, что маршрут сломался, поздно.
+    """
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "unlock_all_blocks", False)
+    return settings
+
+
+def test_new_user_sees_the_whole_map_open(client):
     headers, _ = onboard(client)
     tree = client.get("/v1/tree", headers=headers).json()
 
@@ -64,13 +80,22 @@ def test_new_user_sees_the_whole_map_with_one_block_open(client):
     assert sum(b["nodeCount"] for b in tree["blocks"]) == 71
     assert tree["sourceAttribution"]
 
+    # Весь материал доступен с первого дня: постепенное открытие выключено.
+    assert [b["id"] for b in tree["blocks"] if b["status"] == "locked"] == []
+    assert all(b["title"] for b in tree["blocks"])
+
+
+def test_the_route_still_locks_when_staged_unlocking_is_on(client, staged_unlocking):
+    headers, _ = onboard(client)
+    tree = client.get("/v1/tree", headers=headers).json()
+
     open_blocks = [b["id"] for b in tree["blocks"] if b["status"] != "locked"]
     assert open_blocks == ["D1"]
     # Everything else is visible, not hidden: the map is the promise (spec §2).
     assert all(b["title"] for b in tree["blocks"])
 
 
-def test_locked_block_opens_and_explains_itself(client):
+def test_locked_block_opens_and_explains_itself(client, staged_unlocking):
     headers, _ = onboard(client)
     detail = client.get("/v1/blocks/V1", headers=headers).json()
 
@@ -79,6 +104,16 @@ def test_locked_block_opens_and_explains_itself(client):
     assert detail["gateBlockedReason"] == "locked"
     assert detail["block"]["prerequisiteBlockIds"] == ["D1"]
     assert len(detail["nodes"]) == 4
+
+
+def test_an_open_block_still_needs_its_lessons_before_the_gate(client):
+    """Открыт материал, а не гейт: внутри блока порядок остался прежним."""
+    headers, _ = onboard(client)
+    detail = client.get("/v1/blocks/V1", headers=headers).json()
+
+    assert detail["block"]["status"] == "available"
+    assert detail["gateAvailable"] is False
+    assert detail["gateBlockedReason"] == "lessons_remaining"
 
 
 def test_unwritten_block_is_marked_rather_than_hidden(client):
@@ -149,12 +184,26 @@ def test_gate_start_is_refused_while_lessons_remain(client):
     assert response.json()["detail"]["code"] == "block_not_ready"
 
 
-def test_passing_a_gate_unlocks_the_next_block_and_awards_xp(client):
+def test_passing_a_gate_marks_the_block_passed_and_awards_xp(client):
     headers, _ = onboard(client)
     feedback = pass_gate(client, headers)
 
     assert feedback["passed"] is True
     assert feedback["feedback"]["score"] >= feedback["passThreshold"]
+
+    tree = client.get("/v1/tree", headers=headers).json()
+    statuses = {b["id"]: b["status"] for b in tree["blocks"]}
+    assert statuses["D1"] == "passed"
+
+    progress = client.get("/v1/progress", headers=headers).json()
+    assert progress["blocksPassed"] == 1
+    assert progress["totalXp"] >= 60 + 10 * len(block_lessons("D1"))
+
+
+def test_passing_a_gate_unlocks_the_next_block(client, staged_unlocking):
+    headers, _ = onboard(client)
+    feedback = pass_gate(client, headers)
+
     assert "V1" in feedback["unlockedBlockIds"]
 
     tree = client.get("/v1/tree", headers=headers).json()
@@ -163,10 +212,6 @@ def test_passing_a_gate_unlocks_the_next_block_and_awards_xp(client):
     assert statuses["V1"] == "available"
     assert statuses["D2"] == "available"  # X2 opens after X1 of the same domain
     assert statuses["R1"] == "locked"     # still needs V1
-
-    progress = client.get("/v1/progress", headers=headers).json()
-    assert progress["blocksPassed"] == 1
-    assert progress["totalXp"] >= 60 + 10 * len(block_lessons("D1"))
 
 
 def test_failing_a_gate_keeps_xp_and_points_at_specific_lessons(client):

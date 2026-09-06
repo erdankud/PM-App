@@ -97,7 +97,7 @@ def recompute(db: Session, user_id: str) -> dict[str, BlockProgress]:
             continue
 
         prerequisites = block["prerequisiteBlockIds"]
-        unlocked = all(
+        unlocked = settings.unlock_all_blocks or all(
             rows.get(p) is not None and rows[p].status == PASSED for p in prerequisites
         )
         if not unlocked:
