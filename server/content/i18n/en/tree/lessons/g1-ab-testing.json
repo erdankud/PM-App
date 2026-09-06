@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "104a03f80d5fed1c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "A/B: how long to wait and when not to look",
+    "keyTakeaway": "Sample size and duration are calculated before launch, based on the effect size you want to detect. Peeking and stopping at a convenient moment turns the experiment into a way to find randomness.",
+    "checkQuestion": "On the third day, variant B is ahead by 12%. Why shouldn't you stop the test?",
+    "blocks/0/text": "Continuation of the same question: **how the test itself is structured.** In the lesson on measuring change, we compared “before” and “after”; here a control group appears, and that is what gives the right to speak of causality.",
+    "blocks/1/title": "A/B test",
+    "blocks/1/subtitle": "Three numbers calculated in advance",
+    "blocks/1/items/0": "**Minimum detectable effect** — how small of a change you care about. The smaller it is, the larger the required sample.",
+    "blocks/1/items/1": "**Sample size** — follows from the first number and the current metric level. Calculated with a tool, not by eye.",
+    "blocks/1/items/2": "**Duration** — at least a full behavior cycle: if the scenario is weekly, three days will show nothing.",
+    "blocks/2/text": "If you check results every day and stop when the difference looks convincing, you are almost guaranteed to find an effect where there is none. Early days are the noisiest.",
+    "blocks/2/title": "Peeking breaks the test",
+    "blocks/3/title": "A/A test",
+    "blocks/3/subtitle": "Testing your measurement system, not a hypothesis",
+    "blocks/3/items/0": "Both branches receive **the exact same thing**, and there should be no difference.",
+    "blocks/3/items/1": "If there is a difference, the split, tracking, or metric itself is broken.",
+    "blocks/3/items/2": "Cheap and one-off: A/A makes sense before the first serious experiment and after changes in analytics.",
+    "blocks/4/text": "On the third day, the variant with a three-day trial was ahead by 12%. Rollout was suggested.\n\nThe card specified: four weeks, 22 thousand per branch. By the end of the second week, the gap shrank to 4%, and by the fourth week to 2.9%, against the stated target of 0.9 percentage points.\n\nThe early gap had a simple explanation: during the first days, weekend users who read more entered the branch. Had the test been stopped on the third day, a conclusion that was an artifact would have been rolled out to the entire base.",
+    "blocks/4/title": "Vetka: the test that was almost stopped",
+    "blocks/5/text": "A/B answers “what happened” and stays silent on why. It is unsuitable for rare events and small audiences: if an event occurs a hundred times a month, you will never detect a 10% change. And it only tests what is already built — before building, cheaper methods are needed.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

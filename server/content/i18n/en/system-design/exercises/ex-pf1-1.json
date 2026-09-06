@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "09e062f5dfa3c086",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Latency or Throughput",
+    "inputs/0/label": "\"Catalog opens in 4 seconds\" — identical day and night",
+    "inputs/1/label": "\"Everything freezes at lunchtime\"",
+    "inputs/2/label": "\"Checkout takes 15 seconds\" — for some users",
+    "inputs/3/label": "\"After the broadcast, it didn't work for 20 minutes\"",
+    "acceptance/0/expected": "latency",
+    "acceptance/1/expected": "throughput",
+    "acceptance/2/expected": "latency",
+    "acceptance/3/expected": "throughput",
+    "inputs/0/choices/0": "latency",
+    "inputs/0/choices/1": "throughput",
+    "inputs/1/choices/0": "latency",
+    "inputs/1/choices/1": "throughput",
+    "inputs/2/choices/0": "latency",
+    "inputs/2/choices/1": "throughput",
+    "inputs/3/choices/0": "latency",
+    "inputs/3/choices/1": "throughput",
+    "promptBlocks/0/text": "For each complaint, determine the type and state whether adding servers will help.",
+    "promptBlocks/1/items/0": "\"Catalog opens in 4 seconds\" — identical day and night",
+    "promptBlocks/1/items/1": "\"Everything freezes at lunchtime\" — from 12 to 14",
+    "promptBlocks/1/items/2": "\"Checkout takes 15 seconds\" — only for some users, at any time",
+    "promptBlocks/1/items/3": "\"After the newsletter, the app didn't work for 20 minutes\"",
+    "referenceReasoningBlocks/0/text": "1 — latency, servers will not help. 2 — throughput, they will help. 3 — latency, and \"some\" points to an external dependency or network segment. 4 — throughput, but adding servers post-facto is useless: preparation is needed in advance. Technique: does it depend on the time of day."
+  }
+}

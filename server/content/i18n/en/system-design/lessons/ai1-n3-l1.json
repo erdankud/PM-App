@@ -1,0 +1,42 @@
+{
+  "language": "en",
+  "sourceDigest": "5136c2600ae88f7d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "Why the response is different every time",
+    "keyTakeaway": "Response variance is a feature, not a defect, and the product must decide for each scenario whether it is acceptable or squelched by a strict format and code validation of the result.",
+    "sections/0/blocks/0/text": "A QA engineer sent a bug: \"the response is different the second time\". Is this a defect?",
+    "sections/1/blocks/0/text": "Non-determinism breaks familiar ways of working: testing, support, reproducing bugs. A team that hasn't adapted its processes wastes time on \"bugs\" that aren't bugs and misses real problems.",
+    "sections/2/blocks/0/text": "At each step, the model outputs a probability distribution of the next [[token|token]]. Then [[sampling|sampling]] occurs—a selection from this distribution. [[temperature|Temperature]] controls diversity: lower means more probable choices, more stable responses; higher means more diverse.",
+    "sections/2/blocks/1/text": "Even at zero temperature, complete reproducibility is not guaranteed: request batching, model version, and hardware specifics all have an effect.",
+    "sections/2/blocks/2/text": "Product consequences, each requiring a decision:",
+    "sections/2/blocks/3/text": "**Testing changes.** You cannot compare against a standard character by character. What gets checked is not a match, but properties: is the required fact present, is the format followed, is there anything forbidden. Covered in `AI2-N4`.",
+    "sections/2/blocks/4/text": "**Support changes.** \"I got something different\" is a normal message. To investigate, you need to store actual responses with an identifier.",
+    "sections/2/blocks/5/text": "**Trust changes.** A person who sees two different answers to the same question starts doubting both. This is a product problem, and it is not solved by tech.",
+    "sections/2/blocks/6/text": "**Where variance is acceptable and where it is not:**",
+    "sections/2/blocks/7/header/0": "Scenario",
+    "sections/2/blocks/7/header/1": "Acceptable",
+    "sections/2/blocks/7/rows/0/0": "Creative text, ideas, phrasing options",
+    "sections/2/blocks/7/rows/0/1": "Yes, this is value",
+    "sections/2/blocks/7/rows/1/0": "Answering a factual question",
+    "sections/2/blocks/7/rows/1/1": "No, there must be a single fact",
+    "sections/2/blocks/7/rows/2/0": "Classification, data extraction",
+    "sections/2/blocks/7/rows/2/1": "No, stability is needed",
+    "sections/2/blocks/7/rows/3/0": "Recommendation picking",
+    "sections/2/blocks/7/rows/3/1": "Partially: the set can differ, quality cannot",
+    "sections/2/blocks/8/text": "For the second and third categories, techniques include: low temperature, strict output format, code verification of the result.",
+    "sections/3/blocks/0/text": "Three decisions.",
+    "sections/3/blocks/1/text": "*Product answers.* Temperature is minimal, format is strict, facts are taken solely from context. Variance remains in phrasing, not content. A user who asks a question twice gets different words with the same meaning—this is acceptable.",
+    "sections/3/blocks/2/text": "*Cart picking.* Temperature is medium. Different sets upon repeat are not a defect, but a feature. But we added a \"different option\" button that makes variance explicit and controllable instead of random.",
+    "sections/3/blocks/3/text": "*Extracting ingredients from supplier descriptions.* Strict JSON format, zero temperature, result checked by code: if a field fails to parse, we retry once, then flag the item for manual processing.",
+    "sections/3/blocks/4/text": "The last one is a general technique: **where reliability is needed, the model's result is verified by a program rather than taken on faith.**",
+    "sections/4/blocks/0/text": "Low temperature does not eliminate errors, it makes them stable. The model will confidently repeat the same wrong answer.",
+    "sections/5/blocks/0/text": "Response variance is a feature, not a defect, and the product must decide for each scenario whether it is acceptable or squelched by a strict format and code validation of the result."
+  }
+}

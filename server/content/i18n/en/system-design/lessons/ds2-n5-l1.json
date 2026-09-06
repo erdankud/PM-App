@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "877c106f42952f6e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "Partitioning: slicing the table into parts",
+    "keyTakeaway": "Partitioning speeds up queries by key and makes deleting old data cheap, but degrades queries that do not use this key.",
+    "sections/0/blocks/0/text": "The orders table has grown to eight million rows, and will soon reach thirty. What changes and when should you think about it?",
+    "sections/1/blocks/0/text": "Working with database limits is always cheaper in advance. Partitioning a live table of thirty million rows is a nighttime maintenance window and a risk; at eight million it is a planned task. The difference in cost is determined by how early the product manager heard the signal and put the task in the plan.",
+    "sections/2/blocks/0/text": "[[partitioning|Partitioning]] is slicing a single table into parts within the same database. Most often by dates: each month is a separate [[partition|partition]]. Nothing changes for the code, the table looks like a single one.",
+    "sections/2/blocks/1/text": "What this gives the product.",
+    "sections/2/blocks/2/text": "**[[partition-pruning|Partition pruning]].** A query for the last week touches one partition instead of the entire table. With thirty million rows and monthly partitions, this is the difference between scanning a million rows and thirty million.",
+    "sections/2/blocks/3/text": "**Cheap deletion of old data.** Dropping a partition is an instantaneous operation. Deleting a million rows with a regular query takes hours of work and load. Partitioning turns [[retention|retention]] from a project into a configuration setting, and this is its main un-obvious benefit.",
+    "sections/2/blocks/4/text": "**Maintenance in parts.** Index rebuilding, archiving, checks run on a single partition without blocking the rest.",
+    "sections/2/blocks/5/text": "What it does not give: partitioning does not increase capacity. All parts lie on the same server, and when disk or CPU runs out, it does not help.",
+    "sections/2/blocks/6/text": "Signs that it is time, which the product manager also sees:",
+    "sections/2/blocks/7/items/0": "queries for a period have become noticeably slower than half a year ago with the same logic;",
+    "sections/2/blocks/7/items/1": "deletion of old data is delayed because \"this takes down the database for a long time\";",
+    "sections/2/blocks/7/items/2": "nightly maintenance no longer fits into the night window.",
+    "sections/3/blocks/0/text": "Orders were partitioned by months at seven million rows. The reason was not speed, but retention: legal asked to delete personal data in orders older than three years, and the estimate for a regular delete was 11 hours of continuous load.",
+    "sections/3/blocks/1/text": "After partitioning, deleting a three-year-old partition took seconds. As a side effect, the partner dashboard sped up: monthly reports read a single partition.",
+    "sections/3/blocks/2/text": "A product consequence learned later: queries **without a date** became slower because the database is forced to scan all partitions. Order search by phone number in support suffered. Fixed with a separate index, but the lesson remained — partitioning optimizes for one access pattern and degrades the others.",
+    "sections/4/blocks/0/text": "The partitioning key is chosen once and is difficult to change. It is chosen by the most frequent access pattern, not the most convenient one for storage.",
+    "sections/5/blocks/0/text": "Partitioning speeds up queries by key and makes deleting old data cheap, but degrades queries that do not use this key."
+  }
+}

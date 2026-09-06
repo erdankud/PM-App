@@ -1,0 +1,92 @@
+{
+  "lessonId": "d1-five-whys",
+  "sourceDigest": "3f78ca7a3efe",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "audio-2026-09-02",
+    "generatedAt": "2026-09-03T00:43:38Z"
+  },
+  "turns": [
+    {
+      "speaker": "guide",
+      "text": "A user comes to you demanding dark mode or an Excel export, so you just build it, right?"
+    },
+    {
+      "speaker": "expert",
+      "text": "If you do, two people will use it, your metrics won't move, and you've wasted your time. That request is just someone's homemade answer to a problem you haven't heard yet."
+    },
+    {
+      "speaker": "guide",
+      "text": "But if they literally ask for an Excel export, isn't that what they actually need?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Not usually. A coffee shop owner once asked us for an Excel export of his schedule, which sounds straightforward enough."
+    },
+    {
+      "speaker": "guide",
+      "text": "Okay, so why did he want Excel?"
+    },
+    {
+      "speaker": "expert",
+      "text": "We asked why Excel was important, and he said he used it to tweak the hours before handing them to his accountant. Our app only showed hours per shift, but she needed monthly totals per person."
+    },
+    {
+      "speaker": "guide",
+      "text": "So Excel was just where he was doing manual math."
+    },
+    {
+      "speaker": "expert",
+      "text": "Right. Then we asked the crucial question: what happens if you give her the data as is?"
+    },
+    {
+      "speaker": "guide",
+      "text": "And what was the cost?"
+    },
+    {
+      "speaker": "expert",
+      "text": "He said the accountant once recalculated it herself, made a mistake, someone got underpaid, and there was a huge scene. That mistake was a real risk he was desperate to avoid."
+    },
+    {
+      "speaker": "guide",
+      "text": "So the problem wasn't 'I need Excel,' it was 'I need to give my accountant accurate monthly totals.'"
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly. A simple monthly summary inside the app solved his problem completely, and it was actually faster to build than an export feature."
+    },
+    {
+      "speaker": "guide",
+      "text": "How do you dig down like that without annoying people?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Chain your 'whys,' but anchor them in facts, not opinions. Ask what they actually did last time, not what they 'usually' do, because people start rationalizing after the third why."
+    },
+    {
+      "speaker": "guide",
+      "text": "What if they tell you 'it's just more convenient'?"
+    },
+    {
+      "speaker": "expert",
+      "text": "That's a trap. 'More convenient' means you've hit a habit, not a cause. Go back one step and ask about a specific recent instance."
+    },
+    {
+      "speaker": "guide",
+      "text": "And when do you stop asking why?"
+    },
+    {
+      "speaker": "expert",
+      "text": "You stop the moment you reach a cause you can actually influence. 'Five' isn't a strict rule, just a reminder not to stop at the first answer."
+    },
+    {
+      "speaker": "guide",
+      "text": "So the takeaway is never to take that initial feature request at face value?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Never. The first thing a customer asks for is just a solution they guessed. Your job is to find the underlying problem, because the real problem almost always has a cheaper fix."
+    }
+  ]
+}

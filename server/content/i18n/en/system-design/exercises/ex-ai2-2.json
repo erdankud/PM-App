@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "2857f915b50a241d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Where vector search fails",
+    "inputs/0/label": "«Something for breakfast»",
+    "inputs/1/label": "«Lactose-free milk»",
+    "inputs/2/label": "«SKU 4820001»",
+    "inputs/3/label": "«Activia 2.9%»",
+    "inputs/4/label": "«Cheaper than 300 rubles»",
+    "acceptance/0/expected": "works",
+    "acceptance/1/expected": "fails",
+    "acceptance/2/expected": "fails",
+    "acceptance/3/expected": "fails",
+    "acceptance/4/expected": "fails",
+    "inputs/0/choices/0": "works",
+    "inputs/0/choices/1": "fails",
+    "inputs/1/choices/0": "works",
+    "inputs/1/choices/1": "fails",
+    "inputs/2/choices/0": "works",
+    "inputs/2/choices/1": "fails",
+    "inputs/3/choices/0": "works",
+    "inputs/3/choices/1": "fails",
+    "inputs/4/choices/0": "works",
+    "inputs/4/choices/1": "fails",
+    "promptBlocks/0/text": "Mark queries where pure vector search will give bad results and state how to supplement it.",
+    "promptBlocks/1/text": "«Something for breakfast» 2. «Lactose-free milk» 3. «SKU 4820001» 4. «Activia 2.9%» 5. «Cheaper than 300 rubles»",
+    "referenceReasoningBlocks/0/text": "1 — works, semantic proximity. 2 — fails on negation: 'lactose-free' and 'with lactose' are close; ingredient filter needed. 3 — fails, exact match; text search. 4 — fails on brand; hybrid search. 5 — fails, numerical condition; price filter. Technique: negations, numbers, exact strings — not for vectors."
+  }
+}

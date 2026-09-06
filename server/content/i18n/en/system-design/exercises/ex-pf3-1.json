@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "sourceDigest": "befd5502819c5e23",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Build a Cost Model",
+    "inputs/0/label": "Bill after audience doubles",
+    "inputs/0/unit": "million RUB",
+    "promptBlocks/0/text": "Bill: compute 400k, storage 120k, traffic 90k, analytics 60k, SMS 180k, acquiring 620k. Audience is planned to double with behavior remaining the same.",
+    "promptBlocks/1/items/0": "What drivers are items tied to?",
+    "promptBlocks/1/items/1": "What will the bill become?",
+    "promptBlocks/1/items/2": "Which item requires attention first?",
+    "referenceReasoningBlocks/0/text": "compute, traffic, analytics, SMS, acquiring — tied to active users and transactions, double in proportion. Storage — tied to accumulated volume, grows faster than double, approximately 2.3 times. Bill: approximately 2.9 million instead of 1.47 million. Acquiring requires attention — the largest item, linear, does not decrease with scale; it is a negotiation lever, and one should start before growth, not after."
+  }
+}

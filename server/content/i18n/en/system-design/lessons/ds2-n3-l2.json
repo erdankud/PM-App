@@ -1,0 +1,27 @@
+{
+  "language": "en",
+  "sourceDigest": "046095b3c206b884",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "What the user sees: guarantees on their side",
+    "keyTakeaway": "A user needs not data freshness in general, but the visibility of their own actions and the absence of rollbacks — both are achieved cheaper than reading everything from the primary database.",
+    "sections/0/blocks/0/text": "How to make sure a person does not notice lag without routing all reads to the primary database?",
+    "sections/1/blocks/0/text": "The difference between a product that \"behaves strangely sometimes\" and a product people trust often lies precisely in this. A user forgives slowness. They do not forgive when their own action disappears — this looks like data loss, and after that they check everything manually.",
+    "sections/2/blocks/0/text": "There are two guarantees that matter more to the user than formal data freshness.",
+    "sections/2/blocks/1/text": "**[[read-your-writes|Read your writes]].** A person must see their own change immediately. Other people's changes can lag — nobody will notice this because the person does not know when exactly they happened.",
+    "sections/2/blocks/2/text": "Implemented simply: for some time after a write, this user's reads go to the primary. Or the change is displayed locally in the client without waiting for the server.",
+    "sections/2/blocks/3/text": "**[[monotonic-reads|Monotonic reads]].** Data must not roll back. If a person saw their review, and on the next refresh the review disappeared — this is worse than if the review had never appeared at all. Occurs when two consecutive requests hit different replicas with different lag. Fixed by pinning the user to a single replica within a session.",
+    "sections/2/blocks/4/text": "The third technique is product-level, not technical: **honest intermediate state.** Not \"review published\" and not emptiness, but \"review sent, will appear within a minute\". A user calmly waits for what they were warned about and worries about what disappeared silently.",
+    "sections/3/blocks/0/text": "Order history is read from the replica, but for 30 seconds after checkout — from the primary. The threshold is chosen as the worst observed lag multiplied by three. The cost is fractions of a percent of load on the primary because the window is short.",
+    "sections/3/blocks/1/text": "Reviews were handled differently. Publication goes through moderation, meaning there is a delay anyway. Instead of a technical solution, a product one was written: the review immediately appears in the personal section with an \"under review\" badge and is visible to the author. Lag ceased to exist as a problem because the interface explained the delay that was already there.",
+    "sections/3/blocks/2/text": "The reverse example we learned from: the counter \"N items in cart\" in the header was read from the replica. A person added an item, the counter did not change, the person added it again. Duplicates in the cart became a noticeable share of support tickets. Fixed by moving the counter to the client — it already knows what the person just clicked.",
+    "sections/4/blocks/0/text": "Guarantees on the user side do not replace strong consistency where it is fundamentally needed: money, stock, access rights. They solve the perception problem, not correctness.",
+    "sections/5/blocks/0/text": "A user needs not data freshness in general, but the visibility of their own actions and the absence of rollbacks — both are achieved cheaper than reading everything from the primary database."
+  }
+}

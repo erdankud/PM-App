@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "93fd280a9c16eefb",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "Perceived speed",
+    "keyTakeaway": "Speed perception is built on instant feedback, showing progress, appearance order, and the absence of layout shifts, and it is cheaper to improve than actual time.",
+    "sections/0/blocks/0/text": "Two screens load in 1.5 seconds. Why does one feel fast and the other slow?",
+    "sections/1/blocks/0/text": "Perception determines user behavior, not measured time. A product can gain more in feel than in milliseconds, and this is usually cheaper than optimization.",
+    "sections/2/blocks/0/text": "[[perceived-performance|Speed perception]] is determined by four things besides actual time.",
+    "sections/2/blocks/1/text": "**Immediate reaction to action.** A tap must give feedback within 100 ms—highlight, animation, state change. Without this, the user is unsure if they tapped and taps again.",
+    "sections/2/blocks/2/text": "**Progress instead of emptiness.** A [[skeleton-screen|skeleton screen]]—outlines of future content—is perceived as faster than a spinner for the same duration. It shows what is loading and creates a sense that progress is being made.",
+    "sections/2/blocks/3/text": "**Order of appearance.** First what matters: text before images, the first screen before the rest. The person starts reading while the rest loads and does not notice the difference.",
+    "sections/2/blocks/4/text": "**Absence of shifts.** Content that appears and shifts what is already shown destroys the feeling of readiness more than an extra second of waiting.",
+    "sections/2/blocks/5/text": "Separately—[[optimistic-ui|optimistic actions]] from `IN1-N4-L2`: the result is shown before server confirmation. A feeling of instant response with unchanged actual time.",
+    "sections/2/blocks/6/text": "Practical ratio: **improving perception usually takes days, improving actual time takes weeks.** It is sensible to start with the former.",
+    "sections/3/blocks/0/text": "Three changes without a single millisecond of metric gains:",
+    "sections/3/blocks/1/text": "*Skeleton instead of spinner* on the main screen. Pre-load drop-off fell from 8% to 5.5%.",
+    "sections/3/blocks/2/text": "*Rendering order:* text and price cards first, images fading in later. The user starts choosing sooner.",
+    "sections/3/blocks/3/text": "*Reserving space for images.* Previously cards shifted when images loaded, and people missed buttons. The \"app jumps\" complaint disappeared.",
+    "sections/3/blocks/4/text": "Separately on feedback: the add-to-cart button used to show state change after the server response, 240 ms. Moved to the client, feedback became instant. The number of repeat taps dropped by 60%—which means fewer cart duplicates and support tickets.",
+    "sections/4/blocks/0/text": "Perception does not replace speed. A skeleton shown for eight seconds does not help—it makes it obvious that nothing is happening.",
+    "sections/5/blocks/0/text": "Speed perception is built on instant feedback, showing progress, appearance order, and the absence of layout shifts, and it is cheaper to improve than actual time."
+  }
+}

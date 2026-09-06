@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "d01d18476e38e870",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:58:13Z"
+  },
+  "fields": {
+    "title": "What to Do When the Budget Does Not Add Up",
+    "keyTakeaway": "When the budget does not add up, first drop from the path, move in time, and precompute, and only then optimize—because reducing work is cheaper than speeding it up.",
+    "sections/0/blocks/0/text": "The sum of minimum possible times exceeds the goal. What now?",
+    "sections/1/blocks/0/text": "This is a common situation, and without a structured response it turns into endless optimization or silently dropping the goal. Four levers resolve it faster than trying to speed up everything.",
+    "sections/2/blocks/0/text": "When the budget does not add up, there are four moves, and three of them are product moves.",
+    "sections/2/blocks/1/text": "**Drop from the path.** Something on the screen does not have to be there. Recommendations, counters, optional blocks. The cheapest move, and it requires a product decision.",
+    "sections/2/blocks/2/text": "**Move in time.** Show the screen without some data, load it later. Works if the user starts interacting before the data is needed.",
+    "sections/2/blocks/3/text": "**Precompute.** Calculate in advance instead of on-demand. A materialized view from `DS2-N1-L2`, cache, night recalculation.",
+    "sections/2/blocks/4/text": "**Optimize.** The most expensive move and the last in line.",
+    "sections/2/blocks/5/text": "The order is not random: the first three change the amount of work, the fourth changes execution speed. Reducing work is almost always cheaper than speeding it up.",
+    "sections/2/blocks/6/text": "Separately—**revising the goal.** Sometimes 1.5 seconds was chosen arbitrarily, and 2 seconds is no worse. Checked with data: drop-off by wait intervals, like in the `PF1-G-B` gate.",
+    "sections/2/blocks/7/text": "What not to do: silently accept an unreachable goal. A goal that no one intends to meet devalues all others.",
+    "sections/3/blocks/0/text": "Checkout screen: goal 3 s, minimum possible time unchanged—4.2 s.",
+    "sections/3/blocks/1/text": "*Dropped from path:* promo code check when there is no promo code (180 ms), recommendations call for a removed block (140 ms). 320 ms for free.",
+    "sections/3/blocks/2/text": "*Moved in time:* calculation of bonuses earned for the order—shown after confirmation. 260 ms.",
+    "sections/3/blocks/3/text": "*Precomputed:* available delivery slots used to be calculated on demand, now recalculated every 5 minutes in the background. 640 ms.",
+    "sections/3/blocks/4/text": "*Left to optimize:* combining 12 stock check calls into one. 420 ms.",
+    "sections/3/blocks/5/text": "Total 4.2 → 2.56 s, of which only the last item was an optimization. Three-quarters of the gain came from decisions on what to do and when.",
+    "sections/4/blocks/0/text": "Moving in time creates intermediate states, and they require design per `IN1-N4-L2`. Saving milliseconds at the cost of a jumping UI is a bad trade.",
+    "sections/5/blocks/0/text": "When the budget does not add up, first drop from the path, move in time, and precompute, and only then optimize—because reducing work is cheaper than speeding it up."
+  }
+}

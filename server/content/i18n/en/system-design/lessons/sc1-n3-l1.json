@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "4026863f9c2761a0",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "Find on the Diagram",
+    "keyTakeaway": "A single point of failure is found by asking \"what if it's gone\" for each element of the diagram, and the decision to add redundancy is made based on the cost of downtime for the product.",
+    "sections/0/blocks/0/text": "How to look at an architectural diagram and name three places whose failure will stop the product?",
+    "sections/1/blocks/0/text": "A [[single-point-of-failure|single point of failure]] is discovered either on paper in half an hour, or in prod after a few hours of downtime. The difference in cost is a thousandfold. This is one of the few exercises where a PM can provide real value to the team without technical knowledge.",
+    "sections/2/blocks/0/text": "The technique is simple: **for each diagram element, ask \"what if it's gone?\"** If the answer is \"the product does not work\" — that is a single point of failure.",
+    "sections/2/blocks/1/text": "Typical places:",
+    "sections/2/blocks/2/text": "*Write database.* One, replicas are read-only. Failure — product in read-only mode. *Authorization service.* Does not work — nothing works, because every request checks the token. *External provider without Plan B.* Covered in `IN1-N5`. *Component through which all traffic passes* — load balancer, gateway. *Shared queue* — if everything goes through it.",
+    "sections/2/blocks/3/text": "The fix is **[[redundancy|redundancy]]**: a second instance that takes over. But not everything is equally cheap to make redundant, and not everything needs to be.",
+    "sections/2/blocks/4/text": "Product criterion: **what exactly stops working and how much does it cost?** Failure of the recommendations service — main screen without personalization, small loss. Failure of the orders service — revenue stops.",
+    "sections/2/blocks/5/text": "Hence the table worth keeping explicit: component, what breaks for the user, hourly downtime cost, is there a backup. It takes an hour to make and changes the reliability conversation from abstract to concrete.",
+    "sections/3/blocks/0/text": "The analysis yielded six points, three of which turned out to be non-obvious.",
+    "sections/3/blocks/1/text": "*Write database.* Known, backup is automatic failover to a replica, up to 2 minutes of write unavailability. *API gateway.* Known, three instances. *Authorization service.* Non-obvious: it is small and no one thought about it. Every request goes to it to check the token. Failure — complete stoppage. Added a 60-second check cache, now a minute-long outage is unnoticeable. *Single instance of the order queue processor.* Non-obvious: the processor is single, when it crashes, orders accumulate and do not go to stores. Discovered precisely by this exercise. *Payment provider.* Plan B — cash on delivery. *DNS provider.* A classic that no one thinks about until it happens.",
+    "sections/3/blocks/2/text": "An hour of work with the diagram yielded two real findings, each of which would one day have cost several hours of downtime.",
+    "sections/4/blocks/0/text": "Making everything redundant is more expensive than tolerating some failures. The decision is made based on the cost of downtime, not on principle.",
+    "sections/5/blocks/0/text": "A single point of failure is found by asking \"what if it's gone\" for each element of the diagram, and the decision to add redundancy is made based on the cost of downtime for the product."
+  }
+}

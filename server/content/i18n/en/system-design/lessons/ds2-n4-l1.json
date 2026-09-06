@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "71d0a03e77af5243",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "Two workloads that do not get along",
+    "keyTakeaway": "Transactional and analytical workloads require opposite data organization, and trying to serve both with a single storage degrades the one that matters more to the user.",
+    "sections/0/blocks/0/text": "Why can an analytical report take down a product even though it only reads data?",
+    "sections/1/blocks/0/text": "This is the most common cause of \"unexplainable\" product slowdowns in companies where analytics grew faster than infrastructure. The symptom — the product lags during working hours and works great at night. A product manager who knows this pattern recognizes it from the description in a minute.",
+    "sections/2/blocks/0/text": "The two types of workload are structured oppositely.",
+    "sections/2/blocks/1/text": "[[oltp|OLTP]] — transactional: many short operations on individual records. Create an order, update status, read profile. Thousands per second, each touches single rows, each must be fast.",
+    "sections/2/blocks/2/text": "[[olap|OLAP]] — analytical: rare heavy queries over many records. Revenue by category for the quarter broken down by stores. Dozens per hour, each reads millions of rows, each can take a minute.",
+    "sections/2/blocks/3/text": "They conflict along three lines.",
+    "sections/2/blocks/4/text": "*Resources.* An analytical query evicts data needed by transactions from memory. After it runs, the database works slowly for a while, even when the query has finished.",
+    "sections/2/blocks/5/text": "*Locks.* Long reads hold data and hinder writes, as in the store report case discussed earlier.",
+    "sections/2/blocks/6/text": "*Structure.* Transactional workloads need entire rows — the whole order at once. Analytical workloads need a single column across all rows — sums only. The exact same data organization cannot be optimal for both.",
+    "sections/2/blocks/7/text": "Hence the solution everyone arrives at: **different storage systems.** Product database for OLTP, [[data-warehouse|data warehouse]] for OLAP, [[etl-elt|data pipeline]] between them.",
+    "sections/3/blocks/0/text": "The problem was solved in two steps, and both were right at their time.",
+    "sections/3/blocks/1/text": "First, a read-only replica — three weeks. Reports stopped interfering with orders. But the reports themselves remained slow: forty seconds, because the structure did not change, only the location did.",
+    "sections/3/blocks/2/text": "Then a separate storage system — six weeks. Data is transferred once an hour, structure tailored for analytics: pre-calculated aggregates by stores and days. The report opens in a second instead of forty, and this turned out to be more important than buyer speed because the partner dashboard became a sales argument.",
+    "sections/3/blocks/3/text": "The intermediate step with the replica was not redundant: it stopped losses in three weeks instead of six.",
+    "sections/4/blocks/0/text": "Separation costs money and introduces delay. A small product does not need it: up to a certain volume, analytics on the product database at night work perfectly. The sign that it is time is when analytical queries start happening during working hours and become regular.",
+    "sections/5/blocks/0/text": "Transactional and analytical workloads require opposite data organization, and trying to serve both with a single storage degrades the one that matters more to the user."
+  }
+}

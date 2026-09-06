@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "337986a15299b493",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:27Z"
+  },
+  "fields": {
+    "title": "Authentication vs Authorization",
+    "inputs/0/label": "Session expired during checkout",
+    "inputs/1/label": "Store employee opens network report",
+    "inputs/2/label": "Password entered incorrectly",
+    "inputs/3/label": "User opens someone else's order via link",
+    "acceptance/0/expected": "authentication",
+    "acceptance/1/expected": "authorization",
+    "acceptance/2/expected": "authentication",
+    "acceptance/3/expected": "authorization",
+    "inputs/0/choices/0": "authentication",
+    "inputs/0/choices/1": "authorization",
+    "inputs/1/choices/0": "authentication",
+    "inputs/1/choices/1": "authorization",
+    "inputs/2/choices/0": "authentication",
+    "inputs/2/choices/1": "authorization",
+    "inputs/3/choices/0": "authentication",
+    "inputs/3/choices/1": "authorization",
+    "promptBlocks/0/text": "For each situation: what is the problem and what to show.",
+    "promptBlocks/1/items/0": "Session expired during checkout",
+    "promptBlocks/1/items/1": "Store employee opens network report",
+    "promptBlocks/1/items/2": "Password entered incorrectly",
+    "promptBlocks/1/items/3": "User opens someone else's order via link",
+    "referenceReasoningBlocks/0/text": "1 — authentication, `401`, login preserving the cart. 2 — authorization, `403`, explanation \"network manager rights required\", do not offer login. 3 — authentication, message without specifying what exactly is wrong. 4 — authorization, `404` instead of `403`: no need to disclose that someone else's order exists. The latter is subtle: sometimes the correct answer is \"not found\" instead of \"forbidden\"."
+  }
+}

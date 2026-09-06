@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "280aeb393203c246",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "Acceptance criteria: what \"done\" means",
+    "keyTakeaway": "An acceptance criterion is checked with a simple yes or no, without debate. Anything open to argument during a demo is not a criterion and must be rewritten before work starts, not after.",
+    "checkQuestion": "\"The list should load fast\"—why is this not an acceptance criterion, and how should it be rewritten?",
+    "blocks/0/text": "The key question of this node: **what features and properties should the product have?** More specifically—how you and the team reach a shared understanding of the word \"done\".",
+    "blocks/1/text": "**What happens if you do not answer this question.** A task goes into development formulated as \"make car selection convenient.\" Two weeks later at the demo, it turns out you understood \"convenient\" differently. The debate happens at the most expensive moment—when the work is already done.",
+    "blocks/2/title": "Acceptance criteria vs. evaluation criteria",
+    "blocks/2/subtitle": "Two different questions that are constantly confused",
+    "blocks/2/items/0": "**Acceptance—\"yes / no\".** A verifiable condition: when three cars are available, the list shows three rows. Nothing to argue about.",
+    "blocks/2/items/1": "**Evaluation—\"how well\".** A scale or number: median trip selection time is under 40 seconds.",
+    "blocks/2/items/2": "Acceptance is needed to **close the task**. Evaluation is needed to see if **it helped**.",
+    "blocks/2/items/3": "A task might lack evaluation criteria, but without acceptance criteria, it cannot be taken into work.",
+    "blocks/3/items/0": "\"The list loads fast\" → \"The list of available cars for the selected date displays in under 2 seconds for 60 cars\"",
+    "blocks/3/items/1": "\"Clear error on conflict\" → \"If a driver is already assigned to this time slot, show the conflicting trip name and a button to go to it\"",
+    "blocks/3/items/2": "\"Convenient selection\" → acceptance: \"filter by cargo class and date applies simultaneously\"; evaluation: \"median trip selection time is under 40 seconds\"",
+    "blocks/4/text": "For the \"close trip\" task, a criterion was written: \"after a trip is closed, the car immediately becomes available and appears in the list for that date.\"\n\nAt the demo, the developer showed that after closing, you had to refresh the page. Formally, the feature worked. But the criterion was written in advance and unambiguously, so the discussion took a minute instead of half an hour: task rejected, one hour of rework. The value of the criterion was not that it banned something, but that it existed before work began.",
+    "blocks/4/title": "Dispetcher: the argument that never happened",
+    "blocks/5/text": "Criteria do not replace conversation: a list of twenty points means the team didn't understand the task and is trying to hedge. And watch the boundary—a criterion like \"the button is blue, in the bottom right corner, 16 pixels\" is already design baked into a requirement: you took away a decision from the team that you are not responsible for.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

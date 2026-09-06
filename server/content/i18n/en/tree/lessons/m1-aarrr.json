@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "34059250913eab47",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "AARRR: acquisition without activation is a waste",
+    "keyTakeaway": "It only makes sense to measure acquisition alongside what happens after. Growth in the top stage with an unchanged second stage means you are paying for people who found no use for the product.",
+    "checkQuestion": "Registrations doubled, paying users stayed the same. What happened?",
+    "blocks/0/text": "The same key question, but broader: **how the stages are connected to each other** and why you shouldn't optimize just one.",
+    "blocks/1/title": "AARRR",
+    "blocks/1/subtitle": "Five stages, each a question for the previous one",
+    "blocks/1/items/0": "**Acquisition** — arrived. Cheap to scale up and most costly in deceiving you.",
+    "blocks/1/items/1": "**Activation** — reached initial value. Here it becomes clear whether the right person arrived.",
+    "blocks/1/items/2": "**Retention** — returned. The only stage that says the product is needed.",
+    "blocks/1/items/3": "**Revenue** — paid.",
+    "blocks/1/items/4": "**Referral** — brought someone else.",
+    "blocks/1/items/5": "Look at stages **in pairs**: acquisition growth with unchanged activation is not growth, but a traffic bill.",
+    "blocks/2/text": "Marketing launched a campaign: monthly registrations reached 900 instead of 450. The report looked great.\n\nActivation — the share of those who created their first document — dropped from 41% to 23%. In absolute numbers, activated users became 207 instead of 184: a 12% growth while doubling the budget.\n\nTurns out: the campaign ran on the search query \"free document management,\" and people came in needing a one-off invoice rather than a subscription. The product wasn't right for them, which was predictable from the ad text.",
+    "blocks/2/title": "Reestr, doubling registrations",
+    "blocks/3/text": "AARRR is a discussion framework, not a model for a specific product: a marketplace has different stages, and so does B2B with a long sales cycle. And the order of stages is not set in stone: in some products, referral happens before payment.",
+    "blocks/3/title": "Boundaries of the model"
+  }
+}

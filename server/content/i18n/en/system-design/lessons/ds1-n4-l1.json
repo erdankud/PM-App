@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "fd07071c422eda3d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:45Z"
+  },
+  "fields": {
+    "title": "Keys: what makes a record distinct from all others",
+    "keyTakeaway": "The identifier seen by the user is a product decision: it will outlive several generations of code and end up in systems you do not control.",
+    "sections/0/blocks/0/text": "What makes order #4471 specifically that order, and why is choosing an identifier a product decision rather than a technical detail?",
+    "sections/1/blocks/0/text": "The identifier ends up in URLs, receipts, emails, customer support, and partner integrations. Changing it after launch is almost impossible—it has already spread to systems you do not control. The choice is made once, and the consequences live on for years.",
+    "sections/2/blocks/0/text": "A [[primary-key|primary key]] is an attribute that uniquely identifies a record. Two approaches.",
+    "sections/2/blocks/1/text": "A [[natural-key|natural key]] is an identifier with meaning: a user's email, a product SKU. Tempting because it already exists. Dangerous because meaningful things tend to change: people change emails, suppliers reissue SKUs. By changing the key, you change all references to it.",
+    "sections/2/blocks/2/text": "A [[surrogate-key|surrogate key]] is an artificial identifier with no meaning. It means nothing, so it never becomes obsolete.",
+    "sections/2/blocks/3/text": "Among surrogate keys, there are two options, and the difference between them is product-driven.",
+    "sections/2/blocks/4/text": "*Sequential number* — 1, 2, 3. Short, readable, convenient for support. But it exposes business information: order #4471 tells competitors how many orders you have. Registering twice a week apart lets you figure out the growth rate. Also, it must be issued by a single database—which is a scaling limitation.",
+    "sections/2/blocks/5/text": "*[[uuid|UUID]]* — a long identifier that can be generated anywhere without asking. Exposes nothing, requires no coordination. In exchange, it is unreadable: you cannot dictate it in a conversation with support.",
+    "sections/2/blocks/6/text": "Hence the frequent solution: a UUID as the actual key inside the system, with a separate short human-readable number for the user.",
+    "sections/2/blocks/7/text": "A [[foreign-key|foreign key]] is an attribute referencing the primary key of another entity. This is how relationships are implemented: an order stores a user identifier.",
+    "sections/3/blocks/0/text": "User — UUID inside, phone number as a login method, but not as a key: a phone number gets reassigned to another person, and using it as a key would one day expose someone else's order history.",
+    "sections/3/blocks/1/text": "Order — UUID inside and a separate human-readable number like `PL-240815-4471` for the user and support. The date in the number gives support context without a database query, and a sequential counter within the day does not reveal the total volume.",
+    "sections/3/blocks/2/text": "Product — this is where a mistake was made. Initially, the supplier's SKU was made the key, a natural key. A year later, the supplier changed their SKU system, and half the catalog stopped matching shipments. Fixing it took more time than the initial choice saved.",
+    "sections/4/blocks/0/text": "For very large tables, key choice affects write performance: random UUIDs don't fit on disk as well as growing numbers. At Polka's scale this doesn't matter; at the scale of billions of records, it does, and intermediate options like UUIDv7 are used there.",
+    "sections/5/blocks/0/text": "The identifier seen by the user is a product decision: it will outlive several generations of code and end up in systems you do not control."
+  }
+}

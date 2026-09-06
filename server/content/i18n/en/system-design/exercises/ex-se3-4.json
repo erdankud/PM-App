@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "ec34fc4552e029d5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Conduct Triage",
+    "inputs/0/label": "Changing button color",
+    "inputs/1/label": "Exporting order history to a file",
+    "inputs/2/label": "Referral program with bonuses",
+    "inputs/3/label": "Category filter",
+    "inputs/4/label": "Support chat",
+    "inputs/5/label": "Store rating display",
+    "acceptance/0/expected": "does not require",
+    "acceptance/1/expected": "requires full review",
+    "acceptance/2/expected": "requires full review",
+    "acceptance/3/expected": "does not require",
+    "acceptance/4/expected": "requires full review",
+    "acceptance/5/expected": "does not require",
+    "inputs/0/choices/0": "requires full review",
+    "inputs/0/choices/1": "does not require",
+    "inputs/1/choices/0": "requires full review",
+    "inputs/1/choices/1": "does not require",
+    "inputs/2/choices/0": "requires full review",
+    "inputs/2/choices/1": "does not require",
+    "inputs/3/choices/0": "requires full review",
+    "inputs/3/choices/1": "does not require",
+    "inputs/4/choices/0": "requires full review",
+    "inputs/4/choices/1": "does not require",
+    "inputs/5/choices/0": "requires full review",
+    "inputs/5/choices/1": "does not require",
+    "promptBlocks/0/text": "Which features require a full threat review?",
+    "promptBlocks/1/text": "Changing button color 2. Exporting order history to a file 3. Referral program with bonuses 4. Category filter 5. Support chat 6. Store rating display",
+    "referenceReasoningBlocks/0/text": "full review — 2 (personal data export), 3 (money plus abuse potential), 5 (communication, personal data in chat). Do not require — 1, 4, 6. Takeaway: six triage criteria filter out the majority, and that's precisely why the process works."
+  }
+}

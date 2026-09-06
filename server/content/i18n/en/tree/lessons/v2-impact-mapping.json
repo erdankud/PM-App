@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "1c019d3d25ac9bcc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "Impact Mapping: from goal to feature, not vice versa",
+    "keyTakeaway": "A feature is justified if a chain is clear: goal → who affects it → what behavior must change → what we do for this. A break in any link means the feature ended up in the plan for another reason.",
+    "checkQuestion": "The COO asks for a \"downtime report.\" What three links need to be built before putting this in the plan?",
+    "blocks/0/text": "Value Proposition Canvas answers for whom and why. Impact Mapping answers a related question: **does this bring us closer to why the product is built in the first place?**",
+    "blocks/1/title": "Impact Map",
+    "blocks/1/subtitle": "Four levels, read left to right",
+    "blocks/1/items/0": "**Goal (Why)**—a measurable business outcome, not \"improve process.\"",
+    "blocks/1/items/1": "**Actors (Who)**—specific people whose behavior affects the goal. Including those who can obstruct.",
+    "blocks/1/items/2": "**Impact (How)**—what actor behavior must change. Formulated with a verb: \"stops calling the driver,\" \"closes the schedule in an hour.\"",
+    "blocks/1/items/3": "**Deliverable (What)**—a feature or change. This is a hypothesis on how to trigger the desired behavior—the most replaceable level of the four.",
+    "blocks/2/text": "Goal: reduce empty mileage from 18% to 14% in six months.\n\nDispatcher → stops planning a one-way trip without checking return load\n  → return trip prompt during planning\n  → warning when a truck returns empty\n\nDriver → stops taking side cargo outside the system\n  → side-load request from mobile in two actions\n\nSales manager → starts creating return trip orders in advance\n  → visibility into available return legs a week ahead\n\nOut of the four \"What\" items, two turned out cheap, and their chain to the goal is clear. The downtime dashboard originally requested didn't make the map: it changes nobody's behavior.",
+    "blocks/2/title": "Dispetcher: map before plan",
+    "blocks/3/text": "The feature exists, but the behavior isn't named. This means nobody tested whether people will use it. If you state the behavior out loud, you often find that what hinders it isn't lack of a feature, but something else—a habit, distrust, or someone else's process.",
+    "blocks/3/title": "The most common gap is between \"What\" and \"How\"",
+    "blocks/4/text": "**The map is also useful as a conversational tool.** It shows which features compete for the same behavior: keeping just one and testing it is enough.",
+    "blocks/5/text": "Impact Mapping doesn't prioritize. It shows connections and gaps, while choosing between two connected branches is done by cost and probability—that's prioritization from block R2.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

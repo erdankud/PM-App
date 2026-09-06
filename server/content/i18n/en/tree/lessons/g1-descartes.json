@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "6333a18e0b7c1d0f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "Descartes Matrix: four questions instead of an argument",
+    "keyTakeaway": "Before comparing ideas, ask not only “what happens if we do it”, but also “what happens if we don't”. The second question almost always changes the order.",
+    "checkQuestion": "Two ideas look equally useful. Which question will pull them apart?",
+    "blocks/0/text": "Key question of the node: **which ideas should be developed further?** Not “which is better”, but which one is worth testing now.",
+    "blocks/1/text": "**What happens if you do not answer this question.** Ideas are compared by expected benefit, and all ideas look useful — otherwise they wouldn't have been proposed. The choice is made based on who speaks more persuasively.",
+    "blocks/2/title": "Descartes Matrix",
+    "blocks/2/subtitle": "One idea, four questions",
+    "blocks/2/items/0": "**What will happen if we do it?** — expected benefit. This is usually the only question asked.",
+    "blocks/2/items/1": "**What won't happen if we do it?** — cost: what we won't do instead, what will break.",
+    "blocks/2/items/2": "**What will happen if we don't do it?** — cost of inaction. Urgency hides here.",
+    "blocks/2/items/3": "**What won't happen if we don't do it?** — what we won't learn and which door will close.",
+    "blocks/3/text": "Idea A: book recommendations on the home screen. Idea B: giving the first book in full with no time limit.\n\nOn the first question, both look the same: “people will read more”.\n\nThe third question sets them apart. If we don't do recommendations — nothing changes; users already find books through search. If we don't offer the open first book — we will never find out if duration is the issue, and this question blocks three more hypotheses about the trial period.\n\nThe fourth question added the decisive point: recommendations can be added at any time, but the window for the trial period experiment is closing — the pricing grid changes in a quarter.",
+    "blocks/3/title": "Vetka: two ideas with equal benefit",
+    "blocks/4/text": "The matrix helps unpack a single idea and scales poorly to twenty: four questions for each means an hour for five ideas. A longer list requires a rougher filter, while Descartes is applied to finalists. And it does not produce numbers: the result is understanding, not a score.",
+    "blocks/4/title": "Model boundaries"
+  }
+}

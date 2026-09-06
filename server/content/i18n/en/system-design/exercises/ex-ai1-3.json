@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "9afbed5fe688daf4",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Where variability is acceptable",
+    "promptBlocks/0/text": "For each scenario: is it acceptable, and how to restrict if not.",
+    "promptBlocks/1/items/0": "Generating a product description for a card",
+    "promptBlocks/1/items/1": "Extracting weight and volume from supplier text",
+    "promptBlocks/1/items/2": "Answering 'does this contain milk'",
+    "promptBlocks/1/items/3": "Brainstorming dinner ideas",
+    "referenceReasoningBlocks/0/text": "1 — acceptable, but output goes through moderation before publishing. 2 — unacceptable: strict JSON, zero temperature, code check, fallback to manual handling if unparsed. 3 — unacceptable in content, acceptable in phrasing: fact from context, low temperature, source citation. 4 — acceptable and provides value, plus a 'more options' button. Technique: separate content variability from phrasing."
+  }
+}

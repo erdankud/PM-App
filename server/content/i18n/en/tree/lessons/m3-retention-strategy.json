@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "c3a207f022af6240",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Retention strategy: processes, not mechanics",
+    "keyTakeaway": "The plan for active clients relies not on notifications, but on several processes: guiding to first value, addressing churn signals, and win-back of lost customers. Each of them has an owner and a metric.",
+    "checkQuestion": "Churn grew by 2 percentage points. Which three processes will you check first?",
+    "blocks/0/text": "The key question of this node: **which processes will deliver the active user targets?**",
+    "blocks/1/text": "**What happens if you don't answer this question.** Nobody owns retention: marketing acquires, product builds features, support responds. Churn grows slowly and is only discovered after plans have already been made.",
+    "blocks/2/title": "Three retention processes",
+    "blocks/2/subtitle": "Each has an owner, a metric, and a response timeframe",
+    "blocks/2/items/0": "**Guiding to first value**—from payment to the moment after which churn stops. Metric: share of users reaching it in N days.",
+    "blocks/2/items/1": "**Early warning**—signs of imminent churn: stopped logging in, transaction volume dropped, key person on the customer side left. Metric: share of at-risk customers and share of retained ones.",
+    "blocks/2/items/2": "**Win-back of churned users**—a separate process with its own offer; some churned customers return if the issue was fixed and communicated.",
+    "blocks/2/items/3": "**Essential addition:** the reason for churn is recorded based on real facts, not a checkbox in a cancellation form.",
+    "blocks/3/text": "First value: create and sign a document. Owner—product team, metric—share of users reaching it within 7 days (currently 52%).\n\nEarly warning: client hasn't created a single document in 14 days. The list goes to support once a week: they reach out to the person and ask what is blocking them. Of those contacted, 44% stay versus 21% among similar clients who were not contacted.\n\nWin-back: once a quarter, clients who churned in the past six months get an email about what has changed. 6% return—cheap and predictable.\n\nSupport collects churn reasons in conversation, not via a form: the vague \"don't use it\" turns into specific feedback in about half the cases.",
+    "blocks/3/title": "Reestr, how it is set up",
+    "blocks/4/text": "A discount postpones churn and ruins unit economics: a customer retained with price usually leaves at the next renewal. Fixing the cause works, while money serves only as a gesture in case of a clear mistake on your part.",
+    "blocks/4/title": "Retention cannot be bought with a renewal discount",
+    "blocks/5/text": "Some churn is healthy: the customer grew out of it, closed down, or the task disappeared. The goal is not zero churn, but zero churn caused by preventable issues; telling them apart has to be done manually.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

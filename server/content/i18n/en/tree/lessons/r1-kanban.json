@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "025806f023acf99a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "The board shows flow, not busyness",
+    "keyTakeaway": "Look not at how many tasks are in progress, but at how long they sit there. A full \"in progress\" column is not a sign of productivity, but a sign that flow has stalled further down the line.",
+    "checkQuestion": "There are eight tasks in the \"in progress\" column with a team of four. What does this mean?",
+    "blocks/0/text": "The same question about discrepancy, but at the weekly level rather than daily: **where exactly does work stop moving.**",
+    "blocks/1/text": "**What happens if you don't answer this question.** Everyone is busy, everyone is doing something, yet the release isn't assembling. Each person is individually productive, but flow is stalled.",
+    "blocks/2/title": "Kanban board",
+    "blocks/2/subtitle": "Three things it shows for free",
+    "blocks/2/items/0": "**Bottleneck**—the column where tasks pile up. Usually it isn't development, but review or testing.",
+    "blocks/2/items/1": "**Task age**—how many days a card hasn't moved. The most useful and most ignored number.",
+    "blocks/2/items/2": "**WIP limit**—how many tasks are allowed in a column simultaneously. It doesn't speed up work; it makes the bottleneck visible.",
+    "blocks/3/text": "The WIP limit is the only rule that feels uncomfortable, which is precisely why it works. When you cannot pick up a new task, you must go help with the stuck one. Without a limit, everyone takes the next task, filling the board with half-done work that is worth zero until it reaches completion.",
+    "blocks/4/text": "Eight tasks in progress for four developers. Looks like high utilization.\n\nThey checked task age: three tasks sitting in \"in review\" for five days. There is only one reviewer, and he is also working on the hardest task of the sprint.\n\nThey set a limit of 4 on \"in progress\". The next day, two people couldn't take new work and sat down to review. The queue cleared in half a day, and the release came together on time.\n\nBusyness didn't change. Throughput did.",
+    "blocks/4/title": "Polka, the board mid-sprint",
+    "blocks/5/text": "A task in the \"in review\" column delivers no value and reduces no risk. It only creates an illusion of progress.",
+    "blocks/5/title": "Half-done work is worth zero",
+    "blocks/6/text": "The board shows flow inside the team and is blind to everything outside: waiting for responses from external teams, approvals, or data delivery are invisible unless there is a dedicated column. And it is useless if cards are moved right before standup rather than in real time.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

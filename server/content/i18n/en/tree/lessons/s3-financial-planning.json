@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "56aaa1c10baa4059",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Financial plan: how much runway you have",
+    "keyTakeaway": "Product strategy decisions require three figures: current cash balance, monthly burn rate, and runway in months. They anchor roadmap debates in timeline constraints.",
+    "checkQuestion": "The team asks for six months to build a new business line. What three numbers do you need before answering?",
+    "blocks/0/text": "Key node question: **how will financial goals be achieved?**",
+    "blocks/1/text": "**What happens if you do not answer the question.** Strategic plans assume infinite runway. Then reality strikes with five months of cash remaining, forcing panicky, flawed operational trade-offs.",
+    "blocks/2/title": "Three metrics every product manager must track",
+    "blocks/2/subtitle": "They should be reviewed with the CFO quarterly",
+    "blocks/2/items/0": "**Cash reserve** — available balance plus confirmed incoming payments.",
+    "blocks/2/items/1": "**Burn rate** — net monthly spend in excess of revenue.",
+    "blocks/2/items/2": "**Runway in months** — cash balance divided by burn rate. Defines the timeframe within which roadmap bets must pay off.",
+    "blocks/2/items/3": "**Plus two qualifiers:** burn rate levers (costs that can be cut quickly) and revenue risks (unconfirmed pipeline).",
+    "blocks/3/text": "**This yields a clear prioritization rule.** If runway is under 12 months, do not launch initiatives with payback horizons exceeding that window — not because they are bad ideas, but because cash will run out before impact materializes.",
+    "blocks/4/text": "Cash balance: 18 million ₽. Monthly net burn: 2.1 million ₽. Remaining runway: 8.5 months.\n\nProposed initiative: custom manufacturing vertical, projected payback of 14 months.\n\nVerdict: not \"bad idea\", but \"unaffordable given our current runway\". Shifted focus to regulatory compliance (8-week dev effort, mandated for 40% of clients) and a 15% price bump for new acquisitions.\n\nTwo quarters later, net monthly burn dropped to 0.4 million ₽, extending runway to over two years — enabling the board to revisit the new vertical.\n\nThe same three metrics clearly demonstrated to the board why the rejection was a matter of timing, not merit.",
+    "blocks/4/title": "Kedr: evaluating a strategic decision",
+    "blocks/5/text": "Calculate runway conservatively: ignore pipeline deals until signed. Strategic roadmaps built on \"imminent contract closes\" invariably fail when those deals delay.",
+    "blocks/5/title": "Revenue projections are the most optimistic part of any plan",
+    "blocks/6/text": "A financial plan does not dictate product strategy — it establishes boundaries on what is feasible. Within those boundaries, product decisions remain driven by customer value and strategy.",
+    "blocks/6/title": "Limitations of the model"
+  }
+}

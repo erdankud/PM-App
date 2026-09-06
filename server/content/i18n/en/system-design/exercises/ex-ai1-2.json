@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "2f6cfd1f31738eda",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Find the cause of a bad response",
+    "promptBlocks/0/text": "For each case, state where the problem is and what to do.",
+    "promptBlocks/1/items/0": "Model names ingredients not present in the description",
+    "promptBlocks/1/items/1": "Responses are one sentence sometimes, a paragraph other times",
+    "promptBlocks/1/items/2": "Model answers a medical question instead of refusing",
+    "promptBlocks/1/items/3": "Model doesn't know about products added today",
+    "referenceReasoningBlocks/0/text": "1 — no data in context plus no permission to say 'I don't know'; instruction fix. 2 — no format specified; examples of desired response. 3 — behavior for this question class not specified; explicit rule in instruction. 4 — data not injected into context; prompt building issue, not model. In no case is model replacement the first answer."
+  }
+}

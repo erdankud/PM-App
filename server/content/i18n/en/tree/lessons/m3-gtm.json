@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "624fdc798188ad84",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Go-to-market: decisions made before launch",
+    "keyTakeaway": "A launch is not the announcement day, but a set of decisions: who we sell to first, what we promise, how we sell, what support is ready for, and how we know it worked. The date comes last on this list.",
+    "checkQuestion": "The product is ready, the date is set. Which five decisions might be missing?",
+    "blocks/0/text": "The key question of this node: **what is needed for a successful launch?**",
+    "blocks/1/title": "Ansoff Matrix",
+    "blocks/1/subtitle": "Four types of growth—and different levels of risk",
+    "blocks/1/items/0": "**Current product, current market**—deeper penetration. The cheapest and usually underused.",
+    "blocks/1/items/1": "**Current product, new market**—a new segment or geography. The risk is that the task there is different, even if the product is similar.",
+    "blocks/1/items/2": "**New product, current market**—an expansion for those who are already with you. Clear channel, clear customer.",
+    "blocks/1/items/3": "**New product, new market**—the most expensive and most frequent place of failure: both sides are unknown at once.",
+    "blocks/2/text": "The **ADL approach** adds the question of maturity: in a young market, you win with speed and customer education; in a mature one, with efficiency and price. The exact same launch is done differently in these markets.",
+    "blocks/3/text": "Type of growth: new product for current market—it is clear who to sell to and through which channels.\n\nDecisions before the date:\nwho gets it first—40 clients with more than 20 counterparties; it hurts them;\nwhat we promise—\"reconciliation in an hour instead of a day\", not \"a new module\";\nhow we sell—inside the product to those who open the counterparty list;\nprice—included in the current plan for a quarter, then separate;\nsupport—two people trained in advance, answers ready for three expected questions;\nsuccess—25% of 40 used it within a month and half of them repeated.\n\nThe announcement date turned out to be the least important of these decisions.",
+    "blocks/3/title": "Reestr launches a reconciliation statement module",
+    "blocks/4/text": "A wave of forty clients gives time to fix what was found. Announcing to the entire user base turns the first 24 hours into a lottery and makes any rollback public.",
+    "blocks/4/title": "Launching to everyone at once deprives you of the chance to learn",
+    "blocks/5/text": "A good launch does not save an unneeded product: it only speeds up getting an honest answer. If the answer is negative, the value of the launch is that you learned it in a month, not a year.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

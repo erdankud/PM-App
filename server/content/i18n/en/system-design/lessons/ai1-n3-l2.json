@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "aa62007ce992b1f0",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "How to show uncertainty",
+    "keyTakeaway": "Showing the source reduces both errors and the damage from them stronger than any warnings, and the model must have the right to say \"I don't know\"—otherwise it will make things up.",
+    "sections/0/blocks/0/text": "The model can make mistakes. How to build an interface that accounts for this without destroying trust?",
+    "sections/1/blocks/0/text": "An interface that presents the model's response as absolute truth shifts all responsibility for errors onto the product. An interface covered in warnings devalues the feature. There is a working middle ground between them, and the product manager finds it.",
+    "sections/2/blocks/0/text": "Four techniques, from strongest to softest.",
+    "sections/2/blocks/1/text": "**Show the source.** A response with a link to a specific place in the data is verifiable. This is the strongest technique: it turns \"the model says\" into \"here is where this comes from\". Sharply reduces both the number of errors noticed by the user and the damage from them.",
+    "sections/2/blocks/2/text": "**Separate fact from judgment.** Product ingredients are a fact from the data. \"Good for breakfast\" is a model judgment. Visually different things should look different.",
+    "sections/2/blocks/3/text": "**Provide an action instead of a statement.** Not \"this item is gluten-free\", but \"gluten is not listed in the ingredients, view full ingredients\". The person draws their own conclusion having the data.",
+    "sections/2/blocks/4/text": "**Warning as a last resort.** Works worst of all: people stop reading identical text by the third time.",
+    "sections/2/blocks/5/text": "Separately — **designing refusal.** The model must be able to say \"I don't know\", and the product must encourage this. An instruction demanding to always give an answer guarantees fabricated responses.",
+    "sections/2/blocks/6/text": "And **feedback**: the ability to flag an incorrect response. It is needed not so much by the user as by the product—it is the only data stream on quality from real usage.",
+    "sections/3/blocks/0/text": "Product answers:",
+    "sections/3/blocks/1/text": "*Factual part* — a quote from the ingredients labeled \"from manufacturer description\". Verifiable. *Judgment* — in a separate block, lighter, with the words \"based on description, it appears that\". *No data* — \"not specified in description\", with a link to the manufacturer card. The model is required to answer this way, it's in the instruction.",
+    "sections/3/blocks/2/text": "Medical and allergen questions: no answer is given, ingredients are shown along with a recommendation to check with the manufacturer. Strict.",
+    "sections/3/blocks/3/text": "An \"answer is inaccurate\" button under every response. Over a quarter, 340 marks out of 41 thousand responses—0.8%. Investigating 340 yielded six systemic problems, four of which were not in the model, but in supplier data.",
+    "sections/3/blocks/4/text": "A separate result: after introducing ingredient quotes, the share of \"inaccurate\" marks dropped by half. People saw the source and stopped arguing with the phrasing.",
+    "sections/4/blocks/0/text": "Showing the source requires that the source exists—meaning RAG or explicit data in context. For purely generative tasks, the technique is not applicable.",
+    "sections/5/blocks/0/text": "Showing the source reduces both errors and the damage from them stronger than any warnings, and the model must have the right to say \"I don't know\"—otherwise it will make things up."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "efff14251bbcf6bb",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:40:52Z"
+  },
+  "fields": {
+    "title": "Adoption and frequency: the average describes a user who doesn't exist",
+    "keyTakeaway": "An overall product average almost always hides two different products. Look at the share of users who reached the action and the frequency distribution, not a single number.",
+    "checkQuestion": "Average frequency is 3 times a week. What might this hide?",
+    "blocks/0/text": "The node's key question remains the same — **what is happening in the product** — but now it's about the shape of the data. The exact same average comes from completely different products.",
+    "blocks/1/text": "**What happens if you don't answer the question.** You optimize for a non-existent average user and fail to notice that you have two segments with opposite behavior.",
+    "blocks/2/title": "Adoption / Frequency",
+    "blocks/2/subtitle": "Two simple slices that almost always change the picture",
+    "blocks/2/items/0": "**Adoption** — what share of accounts reached the key action at least once.",
+    "blocks/2/items/1": "**Frequency** — how often those who reached it do it; look at the histogram, not the average.",
+    "blocks/2/items/2": "**Separate the denominator.** 'Out of all registered' and 'out of those who reached it' are different questions.",
+    "blocks/2/items/3": "**Look at registration cohorts**, otherwise new accounts dilute the picture for old ones.",
+    "blocks/3/text": "Average: 3.1 swaps per account per month.\nBroken down: 64% of accounts didn't make a single swap. Among the remaining 36%, the median is 8 swaps per month.\n\nSo you don't have a 'product where people occasionally swap shifts', but two products: one is shift scheduling, the other is active shift swapping within the team. The number 3.1 describes neither of them.",
+    "blocks/3/title": "Smena, shift swapping",
+    "blocks/4/text": "A month for a weekly scenario is four opportunities. A window that's too short turns normal users into 'inactive'.",
+    "blocks/4/title": "Check the observation window",
+    "blocks/5/text": "The distribution shows what is happening, but not why. It tells you which segment to go study — the explanation will come from interviews and feedback, not from the histogram.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

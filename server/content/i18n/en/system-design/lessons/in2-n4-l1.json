@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "eb6fc844914c58e1",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:51Z"
+  },
+  "fields": {
+    "title": "Queue as a buffer",
+    "keyTakeaway": "A queue turns a peak into a delay and isolates the product from slow dependencies, but it does not create capacity — and queue lag is a product metric, not a technical one.",
+    "sections/0/blocks/0/text": "Why put work into a queue if you can execute it right away?",
+    "sections/1/blocks/0/text": "A queue is the standard response to load spikes and slow dependencies. A PM who does not understand how a queue works cannot explain why a notification arrived twenty minutes late, and cannot tell \"the system is overloaded\" from \"the system is broken\".",
+    "sections/2/blocks/0/text": "A [[queue|queue]] is a store of tasks that will be processed later. One component puts a [[message|message]], another takes it and executes it.",
+    "sections/2/blocks/1/text": "What this gives the product:",
+    "sections/2/blocks/2/text": "**Smoothing out spikes.** A promo broadcast creates an avalanche of actions. Without a queue, the system must handle the peak; with a queue, it handles the average load, and the peak just takes longer to process.",
+    "sections/2/blocks/3/text": "**Isolation from slow dependencies.** The SMS provider slows down — the queue grows, but checkout time does not.",
+    "sections/2/blocks/4/text": "**Reliability of retries.** It failed — the message returns to the queue and tries again. It failed many times — it goes to the [[dead-letter-queue|dead-letter queue]], where humans sort it out.",
+    "sections/2/blocks/5/text": "Two concepts a PM must be able to read on monitoring dashboards:",
+    "sections/2/blocks/6/text": "[[queue-lag|Queue lag]] — how many messages are waiting and for how long. Growing lag means the consumer cannot keep up, an early signal that the product is still working but already delayed.",
+    "sections/2/blocks/7/text": "[[backpressure|Backpressure]] — a mechanism to slow down the producer when the consumer cannot cope. Without it, the queue grows infinitely until space runs out.",
+    "sections/2/blocks/8/text": "A distinction that matters for design: **[[event|events]] and [[command|commands]].** An event reports that something happened: \"order placed\". There can be any number of subscribers, and adding a new one does not touch the publisher. A command instructs to do something: \"send an SMS\". There is a single recipient, and the sender knows about it.",
+    "sections/2/blocks/9/text": "Events are more flexible: a new reaction to order placement is added without changing the placement code. The flip side is that the code makes it hard to see what happens after an action, which is a separate operational complexity.",
+    "sections/3/blocks/0/text": "After moving side work out of order placement into the background, an `order.created` event appeared. Five handlers subscribe to it: store notification, customer SMS, bonus accrual, recommendation update, analytics export.",
+    "sections/3/blocks/1/text": "A sixth subscriber — delivery service notification — was added half a year later without a single line of changes in the placement code. This is the payoff of events.",
+    "sections/3/blocks/2/text": "Queue lag hit product monitoring after an incident where the SMS handler crashed at night and messages piled up for six hours. In the morning, 2 300 people received notifications about yesterday's orders. The damage was small, but it looked bad. Now, if lag exceeds 15 minutes, an alert fires, and messages older than two hours are not sent at all — an outdated notification is worse than none.",
+    "sections/3/blocks/3/text": "The latter is a product decision, and it is non-obvious: the system is ready to deliver, but we consciously refuse.",
+    "sections/4/blocks/0/text": "A queue does not speed up work, it postpones it in time. If the consumer is systematically slower than the producer, the queue only delays the moment when this becomes noticeable.",
+    "sections/5/blocks/0/text": "A queue turns a peak into a delay and isolates the product from slow dependencies, but it does not create capacity — and queue lag is a product metric, not a technical one."
+  }
+}

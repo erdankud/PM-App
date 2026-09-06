@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "9fdcf36f8e8c0416",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "What the Product Manager Does During an Incident",
+    "keyTakeaway": "During an incident, the product manager is responsible for degradation, communication, and damage assessment, while pre-prepared degradation tables and message templates turn these decisions into minutes instead of hours.",
+    "sections/0/blocks/0/text": "The product is unavailable. Engineers are figuring it out. What is the product manager doing — and why not \"helping find the cause\"?",
+    "sections/1/blocks/0/text": "A product manager who meddles in technical investigation slows it down with questions. A product manager who disengages leaves decisions unmade that only they can make: what to tell users, what to sacrifice for recovery speed, who to warn. Both options make the incident more expensive.",
+    "sections/2/blocks/0/text": "Roles in an incident are divided. Technical — diagnostics and recovery. Product — three.",
+    "sections/2/blocks/1/text": "**Degradation decision.** Turn off a feature, switch to plan B, enable load shedding. An engineer can technically do this, but choosing what to sacrifice is a product decision, and a pre-made degradation table makes it instant.",
+    "sections/2/blocks/2/text": "**Communication.** What users see, what to write to partners, what to answer support. This is the only part of the incident the outside world sees, and it is entirely on the product manager.",
+    "sections/2/blocks/3/text": "**Damage assessment.** How many orders, how much money, what obligations violated. Needed both during — for prioritization, and after — for decisions.",
+    "sections/2/blocks/4/text": "What the product manager **does not** do: doesn't ask \"when will it be fixed\" every five minutes, doesn't offer hypotheses, doesn't call a meeting.",
+    "sections/2/blocks/5/text": "Regarding communication separately. The rules are simple and almost always broken:",
+    "sections/2/blocks/6/text": "*Report before asked.* Silence is perceived worse than the problem. *Say what is not working and what is.* \"Checkout is unavailable, catalog opens\" is more useful than \"we have technical problems\". *Don't promise timelines you don't know.* Better \"we will report in 15 minutes\" — and report, even if there is no news. *After recovery, say so.* This is forgotten most often.",
+    "sections/3/blocks/0/text": "Roles are fixed: on-call engineer leads recovery, product manager leads communication and degradation decisions, head of support leads inquiries.",
+    "sections/3/blocks/1/text": "Message templates are prepared in advance — for the app, for partners, for support. During an incident they are filled out in a minute instead of being composed under pressure.",
+    "sections/3/blocks/2/text": "The reviews incident showed the cost of not having this: for 22 minutes the app had a standard error screen, partners were not written to at all, support answered \"we are clarifying\". After introducing templates, the average first message delay dropped from 14 minutes to 3.",
+    "sections/3/blocks/3/text": "Notifying partners about planned dashboard shedding during overload turned out to be unexpectedly valuable: partners warned in advance perceive this as a managed situation, not product unreliability.",
+    "sections/4/blocks/0/text": "In minor incidents, formal roles are excessive. The threshold at which the procedure turns on should be defined in advance — usually by the number of affected users.",
+    "sections/5/blocks/0/text": "During an incident, the product manager is responsible for degradation, communication, and damage assessment, while pre-prepared degradation tables and message templates turn these decisions into minutes instead of hours."
+  }
+}

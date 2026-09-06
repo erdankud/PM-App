@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "720731bc4624d517",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "A person doesn't read everything all at once",
+    "keyTakeaway": "At each step of attention, a person has a specific question, and you must answer the current one. A message that answers everything at once answers nothing.",
+    "checkQuestion": "Why shouldn't you write the same thing on a banner as on a pricing page?",
+    "blocks/0/text": "The same question about value, but adjusted for **how much attention a person has right now**.",
+    "blocks/1/title": "AIDA(s)",
+    "blocks/1/subtitle": "Four steps and one added",
+    "blocks/1/items/0": "**Attention** — noticed. Task: match the reader's situation in a single phrase.",
+    "blocks/1/items/1": "**Interest** — interested. Task: show that the task can be solved at all.",
+    "blocks/1/items/2": "**Desire** — wanted. Task: prove that it works specifically for them.",
+    "blocks/1/items/3": "**Action** — took a step. Task: remove everything preventing them from clicking.",
+    "blocks/1/items/4": "**Satisfaction** — got what was promised. Without it, the previous four turn into churn.",
+    "blocks/2/text": "A banner in a Telegram channel for accountants: \"Does an acceptance certificate take a week by mail?\" — that's attention, a question about the situation, nothing about the product.\n\nLanding page: \"In-browser signing, without EDI operator or trips\" — interest.\n\nPricing page: case study of a 12-person company, 6-hour signing time, price — desire.\n\nButton: \"Try 14 days, no card needed\" — action, removing friction.\n\nIf you put pricing page copy on the banner, it won't work: the person hasn't asked \"how much does it cost\" yet.",
+    "blocks/2/title": "Reestr, one message across four steps",
+    "blocks/3/text": "AIDA describes a linear path that most people don't take: they arrive on recommendation directly at pricing or return a month later. The fifth step — Satisfaction — is more important than the other four, and it lies outside marketing: it's the product itself.",
+    "blocks/3/title": "Boundaries of the model"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "db4b95e982003b04",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Resources and risks: what must be known before launch",
+    "keyTakeaway": "A project relies on three things: who participates, what it depends on, and what can go wrong. A risk without an owner and a trigger indicator is unmanaged — it's just waiting to happen.",
+    "checkQuestion": "Risk: \"the vendor might delay the API.\" What is missing in this phrasing?",
+    "blocks/0/text": "Key node question: **what resources are needed for the changes?**",
+    "blocks/1/title": "Project Canvas",
+    "blocks/1/subtitle": "One page instead of a twenty-page charter",
+    "blocks/1/items/0": "**Why** — what is the goal and how will we know we achieved it.",
+    "blocks/1/items/1": "**Who** — team, stakeholder, who signs off on results, whose approval is required.",
+    "blocks/1/items/2": "**Scope and out-of-scope** — the second half is more important than the first.",
+    "blocks/1/items/3": "**Dependencies** — external deadlines, third-party systems, procurement, access permissions.",
+    "blocks/1/items/4": "**Risks and assumptions** — things we take on faith without proof.",
+    "blocks/2/title": "Risk management",
+    "blocks/2/subtitle": "A phrasing that leads to action",
+    "blocks/2/items/0": "**Event** — what specifically might happen.",
+    "blocks/2/items/1": "**Probability and impact** — roughly, in three levels; precision isn't needed here.",
+    "blocks/2/items/2": "**Trigger indicator** — what we will notice first; without it, the risk is spotted after the fact.",
+    "blocks/2/items/3": "**Response** — mitigate, transfer, accept, or prepare a workaround. Decided in advance.",
+    "blocks/2/items/4": "**Owner** — one person tracking the indicator.",
+    "blocks/3/text": "Poor: \"Scanner vendor might delay the SDK.\"\n\nActionable phrasing:\nEvent — new scanner SDK won't be out by February 15.\nProbability medium, impact high: without it, we can't assemble the release for Gastronom, deadline March 1.\nTrigger indicator — if there is no beta by February 1, they won't make it in time.\nResponse — build a fallback in advance: manual code entry, two weeks of work, start January 20 in parallel.\nOwner — Igor.\n\nOn February 1, there was no beta. The fallback was already being written; the release went out on February 26.",
+    "blocks/3/title": "Polka, a risk that materialized",
+    "blocks/4/text": "A timeline chart shows well what cannot start before something else ends: migration after integration, enablement after release. For routine product work, it creates an illusion of precision more often than it helps.",
+    "blocks/4/title": "Gantt charts are useful strictly where hard dependencies exist",
+    "blocks/5/text": "Schedule estimates are ranges presented as numbers. Treat the plan as a dependency discovery tool rather than a date commitment: commitments are made by counting backward and adding buffer.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "0d953facab9d8d6b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "The Section That Gets Tested",
+    "keyTakeaway": "A performance requirement contains a scenario, a metric, a percentile, conditions, and the consequence of failure, and only an automated check in the pipeline saves from gradual degradation.",
+    "sections/0/blocks/0/text": "How to formulate a speed requirement so that it can be tested?",
+    "sections/1/blocks/0/text": "The requirement \"it should work fast\" cannot be tested and therefore is not met. Speed degrades gradually, each release adds 30 milliseconds, and in a year the screen opens twice as slowly without a single noticeable event.",
+    "sections/2/blocks/0/text": "A performance [[nfr|requirement]] contains five parts:",
+    "sections/2/blocks/1/text": "**Scenario.** What exactly we are measuring: screen opening, form submission. **Metric.** Time to interactivity, server response time, time to first byte. **Percentile and threshold.** p95 ≤ 1.5 s. **Conditions.** Under what load, on what device, on what network. **What we do if not met.** Blocks the release or is recorded as debt.",
+    "sections/2/blocks/2/text": "The last item turns the requirement from a wish into a decision.",
+    "sections/2/blocks/3/text": "A [[performance-acceptance-criteria|performance acceptance criterion]] is written so that it can be checked automatically: number, measurement tool, failure threshold.",
+    "sections/2/blocks/4/text": "A separate practice is a **[[performance-budget-in-ci|budget in the pipeline]]**: automatic check on every change. Client bundle size, number of requests per screen, response time under test load. Exceeding it means the build fails.",
+    "sections/2/blocks/5/text": "This is the only reliable way to stop [[performance-regression|gradual degradation]], because it happens not as a result of one decision, but as a result of a hundred small ones.",
+    "sections/2/blocks/6/text": "What is worth checking automatically, in descending order of usefulness: client bundle size, number of network requests on key screens, number of database queries on key operations, response time on a load test.",
+    "sections/3/blocks/0/text": "Template of the section in the spec:",
+    "sections/3/blocks/1/text": "> **Performance.** Selection screen: time to interactivity p95 ≤ 1.9 s on a median-age device under 4G, up to 500 RPS total load. Server-side p95 ≤ 620 ms. Number of network requests on opening ≤ 4. Failure blocks the release.",
+    "sections/3/blocks/2/text": "Three things are checked in the pipeline: bundle size (limit with a 10% margin), number of requests on five key screens, server time on a load test.",
+    "sections/3/blocks/3/text": "Checking the number of requests turned out to be the most useful: over half a year it blocked 11 builds where an extra call was accidentally added. Each individually would have been unnoticeable, together they would have added plus a second over a year.",
+    "sections/3/blocks/4/text": "Separately, a quarterly review was introduced: comparing the time of key screens with metrics from a quarter ago. Twice it detected degradation that the pipeline did not catch because it came from the data side rather than the code.",
+    "sections/4/blocks/0/text": "Automated checks are noisy in unstable environments and start being ignored. Thresholds are set with a margin, and a check failure should be a rare event.",
+    "sections/5/blocks/0/text": "A performance requirement contains a scenario, a metric, a percentile, conditions, and the consequence of failure, and only an automated check in the pipeline saves from gradual degradation."
+  }
+}

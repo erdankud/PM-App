@@ -34,9 +34,15 @@ from app.services.glossary import describe_diagram
 # Роли закреплены за голосами на весь корпус: если ведущий в одном уроке звучит
 # одним голосом, а в другом другим, слушатель каждый раз заново решает, кто говорит.
 VOICES = {
-    "guide": "ru-RU-SvetlanaNeural",
-    "expert": "ru-RU-DmitryNeural",
+    "ru": {"guide": "ru-RU-SvetlanaNeural", "expert": "ru-RU-DmitryNeural"},
+    # Английская пара подобрана по тому же принципу: два разных голоса, иначе
+    # диалог сворачивается обратно в монолог.
+    "en": {"guide": "en-US-AriaNeural", "expert": "en-US-GuyNeural"},
 }
+
+
+def voices(language: str = "ru") -> dict[str, str]:
+    return VOICES.get(language, VOICES["ru"])
 
 # Паузы в миллисекундах. В разговоре границы проходят не по абзацам, а по смене
 # говорящего: подхват реплики короче, чем пауза перед сменой темы.
@@ -46,19 +52,45 @@ PAUSE_TURN = 380
 # Шесть секций System Design в аудио объявляются вслух: на экране структура видна,
 # в наушниках — нет, и без объявления непонятно, где кончился пример.
 SECTION_LEADS = {
-    "question": "Вопрос.",
-    "cost": "Чего это стоит.",
-    "substance": "Суть.",
-    "example": "Пример.",
-    "limits": "Границы.",
-    "takeaway": "Вывод.",
+    "ru": {
+        "question": "Вопрос.",
+        "cost": "Чего это стоит.",
+        "substance": "Суть.",
+        "example": "Пример.",
+        "limits": "Границы.",
+        "takeaway": "Вывод.",
+    },
+    "en": {
+        "question": "The question.",
+        "cost": "What it costs.",
+        "substance": "The substance.",
+        "example": "An example.",
+        "limits": "The limits.",
+        "takeaway": "The takeaway.",
+    },
 }
 
-CALLOUT_LEADS = {"info": "Обратите внимание.", "warning": "Осторожно.", "limit": "Граница."}
+CALLOUT_LEADS = {
+    "ru": {"info": "Обратите внимание.", "warning": "Осторожно.", "limit": "Граница."},
+    "en": {"info": "Note.", "warning": "Careful.", "limit": "A limit."},
+}
 
 # Латиница в русском голосе читается через espeak как попало: `SLA` звучит как
 # «сла», `RPS` — как «рпс». Словарь покрывает то, что реально встречается в
 # корпусе; всё остальное espeak транслитерирует сносно.
+# Английскому голосу словарь почти не нужен: он читает латиницу как латиницу.
+# Оставлены только те сокращения, которые он произносит как слово, а не по буквам.
+PRONUNCIATION_EN = {
+    "SLO": "S L O",
+    "SLI": "S L I",
+    "RPO": "R P O",
+    "RTO": "R T O",
+    "TTFT": "T T F T",
+    "p50": "the 50th percentile",
+    "p95": "the 95th percentile",
+    "p99": "the 99th percentile",
+}
+
 PRONUNCIATION = {
     "API": "апи́", "AI": "эй ай", "SDK": "эс ди кей", "SMS": "эс эм эс",
     "SLA": "эс эл эй", "SLO": "эс эл о", "SLI": "эс эл ай",
@@ -79,30 +111,48 @@ PRONUNCIATION = {
     "retention": "ретеншн", "Retention": "ретеншн",
 }
 
+PRONUNCIATIONS = {"ru": PRONUNCIATION, "en": PRONUNCIATION_EN}
+
 
 # Знаки, у которых есть звучание. Читатель видит «≈ 250 тыс.» и слышит внутри себя
 # «примерно», espeak же читает символ как придётся или молчит.
 SYMBOLS = {
-    "≈": " примерно ", "≥": " не меньше ", "≤": " не больше ", "±": " плюс-минус ",
-    "×": " умножить на ", "÷": " делить на ", "=": " равно ", "≠": " не равно ",
-    "<": " меньше ", ">": " больше ", "+": " плюс ", "−": " минус ",
-    "~": " примерно ", "₽": " рублей", "№": " номер ", "–": "—",
-    "“": "«", "”": "»", "„": "«", '"': "",
+    "ru": {
+        "≈": " примерно ", "≥": " не меньше ", "≤": " не больше ", "±": " плюс-минус ",
+        "×": " умножить на ", "÷": " делить на ", "=": " равно ", "≠": " не равно ",
+        "<": " меньше ", ">": " больше ", "+": " плюс ", "−": " минус ",
+        "~": " примерно ", "₽": " рублей", "№": " номер ", "–": "—",
+        "“": "«", "”": "»", "„": "«", '"': "",
+    },
+    "en": {
+        "≈": " about ", "≥": " at least ", "≤": " at most ", "±": " plus or minus ",
+        "×": " times ", "÷": " divided by ", "=": " equals ", "≠": " does not equal ",
+        "<": " less than ", ">": " more than ", "+": " plus ", "−": " minus ",
+        "~": " about ", "₽": " roubles", "№": " number ", "–": "—",
+        "“": '"', "”": '"', "„": '"',
+    },
+}
+
+ARROW = {"ru": " ведёт к ", "en": " leads to "}
+TABLE_LINE = {
+    "ru": "Дальше в уроке таблица — её лучше посмотреть на экране.",
+    "en": "There is a table here — it is easier to read on screen.",
 }
 
 
-def _pronounce(text: str) -> str:
+def _pronounce(text: str, language: str = "ru") -> str:
     """Подставляет произношение для латинских терминов по границам слова."""
-    for term in sorted(PRONUNCIATION, key=len, reverse=True):
+    table = PRONUNCIATIONS.get(language, PRONUNCIATION)
+    for term in sorted(table, key=len, reverse=True):
         text = re.sub(
             rf"(?<![A-Za-z0-9]){re.escape(term)}(?![A-Za-z0-9])",
-            PRONUNCIATION[term],
+            table[term],
             text,
         )
     return text
 
 
-def _speakable(text: str, pronounce: bool = True) -> str:
+def _speakable(text: str, pronounce: bool = True, language: str = "ru") -> str:
     """Убирает разметку, которую видно глазом и не слышно ухом.
 
     `pronounce=False` оставляет термины как есть: так текст уходит в промпт
@@ -112,12 +162,12 @@ def _speakable(text: str, pronounce: bool = True) -> str:
     text = re.sub(r"\[\[([^\]]+)\]\]", r"\1", text)
     text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)
     text = re.sub(r"(?<!\w)[`*_]([^`*_]+)[`*_](?!\w)", r"\1", text)
-    text = text.replace("`", " ").replace("→", " ведёт к ")
+    text = text.replace("`", " ").replace("→", ARROW.get(language, ARROW["ru"]))
     text = re.sub(r"[*_]{1,2}(?=\S)|(?<=\S)[*_]{1,2}", "", text)
-    for symbol, spoken in SYMBOLS.items():
+    for symbol, spoken in SYMBOLS.get(language, SYMBOLS["ru"]).items():
         text = text.replace(symbol, spoken)
     text = re.sub(r"\s+", " ", text).strip()
-    return _pronounce(text) if pronounce else text
+    return _pronounce(text, language) if pronounce else text
 
 
 def _sentence(text: str) -> str:
@@ -126,9 +176,11 @@ def _sentence(text: str) -> str:
     return text if not text or text[-1] in ".!?:;»…" else text + "."
 
 
-def _block_lines(block: dict, pronounce: bool = True) -> Iterator[str]:
+def _block_lines(
+    block: dict, pronounce: bool = True, language: str = "ru"
+) -> Iterator[str]:
     def _sp(value: str) -> str:
-        return _speakable(value, pronounce)
+        return _speakable(value, pronounce, language)
 
     kind = block["type"]
     if kind == "paragraph":
@@ -148,21 +200,23 @@ def _block_lines(block: dict, pronounce: bool = True) -> Iterator[str]:
         for item in block["items"]:
             yield _sentence(_sp(item))
     elif kind == "callout":
-        lead = CALLOUT_LEADS.get(block.get("tone", "info"), "")
+        lead = CALLOUT_LEADS.get(language, CALLOUT_LEADS["ru"]).get(
+            block.get("tone", "info"), ""
+        )
         title = _sentence(_sp(block["title"])) if block.get("title") else ""
         yield " ".join(part for part in (lead, title) if part)
         yield _sp(block["text"])
     elif kind == "table":
         # Таблица вслух — это перечисление ячеек, которое невозможно удержать в голове.
-        yield "Дальше в уроке таблица — её лучше посмотреть на экране."
+        yield TABLE_LINE.get(language, TABLE_LINE["ru"])
     elif kind == "diagram_ref":
-        diagram = tree_content.diagram(block["diagramId"])
+        diagram = tree_content.diagram(block["diagramId"], language)
         if diagram is not None:
-            yield _sp(describe_diagram(diagram))
+            yield _sp(describe_diagram(diagram, language))
     # code опускается намеренно: идентификаторы вслух — шум, а не содержание
 
 
-def block_lines_for_prompt(lesson: dict) -> list[str]:
+def block_lines_for_prompt(lesson: dict, language: str = "ru") -> list[str]:
     """Текст урока для промпта: разметка снята, произношение не подставлено.
 
     Сценаристу нужен урок таким, каким его читает человек. Подстановки вроде
@@ -175,36 +229,46 @@ def block_lines_for_prompt(lesson: dict) -> list[str]:
         else lesson.get("blocks", [])
     )
     for block in blocks:
-        for line in _block_lines(block, pronounce=False):
+        for line in _block_lines(block, pronounce=False, language=language):
             lines.append(line)
     return [line for line in lines if line]
 
 
-def source_digest(lesson: dict) -> str:
-    """Отпечаток текста урока: по нему видно, что сценарий отстал от урока."""
+def source_digest(lesson: dict, language: str = "ru") -> str:
+    """Отпечаток текста урока: по нему видно, что сценарий отстал от урока.
+
+    Урок на разных языках — разный текст, поэтому и отпечатки разные: английский
+    сценарий привязан к английскому уроку и устаревает вместе с ним.
+    """
     payload = "\n".join(
-        [lesson.get("title", ""), lesson.get("keyTakeaway", "")] + block_lines_for_prompt(lesson)
+        [lesson.get("title", ""), lesson.get("keyTakeaway", "")]
+        + block_lines_for_prompt(lesson, language)
     )
     return hashlib.sha256(payload.encode()).hexdigest()[:12]
 
 
-def script_path(lesson: dict) -> Path:
+def script_path(lesson: dict, language: str = "ru") -> Path:
     kind = tree_content.kind_of_block(lesson["blockId"]) or tree_content.DEFAULT_KIND
     directory = tree_content.TREES[kind]["dir"]
-    return settings.content_dir / directory / "audio-scripts" / f"{lesson['id']}.json"
+    root = settings.content_dir
+    if language != "ru":
+        # Тот же каталог, что и у переводов: всё, что не на языке оригинала, лежит
+        # под `i18n/<язык>` и по тому же относительному пути.
+        root = root / "i18n" / language
+    return root / directory / "audio-scripts" / f"{lesson['id']}.json"
 
 
-def load_script(lesson: dict) -> dict | None:
+def load_script(lesson: dict, language: str = "ru") -> dict | None:
     """Сценарий обзора, если он есть и не отстал от урока.
 
     Расхождение отпечатка — это не ошибка, а состояние «урок переписали, обзор ещё
     нет». Возвращаем None, и урок живёт без аудио, пока сценарий не перегенерируют.
     """
-    path = script_path(lesson)
+    path = script_path(lesson, language)
     if not path.exists():
         return None
     script = json.loads(path.read_text(encoding="utf-8"))
-    if script.get("sourceDigest") != source_digest(lesson):
+    if script.get("sourceDigest") != source_digest(lesson, language):
         return None
     return script
 
@@ -226,26 +290,32 @@ def dialogue_lines(script: dict) -> list[tuple[str, str, int]]:
     return lines
 
 
-def script_text(lesson: dict) -> str:
+def script_text(lesson: dict, language: str = "ru") -> str:
     """Плоский текст обзора — для хеша и для тестов."""
-    script = load_script(lesson)
+    script = load_script(lesson, language)
     if script is None:
         return ""
     return "\n".join(f"{speaker}: {text}" for speaker, text, _ in dialogue_lines(script))
 
 
-def digest(lesson: dict) -> str:
+def digest(lesson: dict, language: str = "ru") -> str:
     """Отпечаток обзора и голосов: правка сценария меняет имя файла сама."""
-    voices = ",".join(f"{role}={name}" for role, name in sorted(VOICES.items()))
-    return hashlib.sha256(f"{voices}\n{script_text(lesson)}".encode()).hexdigest()[:12]
+    names = ",".join(f"{role}={name}" for role, name in sorted(voices(language).items()))
+    text = script_text(lesson, language)
+    return hashlib.sha256(f"{names}\n{text}".encode()).hexdigest()[:12]
 
 
-def has_script(lesson: dict) -> bool:
-    return load_script(lesson) is not None
+def has_script(lesson: dict, language: str = "ru") -> bool:
+    return load_script(lesson, language) is not None
 
 
-def audio_path(lesson: dict) -> Path:
-    return Path(settings.audio_dir) / f"{lesson['id']}.{digest(lesson)}.mp3"
+def audio_path(lesson: dict, language: str = "ru") -> Path:
+    # Язык в имени файла избыточен — отпечаток и так включает голоса, — но без него
+    # каталог невозможно читать глазами.
+    return (
+        Path(settings.audio_dir)
+        / f"{lesson['id']}.{language}.{digest(lesson, language)}.mp3"
+    )
 
 
 # --- Синтез -----------------------------------------------------------------
@@ -298,11 +368,11 @@ async def _speak(text: str, voice: str) -> bytes:
     return bytes(audio)
 
 
-async def _render(lines: list[tuple[str, str, int]]) -> bytes:
+async def _render(lines: list[tuple[str, str, int]], language: str = "ru") -> bytes:
     pieces: list[bytes] = []
     silences: dict[int, bytes] = {}
     for speaker, text, pause in lines:
-        pieces.append(await _speak(text, VOICES[speaker]))
+        pieces.append(await _speak(text, voices(language)[speaker]))
         if pause:
             if pause not in silences:
                 silences[pause] = _silence_mp3(pause)
@@ -310,20 +380,20 @@ async def _render(lines: list[tuple[str, str, int]]) -> bytes:
     return b"".join(pieces)
 
 
-def synthesize(lesson: dict) -> Path:
+def synthesize(lesson: dict, language: str = "ru") -> Path:
     """Собирает mp3 обзора. Готовый файл возвращается как есть, без пересчёта."""
-    script = load_script(lesson)
+    script = load_script(lesson, language)
     if script is None:
         raise SynthesisUnavailable(
-            f"нет сценария обзора для {lesson['id']}; "
+            f"нет сценария обзора для {lesson['id']} ({language}); "
             "сначала `python -m scripts.generate_audio_scripts`"
         )
 
-    target = audio_path(lesson)
+    target = audio_path(lesson, language)
     if target.exists():
         return target
 
-    mp3 = asyncio.run(_render(dialogue_lines(script)))
+    mp3 = asyncio.run(_render(dialogue_lines(script), language))
 
     target.parent.mkdir(parents=True, exist_ok=True)
     # Пишем через временный файл: прерванная сборка не должна оставить обрезанный
@@ -334,23 +404,27 @@ def synthesize(lesson: dict) -> Path:
     return target
 
 
-# Темп речи голосов, слов в минуту. Измерен на собранном файле, а не взят из
+# Темп речи голосов, слов в минуту. Измерен на собранных файлах, а не взят из
 # справочника: со «150 словами в минуту» оценка врёт на четверть. Величина зависит
-# от голосов и от SPEECH_RATE, поэтому при их смене её надо перемерить.
-WORDS_PER_MINUTE = 110
+# от голосов и от SPEECH_RATE, поэтому при их смене её надо перемерить —
+# `python -m scripts.build_audio --measure`.
+# Английский быстрее русского не потому, что голос торопится, а потому что слово
+# короче: 172 измерено на собранном файле, русские 110 — на своих.
+WORDS_PER_MINUTE = {"ru": 110, "en": 172}
 
 
-def duration_seconds(lesson: dict) -> int:
+def duration_seconds(lesson: dict, language: str = "ru") -> int:
     """Оценка длительности без синтеза — для карточки урока до загрузки файла.
 
     Это именно оценка: точную длительность плеер берёт из самого файла, когда тот
     скачан. Нужна она для одной строки под кнопкой, чтобы человек заранее знал,
     десять это минут или две.
     """
-    script = load_script(lesson)
+    script = load_script(lesson, language)
     if script is None:
         return 0
     lines = dialogue_lines(script)
     words = sum(len(text.split()) for _, text, _ in lines)
     pauses = sum(pause for _, _, pause in lines) / 1000
-    return round(words / WORDS_PER_MINUTE * 60 + pauses)
+    rate = WORDS_PER_MINUTE.get(language, WORDS_PER_MINUTE["ru"])
+    return round(words / rate * 60 + pauses)

@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "cee87b033393e532",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Choose a sharding key",
+    "promptBlocks/0/text": "Polka is being sharded. For each key, name a scenario that will become expensive.",
+    "promptBlocks/1/items/0": "By user",
+    "promptBlocks/1/items/1": "By store",
+    "promptBlocks/1/items/2": "By order date",
+    "promptBlocks/1/items/3": "By city",
+    "referenceReasoningBlocks/0/text": "By user — partner dashboard becomes cross-shard. By store — user history from different stores (34% of audience) and almost guaranteed hot shard from large chains. By date — anything viewing a specific user's or store's history, plus the last shard is always hot, all writes go to it. By city — intercity analytics and a hot Moscow shard. Rule: name the main product scenario first, then the key, not the other way around."
+  }
+}

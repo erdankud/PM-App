@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "cb4df22a23cb2018",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "Service boundaries are product boundaries",
+    "keyTakeaway": "A service boundary lies where data changes for different reasons and where the user is ready to accept a delay, and both criteria are product-driven.",
+    "sections/0/blocks/0/text": "Why do engineers invite PMs to discuss boundaries between services?",
+    "sections/1/blocks/0/text": "A poorly drawn boundary becomes a permanent tax: every feature crossing it costs twice as much and introduces intermediate states for the user. Moving a boundary later is harder than drawing it right. The PM knows where the natural line is — they know what changes together in the product.",
+    "sections/2/blocks/0/text": "A correct boundary runs where **data and decisions change together.** The catalog changes for its own reasons, orders for theirs. These are different [[bounded-context|contexts]], and separating them is natural.",
+    "sections/2/blocks/1/text": "A sign of a natural boundary: **entities on opposite sides have different meanings for the same word.** \"Product\" in the catalog is a card with descriptions and images. \"Product\" in the order is an item with a fixed price and quantity. These are different things coincidentally named the same, and the boundary between contexts lies right here.",
+    "sections/2/blocks/2/text": "Three questions answered by the PM:",
+    "sections/2/blocks/3/text": "*What changes together?* If two things are always edited in the same task, splitting them is expensive. *Where is a transaction needed?* Anything that must be \"all or nothing\" stays on one side. Order, items, and inventory reduction are inseparable. *Where is the user ready for a delay?* A boundary introduces delay and intermediate states. Between order and notification, a delay is acceptable; between order and charging, it is not.",
+    "sections/2/blocks/4/text": "[[conways-law|Conway's Law]] says architecture will mirror organizational structure. In reverse, this is a working tool: service boundaries should be drawn the way you want to organize teams — otherwise the organization will reshape the system to fit itself.",
+    "sections/3/blocks/0/text": "Dispute over the boundary between orders and delivery.",
+    "sections/3/blocks/1/text": "Engineering proposal: delivery is a separate service, the order stores a reference. Product objection: delivery status is shown on the order card on the main screen, meaning every open is an inter-service call, and if delivery is unavailable, the order is shown without status.",
+    "sections/3/blocks/2/text": "Analyzed using the three questions. Change separately — delivery evolves independently. Transaction not needed — order exists before courier assignment. Delay is acceptable, but not when viewing a card.",
+    "sections/3/blocks/3/text": "Decision: services are split, but the order stores a **snapshot** of the last known delivery status, updated via an event. The card reads the snapshot, no inter-service call is made, and if delivery is unavailable, the last known status with a timestamp is shown.",
+    "sections/3/blocks/4/text": "This is precisely snapshot vs. reference from `DS2-N1-L1`, applied to service boundaries. And it was devised by the PM, not the engineer, because the question was about what the user sees.",
+    "sections/4/blocks/0/text": "Boundaries are not permanent: the product changes, and what used to be a single context drifts apart. Reviewing them every 1 to 1.5 years is normal practice, not a sign of an error.",
+    "sections/5/blocks/0/text": "A service boundary lies where data changes for different reasons and where the user is ready to accept a delay, and both criteria are product-driven."
+  }
+}

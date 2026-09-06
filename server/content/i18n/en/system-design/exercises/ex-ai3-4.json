@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "sourceDigest": "fbe401948efae38c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Minimize sent data",
+    "promptBlocks/0/text": "A banking app assistant answers questions about spending. Decide what to send to the model and what to omit.",
+    "promptBlocks/1/text": "Available: name, card number, balance, list of transactions with amounts and merchants, address, phone number, customer ID.",
+    "referenceReasoningBlocks/0/text": "Send — transaction categories and amounts, anonymized; user question. Do not send — name, card number, address, phone number, customer ID. Balance — debatable: needed to answer \"how much do I have left\", but you can inject it into the UI rather than generating it. Merchants — replace with categories unless the task requires specific names. Rule of thumb: data that is not sent cannot leak."
+  }
+}

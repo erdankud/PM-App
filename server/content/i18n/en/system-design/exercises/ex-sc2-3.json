@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "12be6dabda8302d6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Configure Retries",
+    "inputs/0/label": "Promo code check — circuit breaker",
+    "inputs/1/label": "Card charge — circuit breaker",
+    "inputs/2/label": "Store notification — circuit breaker",
+    "inputs/3/label": "Card rating — circuit breaker",
+    "acceptance/0/expected": "not needed",
+    "acceptance/1/expected": "not needed",
+    "acceptance/2/expected": "needed",
+    "acceptance/3/expected": "needed",
+    "inputs/0/choices/0": "needed",
+    "inputs/0/choices/1": "not needed",
+    "inputs/1/choices/0": "needed",
+    "inputs/1/choices/1": "not needed",
+    "inputs/2/choices/0": "needed",
+    "inputs/2/choices/1": "not needed",
+    "inputs/3/choices/0": "needed",
+    "inputs/3/choices/1": "not needed",
+    "promptBlocks/0/text": "For each call, assign a timeout, number of retries, and whether a circuit breaker is needed.",
+    "promptBlocks/1/text": "Promo code check on input 2. Card charge 3. Sending store notification 4. Fetching rating for a product card",
+    "referenceReasoningBlocks/0/text": "1 — 2 s, no retries, circuit breaker not needed: user is right there. 2 — 10 s, 3 retries with backoff, no circuit breaker, critical. 3 — background, up to 10 attempts over an hour, circuit breaker present. 4 — 500 ms, 1 retry, circuit breaker with a low threshold: service is optional. Rule of thumb: if a user is waiting — short timeouts and few retries; if background — delivery matters, not speed."
+  }
+}

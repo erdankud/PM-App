@@ -1,0 +1,43 @@
+{
+  "language": "en",
+  "sourceDigest": "dfdf993a4eecac73",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:58:13Z"
+  },
+  "fields": {
+    "title": "Amdahl's Law Explained Simply",
+    "keyTakeaway": "The gain from speeding up a component is limited by its share of the total time, so an optimization task starts with calculating its share, not with an idea.",
+    "sections/0/blocks/0/text": "We sped up a component by half. Why did the screen get faster by only 6%?",
+    "sections/1/blocks/0/text": "Optimizing the wrong component is the easiest way to waste weeks. The rule to prevent this is stated in one line and almost never applied.",
+    "sections/2/blocks/0/text": "[[amdahls-law|Amdahl's law]] in product terms: **the speedup of a part is limited by that part's share of the whole.**",
+    "sections/2/blocks/1/text": "A component takes 12% of the time. We sped it up twofold—we gained 6% overall. Sped it up threefold—8%. Even instant execution yields 12%, and physically more is impossible.",
+    "sections/2/blocks/2/text": "Hence the prioritization rule: **first calculate the share, then decide if it is worth it.**",
+    "sections/2/blocks/3/header/0": "Component share",
+    "sections/2/blocks/3/header/1": "Maximum gain",
+    "sections/2/blocks/3/header/2": "Worth it?",
+    "sections/2/blocks/3/rows/0/0": "Over 40%",
+    "sections/2/blocks/3/rows/0/1": "up to 40%",
+    "sections/2/blocks/3/rows/0/2": "Yes, priority",
+    "sections/2/blocks/3/rows/1/0": "20–40%",
+    "sections/2/blocks/3/rows/1/1": "up to 40%",
+    "sections/2/blocks/3/rows/1/2": "Yes",
+    "sections/2/blocks/3/rows/2/0": "10–20%",
+    "sections/2/blocks/3/rows/2/1": "up to 20%",
+    "sections/2/blocks/3/rows/2/2": "If cheap",
+    "sections/2/blocks/3/rows/3/0": "Less than 10%",
+    "sections/2/blocks/3/rows/3/1": "up to 10%",
+    "sections/2/blocks/3/rows/3/2": "Almost never",
+    "sections/2/blocks/4/text": "[[bottleneck|The bottleneck]] is the component with the largest share. Once it is removed, the next one becomes the bottleneck, and this is normal: optimization is a sequence, not a single action.",
+    "sections/2/blocks/5/text": "Second corollary, less obvious: **on the critical path, only the work that lies on it matters.** Speeding up a parallel call that is not the longest yields nothing at all.",
+    "sections/3/blocks/0/text": "An example of a failed optimization that became a lesson. The team spent two weeks speeding up response serialization: it was 90 ms, became 30. The actual screen improvement was 2% because serialization took 3% of the time.",
+    "sections/3/blocks/1/text": "That same week could have been spent reducing the response size, which took 17%.",
+    "sections/3/blocks/2/text": "After this, a rule was introduced: **before an optimization task, the description must state the component's share and the maximum possible gain.** Tasks without these numbers do not enter the sprint. Over six months, the rule filtered out five tasks and redirected three.",
+    "sections/3/blocks/3/text": "Reverse case: response transmission took 17%, client images took 34%. Working with images yielded a 22% improvement in four days.",
+    "sections/4/blocks/0/text": "The share changes after every improvement, and priorities must be recalculated. What was 8% can become 25% after removing the main bottleneck.",
+    "sections/5/blocks/0/text": "The gain from speeding up a component is limited by its share of the total time, so an optimization task starts with calculating its share, not with an idea."
+  }
+}

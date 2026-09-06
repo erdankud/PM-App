@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "a1260b7491b7392b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Find the transaction boundary",
+    "inputs/0/label": "After which step does the transaction boundary lie",
+    "acceptance/0/expected": "5",
+    "inputs/0/choices/0": "1",
+    "inputs/0/choices/1": "2",
+    "inputs/0/choices/2": "3",
+    "inputs/0/choices/3": "4",
+    "inputs/0/choices/4": "5",
+    "inputs/0/choices/5": "6",
+    "inputs/0/choices/6": "7",
+    "promptBlocks/0/text": "Checkout on Polka consists of seven steps. Mark where the transaction boundary lies and name the state the user will see if a failure occurs right after it.",
+    "promptBlocks/1/items/0": "Check inventory",
+    "promptBlocks/1/items/1": "Create order",
+    "promptBlocks/1/items/2": "Create items",
+    "promptBlocks/1/items/3": "Decrease inventory",
+    "promptBlocks/1/items/4": "Deduct bonuses",
+    "promptBlocks/1/items/5": "Call payment provider",
+    "promptBlocks/1/items/6": "Mark order as paid",
+    "referenceReasoningBlocks/0/text": "boundary between 5 and 6. Steps 1–5 are in a single database and a single transaction. Step 6 is an external system, no atomicity. A failure between 6 and 7 results in deducted money while the order status is \"awaiting payment\". The user should see \"payment processing\" rather than an error, because the money likely left. Rule of thumb: look for the first outward call — the boundary is always right before it."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "59ca0182a4cca649",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "Test before building",
+    "keyTakeaway": "The most expensive test is to build and see. A prototype answers whether users will understand, while shutting down an existing feature answers whether it is needed, and both take days rather than months.",
+    "checkQuestion": "How do you test the value of a feature that does not exist yet without building it?",
+    "blocks/0/text": "The same question about an experiment, but for the stage **when there is nothing to build yet or it is too expensive.**",
+    "blocks/1/title": "Prototype",
+    "blocks/1/subtitle": "Tests understanding and intent, but not value",
+    "blocks/1/items/0": "**What you learn:** whether the scenario is clear, whether people find what they need, what they expect to see next.",
+    "blocks/1/items/1": "**What you won't learn:** whether they will use it regularly or pay. Words about the future remain words.",
+    "blocks/1/items/2": "Cheapest of all — a clickable mockup and five people; this is enough to find major understanding issues.",
+    "blocks/2/title": "Deprivation Testing",
+    "blocks/2/subtitle": "Turn off what already exists and see if people notice",
+    "blocks/2/items/0": "Works where people debate the value of an existing feature.",
+    "blocks/2/items/1": "**How:** disable for a small fraction of users for a limited period.",
+    "blocks/2/items/2": "**What to look at:** support tickets, churn, behavior — not a survey.",
+    "blocks/2/items/3": "The only way to distinguish “used because it's there” from “actually needed”.",
+    "blocks/3/text": "For six months, they debated whether to invest in downloading books for offline reading. Data showed that 6% of users used the feature — low, but advocates argued these were the most loyal users.\n\nThey disabled offline for 2% of users for two weeks. Support tickets — 34, all from people who read on the subway. Churn in this group grew threefold over two weeks.\n\nThe 6% turned out not to be a small fraction, but a high-value segment. The issue was closed in two weeks instead of another quarter of debates.",
+    "blocks/3/title": "Vetka: debate over offline mode",
+    "blocks/4/text": "A Deprivation test degrades the product for real people. A small segment, a short duration, the ability to roll back immediately, and readiness to explain are mandatory.",
+    "blocks/4/title": "Shut off carefully and for a short time",
+    "blocks/5/text": "A prototype overestimates intent: people are polite and say they will use it. Deprivation testing is inapplicable where the cost of error is high — payments, security, legally binding actions. And both methods answer “is it needed”, but not “how much will it bring”.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

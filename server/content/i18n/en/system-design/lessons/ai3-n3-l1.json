@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "72295bde26793200",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "What Changes With Self-Hosting",
+    "keyTakeaway": "Self-hosted inference pays off with high and steady hardware utilization, and the main reason is usually data control rather than cost savings.",
+    "sections/0/blocks/0/text": "Is hosting your own models cheaper or more expensive?",
+    "sections/1/blocks/0/text": "[[self-hosting|Self-hosted inference]] looks like a way to save money and often turns out more expensive. A mistake here costs a quarter of work and ongoing expenses for idle hardware.",
+    "sections/2/blocks/0/text": "API: we pay for tokens, we don't pay for idle time, we manage nothing. Self-hosted: we pay for [[gpu-accelerator|hardware]] continuously, we pay for operations, we manage everything.",
+    "sections/2/blocks/1/text": "The key metric is **[[gpu-utilization|accelerator utilization]]**. Hardware costs the same whether it runs or not. At 15% load, the cost per token is many times higher than a provider's; at 70%, it can be several times lower.",
+    "sections/2/blocks/2/text": "Hence the condition for payback: **high and steady volume.** A product with a daily peak and night-time downtime utilizes its hardware poorly.",
+    "sections/2/blocks/3/text": "What self-hosting gives you besides price:",
+    "sections/2/blocks/4/text": "*Data control.* Nothing leaves the perimeter. Often the main reason, not savings. *Predictability.* No version changes, no provider outages, no rate limits. *Customization.* [[quantization|Quantization]], [[distillation|distillation]], fine-tuning for the task. *Latency.* Can be lower if the model is nearby.",
+    "sections/2/blocks/5/text": "What it takes away:",
+    "sections/2/blocks/6/text": "*Expertise.* Model operations is a separate specialty. *Quality.* [[open-weights|Open weights models]] usually lag behind the best closed ones. *Flexibility.* Changing models requires work, not a config line.",
+    "sections/2/blocks/7/text": "Intermediate options to know about: a provider with dedicated capacity, hosting in your own cloud tenant, a hybrid approach — sensitive data on your own, the rest via API.",
+    "sections/3/blocks/0/text": "We calculated this when discussing catalog processing, our most volume-heavy task.",
+    "sections/3/blocks/1/text": "Volume: 40 thousand items, reprocessing on updates, about 12 million tokens per day. Via API: roughly 180 thousand per month.",
+    "sections/3/blocks/2/text": "Self-hosted: a single mid-range accelerator covers the volume at about 40% load. Rental: about 220 thousand per month, plus operations. More expensive.",
+    "sections/3/blocks/3/text": "Conclusion: does not pay off. Return when volume is three times higher, once utilization exceeds 70%.",
+    "sections/3/blocks/4/text": "We evaluated this separately for the enterprise segment: a retail chain asked whether their data goes to the provider. Here, economics doesn't decide the issue—control does. We answered differently: via the provider's [[zero-data-retention|zero data retention]] mode and a corresponding contract, which proved sufficient.",
+    "sections/4/blocks/0/text": "API prices are dropping faster than hardware gets cheaper. A calculation from a year ago is almost certainly outdated in favor of the API.",
+    "sections/5/blocks/0/text": "Self-hosted inference pays off with high and steady hardware utilization, and the main reason is usually data control rather than cost savings."
+  }
+}

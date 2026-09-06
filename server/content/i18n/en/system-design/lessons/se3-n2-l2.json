@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "dcd4b661bc55dc04",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:50Z"
+  },
+  "fields": {
+    "title": "Who Is the Adversary and What We Accept",
+    "keyTakeaway": "Protection is built against a specific adversary model, risk acceptance is a legitimate decision when damage is defined, and mass leaks of personal and payment data are never accepted.",
+    "sections/0/blocks/0/text": "Who are we defending against and where do we stop?",
+    "sections/1/blocks/0/text": "Protection without an adversary model is either excessive or meaningless. \"Defending against everything\" is impossible, and trying leads to spending on low-probability events while leaving high-probability ones exposed.",
+    "sections/2/blocks/0/text": "An **[[adversary-model|adversary model]]** describes who is attacking and with what capabilities. Typical ones for a consumer app:",
+    "sections/2/blocks/1/text": "*Curious user.* Changes parameters in requests to see what happens. Motivation—curiosity. The most frequent. *Fraudulent actor.* Looks for ways to get money or goods. Motivation is economic. *Malicious employee—internal or client's.* Has legitimate access. *Competitor.* Collects data on prices, assortment, turnover. *Mass automated scraping.* Bots, parsers. *Targeted attack.* Rare for consumer products, expensive to defend against.",
+    "sections/2/blocks/2/text": "For each feature, ask which of these apply. The messaging feature is relevant to the first three and irrelevant to a competitor.",
+    "sections/2/blocks/3/text": "**[[risk-acceptance|Risk acceptance]]** is a legitimate decision. Conditions for it to be correct:",
+    "sections/2/blocks/4/text": "*Damage is limited and known.* *Probability is low.* *Cost of protection exceeds expected damage.* *Decision is documented,* not forgotten.",
+    "sections/2/blocks/5/text": "The last point is the most important: an accepted and documented risk is a management decision; an accepted and forgotten risk is negligence. The difference shows during an investigation.",
+    "sections/2/blocks/6/text": "Separately—**risks that cannot be accepted** regardless of the math: mass personal data breaches, access to payment data, bodily harm. For these, the answer is to eliminate them or not build the feature.",
+    "sections/3/blocks/0/text": "Adversary model for the partner dashboard: a client's malicious employee (primary), a competitor via an employee, automated data scraping.",
+    "sections/3/blocks/1/text": "Not considered: targeted infrastructure attack. Rationale—protection cost is disproportionate to the data's value to an attacker. Recorded as an accepted risk with annual review.",
+    "sections/3/blocks/2/text": "Accepted product risks documented in a list:",
+    "sections/3/blocks/3/text": "*Exchanging contacts in chat*—damage limited, cannot be prevented. *Competitors scraping prices via the app*—data is public by nature, protection would degrade the product. *Sharing dashboard passwords inside a store*—mitigated via delegation, not eliminated.",
+    "sections/3/blocks/4/text": "The list is reviewed semi-annually. Twice, risks moved from accepted to closed when costs changed: password sharing was closed via delegation when chains with 40 stores appeared.",
+    "sections/4/blocks/0/text": "The adversary model becomes outdated when the product changes: introducing money into the system changes attacker motivation.",
+    "sections/5/blocks/0/text": "Protection is built against a specific adversary model, risk acceptance is a legitimate decision when damage is defined, and mass leaks of personal and payment data are never accepted."
+  }
+}

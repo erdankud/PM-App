@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "430556f342ba145b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:58:39Z"
+  },
+  "fields": {
+    "title": "Significance Threshold",
+    "keyTakeaway": "Optimization is justified when it changes the perception category, yields a measurable behavioral effect, reduces costs, or prevents a growing problem—and is unjustified in other cases.",
+    "sections/0/blocks/0/text": "The team proposes speeding up a screen from 700 to 500 milliseconds. Is it worth it?",
+    "sections/1/blocks/0/text": "Optimization is attractive work with a measurable result, and it easily consumes time that should go into the product. At the same time, skipping necessary optimization is also expensive. An explicit criterion is needed.",
+    "sections/2/blocks/0/text": "Three questions before a performance task.",
+    "sections/2/blocks/1/text": "**Does the improvement change the perception category?** According to the table from `PF1-N2-L2`: 700 → 500 ms stays within \"fast\", a person won't notice. 4 s → 2 s moves it from \"annoyance\" to \"waiting\"—they will notice.",
+    "sections/2/blocks/2/text": "**Is there a behavioral effect?** Drop-off data depending on time answers this directly. If drop-off does not differ between 500 and 700 ms, the improvement won't pay off.",
+    "sections/2/blocks/3/text": "**What is the component's share and maximum gain?** Amdahl's law from `PF2-N2-L1`.",
+    "sections/2/blocks/4/text": "[[significance-threshold|Significance threshold]] for consumer products usually runs at 20% relative improvement or crossing a category boundary. Anything less does not justify weeks of work.",
+    "sections/2/blocks/5/text": "When to optimize regardless of these rules:",
+    "sections/2/blocks/6/text": "*Growing problem.* Currently 800 ms, with 3x growth it will become 2.5 s. Fixing it is cheaper now. *Cost.* An improvement that reduces infrastructure costs pays off in money, not perception. *Unblocking.* A slow component prevents building a feature.",
+    "sections/2/blocks/7/text": "And the [[premature-optimization|inverse rule]]: optimizing something that doesn't yet work under load is almost always premature. First measure, then improve.",
+    "sections/3/blocks/0/text": "Three decisions by this criterion.",
+    "sections/3/blocks/1/text": "*Declined:* speeding up product card from 480 to 320 ms. Within the \"fast\" category, drop-off doesn't differ, component share 11%. Two weeks of work for an imperceptible improvement.",
+    "sections/3/blocks/2/text": "*Approved:* reducing the main screen response size. Not about speed, but traffic: 42 TB a month at 5.7 RUB/GB. A 30% reduction is 820k saved per year for a week of work.",
+    "sections/3/blocks/3/text": "*Approved:* speeding up the order history screen from 2.9 to 1.1 s. No one complained, but the screen crossed a category boundary, and with database growth would become even slower—N+1 scales with the number of orders.",
+    "sections/3/blocks/4/text": "The last case is an example of the \"growing problem\" rule: imperceptible now, an outage in a year.",
+    "sections/4/blocks/0/text": "The criterion does not apply to scenarios where speed is part of the product's value. For search or a trading terminal, 200 ms versus 400 is a fundamental difference, even though both are within \"fast\".",
+    "sections/5/blocks/0/text": "Optimization is justified when it changes the perception category, yields a measurable behavioral effect, reduces costs, or prevents a growing problem—and is unjustified in other cases."
+  }
+}

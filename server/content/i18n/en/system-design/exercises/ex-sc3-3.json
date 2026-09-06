@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "d7064b79b112d1dd",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:27Z"
+  },
+  "fields": {
+    "title": "Do You Need a Second Region",
+    "inputs/0/label": "Client requires data storage in a specific country",
+    "inputs/1/label": "Users in another part of the world complain about loading times",
+    "inputs/2/label": "We want to survive a data center outage",
+    "inputs/3/label": "We are afraid a bad release will corrupt data",
+    "acceptance/0/expected": "yes",
+    "acceptance/1/expected": "yes",
+    "acceptance/2/expected": "no",
+    "acceptance/3/expected": "no",
+    "inputs/0/choices/0": "yes",
+    "inputs/0/choices/1": "no",
+    "inputs/1/choices/0": "yes",
+    "inputs/1/choices/1": "no",
+    "inputs/2/choices/0": "yes",
+    "inputs/2/choices/1": "no",
+    "inputs/3/choices/0": "yes",
+    "inputs/3/choices/1": "no",
+    "promptBlocks/0/text": "For each situation, state whether multi-region solves the problem and what is cheaper.",
+    "promptBlocks/1/items/0": "Client requires data storage in a specific country",
+    "promptBlocks/1/items/1": "Users in another part of the world complain about slow loading",
+    "promptBlocks/1/items/2": "We want to survive a data center outage",
+    "promptBlocks/1/items/3": "We are afraid a bad release will corrupt data",
+    "referenceReasoningBlocks/0/text": "1 — yes, but as a separate installation, not active-active. 2 — yes, but CDN for static assets and a single region for writes is usually enough. 3 — no, availability zones are enough and are an order of magnitude cheaper. 4 — no, geography does not help at all: you need backups and gradual rollout. Technique: multi-region solves legal and geographic problems, not reliability."
+  }
+}

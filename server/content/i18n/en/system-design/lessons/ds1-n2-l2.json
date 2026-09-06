@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "7a99d092e4753d7c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "Document and Key-Value Stores: Flexibility and Speed",
+    "keyTakeaway": "Storage type is a chosen trade-off between guarantees, flexibility, and speed, and different product data requires different choices.",
+    "sections/0/blocks/0/text": "If a relational database provides guarantees, why do others exist — and why does a mature product typically have multiple datastores?",
+    "sections/1/blocks/0/text": "A product manager for whom a \"database\" is just one monolithic thing won't understand the phrase \"let's put this in Redis\" and cannot take part in discussions about whether a feature will be fast. Nor do they understand why an engineer says \"this data might drift\" — dismissing the warning as overcautious until they see the mismatch in production.",
+    "sections/2/blocks/0/text": "A [[document-database|document database]] stores documents — self-contained structures of arbitrary shape. A \"milk\" product can have fat and volume fields, a \"powder\" product can have weight and load type, and the database doesn't care. This is a [[schemaless|flexible schema]].",
+    "sections/2/blocks/1/text": "What changes for the product:",
+    "sections/2/blocks/2/text": "*Good.* A new attribute is added without migration — new documents simply have it. A catalog with diverse products ceases to be a problem. A document is read entirely in a single call, without assembling it from five tables.",
+    "sections/2/blocks/3/text": "*Bad.* The database doesn't check consistency: it will accept a document with a typo in a field name without saying a word. Half of the products might have a `weight` field, half a `ves` (weight in Russian), and this will only surface on the user's screen. Joining documents is difficult, and ad-hoc analytics becomes a project.",
+    "sections/2/blocks/4/text": "[[key-value-store|Key-value]] is the limit case: a key and a value, with the database completely blind to the value's internals. In return — maximum speed, fractions of a millisecond. Used where data is temporary or recoverable: sessions, carts, counters, cache.",
+    "sections/2/blocks/5/text": "The key property of key-value for the product: **this data can be lost.** It is usually kept in RAM, and server restarts erase it. This is not a defect, but part of the deal — speed is bought at exactly this price.",
+    "sections/3/blocks/0/text": "Three datastores, each for its own reason.",
+    "sections/3/blocks/1/text": "*Relational:* orders, payments, stock. Reason — consistency is mandatory.",
+    "sections/3/blocks/2/text": "*Document:* product catalog. Reason — each category has its own set of specs, and adding a new category shouldn't require a release.",
+    "sections/3/blocks/3/text": "*Key-value:* cart before checkout. Reason — reads to it are hundreds of times more frequent than to orders, and losing a cart during a crash is unpleasant but not catastrophic.",
+    "sections/3/blocks/4/text": "The product consequence of the last choice must be accepted consciously: the cart lives for 30 days and can vanish during an outage. If the product wants to promise \"your cart will be saved forever,\" the cart will have to be moved to a relational database, paying for it with speed on every added item. This is a product decision, not a technical one, and the PM must make it.",
+    "sections/4/blocks/0/text": "The boundary between datastore types is blurring: relational databases have learned to store documents, document ones to support transactions. A datastore label today says less than its settings. The right question to an engineer is not \"what database do we use,\" but \"what guarantees does this datastore provide for this data.\"",
+    "sections/5/blocks/0/text": "Storage type is a chosen trade-off between guarantees, flexibility, and speed, and different product data requires different choices."
+  }
+}

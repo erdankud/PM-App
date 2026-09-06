@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "417bafdd8271810d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "From Users to Requests",
+    "keyTakeaway": "A product plan is translated into load by four multiplications, and the main thing in it is not the average, but the peak.",
+    "sections/0/blocks/0/text": "Marketing promises 200 thousand new users per month. Is this a lot for the system or not?",
+    "sections/1/blocks/0/text": "Without translating into system units, this question has no answer, and the PM either over-insures or brings a surprise to the team. A campaign that engineers found out about three days in advance is a typical cause of failure at the moment of maximum attention to the product.",
+    "sections/2/blocks/0/text": "[[load|Load]] is measured in [[rps|requests per second]]. Translating from product metrics is done in four steps, and the PM has all the data for it.",
+    "sections/2/blocks/1/text": "**Step 1. Daily active users.** Not total registered — active.",
+    "sections/2/blocks/2/text": "**Step 2. Actions per user per session.** Opening the app is not one request, but ten to twenty: feed, catalog, cart, profile.",
+    "sections/2/blocks/3/text": "**Step 3. Average per second.** Multiplied, divided by 86,400.",
+    "sections/2/blocks/4/text": "**Step 4. [[peak-to-average-ratio|Peak]].** The average means nothing: the system must withstand the peak. For consumer products the coefficient is usually 3–6, for B2B with a working day — up to 10.",
+    "sections/2/blocks/5/text": "Example on Polka: 180 thousand active daily, about 25 requests per session, 1.4 sessions — this is roughly 6.3 million requests per day, 73 per second on average. With a peak coefficient of 5 — about 370 at the peak.",
+    "sections/2/blocks/6/text": "The second concept is **[[concurrency|concurrency]]**: how many operations are executed simultaneously. It is more important than RPS where operations are slow. One hundred requests per second at 50 ms each is 5 concurrent. One hundred requests at 2 seconds each — 200 concurrent, and this is already a question of the number of database connections.",
+    "sections/2/blocks/7/text": "Translation rule: concurrency ≈ RPS × operation duration.",
+    "sections/3/blocks/0/text": "TV campaign: a spike is expected at the moment the ad airs. Calculated as follows.",
+    "sections/3/blocks/1/text": "Prime time ad, audience about 2 million, expected conversion 0.5% — 10 thousand people. They do not arrive evenly: 60% in the first 10 minutes. That is 600 people per minute, 10 new sessions per second, each with 25 requests in the first half-minute — about 500 additional requests per second on top of the usual 370.",
+    "sections/3/blocks/2/text": "Doubling of the peak. With this figure we went to the team, and the conversation took twenty minutes instead of a week of clarifications.",
+    "sections/3/blocks/3/text": "Reverse case: a partner newsletter to 900 stores \"report is ready\" caused a morning spike in the dashboard — the exact Monday peak from block `DS1`. No one calculated it in advance back then, even though the newsletter was planned.",
+    "sections/4/blocks/0/text": "A back-of-the-envelope estimate gives an order of magnitude, and this is enough for the decision \"to prepare or not\". Only load testing shows the exact behavior under load.",
+    "sections/5/blocks/0/text": "A product plan is translated into load by four multiplications, and the main thing in it is not the average, but the peak."
+  }
+}

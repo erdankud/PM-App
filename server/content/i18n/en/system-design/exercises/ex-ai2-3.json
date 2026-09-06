@@ -1,0 +1,22 @@
+{
+  "language": "en",
+  "sourceDigest": "071baf1656876e50",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Calculate and reduce costs",
+    "inputs/0/label": "Cost per call",
+    "inputs/0/unit": "₽",
+    "inputs/1/label": "Annual cost",
+    "inputs/1/unit": "thousand ₽",
+    "promptBlocks/0/text": "Feature: input 5,000 tokens, output 400. Input price 15 ₽ per million, output 60 ₽ per million. 8,000 calls per day. 3,200 tokens of the input are immutable instruction and structure.",
+    "promptBlocks/1/items/0": "Annual cost?",
+    "promptBlocks/1/items/1": "Three levers and the effect of each.",
+    "referenceReasoningBlocks/0/text": "call = 5,000×0.000015 + 400×0.00006 = 0.075 + 0.024 = 0.099 ₽. Per year: 0.099 × 8,000 × 365 ≈ 289 thousand ₽. Levers: prompt caching on 3,200 immutable tokens — saves about half the input cost; trimming retrieved context; checking if the result depends on the user — if not, compute in advance and cache the response. The latter potentially cuts cost by an order of magnitude."
+  }
+}

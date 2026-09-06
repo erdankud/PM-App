@@ -1,0 +1,42 @@
+{
+  "language": "en",
+  "sourceDigest": "9a8716ec41a5b38b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "The conditions where the product lives",
+    "keyTakeaway": "The median hides a segment for which the product runs several times slower, and the right answer is adaptation to conditions rather than a single version for everyone.",
+    "sections/0/blocks/0/text": "The product was tested in the office on new phones. What does a person see in the subway on a four-year-old device?",
+    "sections/1/blocks/0/text": "The gap between development conditions and usage conditions is a systematic source of product evaluation errors. The team genuinely believes everything is fast because everything is fast for them.",
+    "sections/2/blocks/0/text": "Three axes along which conditions differ.",
+    "sections/2/blocks/1/text": "**Network.** [[round-trip-time|Round-trip time]] on good Wi-Fi is 10–20 ms, on mobile networks 50–150 ms, on the move and with weak signal 300–1,000 ms with packet loss. [[bandwidth|Bandwidth]] differs by orders of magnitude.",
+    "sections/2/blocks/2/text": "Key consequence: **on a poor network, the number of hops matters more than data volume.** One 200 KB request is faster than five 40 KB requests.",
+    "sections/2/blocks/3/text": "**Device.** The difference between a flagship and a four-year-old budget phone is 4–8x in computing speed. Everything done on the client slows down by the same factor.",
+    "sections/2/blocks/4/text": "**[[proximity|Geography]].** Every thousand kilometers adds roughly 10 ms one-way just due to physics. A user in another part of the country pays 30–60 ms for every hop.",
+    "sections/2/blocks/5/text": "What the PM does about this: **knows the audience's distribution across these three axes** and looks at metrics segmented rather than by median.",
+    "sections/2/blocks/6/text": "A practical technique is to define a \"difficult segment\": a device, network, and geography typical of the bottom third of the audience. Target metrics are set for this segment too, even if slightly softer.",
+    "sections/3/blocks/0/text": "Audience distribution:",
+    "sections/3/blocks/1/header/0": "Axis",
+    "sections/3/blocks/1/header/1": "Median",
+    "sections/3/blocks/1/header/2": "Bottom third",
+    "sections/3/blocks/1/rows/0/0": "Device",
+    "sections/3/blocks/1/rows/0/1": "2–3 years",
+    "sections/3/blocks/1/rows/0/2": "4+ years, 18%",
+    "sections/3/blocks/1/rows/1/0": "Network",
+    "sections/3/blocks/1/rows/1/1": "4G in the city, RTT 60 ms",
+    "sections/3/blocks/1/rows/1/2": "Weak signal, RTT 250+ ms, 22% of sessions",
+    "sections/3/blocks/1/rows/2/0": "Geography",
+    "sections/3/blocks/1/rows/2/1": "European part",
+    "sections/3/blocks/1/rows/2/2": "Far East, +70 ms, 6%",
+    "sections/3/blocks/2/text": "The worst realistic case—a four-year-old phone, weak signal, distant region. Main screen time to interactive for them was 6.8 seconds while the median was 900 ms.",
+    "sections/3/blocks/3/text": "This is 3–4% of the audience, but in absolute numbers about 6 thousand people per day, and their churn was four times the average.",
+    "sections/3/blocks/4/text": "What was done specifically for them: a lightweight version of the main screen on slow networks—fewer images, fewer cards in the initial load. Determined by the actual speed of the first responses. Time dropped to 2.4 seconds, drop-off in the segment almost halved.",
+    "sections/4/blocks/0/text": "Optimizing for the difficult segment has a limit: the product must not become worse for everyone else for the sake of the worst conditions. The right approach is adaptation, not lowering the bar.",
+    "sections/5/blocks/0/text": "The median hides a segment for which the product runs several times slower, and the right answer is adaptation to conditions rather than a single version for everyone."
+  }
+}

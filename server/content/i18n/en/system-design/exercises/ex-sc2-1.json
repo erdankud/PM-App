@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "sourceDigest": "cdee8bb3ea4fdd9a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Formulate SLIs",
+    "promptBlocks/0/text": "For each scenario, formulate an indicator and state what is not considered a failure.",
+    "promptBlocks/1/text": "Checkout 2. Catalog search 3. Partner webhook delivery 4. Uploading a photo in a review",
+    "referenceReasoningBlocks/0/text": "1 — proportion of submits resulting in an order created faster than 3 s; out of stock rejection is not a failure, timeout is a failure. 2 — proportion of responses faster than 800 ms; empty search result is not a failure. 3 — proportion of webhooks delivered within 15 minutes; partner-side rejection is not our failure, but is logged. 4 — proportion of successful uploads; file size rejection is not a failure. Rule of thumb: defining success is more important than the number."
+  }
+}

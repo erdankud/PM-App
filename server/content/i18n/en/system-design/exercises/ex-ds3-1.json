@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "cfd1d8d964ba9c9e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Reversible or not",
+    "inputs/0/label": "Make \"comment\" mandatory",
+    "inputs/1/label": "Record purchase on order, not on line item",
+    "inputs/2/label": "Email as primary user key",
+    "inputs/3/label": "Price as integer kopecks",
+    "inputs/4/label": "Tenant as branch, not chain",
+    "acceptance/0/expected": "reversible",
+    "acceptance/1/expected": "irreversible",
+    "acceptance/2/expected": "irreversible",
+    "acceptance/3/expected": "reversible",
+    "acceptance/4/expected": "irreversible",
+    "inputs/0/choices/0": "reversible",
+    "inputs/0/choices/1": "irreversible",
+    "inputs/1/choices/0": "reversible",
+    "inputs/1/choices/1": "irreversible",
+    "inputs/2/choices/0": "reversible",
+    "inputs/2/choices/1": "irreversible",
+    "inputs/3/choices/0": "reversible",
+    "inputs/3/choices/1": "irreversible",
+    "inputs/4/choices/0": "reversible",
+    "inputs/4/choices/1": "irreversible",
+    "promptBlocks/0/text": "Classify and explain the criterion.",
+    "promptBlocks/1/items/0": "Make the \"comment\" field mandatory",
+    "promptBlocks/1/items/1": "Record purchase event on order, not on each line item",
+    "promptBlocks/1/items/2": "Use email as primary user key",
+    "promptBlocks/1/items/3": "Store price as an integer number of kopecks instead of fractional",
+    "promptBlocks/1/items/4": "Treat branch as tenant, not the entire chain",
+    "referenceReasoningBlocks/0/text": "1 and 4 are reversible — it's work, data is not lost. 2 (no retroactive granularity, history lost forever), 3 (key leaks outside), 5 (rebuilds the entire rights system and all references) are irreversible. Criterion: is data lost irretrievably. The volume of work does not make a decision irreversible."
+  }
+}

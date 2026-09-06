@@ -61,8 +61,10 @@ def _attempt(db: DbSession, attempt_id: str, user: User) -> ChallengeAttempt:
     return attempt
 
 
-def _scenario(db: DbSession, attempt: ChallengeAttempt) -> dict:
-    scenario = tree_content.scenario(attempt.scenario_id)
+def _scenario(
+    db: DbSession, attempt: ChallengeAttempt, language: Language = Language.RU
+) -> dict:
+    scenario = tree_content.scenario(attempt.scenario_id, language.value)
     if scenario is None:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -336,11 +338,11 @@ def get_feedback(
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail={"code": "attempt_not_submitted"}
         )
-    content = _scenario(db, attempt)
+    content = _scenario(db, attempt, language)
     rating = db.get(FeedbackRating, attempt.id)
     body = _feedback_body(db, attempt, evaluation, language)
     gate = tree_content.gate(attempt.gate_id)
-    block = tree_content.block(attempt.block_id)
+    block = tree_content.block(attempt.block_id, language.value)
     threshold = tree_service.pass_threshold(gate) if gate else None
 
     # A failed gate is only useful if it points at the lesson that would have helped.
@@ -348,7 +350,7 @@ def get_feedback(
     remediation: list[RemediationLink] = []
     if attempt.passed is False:
         for entry in content["rubric"]["remediation"]:
-            lesson = tree_content.lesson(entry["lessonId"])
+            lesson = tree_content.lesson(entry["lessonId"], language.value)
             if lesson is None:
                 continue
             remediation.append(

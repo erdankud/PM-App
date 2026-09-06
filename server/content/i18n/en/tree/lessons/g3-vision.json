@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "2c320f82bda47b8b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Vision: what the world will look like if we succeed",
+    "keyTakeaway": "Vision describes changed human behavior, not future features. Its test is simple: does it help reject good ideas that don't lead to it?",
+    "checkQuestion": "How do you distinguish a vision from an advertising slogan?",
+    "blocks/0/text": "Key question of the node: **how will the company change the market?**",
+    "blocks/1/text": "**What happens if you don't answer the question.** Every new idea seems equally relevant. The product gets cluttered with capabilities that have no shared meaning, and three years later nobody can explain what it's for.",
+    "blocks/2/title": "Signs of a working vision",
+    "blocks/2/subtitle": "Tested with three questions",
+    "blocks/2/items/0": "**About people, not the product** — what will change in their behavior: \"a person who used to drop books now finishes one a month.\"",
+    "blocks/2/items/1": "**It eliminates** — it must imply a \"no\" for some good ideas. A vision that agrees with everything is useless.",
+    "blocks/2/items/2": "**Beyond the planning horizon** — three to five years, otherwise it's a goal.",
+    "blocks/2/items/3": "**Slogan test:** if the sentence can be placed on a competitor's website unchanged, it is not a vision.",
+    "blocks/3/text": "**Product Evolution Canvas** helps lay out the path to a vision by stages: what must be true at each stage so the next becomes possible. This turns a distant picture into a sequence of testable states and shows which step you missed.",
+    "blocks/4/text": "Vision: \"a person who hasn't finished books in recent years reads regularly again — not because they forced themselves, but because they found a rhythm.\"\n\nWhat follows from it:\nyes — work on the first book, recommendations, short formats, rhythm;\nno — chasing catalog size, even though it's an obvious idea and requested;\nno — a social network around reading as a separate product until the first book issue is solved.\n\nStages: first, they finish the first book; then they come back for the second on their own; then they recommend to each other — and only here does social become meaningful.\n\nIt was this vision that stopped buying rights to new releases for half the annual budget.",
+    "blocks/4/title": "Vetka, vision and its consequences",
+    "blocks/5/text": "Test it in a live debate: take two real ideas from the backlog and try to reject one by referencing the vision. If it doesn't work out, the wording needs to be rewritten.",
+    "blocks/5/title": "A vision without rejections is presentation decor",
+    "blocks/6/text": "Vision does not replace strategy and does not tell you what to do in a quarter. It sets the frame within which strategy chooses the path and goals set the immediate step.",
+    "blocks/6/title": "Boundaries of the model"
+  }
+}

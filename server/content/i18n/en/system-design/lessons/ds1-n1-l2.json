@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "81193d7a502c88fd",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "How to Read a Schema and What to Ask It",
+    "keyTakeaway": "The most valuable thing in a schema is what's missing: a missing entity is a missing class of product capabilities.",
+    "sections/0/blocks/0/text": "The schema has been shown, the rectangles are clear. What do we do with it next? The usefulness of a schema for a PM is not in understanding it, but in asking it four questions and getting four product conclusions.",
+    "sections/1/blocks/0/text": "The difference between a PM who \"saw the schema\" and one who \"read it\" shows up during planning. The first learns the cost of a feature from the team. The second comes with a cost hypothesis and discusses not \"how much,\" but \"how to do it cheaper.\" The second conversation is an order of magnitude faster and ends with better solutions, because product trade-offs are discussed alongside technical ones rather than after them.",
+    "sections/2/blocks/0/text": "Four questions, in this order.",
+    "sections/2/blocks/1/text": "**First: where is the money and where is history?** Find entities related to payment and entities storing the past. They have a special mode: they almost never can be changed retroactively. If you see that price is stored in the product and nowhere else, that's a defect that will one day surface as a reporting discrepancy.",
+    "sections/2/blocks/2/text": "**Second: what is a copy and what is the original?** The same data often lives in two places: address in the user profile and address in the order. This is not a bug — the order address must be a snapshot at the time of checkout. But a copy means there is code somewhere synchronizing it, and that code can fail. Every copy is a future bug of \"profile says one thing, order says another,\" and it's better to know about it in advance.",
+    "sections/2/blocks/3/text": "**Third: where are the join tables and what is attached to them?** Join tables are the most interesting part of the schema. That's where quantity, price at the time of purchase, discount, and item status live. Product features like partial cancellation or partial refund hinge on whether an item has its own status.",
+    "sections/2/blocks/4/text": "**Fourth: what is NOT here?** The most valuable question. The absence of an entity is the absence of a whole class of features. No \"Review\" entity means no ratings, no moderation, no store replies. No \"Stock\" entity means the product doesn't know if an item is available, and any availability feature starts from scratch.",
+    "sections/3/blocks/0/text": "Let's walk through the schema from the previous lesson.",
+    "sections/3/blocks/1/text": "*Money and history:* price in the item is good. But there is no separate \"Payment\" entity; payment status is apparently an order attribute. This means there is nowhere to reflect a partial refund: the order is either paid or not.",
+    "sections/3/blocks/2/text": "*Copies:* delivery address is not visible on the schema at all. It's worth asking where it is — in the user or in the order. If only in the user, changing the address will overwrite delivery history.",
+    "sections/3/blocks/3/text": "*Join tables:* \"Order Item\" exists, it has price and quantity. No own status — meaning the product cannot express \"the courier couldn't find two out of five items.\" For a grocery delivery service, this is not a minor detail, but a frequent scenario.",
+    "sections/3/blocks/4/text": "*What's missing:* no \"Stock.\" The app shows items but doesn't know if they are available. No \"Courier\" and \"Delivery\" — the entire logistics layer is absent. No \"Review.\"",
+    "sections/3/blocks/5/text": "Fifteen minutes with the schema yielded three concrete product problems and an understanding of where the current product's boundaries lie.",
+    "sections/4/blocks/0/text": "The schema reflects intent, not reality: code could bypass it and put data into a text field as JSON. This happens, and a good habit is to ask if there are any \"dumpster fields\" in the schema. Besides, large products don't have just one schema: every service has its own.",
+    "sections/5/blocks/0/text": "The most valuable thing in a schema is what's missing: a missing entity is a missing class of product capabilities."
+  }
+}

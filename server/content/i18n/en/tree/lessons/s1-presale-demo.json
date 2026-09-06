@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "25b0c2af12ba0bbc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "A demo is not a product tour",
+    "keyTakeaway": "Show how this specific client's problem gets solved using their data and their terms. A broad feature tour is remembered as \"a lot of stuff\" and gives no compelling reason to buy.",
+    "checkQuestion": "A client asked to see the product. What do you need to find out before the demo?",
+    "blocks/0/text": "Key node question: **how to demo the product to increase deal conversion?** A demo is about recognition, not completeness.",
+    "blocks/1/text": "**What happens if you do not answer the question.** The salesperson walks through menu items. The client sees a complex system to learn and fails to see their problem addressed. After the call, they cannot articulate why they need it.",
+    "blocks/2/title": "Demo preparation",
+    "blocks/2/subtitle": "Four steps, three of them before the meeting",
+    "blocks/2/items/0": "**Uncover the problem** — a brief pre-demo conversation: what exactly is broken right now and what does it cost in numbers.",
+    "blocks/2/items/1": "**Prepare data** — their SKU catalog, warehouse layout, internal naming. A demo built on \"Item 1, Item 2\" shows zero prep work.",
+    "blocks/2/items/2": "**Walk through one complete scenario** — start to finish, edge case included.",
+    "blocks/2/items/3": "**Establish a next step** — what happens next and when. A demo without a next step ends in radio silence.",
+    "blocks/3/text": "First demo: thirty minutes through sections — receiving, putaway, dispatch, reports, permissions, integrations. The client said thanks and went silent.\n\nSecond demo: asked about pain points beforehand. Answer: \"SKU mix-ups during dispatch cost us around 90 thousand a month.\" Uploaded their catalog and demoed exactly one scenario: order picking with a barcode scanner and handling a wrongly picked item.\n\nThe demo took twelve minutes. The contract was signed three weeks later.\n\nThe features shown were identical.",
+    "blocks/3/title": "Kedr: two demos in the same week",
+    "blocks/4/text": "A demo where everything runs perfectly breeds skepticism in anyone with real warehouse experience. Demonstrating error handling builds far more trust than a smooth happy path.",
+    "blocks/4/title": "Show the messy edge case too",
+    "blocks/5/text": "A demo does not replace a trial: it shows that the problem is solvable in principle, not how the product handles real volume in end-user hands. And it fails completely if the problem was misidentified — you will just end up convincingly demonstrating the wrong thing.",
+    "blocks/5/title": "Limitations of the model"
+  }
+}

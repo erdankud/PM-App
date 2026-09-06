@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "8a03b4013708991c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:42:04Z"
+  },
+  "fields": {
+    "title": "An interview script grows out of hypotheses, not curiosity",
+    "keyTakeaway": "Every question in a script must be tied to a hypothesis and capable of disproving it. A question whose answer changes nothing in your plans is just small talk.",
+    "checkQuestion": "How do you check if a question in the script is needed at all?",
+    "blocks/0/text": "The key question of this node: **what questions to ask and how to ask them to validate hypotheses?** A script is not there so you don't forget, but so that after ten conversations you can say something definitive.",
+    "blocks/1/text": "**What happens if you don't answer the question.** Interviews go pleasantly, people say interesting things, and at the end you get notes from which everyone reads confirmation of their own stance. The research is wasted, and the loudest person makes the decision.",
+    "blocks/2/title": "A script built on hypotheses",
+    "blocks/2/subtitle": "Built top-down, in three steps",
+    "blocks/2/items/0": "**1. Hypothesis.** A statement that could turn out to be false: \"cafe owners spend more than an hour a week manually calculating hours.\"",
+    "blocks/2/items/1": "**2. What must be true if the hypothesis holds.** \"They have a separate file or notebook, and they used it last week.\"",
+    "blocks/2/items/2": "**3. A question about the past that will show this.** \"Show me how you calculated hours last month.\"",
+    "blocks/2/items/3": "**Check for necessity:** if both possible answers lead to the exact same action on your part, the question is redundant.",
+    "blocks/3/text": "Hypothesis A: calculating hours is regular manual work.\n→ \"Tell me what you did at the end of last month when you submitted hours to the accountant.\"\n→ \"Show me the file if you still have it.\"\n\nHypothesis B: employees don't understand the status of a shift swap and double-check with the owner.\n→ \"The last time you swapped shifts, how did you find out the swap was confirmed?\"\n→ \"Who did you write to to double-check?\"\n\nTwo hypotheses, four mandatory questions, and the rest of the time is for wherever the conversation leads.",
+    "blocks/3/title": "Smena, a 30-minute script",
+    "blocks/4/text": "Thirty minutes is roughly enough for one case examined in detail. A script with ten hypotheses guarantees that not a single one will be tested properly.",
+    "blocks/4/title": "You cannot test more than two or three hypotheses per interview",
+    "blocks/5/text": "A script is not a questionnaire. If the person digresses and it turns out to be more interesting, follow them: an unexpected insight is the most valuable result of an interview. The script is there so you notice that you wandered off and bring it back.",
+    "blocks/5/title": "Model limitations"
+  }
+}

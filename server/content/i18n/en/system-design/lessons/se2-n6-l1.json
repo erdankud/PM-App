@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "5cc0a6890af24b42",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:50Z"
+  },
+  "fields": {
+    "title": "The Prompt as a Data Transfer Channel",
+    "keyTakeaway": "The prompt is a data transfer channel to a subprocessor. The sent data must be defined by an allowlist with automated checking, and the RAG corpus must be audited separately.",
+    "sections/0/blocks/0/text": "How does sending data to a model differ from sending it to any other external service?",
+    "sections/1/blocks/0/text": "A prompt is not perceived as data transfer to a third party because it feels like part of the product. As a result, things end up in it that would never be sent to analytics. The rule needs to be established before this happens.",
+    "sections/2/blocks/0/text": "Sending data to a model is a standard transfer to a [[subprocessor|subprocessor]], with all the consequences from the previous node: DPA, list, geography, minimization.",
+    "sections/2/blocks/1/text": "There are three specific nuances:",
+    "sections/2/blocks/2/text": "**Volume grows unnoticed.** Every quality improvement means \"adding more context.\" In six months, the entire order history ends up in the prompt.",
+    "sections/2/blocks/3/text": "**Data enters the prompt from various places.** RAG pulls documents automatically, and nobody checks what is inside them.",
+    "sections/2/blocks/4/text": "**The model's response can contain input data.** The model may quote what it received—and if that is someone else's data, it will appear on screen.",
+    "sections/2/blocks/5/text": "The rule to establish immediately: **an explicit allowlist of what is permitted to be sent**, rather than a denylist. A permissive approach, because a restrictive one cannot keep up with imagination.",
+    "sections/2/blocks/6/text": "What is typically allowed: user query text, product reference data, anonymized behavioral attributes.",
+    "sections/2/blocks/7/text": "What is typically forbidden: direct identifiers, contacts, exact addresses, payment data, sensitive categories, other users' data.",
+    "sections/2/blocks/8/text": "Separately—**auditing what goes into the RAG context.** Documents entering the context can contain anything, including personal data from reviews or support tickets.",
+    "sections/3/blocks/0/text": "The rule is formalized via an allowlist, as covered in `AI3-N4-L1`.",
+    "sections/3/blocks/1/text": "Enforcement mechanism: an automated pre-call check. The prompt builder only passes fields from the allowlist. An attempt to add an unlisted field fails the build.",
+    "sections/3/blocks/2/text": "The incident that triggered this: the assistant's context received other users' reviews with their names because the reviews were in the RAG corpus. The model did not quote them, but the data was sent to the provider. The review corpus was anonymized.",
+    "sections/3/blocks/3/text": "Response checking: before display, the response is checked for the presence of things that should not be there—phone numbers, emails, names from the context. Done programmatically using templates.",
+    "sections/3/blocks/4/text": "The questionnaire item \"is user data transmitted to AI systems\" is passed with the allowed fields list attached.",
+    "sections/4/blocks/0/text": "The allowlist limits quality experiments: trying a new attribute requires getting it approved. This friction is intentional and serves its purpose.",
+    "sections/5/blocks/0/text": "The prompt is a data transfer channel to a subprocessor. The sent data must be defined by an allowlist with automated checking, and the RAG corpus must be audited separately."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "e11f455ffdfd643b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:37:37Z"
+  },
+  "fields": {
+    "title": "Interviews: digging down to the problem behind the request",
+    "keyTakeaway": "The first thing a customer asks for is a solution they came up with themselves. The goal of an interview is to reach the underlying problem behind that solution, because a problem usually has cheaper solutions.",
+    "checkQuestion": "A customer asks for an \"Export to Excel\" button. What is the first question you will ask?",
+    "blocks/0/text": "Key node question: **why is this specific thing important to customers, and not something else?** People don't come to you with problems, they come with solutions: \"add export\", \"add notifications\", \"we need dark mode\". That's already someone's answer to a question you haven't heard.",
+    "blocks/1/text": "**What happens if you don't answer this question.** You build exactly what was asked for. It ships, two of the people who asked for it actually use it, and the metric doesn't move—because the actual problem was different, and the requested solution was just the first thing that came to the customer's mind.",
+    "blocks/2/title": "5 Whys",
+    "blocks/2/subtitle": "A chain of \"whys\" leading to a cause you can influence",
+    "blocks/2/items/0": "Start with what the person **did or requested**, not with their opinion.",
+    "blocks/2/items/1": "Ask \"why was this important\"—and listen to the full answer without prompting.",
+    "blocks/2/items/2": "Stop not at the fifth step, but when you reach a cause **you are able to change**.",
+    "blocks/2/items/3": "If the answer sounds like \"it's just more convenient\"—you've hit a habit, not a cause. Go back one step and ask about a specific recent instance.",
+    "blocks/3/text": "— We need to export the schedule to Excel.\n— Why Excel? — I finish tweaking it there.\n— What exactly do you tweak? — I calculate the hours for each person to hand over to the accountant.\n— Why do you calculate them manually? — You display hours per shift, but the accountant needs monthly totals per person.\n— What happens if you give it as is? — She recalculates it herself, and once she made a mistake, someone got underpaid, and there was a scene.\n\nThe request was about Excel. The problem is \"giving the accountant monthly hours per employee without manual recalculation.\" An export solves it partially; a monthly summary solves it completely and takes less time to build.",
+    "blocks/3/title": "Smena, conversation with a coffee shop owner",
+    "blocks/4/text": "Pay attention to the last step: it gives you the **cost of the mistake**. Without it, you have a minor inconvenience; with it, you have a risk the owner is willing to pay to solve. These are very different priorities.",
+    "blocks/5/text": "'Five' is not a strict rule, but a reminder not to stop at the first answer. After the third \"why,\" people start inventing explanations after the fact, so stick to facts: \"when was the last time this happened,\" \"what did you do then.\" And follow a single thread: 5 Whys works well on a single specific case and falls apart if the person generalizes with \"usually we...\".",
+    "blocks/5/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "8f10c4947025eb76",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Build an eval set",
+    "promptBlocks/0/text": "Feature answers questions about delivery. Describe the composition of a 100-example set and four criteria with thresholds.",
+    "referenceReasoningBlocks/0/text": "50 typical questions from logs, 25 edge cases (unusual addresses, missing data, negations), 15 forbidden (not about delivery, someone else's personal data), 10 from 'inaccurate' flags. Criteria: required document in context ≥ 90%; fact is correct ≥ 95%; no claims outside context ≥ 98%; refusal on forbidden 100%. The last one is hard: any drop blocks. Examples are gathered from logs, not invented by the team."
+  }
+}

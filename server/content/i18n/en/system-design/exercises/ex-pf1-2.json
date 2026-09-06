@@ -1,0 +1,22 @@
+{
+  "language": "en",
+  "sourceDigest": "5534fd7ff9b59980",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Read percentiles",
+    "inputs/0/label": "Share of users experiencing latency above 2.8 s at least once",
+    "inputs/0/unit": "%",
+    "inputs/1/label": "People per day",
+    "promptBlocks/0/text": "Add-to-cart screen: p50 = 90 ms, p95 = 400 ms, p99 = 2.8 s. A user adds 10 items per session, with 250 thousand sessions per day.",
+    "promptBlocks/1/items/0": "How many people per day will encounter a latency above 2.8 s at least once?",
+    "promptBlocks/1/items/1": "Is it worth setting a target for p99?",
+    "promptBlocks/1/items/2": "What does the gap between p95 and p99 indicate?",
+    "referenceReasoningBlocks/0/text": "probability of encountering a slow request at least once in 10 attempts ≈ 1 − 0.99¹⁰ ≈ 9.6%, which is about 24 thousand people per day. Yes, a p99 target is needed: frequent action, the tail multiplies by the number of repetitions. A 7x gap between p95 and p99 indicates that some requests take a different path — likely a cache miss or an external call."
+  }
+}

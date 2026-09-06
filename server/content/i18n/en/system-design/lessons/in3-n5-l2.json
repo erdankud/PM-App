@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "f52360e5f35fd729",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "What we promise in the contract",
+    "keyTakeaway": "In a contract, the definition of what constitutes a breach is more important than numbers, and you should only promise what you already measure.",
+    "sections/0/blocks/0/text": "People ask to put 99.9% availability and API response time into the contract. What does this mean for the product over the coming years?",
+    "sections/1/blocks/0/text": "A promise in a contract differs from an internal goal because people pay for it. Unrealistic SLA turns into [[service-credits|service credits]] and constant team stress. Too conservative an SLA turns into lost deals. Both mistakes are made by the PM if they sign without calculating.",
+    "sections/2/blocks/0/text": "Three things that end up in the contract.",
+    "sections/2/blocks/1/text": "**Availability.** 99.9% means 43 minutes of downtime per month. 99.99% means 4 minutes. The difference between them is not a configuration setting, but a different architecture and a different budget. More in the \"Scale and Reliability\" section.",
+    "sections/2/blocks/2/text": "A key question that is often missed: **what counts as downtime.** A total outage? A twofold slowdown? The unavailability of a single feature? The definition is more important than the number, and that is what you should negotiate.",
+    "sections/2/blocks/3/text": "**Performance.** API response time. Promising the median is pointless because it hides the tail. You promise a percentile, and you must understand which one, on which operations, and under what load.",
+    "sections/2/blocks/4/text": "**Integration commitments.** API change notifications, version support timelines, sandbox availability. Here your [[deprecation-policy|deprecation policy]] becomes a contractual obligation, and if it is announced in advance, negotiations are straightforward.",
+    "sections/2/blocks/5/text": "What is important to understand about [[service-credits|service credits]]: they almost never cover customer damages and serve as a signal of seriousness, not insurance. A customer for whom credits are important is actually signaling that they are not confident in your reliability.",
+    "sections/2/blocks/6/text": "The negotiation rule: **do not promise what you do not measure.** Promising availability without monitoring to show it is a promise you can neither confirm nor deny, and in a dispute, this works against you.",
+    "sections/3/blocks/0/text": "We discussed our first SLA with Domashniy. They asked for 99.9% on everything.",
+    "sections/3/blocks/1/text": "We broke it down by feature and offered different terms: checkout and catalog at 99.9%, partner cabinet and reports at 99.5%, webhooks at delivery within 15 minutes instead of seconds. They accepted without objection: for them, the cabinet is genuinely less critical than taking orders.",
+    "sections/3/blocks/2/text": "We defined downtime as \"the share of unsuccessful responses exceeding 5% for 5 consecutive minutes.\" This is measurable with existing monitoring, and before it existed, there would have been nothing to promise.",
+    "sections/3/blocks/3/text": "We agreed on compensation of 10% of the monthly payment for each hour over the limit, capped at 50%. The amount was small, and both sides understood it was symbolic.",
+    "sections/3/blocks/4/text": "The most expensive part was not the SLA itself, but the obligation to notify of API changes 90 days in advance. It tied our hands for two years and once pushed back a product change by a quarter.",
+    "sections/4/blocks/0/text": "An SLA only makes sense with monitoring that measures it and an incident response process. A promise without an on-call rotation is a promise to report post-facto.",
+    "sections/5/blocks/0/text": "In a contract, the definition of what constitutes a breach is more important than numbers, and you should only promise what you already measure."
+  }
+}

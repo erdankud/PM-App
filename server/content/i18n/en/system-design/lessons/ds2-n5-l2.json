@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "7604fc04865ae808",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "Sharding and the key you cannot replay",
+    "keyTakeaway": "The sharding key is chosen based on the main product scenario and is practically immutable, so the decision is made together with the product manager, not communicated to them.",
+    "sections/0/blocks/0/text": "When data does not fit on a single server, it is distributed across several. Why is choosing the layout attribute a product decision?",
+    "sections/1/blocks/0/text": "The [[shard-key|shard key]] is one of the most irreversible decisions in a system. Changing it after launch means re-laying out all data from scratch, usually with downtime. The decision is made once, lives for years, and determines which product scenarios will be cheap and which will be nearly impossible. A product manager who did not participate in the choice spends years explaining to clients why a simple thing cannot be done.",
+    "sections/2/blocks/0/text": "[[sharding|Sharding]] is distributing data across multiple independent databases. Each holds its own part. The shard key determines where a record lands.",
+    "sections/2/blocks/1/text": "The main property: **a query that fits within a single shard is cheap; a query spanning multiple shards is expensive.** A [[cross-shard-query|cross-shard query]] requires querying all databases and assembling the result — it is slow, and some capabilities are lost.",
+    "sections/2/blocks/2/text": "Hence the selection rule: the key becomes what is accessed most frequently. And the product manager knows this because it is a question about scenarios, not data.",
+    "sections/2/blocks/3/text": "The second risk is a [[hot-shard|hot shard]]. If the key distributes unevenly, one shard gets a disproportionate amount of load and becomes a bottleneck while the rest idle. The classic case is sharding by store, when one store generates 30% of turnover.",
+    "sections/2/blocks/4/text": "The third is [[rebalancing|rebalancing]]. Adding a shard requires moving some data around. A thoughtfully designed scheme makes this a background operation, an unthoughtful one — a weekend event.",
+    "sections/3/blocks/0/text": "Three keys were discussed. The analysis shows the dispute was product-driven from start to finish.",
+    "sections/3/blocks/1/text": "*By user.* All orders of a person are on one shard. Personal account, history, re-ordering — fast. Breaks the partner report: store orders are smeared across all shards, the dashboard becomes cross-shard.",
+    "sections/3/blocks/2/text": "*By store.* The partner dashboard is fast, reports are local. Breaks the history of a user ordering from different stores — and 34% of users do this. And a hot shard is almost guaranteed: large chains provide a disproportionate share of orders.",
+    "sections/3/blocks/3/text": "*By date.* Fresh data on one shard, old data on others. Breaks everything looking at the history of a specific user or store, and the last shard is always hot because all writes go to it.",
+    "sections/3/blocks/4/text": "They chose the user, and moved the partner dashboard to the analytical warehouse, which by then already existed. The decision sounds technical, but consists of two product judgments: the buyer scenario is more important than the partner scenario, and the partner scenario tolerates an hour of delay.",
+    "sections/4/blocks/0/text": "Sharding is needed later than it seems. A modern database on decent hardware easily handles tens of millions of records and thousands of operations per second. Before sharding, you exhaust replicas, partitioning, offloading analytics, and simply a larger server — all these are cheaper by an order of magnitude.",
+    "sections/5/blocks/0/text": "The sharding key is chosen based on the main product scenario and is practically immutable, so the decision is made together with the product manager, not communicated to them."
+  }
+}

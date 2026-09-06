@@ -1,0 +1,27 @@
+{
+  "language": "en",
+  "sourceDigest": "eaa05bcf2934f84e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "Relational Databases: Rigidity as a Guarantee",
+    "keyTakeaway": "A relational database trades flexibility for guarantees: data that cannot afford mistakes lives here.",
+    "sections/0/blocks/0/text": "Why do most products handling money run on a relational database under the hood — and why is this a deliberate choice rather than inertia?",
+    "sections/1/blocks/0/text": "A PM for whom \"database\" is a single thing doesn't understand the phrase \"let's put this in Redis\" and cannot participate in conversations deciding whether a feature will be fast. They also don't understand when an engineer says \"this data can drift\" — treating the warning as overcautiousness until they see a discrepancy in production.",
+    "sections/2/blocks/0/text": "A [[relational-database|relational database]] stores data in tables. A row is a record, a column is an attribute. All rows in a table have the same set of columns; this is the [[schema|schema]], and the database enforces it.",
+    "sections/2/blocks/1/text": "Three consequences important for the product.",
+    "sections/2/blocks/2/text": "**The database refuses to accept incorrect data.** If an order requires a user, the database won't let you create an orphan order — even if the code asks. This is protection against programmer errors at the storage level, meaning data is generally trustworthy.",
+    "sections/2/blocks/3/text": "**Relations are enforced at the storage level.** You cannot delete a user and leave hanging orders. The database will either block it or cascade delete, but it won't leave garbage. For the product, this means \"delete account\" is a predictable operation.",
+    "sections/2/blocks/4/text": "**Data can be joined arbitrarily.** The [[sql|SQL]] language allows assembling any report from any tables, even if such a query wasn't planned during design. \"How many orders were placed by users who registered in March in stores with a rating above four\" is a single query, not a project.",
+    "sections/2/blocks/5/text": "The price for this is rigidity. Changing the schema requires a [[migration|migration]], and migrating a large table costs time and risk.",
+    "sections/3/blocks/0/text": "Orders, payments, and stock in a relational database. The reason is not tradition, but a specific property: an order and money deduction must always be consistent, not \"eventually.\" If money was deducted but the order wasn't created, that is an unrecoverable situation involving a real user and real money.",
+    "sections/3/blocks/1/text": "The flip side showed up when the product wanted to store product specifications. Milk has fat content and volume, laundry detergent has weight and load type, bananas have nothing. In a relational model, this is either a table with a hundred mostly empty columns, or a separate \"product attribute\" table with name-value pairs, where filtering becomes slow and awkward. Neither option is good, and that's the right moment to consider a different datastore specifically for the catalog.",
+    "sections/4/blocks/0/text": "Schema rigidity costs dearly when changes are frequent: an early-stage product where the model changes weekly may suffer from it. And relational databases scale harder than non-relational ones — up to certain volumes it doesn't matter, after that it does.",
+    "sections/5/blocks/0/text": "A relational database trades flexibility for guarantees: data that cannot afford mistakes lives here."
+  }
+}

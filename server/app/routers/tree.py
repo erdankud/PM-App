@@ -41,8 +41,10 @@ from app.views import challenge_response
 router = APIRouter(tags=["tree"])
 
 
-def _summary(block: dict, progress, completed: set[str]) -> BlockSummary:
-    lessons = tree_content.lessons_for_block(block["id"])
+def _summary(
+    block: dict, progress, completed: set[str], language: str = "ru"
+) -> BlockSummary:
+    lessons = tree_content.lessons_for_block(block["id"], language)
     gate = tree_content.gate_for_block(block["id"])
     return BlockSummary(
         id=block["id"],
@@ -67,13 +69,13 @@ TREE_TITLES = {
 
 
 @router.get("/trees", response_model=TreesResponse)
-def get_trees(user: CurrentUser, db: DbSession) -> TreesResponse:
+def get_trees(user: CurrentUser, db: DbSession, language: ContentLanguage) -> TreesResponse:
     """Обе карты одной грамматики — для переключателя в табе «Дерево» (спека SD §6.1)."""
     rows = tree_service.recompute(db, user.id)
     db.commit()
     summaries = []
     for kind in tree_content.kinds():
-        blocks = tree_content.blocks_of(kind)
+        blocks = tree_content.blocks_of(kind, language.value)
         statuses = [rows[block["id"]].status for block in blocks]
         title, subtitle = TREE_TITLES[kind]
         summaries.append(TreeSummary(
@@ -91,8 +93,8 @@ def get_trees(user: CurrentUser, db: DbSession) -> TreesResponse:
     return TreesResponse(trees=summaries)
 
 
-def _tree_response(kind: str, user, db) -> TreeResponse:
-    content = tree_content.tree_content(kind)
+def _tree_response(kind: str, user, db, language: str = "ru") -> TreeResponse:
+    content = tree_content.tree_content(kind, language)
     rows = tree_service.recompute(db, user.id)
     db.commit()
     completed = tree_service.completed_lesson_ids(db, user.id)
@@ -106,36 +108,42 @@ def _tree_response(kind: str, user, db) -> TreeResponse:
             for d in content["domains"]
         ],
         blocks=[
-            _summary(block, rows[block["id"]], completed)
+            _summary(block, rows[block["id"]], completed, language)
             for block in content["tree"]["blocks"]
         ],
     )
 
 
 @router.get("/tree", response_model=TreeResponse)
-def get_tree(user: CurrentUser, db: DbSession) -> TreeResponse:
+def get_tree(user: CurrentUser, db: DbSession, language: ContentLanguage) -> TreeResponse:
     """Псевдоним основного дерева: клиенты v0.2 обновляются не мгновенно."""
-    return _tree_response("product", user, db)
+    return _tree_response("product", user, db, language.value)
 
 
 @router.get("/tree/{kind}", response_model=TreeResponse)
-def get_tree_of_kind(kind: str, user: CurrentUser, db: DbSession) -> TreeResponse:
+def get_tree_of_kind(
+    kind: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> TreeResponse:
     if kind not in tree_content.kinds():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "tree_not_found"}
         )
-    return _tree_response(kind, user, db)
+    return _tree_response(kind, user, db, language.value)
 
 
 @router.get("/blocks/{block_id}", response_model=BlockDetailResponse)
-def get_block(block_id: str, user: CurrentUser, db: DbSession) -> BlockDetailResponse:
-    block = tree_content.block(block_id)
+def get_block(
+    block_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> BlockDetailResponse:
+    block = tree_content.block(block_id, language.value)
     if block is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "block_not_found"}
         )
     # Домен и круг берутся из того дерева, которому блок принадлежит: их два.
-    content = tree_content.tree_content(tree_content.kind_of_block(block_id))
+    content = tree_content.tree_content(
+        tree_content.kind_of_block(block_id), language.value
+    )
 
     rows = tree_service.recompute(db, user.id)
     db.commit()
@@ -210,7 +218,7 @@ def _term_view(term: dict, *, seen: bool = False) -> TermView:
     )
 
 
-def _audio_view(lesson: dict) -> LessonAudioView:
+def _audio_view(lesson: dict, language: str = "ru") -> LessonAudioView:
     """Аудио предлагается только когда файл уже лежит на диске.
 
     Синтез 12-минутного урока занимает около полуминуты, поэтому запускать его по
@@ -218,9 +226,9 @@ def _audio_view(lesson: dict) -> LessonAudioView:
     собираются заранее (`python -m scripts.build_audio`), а урок без файла просто
     не показывает плеер.
     """
-    ready = audio_service.audio_path(lesson).exists()
+    ready = audio_service.audio_path(lesson, language).exists()
     if not ready:
-        job = audio_jobs.status_of(lesson["id"])
+        job = audio_jobs.status_of(lesson["id"], language)
         return LessonAudioView(
             available=False,
             status=job.status if job else "absent",
@@ -229,11 +237,11 @@ def _audio_view(lesson: dict) -> LessonAudioView:
     # Отпечаток сценария в адресе: путь урока постоянен, а файл за ним меняется при
     # правке текста. Без него клиент, закешировавший mp3 по адресу, продолжал бы
     # проигрывать прошлую редакцию урока.
-    version = audio_service.digest(lesson)
+    version = audio_service.digest(lesson, language)
     return LessonAudioView(
         available=True,
         url=f"{settings.api_prefix}/lessons/{lesson['id']}/audio?v={version}",
-        duration_seconds=audio_service.duration_seconds(lesson),
+        duration_seconds=audio_service.duration_seconds(lesson, language),
         status="ready",
         can_generate=audio_jobs.generation_allowed(),
     )
@@ -244,32 +252,36 @@ def _audio_view(lesson: dict) -> LessonAudioView:
     response_model=LessonAudioView,
     status_code=status.HTTP_202_ACCEPTED,
 )
-def generate_lesson_audio(lesson_id: str, user: CurrentUser) -> LessonAudioView:
+def generate_lesson_audio(
+    lesson_id: str, user: CurrentUser, language: ContentLanguage
+) -> LessonAudioView:
     """Запускает сборку обзора и сразу отвечает.
 
     Сборка занимает около минуты, поэтому ответ означает «принято», а не «готово»:
     состояние клиент дочитывает из обычного ответа урока. Такой контракт не
     изменится, если однажды за ним встанет настоящая очередь.
     """
-    lesson = _lesson_or_404(lesson_id)
+    lesson = _lesson_or_404(lesson_id, language.value)
     if not audio_jobs.generation_allowed():
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail={"code": "audio_generation_disabled"}
         )
-    audio_jobs.forget(lesson_id)
-    audio_jobs.start(lesson)
-    return _audio_view(lesson)
+    audio_jobs.forget(lesson_id, language.value)
+    audio_jobs.start(lesson, language.value)
+    return _audio_view(lesson, language.value)
 
 
 @router.get("/lessons/{lesson_id}/audio")
-def get_lesson_audio(lesson_id: str, user: CurrentUser) -> FileResponse:
+def get_lesson_audio(
+    lesson_id: str, user: CurrentUser, language: ContentLanguage
+) -> FileResponse:
     """Отдаёт mp3 урока.
 
     `FileResponse` сам обрабатывает `Range`, а без этого перемотка в плеере на
     iOS не работает: `AVPlayer` запрашивает куски, а не файл целиком.
     """
-    lesson = _lesson_or_404(lesson_id)
-    path = audio_service.audio_path(lesson)
+    lesson = _lesson_or_404(lesson_id, language.value)
+    path = audio_service.audio_path(lesson, language.value)
     if not path.exists():
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "audio_not_built"}
@@ -277,15 +289,15 @@ def get_lesson_audio(lesson_id: str, user: CurrentUser) -> FileResponse:
     return FileResponse(
         path,
         media_type="audio/mpeg",
-        filename=f"{lesson_id}.mp3",
+        filename=f"{lesson_id}.{language.value}.mp3",
         # Имя файла содержит хеш сценария, поэтому старый ответ никогда не окажется
         # аудио изменённого урока — кэшировать можно надолго.
         headers={"Cache-Control": "public, max-age=604800, immutable"},
     )
 
 
-def _lesson_or_404(lesson_id: str) -> dict:
-    lesson = tree_content.lesson(lesson_id)
+def _lesson_or_404(lesson_id: str, language: str = "ru") -> dict:
+    lesson = tree_content.lesson(lesson_id, language)
     if lesson is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "lesson_not_found"}
@@ -294,12 +306,14 @@ def _lesson_or_404(lesson_id: str) -> dict:
 
 
 @router.get("/lessons/{lesson_id}", response_model=LessonResponse)
-def get_lesson(lesson_id: str, user: CurrentUser, db: DbSession) -> LessonResponse:
-    lesson = _lesson_or_404(lesson_id)
-    block = tree_content.block(lesson["blockId"])
+def get_lesson(
+    lesson_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> LessonResponse:
+    lesson = _lesson_or_404(lesson_id, language.value)
+    block = tree_content.block(lesson["blockId"], language.value)
     node = next(n for n in block["nodes"] if n["id"] == lesson["nodeId"])
 
-    ordered = tree_content.lessons_for_block(lesson["blockId"])
+    ordered = tree_content.lessons_for_block(lesson["blockId"], language.value)
     index = next(i for i, item in enumerate(ordered) if item["id"] == lesson_id)
     next_id = ordered[index + 1]["id"] if index + 1 < len(ordered) else None
 
@@ -327,18 +341,24 @@ def get_lesson(lesson_id: str, user: CurrentUser, db: DbSession) -> LessonRespon
         ],
         terms=[
             _term_view(term, seen=True)
-            for term in (tree_content.glossary_term(t) for t in lesson.get("termIds", []))
+            for term in (
+                tree_content.glossary_term(t, language.value)
+                for t in lesson.get("termIds", [])
+            )
             if term is not None
         ],
         diagrams=[
-            glossary_service.diagram_view(diagram)
-            for diagram in (tree_content.diagram(d) for d in lesson.get("diagramIds", []))
+            glossary_service.diagram_view(diagram, language.value)
+            for diagram in (
+                tree_content.diagram(d, language.value)
+                for d in lesson.get("diagramIds", [])
+            )
             if diagram is not None
         ],
         exercise_id=lesson.get("exerciseId")
         or (tree_content.exercise_for_node(lesson["nodeId"]) or {}).get("id"),
         cross_refs=lesson.get("crossRefs", []),
-        audio=_audio_view(lesson),
+        audio=_audio_view(lesson, language.value),
         completed=lesson_id in completed,
         next_lesson_id=next_id,
     )

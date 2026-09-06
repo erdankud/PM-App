@@ -1,0 +1,92 @@
+{
+  "lessonId": "d1-feedback-matrix",
+  "sourceDigest": "853e6f9848a2",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "audio-2026-09-02",
+    "generatedAt": "2026-09-03T17:50:19Z"
+  },
+  "turns": [
+    {
+      "speaker": "guide",
+      "text": "Imagine finishing a whole quarter with a long list of completed tasks, but your core metrics haven't moved at all. How does a team end up there?"
+    },
+    {
+      "speaker": "expert",
+      "text": "By fixing whatever feedback is loudest instead of what happens most often. You let one customer writing long emails weigh as much as a hundred people who silently left."
+    },
+    {
+      "speaker": "guide",
+      "text": "But feedback pours in from everywhere—support, reviews, sales chats, founder emails. Isn't that stream your task list?"
+    },
+    {
+      "speaker": "expert",
+      "text": "No, raw feedback is just messages, not problems. To find the real problems, you need to plot those messages on a feedback matrix."
+    },
+    {
+      "speaker": "guide",
+      "text": "How do you map that out?"
+    },
+    {
+      "speaker": "expert",
+      "text": "Along two axes. Axis one is what the user was doing—their stage, like sign-up, setting up a first schedule, shift swapping, or payment."
+    },
+    {
+      "speaker": "guide",
+      "text": "And axis two?"
+    },
+    {
+      "speaker": "expert",
+      "text": "What went wrong: didn't find, didn't understand, didn't work, or missing feature. The cell where they intersect gives you a problem statement, like \"didn't understand during shift swap.\""
+    },
+    {
+      "speaker": "guide",
+      "text": "So you can't even categorize a message without reading it to understand what they were trying to do."
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly. And it separates identical words—saying \"inconvenient\" in payment is a completely different problem with a different cost than \"inconvenient\" in shift swapping."
+    },
+    {
+      "speaker": "guide",
+      "text": "How did this work for Smena, the app for cafe owners and shift workers?"
+    },
+    {
+      "speaker": "expert",
+      "text": "They had 62 messages in a month. Before categorizing, the most noticeable issue seemed to be a chain owner with six locations who sent four detailed emails about reports."
+    },
+    {
+      "speaker": "guide",
+      "text": "But in the matrix, that was just four messages from one single account."
+    },
+    {
+      "speaker": "expert",
+      "text": "Right. The real top issue was 21 messages where employees didn't understand if a shift swap was confirmed, and 14 messages from owners looking for spreadsheet import."
+    },
+    {
+      "speaker": "guide",
+      "text": "So you have to count unique accounts, not just total messages."
+    },
+    {
+      "speaker": "expert",
+      "text": "Always. A cell with 21 messages from 19 accounts means something completely different than 21 messages from 3 accounts."
+    },
+    {
+      "speaker": "guide",
+      "text": "Are there limitations to relying on this matrix?"
+    },
+    {
+      "speaker": "expert",
+      "text": "It shows frequency, not importance. Three messages could represent half your revenue, plus it completely misses the silent majority who write nothing and simply leave."
+    },
+    {
+      "speaker": "guide",
+      "text": "So it's a tool for sorting what you receive, not a complete picture of every user."
+    },
+    {
+      "speaker": "expert",
+      "text": "Exactly. Feedback is raw material, not a task list. A problem only emerges when you group messages by what the person was trying to do, rather than how loudly they wrote."
+    }
+  ]
+}

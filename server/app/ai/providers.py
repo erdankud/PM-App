@@ -12,11 +12,17 @@ Paid adapters (anthropic, openai) are included so the choice is a config change.
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 import httpx
 
-from app.ai.base import EvaluationRequest, ProviderError, ProviderResponse
+from app.ai.base import (
+    EvaluationRequest,
+    ProviderError,
+    ProviderResponse,
+    QuotaExhausted,
+)
 from app.config import settings
 
 _RETRYABLE_STATUS = {408, 409, 425, 429, 500, 502, 503, 504}
@@ -32,18 +38,54 @@ def _require_key() -> str:
     return settings.evaluator_api_key
 
 
-def _post(url: str, *, headers: dict[str, str], json_body: dict[str, Any]) -> dict[str, Any]:
+def _quota_details(body: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(body)
+    except ValueError:
+        return {}
+    for detail in payload.get("error", {}).get("details", []):
+        if str(detail.get("@type", "")).endswith("QuotaFailure"):
+            violations = detail.get("violations") or [{}]
+            return violations[0]
+    return {}
+
+
+def _quota_exhausted(body: str) -> bool:
+    """Суточную квоту отличаем от минутной: вторая проходит сама, первая — нет."""
+    return "PerDay" in str(_quota_details(body).get("quotaId", ""))
+
+
+def _quota_message(body: str) -> str:
+    violation = _quota_details(body)
+    return (
+        f"дневная квота провайдера исчерпана "
+        f"({violation.get('quotaId', 'неизвестно')}, лимит {violation.get('quotaValue', '?')})"
+    )
+
+
+def _post(
+    url: str,
+    *,
+    headers: dict[str, str],
+    json_body: dict[str, Any],
+    timeout: float | None = None,
+) -> dict[str, Any]:
     try:
         response = httpx.post(
             url,
             headers=headers,
             json=json_body,
-            timeout=settings.evaluator_timeout_seconds,
+            timeout=timeout or settings.evaluator_timeout_seconds,
         )
     except httpx.TimeoutException as exc:
         raise ProviderError("provider_timeout", str(exc), retryable=True) from exc
     except httpx.HTTPError as exc:
         raise ProviderError("provider_unreachable", str(exc), retryable=True) from exc
+
+    if response.status_code == 429 and _quota_exhausted(response.text):
+        # Дневная квота — не «повторим попозже»: до сброса ответ не изменится, и
+        # прогон по корпусу обязан остановиться, а не пройти его вхолостую.
+        raise QuotaExhausted(_quota_message(response.text))
 
     if response.status_code >= 400:
         raise ProviderError(
@@ -75,7 +117,7 @@ class GeminiEvaluator:
                 "responseMimeType": "application/json",
             },
         }
-        payload = _post(url, headers={"x-goog-api-key": key}, json_body=body)
+        payload = _post(url, headers={"x-goog-api-key": key}, json_body=body, timeout=timeout)
         try:
             parts = payload["candidates"][0]["content"]["parts"]
             text = "".join(part.get("text", "") for part in parts)
@@ -93,6 +135,7 @@ def gemini_text(
     model: str | None = None,
     max_output_tokens: int = 4096,
     temperature: float = 0.9,
+    timeout: float | None = None,
 ) -> tuple[str, str]:
     """Свободная генерация текста через Gemini: возвращает (текст, id модели).
 
@@ -113,14 +156,25 @@ def gemini_text(
             "responseMimeType": "application/json",
         },
     }
-    payload = _post(url, headers={"x-goog-api-key": key}, json_body=body)
+    payload = _post(url, headers={"x-goog-api-key": key}, json_body=body, timeout=timeout)
     try:
-        parts = payload["candidates"][0]["content"]["parts"]
+        candidate = payload["candidates"][0]
+        parts = candidate["content"]["parts"]
         text = "".join(part.get("text", "") for part in parts)
     except (KeyError, IndexError, TypeError) as exc:
         raise ProviderError("provider_empty_response", retryable=True) from exc
     if not text.strip():
         raise ProviderError("provider_empty_response", retryable=True)
+
+    # Обрыв по лимиту вывода приходит как обычный ответ, просто оборванный на
+    # полуслове. Молча отдавать его дальше нельзя: ломается он потом, на разборе
+    # JSON, и выглядит как ошибка формата, а не как «не поместилось».
+    if candidate.get("finishReason") == "MAX_TOKENS":
+        raise ProviderError(
+            "provider_output_truncated",
+            f"ответ обрезан на лимите вывода ({len(text)} знаков)",
+            retryable=True,
+        )
     return text, model_id
 
 

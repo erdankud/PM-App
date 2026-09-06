@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "a0f7060149041d59",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "User story: all the value is in the \"so that\" part",
+    "keyTakeaway": "The value of the statement lies in the \"so that\" ending. If you cannot fill it in honestly, you are describing a feature, not a task, and you'll have no way to verify the result.",
+    "checkQuestion": "\"As a dispatcher, I want an export to Excel button, so that there is an export to Excel.\" What's wrong here?",
+    "blocks/0/text": "The key question of this node: **what tasks will users solve?** There is a gulf between \"we need a car filter\" and \"we need to see who is available on Thursday within a minute.\" You can build the former literally and miss the mark.",
+    "blocks/1/text": "**What happens if you do not answer this question.** The team builds screens, not tasks. Each screen individually matches a request, but together they don't form the job a person came to do.",
+    "blocks/2/title": "User Story",
+    "blocks/2/subtitle": "As a <role>, I want <action>, so that <benefit>",
+    "blocks/2/items/0": "**Role**—not a job title, but a person in a specific situation.",
+    "blocks/2/items/1": "**Action**—what they do, not an interface element.",
+    "blocks/2/items/2": "**So that**—why; this is the only part you can verify after release.",
+    "blocks/2/items/3": "A story is not a document, but a **promise of a conversation**. It reminds you to talk rather than replacing the conversation.",
+    "blocks/3/items/0": "\"As a dispatcher, I want a filter button\" → \"As a dispatcher, I want to see available cars for a selected date, so that I don't have to call drivers one by one\"",
+    "blocks/3/items/1": "\"As an accountant, I want an export\" → \"As an accountant, I want to get monthly hours for each driver, so that I don't have to compile them manually\"",
+    "blocks/3/items/2": "\"As a director, I want a dashboard\" → \"As a director, I want to see vehicle downtime once a week, so that I can decide if we need another vehicle\"",
+    "blocks/4/text": "Notice that after rewriting, each story gets a **method of verification**: number of calls, time to compile hours, purchase decision. Formulations with a button or dashboard lack this method.",
+    "blocks/5/text": "The story \"as a dispatcher, I want to reassign a trip so that I can cover a driver rejection\" looks simple right up to the first question: what if the new driver doesn't have enough labor hours? What if the car is a different class? What if the cargo is already loaded?\n\nHere you need a Use Case—a sequence of steps with explicit alternatives and exceptions. The rule is simple: **a story describes intent, a use case describes branching**. As soon as there are more than two branches and they are costly, a user story is no longer enough.",
+    "blocks/5/title": "Dispetcher: where a Use Case is actually needed",
+    "blocks/6/text": "A template doesn't make a story good. \"As a user, I want to use the system so that I solve tasks\" is formally correct and useless. And don't describe everything with stories: permissions setup, data migration, integration—these are tasks with no user intent, and pretending otherwise is harmful.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

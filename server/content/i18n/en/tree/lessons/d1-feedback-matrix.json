@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "2189cc918d608e15",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:40:30Z"
+  },
+  "fields": {
+    "title": "Feedback: how to get a list of problems from a stream of messages",
+    "keyTakeaway": "Feedback is raw material, not a task list. A problem only emerges after you group messages by what the person was trying to do, rather than how loudly they wrote.",
+    "checkQuestion": "Why can't two complaints about something being \"inconvenient\" from different parts of the product be considered the same problem?",
+    "blocks/0/text": "The key question of the node: **what problems do customers face when using the product?** It arises because feedback comes in a stream from various places—support, app store reviews, sales chat, an email from a founder friend. In its raw form, this is not a list of problems, but a list of messages.",
+    "blocks/1/text": "Smena is a fictional service where owners of small cafes and shops create shift schedules, while employees view their schedules and swap shifts. The owner pays, both use it. We will return to it in every lesson of this domain.",
+    "blocks/2/text": "**What happens if you don't answer the question.** You start fixing what is loudest, not what is most frequent. One customer who writes long emails weighs as much as a hundred people who silently left. A quarter later, you have a list of completed tasks and unchanged metrics.",
+    "blocks/3/title": "Feedback Matrix",
+    "blocks/3/subtitle": "Plotting each message along two axes to see where they pile up",
+    "blocks/3/items/0": "**Axis 1 — what the person was doing.** Stage or scenario: sign-up, first schedule, shift swap, payment.",
+    "blocks/3/items/1": "**Axis 2 — what exactly went wrong.** Didn't find / didn't understand / didn't work / missing feature.",
+    "blocks/3/items/2": "**Cell** — the intersection. \"Didn't understand during shift swap\" is already a problem statement.",
+    "blocks/3/items/3": "**Cell weight** — how many messages fell into it and from how many different accounts.",
+    "blocks/4/text": "The matrix does two things. First, it forces you to read every message to the end—because you can't categorize it without understanding what the person was doing. Second, it separates identical words into different cells: \"inconvenient\" in payment and \"inconvenient\" in shift swapping are two different problems with different costs.",
+    "blocks/5/text": "After categorization: 21 messages — \"shift swap / didn't understand\" (employees don't understand if the swap is confirmed or not). 14 — \"first schedule / didn't find\" (owners looking for spreadsheet import). 9 — \"payment / didn't work\". The remaining 18 are scattered in ones and twos.\n\nBefore categorization, the most noticeable seemed to be a chain owner with six locations who wrote four detailed emails about reports. In the matrix, his topic is a single cell with four messages from one account.",
+    "blocks/5/title": "Smena, 62 messages in a month",
+    "blocks/6/text": "Four emails from one person is one voice. A cell with \"21 messages from 19 accounts\" and a cell with \"21 messages from 3 accounts\" mean completely different things.",
+    "blocks/6/title": "Count accounts, not messages",
+    "blocks/7/text": "The matrix shows frequency, not importance. A cell with three messages can cost more than a cell with twenty if those three represent half of your revenue. It also fails to see those who wrote nothing and simply left, which is almost always the majority. And it inherits channel bias: people who write to support are those who have already invested effort into the product.",
+    "blocks/7/title": "Model limitations"
+  }
+}

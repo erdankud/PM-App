@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "a7cd4730d8330f3f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Choose What to Optimize",
+    "inputs/0/label": "Speed up serialization by half, 1 week",
+    "inputs/1/label": "Prepared image sizes, 4 days",
+    "inputs/2/label": "Batch database queries, 2 weeks",
+    "acceptance/0/expected": "reject",
+    "acceptance/1/expected": "take first",
+    "acceptance/2/expected": "take second",
+    "inputs/0/choices/0": "take first",
+    "inputs/0/choices/1": "take second",
+    "inputs/0/choices/2": "reject",
+    "inputs/1/choices/0": "take first",
+    "inputs/1/choices/1": "take second",
+    "inputs/1/choices/2": "reject",
+    "inputs/2/choices/0": "take first",
+    "inputs/2/choices/1": "take second",
+    "inputs/2/choices/2": "reject",
+    "promptBlocks/0/text": "Screen 2.4 s. Components: images 780 ms (33%), database queries 620 ms (26%), network 480 ms (20%), serialization 210 ms (9%), rendering 190 ms (8%), other 120 ms.",
+    "promptBlocks/1/text": "The team proposes three tasks: speed up serialization by half (1 week), prepared image sizes (4 days), batch database queries (2 weeks). What do you take?",
+    "referenceReasoningBlocks/0/text": "serialization — maximum 4.5% gain, reject. Images — up to 33%, four days, take first. Queries — up to 26%, two weeks, take second. Order by return per day of work: images yield ~8% per day, queries ~2.6%, serialization ~0.9%. Technique: estimate the maximum gain before discussing timelines."
+  }
+}

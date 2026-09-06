@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "43af6346bddabdf2",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:45Z"
+  },
+  "fields": {
+    "title": "Index budget",
+    "keyTakeaway": "Indexes are a limited resource with an explicit cost in write speed, and it is fairer to discuss a new filter as a trade-off rather than an addition.",
+    "sections/0/blocks/0/text": "If an index speeds up searches, why can't you index every field and close the matter once and for all?",
+    "sections/1/blocks/0/text": "Product teams accumulate indexes gradually: each new filter brings its own, and each individually looks harmless. A year later, table writes degrade, checkout slows down, and the cause is looked for anywhere except the index list. A PM who has the concept of a budget in mind halts this process at the entrance.",
+    "sections/2/blocks/0/text": "Every record modification updates all its indexes. This is called [[write-amplification|write amplification]]: a single logical change turns into multiple physical ones.",
+    "sections/2/blocks/1/text": "Simple arithmetic for Polka. An order is created once and modified on average three times—fulfillment, delivery, completion. At 20 thousand orders per day, this is 80 thousand write operations. Each index multiplies them by itself:",
+    "sections/2/blocks/2/header/0": "Indexes",
+    "sections/2/blocks/2/header/1": "Physical operations per day",
+    "sections/2/blocks/2/rows/0/0": "3",
+    "sections/2/blocks/2/rows/0/1": "320k",
+    "sections/2/blocks/2/rows/1/0": "6",
+    "sections/2/blocks/2/rows/1/1": "560k",
+    "sections/2/blocks/2/rows/2/0": "12",
+    "sections/2/blocks/2/rows/2/1": "1.04M",
+    "sections/2/blocks/3/text": "Twelve indexes instead of three mean three times more write work, while the value of each subsequent one is usually lower than the previous.",
+    "sections/2/blocks/4/text": "Hence the concept of an **index budget**: a conscious limit beyond which a new index is added only in place of an old one. A practical rule of thumb for a transactional table is 5–7. The exact number depends on the load, but the mere existence of a limit is more important than the number.",
+    "sections/2/blocks/5/text": "Two techniques that increase the return on the budget.",
+    "sections/2/blocks/6/text": "**[[covering-index|Covering index]].** If the index contains all fields needed by the query, the database does not read the table itself—the response is assembled entirely from the index. One well-crafted covering index replaces two regular ones.",
+    "sections/2/blocks/7/text": "**Order in a composite index.** An index on \"store, date, status\" serves three queries: by store; by store with date; by all three. One index instead of three. Therefore, the question to the engineer sounds not like \"can we add an index\", but \"can we expand the existing one\".",
+    "sections/3/blocks/0/text": "An audit of indexes on the orders table revealed nine. Three of them were added for screens that stopped being used—removing them restored about 15% of write speed during the evening peak, without a single line of product changes.",
+    "sections/3/blocks/1/text": "Another two were successfully merged: indexes on \"store\" and on \"store, date\"—the second completely covers the first because it works from left to right. The first was redundant from the very beginning.",
+    "sections/3/blocks/2/text": "The product takeaway that the team established: **a new filter in the wireframe comes with the question of which index goes away.** Not a ban, but a trade-off. Over half a year, this filtered out four filters that no one defended once their cost became clear.",
+    "sections/4/blocks/0/text": "The budget is relevant for write-heavy tables. For reference books that change once a week, there can be as many indexes as you like. And in the analytical data warehouse, the logic is different—reads are optimized there and paid for with anything.",
+    "sections/5/blocks/0/text": "Indexes are a limited resource with an explicit cost in write speed, and it is fairer to discuss a new filter as a trade-off rather than an addition."
+  }
+}

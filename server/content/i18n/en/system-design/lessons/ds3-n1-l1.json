@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "e8b58ccd16d80bff",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:35Z"
+  },
+  "fields": {
+    "title": "Doors that close behind you",
+    "keyTakeaway": "Attention in data model discussions should go to decisions where a mistake means irrevocable data loss, not volume of work.",
+    "sections/0/blocks/0/text": "The team spends an hour and a half discussing the data structure for a new feature. Which fifteen minutes of that actually mattered, and which could they have skipped?",
+    "sections/1/blocks/0/text": "Product teams spend attention evenly, but decisions are distributed extremely unevenly. Most data model details get replayed within a day. Five or six decisions are never replayed—or rather, replayed at the cost of a quarter of work and downtime. A PM who cannot tell these two classes apart argues about a field name and quietly agrees to the relationship cardinality.",
+    "sections/2/blocks/0/text": "A [[reversible-decision|reversible decision]] can be undone at roughly the same cost as making it. A [[one-way-door|one-way door]] is an order of magnitude more expensive to undo.",
+    "sections/2/blocks/1/text": "In data models, the boundary runs quite clearly.",
+    "sections/2/blocks/2/text": "**Reversible**—almost everything concerning individual attributes: adding a field, making an optional one mandatory, changing a type, adding an index, denormalizing for speed. Days of work, risk is manageable.",
+    "sections/2/blocks/3/text": "**Irreversible**—five things:",
+    "sections/2/blocks/4/text": "*An entity primary key that leaked outside.* Went into a URL, receipt, email, partner integration. Cannot be revoked.",
+    "sections/2/blocks/5/text": "*Core relationship cardinality.* One order—one user. Turning it into many-to-many means rewriting everything that reads orders.",
+    "sections/2/blocks/6/text": "*Client isolation unit.* Is a tenant a company, a branch, or a user? Changing the level rebuilds the entire permission system.",
+    "sections/2/blocks/7/text": "*[[granularity|Granularity]] of events and facts.* Do we record an event per order or per line item? You can always coarsen, but you cannot add detail retroactively: data that was not recorded does not exist. This is the quietest of irreversible mistakes because it breaks nothing today.",
+    "sections/2/blocks/8/text": "*Sharding key*, if the system is already sharded.",
+    "sections/2/blocks/9/text": "Practical technique: during a model discussion, name out loud which decisions are irreversible. There are usually one or two, and the conversation instantly restructures around them.",
+    "sections/3/blocks/0/text": "Retrospective of three decisions.",
+    "sections/3/blocks/1/text": "*Supplier SKU as item key*—irreversible, accepted in ten minutes as obvious. The supplier changed their SKU system, fixing it cost more than all the savings.",
+    "sections/3/blocks/2/text": "*\"Order placed\" event without line-item breakdown*—irreversible, and nobody noticed. A year later, marketing asked for conversion by product category. Data exists only from the moment the granularity changed—a year of history is lost forever.",
+    "sections/3/blocks/3/text": "*Storing address as a string rather than a structure*—seemed irreversible, turned out to be reversible. Parsing strings into components took two weeks of background processing, about 3% of addresses had to be clarified with users. Unpleasant, but not a quarter of work.",
+    "sections/3/blocks/4/text": "The rule the team derived: **if an error means losing data that cannot be recovered, the decision is irreversible. If it means work—it is reversible, no matter how large that labor is.**",
+    "sections/4/blocks/0/text": "Irreversibility depends on scale. At a thousand records, everything gets replayed. The list above is for a product that has already accumulated history and has external data consumers.",
+    "sections/5/blocks/0/text": "Attention in data model discussions should go to decisions where a mistake means irrevocable data loss, not volume of work."
+  }
+}

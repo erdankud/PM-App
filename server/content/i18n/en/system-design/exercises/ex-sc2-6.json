@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "sourceDigest": "8d6b643ddbab8d78",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:27Z"
+  },
+  "fields": {
+    "title": "Analyze Post-Mortem",
+    "promptBlocks/0/text": "Incident: 40 minutes of downtime. Started at 14:02, detected at 14:31 via support complaints, root cause found at 14:38, fixed at 14:42. Cause: disk space exhaustion due to log growth.",
+    "promptBlocks/1/text": "Name three takeaways not covered by the phrase \"add more disk space\".",
+    "referenceReasoningBlocks/0/text": "detection time of 29 minutes versus 11 to fix — the main issue is not the fix, but the lack of disk space monitoring. Detection via user complaints means there are no automated alerts at all, and this applies beyond just the disk. Log growth is a symptom: no log rotation and no retention period, linked to retention from `DS2-N6`. Technique: ask about the class of problem, not the specific instance."
+  }
+}

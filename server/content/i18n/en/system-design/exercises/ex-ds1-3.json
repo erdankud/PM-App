@@ -1,0 +1,40 @@
+{
+  "language": "en",
+  "sourceDigest": "3880e2982043c583",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Estimate migration",
+    "inputs/0/label": "A. Optional \"courier comment\" field",
+    "inputs/1/label": "B. Multiple delivery addresses per order",
+    "inputs/2/label": "C. Mandatory date of birth for new users",
+    "inputs/3/label": "D. Renaming `price` to `price_at_purchase`",
+    "acceptance/0/expected": "hours",
+    "acceptance/1/expected": "weeks",
+    "acceptance/2/expected": "days",
+    "acceptance/3/expected": "days",
+    "inputs/0/choices/0": "hours",
+    "inputs/0/choices/1": "days",
+    "inputs/0/choices/2": "weeks",
+    "inputs/1/choices/0": "hours",
+    "inputs/1/choices/1": "days",
+    "inputs/1/choices/2": "weeks",
+    "inputs/2/choices/0": "hours",
+    "inputs/2/choices/1": "days",
+    "inputs/2/choices/2": "weeks",
+    "inputs/3/choices/0": "hours",
+    "inputs/3/choices/1": "days",
+    "inputs/3/choices/2": "weeks",
+    "promptBlocks/0/text": "Order by cost and specify the order of magnitude (hours / days / weeks).",
+    "promptBlocks/1/items/0": "A. Add optional \"courier comment\" field",
+    "promptBlocks/1/items/1": "B. Allow multiple delivery addresses per order",
+    "promptBlocks/1/items/2": "C. Make \"date of birth\" mandatory for new users",
+    "promptBlocks/1/items/3": "D. Rename `price` field to `price_at_purchase`",
+    "referenceReasoningBlocks/0/text": "A (hours) → C (days) → D (days) → B (weeks). A doesn't touch old records. C requires a product decision on old users, but no backfill. D lives in two versions until clients update. B changes cardinality and touches everything. The order of C and D is debatable; what matters is that both are an order of magnitude cheaper than B."
+  }
+}

@@ -30,6 +30,15 @@ class ProviderResponse:
     model_id: str
 
 
+class QuotaExhausted(RuntimeError):
+    """Дневная квота провайдера исчерпана.
+
+    Отдельно от `ProviderError`, потому что реакция другая: повторять бессмысленно
+    ни сейчас, ни следующим файлом. Прогон обязан остановиться, а не пройти по
+    остатку корпуса, пометив всё несделанным.
+    """
+
+
 class ProviderError(RuntimeError):
     """Transient or permanent provider failure. `code` is logged, never shown."""
 

@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "94ac3460e668ed3e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Client or Server",
+    "inputs/0/label": "Complaints only from old Android versions",
+    "inputs/1/label": "Server response 200 ms, time to interactivity 2.4 s",
+    "inputs/2/label": "Slow for everyone, correlates with active count",
+    "acceptance/0/expected": "client",
+    "acceptance/1/expected": "client",
+    "acceptance/2/expected": "server",
+    "inputs/0/choices/0": "client",
+    "inputs/0/choices/1": "server",
+    "inputs/1/choices/0": "client",
+    "inputs/1/choices/1": "server",
+    "inputs/2/choices/0": "client",
+    "inputs/2/choices/1": "server",
+    "promptBlocks/0/text": "For each observation, state where the problem lies.",
+    "promptBlocks/1/items/0": "Complaints only from users on older Android versions",
+    "promptBlocks/1/items/1": "Server response time 200 ms, time to interactivity 2.4 s",
+    "promptBlocks/1/items/2": "Slow only on first open after launch",
+    "promptBlocks/1/items/3": "Slow for everyone and correlates with the number of active users",
+    "referenceReasoningBlocks/0/text": "1 — client, platform and devices. 2 — client, the 2.2 s gap is not server-related. 3 — cold start: connections and caches, partly client, partly network. 4 — server, throughput. Technique: breaking down by platform, version, and device answers the question in a minute."
+  }
+}

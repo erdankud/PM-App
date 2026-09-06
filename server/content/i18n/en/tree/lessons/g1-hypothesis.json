@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "29f0de4d49a2a2df",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "A hypothesis is an idea that can be disproved",
+    "keyTakeaway": "A hypothesis specifies the change, metric, magnitude, and mechanism. Without magnitude, it cannot fail; without a mechanism, nothing can be learned, even when it is confirmed.",
+    "checkQuestion": "“If we shorten the trial period, conversion will grow.” What is missing here?",
+    "blocks/0/text": "Key question of the node: **how to package an idea into a hypothesis?** The difference is simple: an idea can be discussed infinitely, a hypothesis can be disproved.",
+    "blocks/1/text": "**What happens if you do not answer this question.** The experiment is launched with the wording “let's see what happens”. Three weeks later, people look at the numbers and everyone sees what they want, because they didn't agree in advance on what counts as failure.",
+    "blocks/2/title": "Hypothesis template",
+    "blocks/2/subtitle": "Four parts, and the last one is more important than the rest",
+    "blocks/2/items/0": "**If** <specific change> — what exactly we are changing, down to “visible on screen”.",
+    "blocks/2/items/1": "**then** <metric> will change by <magnitude> over <timeline> — a number, not a direction.",
+    "blocks/2/items/2": "**because** <mechanism> — why we expect this exact outcome.",
+    "blocks/2/items/3": "**and we are wrong if** <what we see upon failure> — recorded in advance.",
+    "blocks/3/text": "The mechanism is the part most often skipped, yet it is what makes the result useful. A hypothesis without a mechanism is confirmed — you learned one number. A hypothesis with a mechanism is confirmed — you learned how your user works, and your next five hypotheses will be more accurate.",
+    "blocks/4/items/0": "Weak: “If we shorten the trial period, conversion will grow”",
+    "blocks/4/items/1": "Strong: “If we shorten the trial period from 7 to 3 days, subscription conversion will grow from 4.1% to 5% over four weeks, because the decision is made before interest in the started book cools off. We are wrong if the share of those who haven't opened a single book grows”",
+    "blocks/4/items/2": "The second formulation is testable, has a guardrail metric, and can fail",
+    "blocks/5/text": "The three-day hypothesis was confirmed: conversion grew to 5.3%.\n\nThe assumed mechanism was “interest does not cool off”. We checked: for those who subscribed, the median time to subscription was 40 minutes, not the third day. That is, we gained not due to urgency, but because the shorter duration forced showing the subscription offer earlier.\n\nThis changed the next hypothesis: instead of shortening the duration further, show the offer during the first session. Without testing the mechanism, the next step would have been “shorten to one day”.",
+    "blocks/5/title": "Vetka: why a mechanism is needed",
+    "blocks/6/text": "The magnitude in the first hypothesis is almost always pulled out of thin air, and that is fine: its job is to force an agreement in advance, not to be precise. But if the stated magnitude is smaller than what the experiment can detect, there is nothing to test — more on this in the lesson on sample size.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

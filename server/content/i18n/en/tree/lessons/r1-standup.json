@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "4e3690d8ef8644ab",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Standup Is Not for Reporting",
+    "keyTakeaway": "A standup answers one question: where reality diverged from the plan. Everything not about divergence is an activity report, and you can skip it.",
+    "checkQuestion": "Everyone took turns sharing what they did yesterday. What did you learn from this about sprint risks?",
+    "blocks/0/text": "Key node question: **how much does the actual state differ from the plan?** Not \"who is doing what,\" but specifically the divergence — because action is required only on that.",
+    "blocks/1/text": "**What happens if you don't answer the question.** The problem is discovered on the last day of the sprint. It existed for four days, but no one said it out loud: everyone individually hoped to make it in time.",
+    "blocks/2/title": "Standup",
+    "blocks/2/subtitle": "Fifteen minutes, three questions, one purpose",
+    "blocks/2/items/0": "**What moved since yesterday** — not \"what I did,\" but what changed on the board.",
+    "blocks/2/items/1": "**What is blocking** — blockers, waiting, uncertainty.",
+    "blocks/2/items/2": "**What is at risk** — which sprint task already looks unrealistic.",
+    "blocks/2/items/3": "Rule: discussions about divergence are moved **after** the standup and only with those involved.",
+    "blocks/3/text": "The difference between \"what I did\" and \"what moved\" seems verbal, but it changes everything. Everyone always has the first one. The second can be empty — and that emptiness is precisely the signal.",
+    "blocks/4/text": "The \"what I did\" format: \"worked on synchronization,\" \"worked on synchronization,\" \"worked on synchronization.\" Three days in a row, everything sounds fine.\n\nThe \"what moved\" format: \"nothing, third day struggling with the scanner returning codes with a delay on old Androids.\"\n\nThe second phrasing is a signal a week before the end of the sprint. The first is a day before.",
+    "blocks/4/title": "Polka, sprint day four",
+    "blocks/5/text": "A standup reveals divergence but does not fix it: if nothing happens after it, it turns into a ritual. And it is useless where people are afraid to admit they are stuck — in that case, it is not the meeting that needs fixing.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

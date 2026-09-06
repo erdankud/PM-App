@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "36d7a9cb33ec6efd",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Which number to trust",
+    "promptBlocks/0/text": "Product: 20 148 orders yesterday. Dashboard: 20 106. Name three likely reasons and state which number goes into the quarterly report for partners.",
+    "referenceReasoningBlocks/0/text": "Reasons — export delay; different definitions (analytics excludes cancelled and test orders); day boundary based on different fields. The report uses the number from the data warehouse: it is reproducible, the same query in a month will return the same number. The product database changes under your hands, and a repeat report from it will be different. Demanding a match is pointless — you must know the difference."
+  }
+}

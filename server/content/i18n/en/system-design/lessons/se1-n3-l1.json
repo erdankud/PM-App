@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "1d4e7de402fb06b8",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:58Z"
+  },
+  "fields": {
+    "title": "Wider Than Name and Phone Number",
+    "keyTakeaway": "Personal data is anything that allows identifying a person, including behavior under an identifier, and purchase categories can reveal health and beliefs even without direct collection.",
+    "sections/0/blocks/0/text": "Is product browsing history without a username considered personal data?",
+    "sections/1/blocks/0/text": "Product teams systematically underestimate the volume of personal data they handle. This is discovered during the very first audit or deletion request, and reworking it costs more than getting it right from the start.",
+    "sections/2/blocks/0/text": "**[[personal-data|Personal data]]** is data relating to an identified or identifiable person. The keyword is identifiable: not just data where a name is written.",
+    "sections/2/blocks/1/text": "Three categories:",
+    "sections/2/blocks/2/text": "**Direct identifiers.** Name, phone number, email, document number.",
+    "sections/2/blocks/3/text": "**[[quasi-identifiers|Quasi-identifiers]].** Do not identify individually, but do together. Date of birth plus postal code plus gender are in many cases sufficient to establish identity. Also includes: device identifier, IP address, precise geolocation.",
+    "sections/2/blocks/4/text": "**Behavioral data tied to an identifier.** Order history, browsing history, search queries. Personal data even if there is no name: they are linked to an identifier, which is linked to a person.",
+    "sections/2/blocks/5/text": "The answer to the opening question: **yes**, if the history is tied to a user or device identifier.",
+    "sections/2/blocks/6/text": "**[[special-categories|Special categories]]** are data concerning health, nationality, beliefs, orientation. They require heightened protection and usually explicit consent. Products collect them accidentally more often than intentionally: purchases of medications, dietary products, religious literature are effectively data on health and beliefs.",
+    "sections/2/blocks/7/text": "A separate risk is **[[re-identification|re-identification]]**. An anonymized dataset may allow restoring a person's identity through a combination of attributes. Removing the name does not make data anonymous.",
+    "sections/3/blocks/0/text": "The inventory revealed an unexpected picture.",
+    "sections/3/blocks/1/text": "*Obvious:* name, phone number, delivery addresses, order history.",
+    "sections/3/blocks/2/text": "*Not obvious, but personal:* device identifier, browsing history, search queries, map points when selecting an address, activity time.",
+    "sections/3/blocks/3/text": "*Special categories by substance:* baby food purchases indicate having a child; gluten-free and lactose-free products indicate health status; halal and kosher indicate religious affiliation.",
+    "sections/3/blocks/4/text": "The last one was a discovery. Polka does not collect health and religion data — but purchase categories allow inferring them.",
+    "sections/3/blocks/5/text": "Product decisions based on this:",
+    "sections/3/blocks/6/text": "*Do not use such categories in advertising segments.* A direct rule. *Do not show them in the partner interface.* The store sees the contents of the order, but aggregated buyer profiles are not built on sensitive categories. *Account for this during anonymization.* Covered in `SE2`.",
+    "sections/4/blocks/0/text": "The definition of personal data varies across jurisdictions, and deciding on specific categories requires a lawyer. The product task is to know what you have and not consider something anonymized when it is not.",
+    "sections/5/blocks/0/text": "Personal data is anything that allows identifying a person, including behavior under an identifier, and purchase categories can reveal health and beliefs even without direct collection."
+  }
+}

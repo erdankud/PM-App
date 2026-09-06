@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "1ea8086b84599dcc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:35Z"
+  },
+  "fields": {
+    "title": "Extensibility: which doors to pay for in advance",
+    "keyTakeaway": "Model flexibility is justified where variety is created without team involvement, and harmful where forms are defined by the product itself.",
+    "sections/0/blocks/0/text": "An engineer suggests \"making it flexible right away so we don't have to redo it later.\" When is this the right investment, and when is it premature complication?",
+    "sections/1/blocks/0/text": "Both mistakes are costly and symmetrical. An inflexible model slows down the product: every new product category, every new entity type requires a release. An excessively flexible model slows down the team constantly: queries get complex, the database stops checking correctness, and figuring out what data even exists becomes impossible. The choice between them is a product choice because it depends on how much variety is expected.",
+    "sections/2/blocks/0/text": "Three ways to leave a door open, from cheap to expensive.",
+    "sections/2/blocks/1/text": "**Optional fields.** We simply add attributes as needed. Works as long as there are few of them and they make sense for most records. Breaks when the table grows sixty columns, out of which five are filled for each record.",
+    "sections/2/blocks/2/text": "**[[extension-table|Extension table]].** The core entity is strict, additional attributes go into a separate table. The database still checks the core, variety is moved to the side. A good compromise for the \"stable core, diverse periphery\" case.",
+    "sections/2/blocks/3/text": "**[[entity-attribute-value|EAV]]—name-value pairs.** Maximum flexibility: any attribute without schema changes. The price is high and often underestimated: the database checks neither types nor mandatory status, filtering becomes slow, and the question \"what attributes even exist?\" has no answer other than \"let's see what accumulated.\" Justified when variety is the essence of the product, not a side effect.",
+    "sections/2/blocks/4/text": "Separately—**[[polymorphic-entity|polymorphic associations]]**: a single entity references records of different types. Comment on an order, a product, a store. Flexible, but the database stops guaranteeing reference integrity, and this can only be fixed in code.",
+    "sections/2/blocks/5/text": "The question that determines the choice is a product question: **how many different forms are expected in two years, and do new forms appear without team involvement?** If clients create new types themselves, you need flexibility. If the team creates them once a quarter, a release is enough.",
+    "sections/3/blocks/0/text": "Three decisions following one principle.",
+    "sections/3/blocks/1/text": "*Product characteristics*—document database. Variety is the essence here: every new category carries its own set of properties, and categories are added constantly. The cost—filtering by characteristics works slower than desired, and moving this to a search engine is under discussion.",
+    "sections/3/blocks/2/text": "*Order attributes*—strict schema, no flexibility. An order has one form, and the appearance of a second form would mean the product has fundamentally changed. Strictness is protection here.",
+    "sections/3/blocks/3/text": "*Partner store settings*—extension table. The core is strict (name, address, hours), plus extensions for chain specifics: their own warehouse codes, rounding rules. Chains set them up through support, not themselves.",
+    "sections/3/blocks/4/text": "A mistake caught in review: it was suggested to make EAV for store settings so partners could set up anything. Rejected with the question \"who will decide what these settings mean?\" A setting whose meaning is not defined by the product is not flexibility, but a sinkhole for uncertainty.",
+    "sections/4/blocks/0/text": "Flexibility added in advance and not used is pure cost. Rule of thumb: pay for extensibility when there are two confirmed different cases, not one case and a hunch.",
+    "sections/5/blocks/0/text": "Model flexibility is justified where variety is created without team involvement, and harmful where forms are defined by the product itself."
+  }
+}

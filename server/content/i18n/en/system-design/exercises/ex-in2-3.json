@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "c3e8d4299f478211",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Make idempotent",
+    "promptBlocks/0/text": "Rephrase so that retries are harmless, without an idempotency key.",
+    "promptBlocks/1/items/0": "«Add 50 bonuses to user»",
+    "promptBlocks/1/items/1": "«Increment item view counter»",
+    "promptBlocks/1/items/2": "«Send SMS about delivery»",
+    "promptBlocks/1/items/3": "«Deduct 1 item unit from warehouse»",
+    "referenceReasoningBlocks/0/text": "1 — «record accrual for order X: 50 points», tying it to the order provides idempotency. 2 — not needed, a lost or duplicate view is harmless, and this is a conscious choice. 3 — «send notification of type `delivered` for order X», recipient stores the fact of sending. 4 — «record stock reservation for order item X», not «decrease by 1». General technique: tie the operation to a natural event identifier instead of describing a change."
+  }
+}

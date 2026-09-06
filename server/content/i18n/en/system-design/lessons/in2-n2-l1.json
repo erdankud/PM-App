@@ -1,0 +1,39 @@
+{
+  "language": "en",
+  "sourceDigest": "6a312af43ce653ea",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:25Z"
+  },
+  "fields": {
+    "title": "What breaks the client",
+    "keyTakeaway": "Adding to a contract is safe; removing and redefining are not, and the safety of addition is ensured by how clients are written, not just the server.",
+    "sections/0/blocks/0/text": "Which API changes are safe, and which will stop user applications and partner integrations?",
+    "sections/1/blocks/0/text": "A [[breaking-change|breaking change]] released without preparation leads to app failures for some users and halts partner integrations. Recovery takes hours, reputational damage—longer. A product manager who knows the boundary distinguishes a fix from a project during planning, rather than during rollback.",
+    "sections/2/blocks/0/text": "An [[additive-change|additive change]] is safe. A breaking one is not. The boundary runs as follows:",
+    "sections/2/blocks/1/text": "**Safe:**",
+    "sections/2/blocks/2/items/0": "Add a new field to the response",
+    "sections/2/blocks/2/items/1": "Add an optional query parameter",
+    "sections/2/blocks/2/items/2": "Add a new endpoint",
+    "sections/2/blocks/2/items/3": "Expand the range of values where the client does not enumerate them",
+    "sections/2/blocks/2/items/4": "Relax validation: make a required field optional",
+    "sections/2/blocks/3/text": "**Breaks:**",
+    "sections/2/blocks/4/items/0": "Remove or rename a field",
+    "sections/2/blocks/4/items/1": "Change field type: string became a number",
+    "sections/2/blocks/4/items/2": "Make an optional field required",
+    "sections/2/blocks/4/items/3": "Change the meaning of a field while keeping the same name—the most insidious, because nothing crashes",
+    "sections/2/blocks/4/items/4": "Add a new value to an enumeration if the client crashes on unknown values",
+    "sections/2/blocks/4/items/5": "Change identifier format, error code, nesting structure",
+    "sections/2/blocks/5/text": "The last item on the safe list deserves special attention. Adding a new status value—`in_transit`, alongside existing `accepted` and `delivered`—is safe only if clients are written as [[tolerant-reader|tolerant readers]]: they ignore unfamiliar values instead of crashing. This is a property of the client, not the server, and it is ensured by convention, not technology.",
+    "sections/2/blocks/6/text": "Hence the practical rule: **contracts must be designed for growth.** A list of values is accompanied by a note that new ones may appear. Clients are written so that unfamiliar fields are ignored.",
+    "sections/3/blocks/0/text": "The case with the order `status` field. We added the value `assembling` between `accepted` and `in_transit`—it seemed like an additive change.",
+    "sections/3/blocks/1/text": "The mobile app displayed statuses via a hardcoded list and showed an empty tracking screen for unknown values. We spotted the problem a day later through support tickets. Rollback wasn't possible—orders in that status already existed. We rushed an emergency release and waited three weeks for users to update.",
+    "sections/3/blocks/2/text": "After that, the mobile app contract was updated with a rule: the server always returns `status` and `status_display_text`. The client displays the text, but builds its logic on the status, falling back to neutral behavior on unfamiliar values. New statuses have been added three times since then without a single incident.",
+    "sections/3/blocks/3/text": "For the partner API, the rule was documented in a separate section: the value list is open, handle unfamiliar values as \"other\".",
+    "sections/4/blocks/0/text": "The tolerant reader solves the problem of additions, but not removals or meaning changes. For those, versions are needed—the next lesson.",
+    "sections/5/blocks/0/text": "Adding to a contract is safe; removing and redefining are not, and the safety of addition is ensured by how clients are written, not just the server."
+  }
+}

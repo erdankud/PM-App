@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "1d73699bb4b53f1b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Check boundaries",
+    "promptBlocks/0/text": "The system is split into services: users, catalog, cart, orders, payment, delivery, notifications. For each task, state how many services are touched and evaluate the boundaries.",
+    "promptBlocks/1/items/0": "Add brand filter to catalog",
+    "promptBlocks/1/items/1": "Add payment method",
+    "promptBlocks/1/items/2": "Show time until delivery on order card",
+    "promptBlocks/1/items/3": "Change phone format",
+    "referenceReasoningBlocks/0/text": "1 — one, good. 2 — payment plus orders for display, two, acceptable. 3 — orders and delivery; if via cross-service call on every open — bad, if via snapshot on event — good. 4 — users, orders, delivery, notifications: four, a sign that the phone was duplicated without an owner, not a sign of bad service boundaries. Rule of thumb: a typical task should fit within a single service."
+  }
+}

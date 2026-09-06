@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "c2b82d85cd162652",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Analyze a Cascade",
+    "promptBlocks/0/text": "The reviews service started responding in 25 seconds. After 10 minutes the catalog stopped opening, after 15 minutes — the main screen. Trace the mechanics and name three safeguards.",
+    "referenceReasoningBlocks/0/text": "catalog calls reviews for rating, waits 25 seconds without a timeout, connections are held up and run out, catalog stops responding entirely; main screen calls catalog — the same thing repeats. Safeguards: short timeout on reviews call, connection pool cutoff, \"page without rating\" stub plus an emergency switch. The root cause is trivial, the scale was created by propagation — this is the defining characteristic of a cascade."
+  }
+}

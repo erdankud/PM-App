@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "sourceDigest": "9ddb45160d8fc45e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:32Z"
+  },
+  "fields": {
+    "title": "The Product Side of Recovery",
+    "keyTakeaway": "Data recovery creates discrepancies with external systems, and a reconciliation procedure with a \"disputed issues resolved in favor of the user\" rule must be prepared in advance, not during an outage.",
+    "sections/0/blocks/0/text": "Data is restored to a state from an hour ago. What do users see and what do we tell them?",
+    "sections/1/blocks/0/text": "A technically successful recovery can be a product disaster if the lost hour contained orders people paid for. Handling such situations takes weeks of support work — and this is work that can be planned in advance.",
+    "sections/2/blocks/0/text": "Restoring to a point in the past creates three classes of problems.",
+    "sections/2/blocks/1/text": "**Disappeared actions.** Orders placed during the lost hour do not exist. But money was charged, emails sent, stores notified. External systems remember things we do not have.",
+    "sections/2/blocks/2/text": "**Discrepancy with external systems.** The payment provider knows about payments, delivery services about orders. Reconciliation after recovery is mandatory and must be prepared in advance.",
+    "sections/2/blocks/3/text": "**Repeated actions.** A user whose order disappeared will place it again. If reconciliation later restores the first one — you get two.",
+    "sections/2/blocks/4/text": "What gets prepared in advance:",
+    "sections/2/blocks/5/text": "*External system reconciliation procedure.* A script that compares our data with the provider and finds discrepancies. *Communication template.* What to write to people whose actions were lost. *Conflict resolution rule.* In favor of the user — always. Restored and repeated orders are sorted out manually, money is refunded immediately.",
+    "sections/2/blocks/6/text": "A separate product decision — **what to do with partially lost state.** An order exists, but bonuses for it were not credited. It is easier to credit them again to everyone in the recovery window than to figure it out: the cost of an error in the user's favor is lower than the cost of investigation.",
+    "sections/3/blocks/0/text": "The \"post-recovery\" procedure is written in advance, before it is needed.",
+    "sections/3/blocks/1/items/0": "Reconciliation with the payment provider over the recovery window — all payments lacking an order.",
+    "sections/3/blocks/1/items/1": "Reconciliation with the delivery service — all deliveries without an order.",
+    "sections/3/blocks/1/items/2": "Restoring orders using provider data where possible.",
+    "sections/3/blocks/1/items/3": "Refunding where impossible, without investigation.",
+    "sections/3/blocks/1/items/4": "A personal email to everyone affected.",
+    "sections/3/blocks/1/items/5": "Bonus compensation to everyone in the window.",
+    "sections/3/blocks/2/text": "Item 4 was discussed the longest. Agreed: refunds without investigation are cheaper than manual investigation, and much cheaper than dissatisfaction. For a one-hour window, this is a maximum of 800 orders, of which disputed ones are a handful.",
+    "sections/3/blocks/3/text": "Tested in a drill: provider reconciliation worked, delivery service reconciliation did not, because their API did not return deliveries for an arbitrary period. Discovered in a drill, not an outage.",
+    "sections/4/blocks/0/text": "Some actions are impossible to restore by definition: views, searches, drafts. Here the only answer is to acknowledge and not try.",
+    "sections/5/blocks/0/text": "Data recovery creates discrepancies with external systems, and a reconciliation procedure with a \"disputed issues resolved in favor of the user\" rule must be prepared in advance, not during an outage."
+  }
+}

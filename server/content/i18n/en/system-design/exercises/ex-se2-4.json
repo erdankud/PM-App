@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "43bae174d4cba746",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Anonymize Correctly",
+    "promptBlocks/0/text": "An analyst requests an export: order date, district, product categories, amount, age group. What is dangerous here and how to fix it?",
+    "referenceReasoningBlocks/0/text": "the combination of date, district, and age group can uniquely identify a person, especially in a sparsely populated district. Fixes: round the date to the week, district to the city or generalized zone, apply group threshold — do not show rows where the feature combination occurs in fewer than 10 people. Check categories for sensitive ones — baby food, gluten-free — and exclude or generalize them. Takeaway: removing the name does not constitute anonymization."
+  }
+}

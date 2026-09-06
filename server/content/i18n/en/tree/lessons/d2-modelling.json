@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "973d113ac10bbb2a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:44:54Z"
+  },
+  "fields": {
+    "title": "Estimate consequences before doing",
+    "keyTakeaway": "A simple four-factor model answers the \"is it worth doing at all\" question in half an hour. Its value is not in forecast accuracy, but in showing which factor actually matters.",
+    "checkQuestion": "An improvement will raise the step's conversion from 20% to 24%. How do you tell if that is a lot or a little?",
+    "blocks/0/text": "The key question of the node: **what will happen if the metrics change?** Ask it before starting the work, not after.",
+    "blocks/1/text": "**What happens if you do not answer this question.** The team takes on an improvement that yields three percent where it affects nothing, and skips one where the same percent costs ten times more.",
+    "blocks/2/title": "Simple model",
+    "blocks/2/subtitle": "A chain of factors and one question for each",
+    "blocks/2/items/0": "**1. Write down the metric as a product** — result = A × B × C × D.",
+    "blocks/2/items/1": "**2. Substitute the current values.**",
+    "blocks/2/items/2": "**3. Change them one at a time** by a realistic amount and observe the result.",
+    "blocks/2/items/3": "**4. Find the sensitive factor** — the one where a small change yields a large effect. Usually there is only one.",
+    "blocks/3/text": "Paying users = visits × registration × activation × payment.\nNow: 40 000 × 8% × 41% × 37% = 485.\n\nWhat an improvement by a quarter gives:\nregistration 8% → 10%: +121 paying\nactivation 41% → 51%: +118\npayment 37% → 46%: +118\n\nAll three are roughly equal — meaning you should choose by cost, not by effect. Doubling visits gives +485, but costs a budget that is not there.\n\nHalf an hour of work resolved the debate over what matters more.",
+    "blocks/3/title": "Smena, where to go",
+    "blocks/4/text": "If the factors are not independent — for instance, traffic growth degrades conversion — simple multiplication lies. You can tell by looking: check whether the factors moved together in the past.",
+    "blocks/4/title": "The model calculates what you put into it",
+    "blocks/5/text": "This is an order-of-magnitude estimate, not a forecast: a twofold error here is normal and does not prevent you from deciding whether it is worth it. Do not use this model for promises to the business — that requires data, not back-of-the-envelope arithmetic.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

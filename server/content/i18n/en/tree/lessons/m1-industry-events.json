@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "8415e10a2ec4f149",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Why go to an industry event",
+    "keyTakeaway": "The goal of the trip is formulated before it happens and in a verifiable form. \"Showing the product\" is not a goal: you cannot tell whether it was worth going or decide whether to go again.",
+    "checkQuestion": "Went to a conference, collected 60 business cards. Is this a success?",
+    "blocks/0/text": "Key node question: **which events are important for promotion?** The question is solved not with a list of conferences, but by why you are going there.",
+    "blocks/1/text": "**What happens if you do not answer the question.** People go to \"show the product\", returning with business cards and impressions. A year later, the decision to go again is made based on memories.",
+    "blocks/2/title": "Three reasons to go",
+    "blocks/2/subtitle": "Different goals require different preparation and different outcomes",
+    "blocks/2/items/0": "**Sales** — your buyers are there. Outcome: scheduled meetings, not collected contacts.",
+    "blocks/2/items/1": "**Research** — your users and competitors are in one place. Outcome: answers to pre-formulated questions.",
+    "blocks/2/items/2": "**Reputation** — people need to know you. Outcome: a talk, a mention, a conversation with someone who writes about the industry.",
+    "blocks/2/items/3": "You can mix them, but **the main reason is one**, otherwise none will work.",
+    "blocks/3/text": "First year: went to \"show the product\", collected 60 business cards, sold zero. Everyone collects business cards; no one is obligated to reply to an email after a conference.\n\nSecond year: goal is research. Wrote down three questions in advance to ask small company accountants, and set up eight 20-minute conversations right on site.\n\nResult: found out that the main barrier is neither price nor features, but the fear that the counterparty will not accept an electronic certificate. This was not in any previous interviews because those interviews were conducted with people who were already using the product.",
+    "blocks/3/title": "Reestr, an accounting conference",
+    "blocks/4/text": "Events scale poorly and cost a lot of team time. They are justified when the audience gathers rarely and is otherwise unreachable; for a product with a broad online audience, reaching out directly is almost always cheaper.",
+    "blocks/4/title": "Model boundaries"
+  }
+}

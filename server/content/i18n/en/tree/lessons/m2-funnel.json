@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "da77cbd39069a091",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "The funnel: the bottleneck is not the step with the lowest percentage",
+    "keyTakeaway": "Improve the step where realistic progress yields the most at the end, not the step with the worst conversion rate. These are different steps more often than it seems.",
+    "checkQuestion": "Conversion rate for the \"payment\" step is 4%, and for \"registration\" is 40%. Why shouldn't you tackle payment immediately?",
+    "blocks/0/text": "Key node question: **how to turn bottlenecks into growth points?**",
+    "blocks/1/title": "How to find a bottleneck",
+    "blocks/1/subtitle": "An order that saves a quarter",
+    "blocks/1/items/0": "**Map out the funnel step by step** and look at absolute losses rather than percentages: where are most people lost.",
+    "blocks/1/items/1": "**Ask what is normal here** — 4% converting to payment might be an industry norm, while 40% converting to registration might be a failure.",
+    "blocks/1/items/2": "**Estimate the ceiling** — how realistic is it to move the step. Doubling 4% is harder than boosting 40% to 55%.",
+    "blocks/1/items/3": "**Calculate bottom-line impact** — how many paying users each improvement adds. Choose based on this number.",
+    "blocks/1/items/4": "**Segment by source** — often a \"bad step\" is only bad for a single channel.",
+    "blocks/2/text": "Visit → registration 9% → first document 38% → payment 22%.\nOut of 20 000 visits: 1 800 → 684 → 150 paying users.\n\nIt seems payment (22%) is what needs fixing. But:\nregistration 9% → 11% yields +33 paying users;\nfirst document 38% → 48% yields +39;\npayment 22% → 26% yields +27.\n\nSegmentation adds the crucial insight: 61% of search visitors create a first document, while only 14% from social media do. So the hole isn't in the step, but in whom we bring in.",
+    "blocks/2/title": "Reestr, where the leak actually is",
+    "blocks/3/text": "Between \"landed\" and \"registered\" there is often a hidden gap: read the price, left to compare, came back a week later. If this isn't tracked, the funnel lies and you optimize what is visible.",
+    "blocks/3/title": "The step you don't see is the most dangerous",
+    "blocks/4/text": "A funnel models a linear journey, but people loop back, leave, and return from another source. It also remains silent on those who never reached it. And while it shows where the loss occurs, it doesn't show why — interviews and session recordings answer the \"why\".",
+    "blocks/4/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "sourceDigest": "7f796e7e3053ccc6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Where the number broke",
+    "promptBlocks/0/text": "DAU dropped by 12%. For each observation, state what it indicates.",
+    "promptBlocks/1/items/0": "Number of orders in product database did not change",
+    "promptBlocks/1/items/1": "Drop is visible only on iOS",
+    "promptBlocks/1/items/2": "Drop started exactly at midnight on the 14th",
+    "promptBlocks/1/items/3": "Historical data for last year changed too",
+    "promptBlocks/1/items/4": "Drop only in the last hour and evens out",
+    "referenceReasoningBlocks/0/text": "1 — product is fine, number is broken. 2 — platform issue, most likely release or SDK. 3 — sharp boundary points to schema drift or event loss, not human behavior. 4 — metric definition changed, not data. 5 — export delay, wait. Rule: check against product database first, then go top-down."
+  }
+}

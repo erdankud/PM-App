@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "0d9f75553fa67478",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "Interface for a slow response",
+    "keyTakeaway": "Streaming, a filled pause before the first token, and output starting with useful info turn an eight-second response into an acceptable one without a single millisecond of acceleration.",
+    "sections/0/blocks/0/text": "The response takes eight seconds. How to build a screen so this works?",
+    "sections/1/blocks/0/text": "AI features are almost always slower than what users are accustomed to. A product that hasn't designed the waiting experience loses people on a feature that objectively works.",
+    "sections/2/blocks/0/text": "Five techniques specific to generative responses.",
+    "sections/2/blocks/1/text": "**Streaming is mandatory** where the response is longer than a couple of sentences. Lack of streaming is the most common mistake of early AI feature versions.",
+    "sections/2/blocks/2/text": "**Show what is happening before the first token.** TTFT is a pause where nothing is printed. Filled with an indicator and text: \"searching for matching items\".",
+    "sections/2/blocks/3/text": "**Show intermediate steps** if there are several. \"Found 12 items → checking availability → assembling set\". Turns eight seconds of waiting into watching work happen.",
+    "sections/2/blocks/4/text": "**Provide an ability to interrupt.** A \"stop\" button on long generation. Cheap, strongly reduces annoyance.",
+    "sections/2/blocks/5/text": "**Structure output so useful info appears first.** If the response starts with a preamble, the person reads useless info. The instruction should require jumping straight to the point—this is a product requirement for format.",
+    "sections/2/blocks/6/text": "Separately — **what to do with an error in the middle.** The response started and cut off. The product must decide: show partial, retry entirely, show error. Usually the right thing is to retry, but not silently.",
+    "sections/3/blocks/0/text": "Cart picking:",
+    "sections/3/blocks/1/text": "*0–1.1 s:* \"Looking at what you usually buy\". *1.1–3 s:* first items appear as they generate. *3–7.8 s:* set is supplemented, sum counter updates. *All the time:* \"Stop\" button.",
+    "sections/3/blocks/2/text": "The instruction requires starting with items rather than an explanation. The first version started with the phrase \"I have picked a weekly set for you taking into account your previous purchases\"—22 tokens of useless text before the first item, meaning an extra 250 milliseconds before useful info.",
+    "sections/3/blocks/3/text": "Generation cutoff: assembled part is shown plus \"failed to finish assembling\" and a retry button. A partial set is useful in its own right.",
+    "sections/3/blocks/4/text": "We measured the effect of streaming: without it, drop-off on this feature was 34%, with streaming—11%. Time did not change.",
+    "sections/4/blocks/0/text": "Streaming complicates validation: checking the response as a whole is only possible when it's ready. For scenarios with strict checking, streaming may be inapplicable, and then an honest indicator is needed.",
+    "sections/5/blocks/0/text": "Streaming, a filled pause before the first token, and output starting with useful info turn an eight-second response into an acceptable one without a single millisecond of acceleration."
+  }
+}

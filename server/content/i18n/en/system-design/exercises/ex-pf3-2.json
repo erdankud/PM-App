@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "6010035fd6b0fb83",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Find the Excess",
+    "promptBlocks/0/text": "Where to look first if the bill grew by 25% without audience growth?",
+    "referenceReasoningBlocks/0/text": "order — idle resources (forgotten environments, replicas after migrations); storage accumulation without retention; new analytics events added by the team; inter-zone traffic after migrations; billing model change or expiration of reservations. Verified in a day if resource tagging is in place. Without tagging, the first step is to introduce it, otherwise analysis is impossible."
+  }
+}

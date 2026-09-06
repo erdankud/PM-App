@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "50ed05bf44f1e137",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:58:13Z"
+  },
+  "fields": {
+    "title": "What Can Be Moved Closer",
+    "keyTakeaway": "A CDN brings static assets closer cheaply and provides most of the geographic gain, while bringing dynamic data closer requires multi-region setup and costs an order of magnitude more.",
+    "sections/0/blocks/0/text": "The user is 6 thousand kilometers away from the server. What do we do about it?",
+    "sections/1/blocks/0/text": "Geography introduces latency that cannot be eliminated by optimization. For part of the audience, this is the difference between a fast and a slow product, and the solution is cheap if you know what exactly to move out.",
+    "sections/2/blocks/0/text": "Physics: light in fiber optic cable travels about 200 km per millisecond, the actual path is longer than a straight line. A thousand kilometers is roughly 10 ms one way, 20 ms for a [[round-trip-time|round trip]].",
+    "sections/2/blocks/1/text": "[[cdn|CDN]]—a network of servers in different geographies serving copies of [[static-assets|static files]] from the nearest [[pop|point of presence]].",
+    "sections/2/blocks/2/text": "What moves to a CDN easily:",
+    "sections/2/blocks/3/text": "*Images, video, fonts, scripts, styles.* Do not change between users and between requests. *Rarely changing data.* Catalog categories, reference books, configuration.",
+    "sections/2/blocks/4/text": "What does not move:",
+    "sections/2/blocks/5/text": "*Personal data.* Different for everyone. *Data requiring freshness.* Stock, prices. *Write operations.* Always go to the primary region.",
+    "sections/2/blocks/6/text": "Practical ratio: **on a typical screen, 60–80% of bytes are static.** Moving them to a CDN provides most of the geographic gain at the cost of days of work.",
+    "sections/2/blocks/7/text": "The remaining part—dynamic requests to the primary region—is reduced only by bringing the application itself closer, i.e., multi-region setup from `SC3-N3`, which is an order of magnitude more expensive.",
+    "sections/2/blocks/8/text": "A separate technique is moving not data closer, but the entry point: connection is established with the nearest node, then travels over the provider's optimized network. Saves on connection establishment, which is expensive on mobile networks.",
+    "sections/3/blocks/0/text": "Product images in a CDN from the very beginning. Without this, 2.1 MB on the main screen would load from a single region.",
+    "sections/3/blocks/1/text": "Geography check showed: for the Far East (6% of the audience), time to interactivity was 3.8 s vs 2.1 s in the European part. Breakdown: 14 dynamic requests × 70 ms extra latency = about 1 second.",
+    "sections/3/blocks/2/text": "What was done: reduced the number of dynamic requests from 14 to 4 (same techniques as for everyone), moved configuration and categories to the CDN. The gap narrowed to 0.6 s.",
+    "sections/3/blocks/3/text": "A second region for writes was not considered—per the calculation in `SC3-N3-L1`, it does not pay off for 6% of the audience.",
+    "sections/4/blocks/0/text": "A CDN does not help on the first request to a cold point of presence and requires attention to invalidation: an updated image may be served as old for several hours. Fixed by a version in the file name.",
+    "sections/5/blocks/0/text": "A CDN brings static assets closer cheaply and provides most of the geographic gain, while bringing dynamic data closer requires multi-region setup and costs an order of magnitude more."
+  }
+}

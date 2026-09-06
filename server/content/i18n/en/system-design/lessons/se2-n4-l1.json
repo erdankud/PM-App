@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "7c40cc868c933c00",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "Three Kinds of Deletion",
+    "keyTakeaway": "Deletion is a process with stages and timelines, for transactional data the right answer is usually anonymization, and a promise must describe what actually happens.",
+    "sections/0/blocks/0/text": "A user deleted an account. What happened to their orders?",
+    "sections/1/blocks/0/text": "A promise about deletion is a legal obligation. An unfulfillable promise is worse than a limited but honest one. Covered mechanically in `DS2-N6-L2`, here — from the side of obligations and design.",
+    "sections/2/blocks/0/text": "Three actions that look identical:",
+    "sections/2/blocks/1/text": "**[[soft-delete|Soft delete]].** Marking. Data remains. Acceptable as an intermediate step, unacceptable as an answer to a deletion request.",
+    "sections/2/blocks/2/text": "**Hard delete.** Erasing. Breaks links, requires [[cascade-delete-2|cascades]] or [[tombstone|tombstones]] — records of the deletion fact.",
+    "sections/2/blocks/3/text": "**[[anonymization|Anonymization]].** Breaking the link with the person while retaining data. Usually the right answer for transactional records: the order remains for reporting, the person disappears from it.",
+    "sections/2/blocks/4/text": "What determines the choice — **storage obligations.** Some data cannot be deleted: payment documents, tax reporting. For them the answer is anonymization within permissible limits and honest disclosure in the policy.",
+    "sections/2/blocks/5/text": "Five places deletion must reach:",
+    "sections/2/blocks/6/text": "*Main database.* Obvious. *Analytical storage.* Separate system, separate work. *Search indices and caches.* Often forgotten, and the person remains discoverable. *Backups.* Selectively deleting is usually impossible; the answer is backup expiration timeline. *Third parties.* Requires separate requests if data was transferred.",
+    "sections/2/blocks/7/text": "Product-wise important: **deletion is a process, not an operation.** It has a deadline, stages, and states, and this can be shown to the user.",
+    "sections/3/blocks/0/text": "Account deletion as a process with a visible state:",
+    "sections/3/blocks/1/text": "*Immediately:* profile, contacts, addresses, cart are deleted; reviews are anonymized; sessions are terminated; account becomes unavailable. *Within a day:* deletion reaches the analytical storage and search index. *Within 30 days:* backups expire. *Remains:* payment documents by law, anonymized purchase facts.",
+    "sections/3/blocks/2/text": "The screen shows these four stages with markers — not because the user is tracking, but because it is more honest than a single phrase.",
+    "sections/3/blocks/3/text": "Deferred deletion during an active order: deletion is queued, executed after delivery completion. Explained explicitly.",
+    "sections/3/blocks/4/text": "Cancellation period — 7 days. Came from support: some people deleted their account in annoyance and came back. Over a quarter 12% of deletions are canceled.",
+    "sections/3/blocks/5/text": "Policy wording: personal data is deleted immediately, disappears from backups within a month, anonymized purchase statistics remain and are not linked to the person.",
+    "sections/4/blocks/0/text": "The right to deletion has exceptions: retention obligations, establishing legal claims. Boundaries are defined by the lawyer, the product fulfills and explains them.",
+    "sections/5/blocks/0/text": "Deletion is a process with stages and timelines, for transactional data the right answer is usually anonymization, and a promise must describe what actually happens."
+  }
+}

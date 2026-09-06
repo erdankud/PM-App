@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "sourceDigest": "672e11751907cd83",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Design expectations",
+    "inputs/0/label": "Total response time",
+    "inputs/0/unit": "s",
+    "promptBlocks/0/text": "Feature: summarize 40 product reviews. Input 6,000 tokens, output 200, TTFT 1.4 s, speed 80 tokens/s.",
+    "promptBlocks/1/items/0": "Total time?",
+    "promptBlocks/1/items/1": "Four UI solutions.",
+    "promptBlocks/1/items/2": "One way to speed up.",
+    "referenceReasoningBlocks/0/text": "1.4 + 200/80 = 3.9 s. UI: streaming; pause text 'reading 40 reviews'; output starts with the bottom line, no preamble; stop button. Speed up: summarization doesn't depend on the user — compute in advance and cache, updating when new reviews accumulate. Then user wait time is zero. Technique: ask if calculation at request time is mandatory."
+  }
+}

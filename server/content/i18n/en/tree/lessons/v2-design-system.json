@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "f23a81339564acaf",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "Design system and metaphor: why identical things should look identical",
+    "keyTakeaway": "A design system is an agreement on repeatable solutions, while a metaphor is about how the product names things. Both save user attention rather than designer time: the user learns once.",
+    "checkQuestion": "The product has three different ways to show \"save error\". Why is this bad, besides visual appearance?",
+    "blocks/0/text": "The key question of this node: **what elements build the interface?** A product manager doesn't need to draw components, but needs to understand what is being paid for here and what breaks without it.",
+    "blocks/1/title": "What a design system consists of",
+    "blocks/1/subtitle": "Bottom up",
+    "blocks/1/items/0": "**Tokens**—colors, spacing, fonts, radii. Changed in one place.",
+    "blocks/1/items/1": "**Components**—button, field, table, modal window, empty state. Each lists states: normal, pressed, disabled, error, loading.",
+    "blocks/1/items/2": "**Templates**—standard pages: list, object card, multi-step wizard.",
+    "blocks/1/items/3": "**Rules**—when to apply what. Without this layer, the system turns into a set of pictures.",
+    "blocks/2/text": "**Metaphor is a separate thing.** It is the language the product uses to speak about the domain. The user already has a language, and the product either aligns with it or forces translation.",
+    "blocks/3/text": "First option: \"order cards\" and \"truck slots,\" where the dispatcher drags a card into a slot. Pretty, looks like a task board.\n\nSecond option: \"waybill\"—the same document dispatchers have filled out for twenty years, with the same fields in the same order.\n\nThe second option won when observing three dispatchers: onboarding took minutes instead of an hour, and there were no questions about \"what is a slot.\"\n\nYou should take metaphors from user speech. If they say \"close the waybill\" in conversation, it is strange to call it \"terminate planning session.\"",
+    "blocks/3/title": "Dispetcher: two planning metaphors",
+    "blocks/4/text": "A off-the-shelf component library covers almost everything. Building a custom one starts when there are multiple products or when brand recognition is part of the value. Before that, its cost should be honestly weighed against features that were not built instead.",
+    "blocks/4/title": "A custom design system rarely pays off in an early-stage product",
+    "blocks/5/text": "Interface consistency does not make a product needed. It lowers learning costs and error rates; it doesn't create demand or fix bad business logic.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "07dbf52d5bc98b96",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:43:55Z"
+  },
+  "fields": {
+    "title": "What job the product is hired for",
+    "keyTakeaway": "Look at what a person does instead of using your product—that is where the real job is visible. A competitor is almost never who you think it is.",
+    "checkQuestion": "Business owners manage the schedule in a messaging app. What job did they hire the messaging app for?",
+    "blocks/0/text": "The key question of this node: **how does the customer solve their problems right now?** Not “what do they want,” but what they actually do today, before you.",
+    "blocks/1/text": "**What happens if you ignore this question.** The product gets compared feature-by-feature with similar products, missing that the real alternative is a notepad, a messenger, or an assistant who “just remembers.”",
+    "blocks/2/title": "The job a product is hired for",
+    "blocks/2/subtitle": "Three questions that uncover it",
+    "blocks/2/items/0": "**What was the person doing before they started doing this?** The previous solution is the competitor.",
+    "blocks/2/items/1": "**At what point did they decide they couldn’t go on like this?** A trigger event, not gradual dissatisfaction.",
+    "blocks/2/items/2": "**What would have needed to happen for them to stay with the old way?** This reveals the retaining forces.",
+    "blocks/2/items/3": "A job is framed as the **progress** a person makes, not as a feature.",
+    "blocks/3/text": "Business owners kept the schedule in a group chat. Formally, this is bad: there is no history, and you cannot find last week’s schedule.\n\nBut conversations showed what job it was hired for: **making sure the person saw it**. In a chat, you can see read receipts and follow up immediately.\n\nA product with a pretty calendar did not do this job—which is why the chat stayed, even for those using Smena.\n\nThe takeaway was not about the calendar: they needed to show which employees opened the schedule.",
+    "blocks/3/title": "Smena: what the messenger was hired for",
+    "blocks/4/text": "Most often, it is a spreadsheet, paper, a messenger, or a human. None of these show up in competitor analysis if you search by product names.",
+    "blocks/4/title": "A competitor is what gets replaced, not what looks similar",
+    "blocks/5/text": "JTBD explains the past well and predicts the future poorly: by reconstructing the job, you will understand why the current solution is hired, but you will not know if they will hire yours. Also, the phrasing easily turns into a word game—if the job sounds like “becoming a better version of yourself,” you have strayed too far from what is observable.",
+    "blocks/5/title": "Limits of the framework"
+  }
+}

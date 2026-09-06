@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "d37687e1619d250f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Retrospective and team agreements: how a team fixes itself",
+    "keyTakeaway": "A retrospective is useful when it ends with a single change that has an owner and a deadline. Discussion without this turns into complaining, and after three months the team stops coming.",
+    "checkQuestion": "The same problem is raised for the third time at a retrospective. What does this mean?",
+    "blocks/0/text": "**What happens if you don't answer this question.** The process forms on its own: no one articulated rules, everyone acts on past experience, and conflicts are blamed on personalities.",
+    "blocks/1/title": "A retrospective that changes things",
+    "blocks/1/subtitle": "One hour every two weeks, strict structure",
+    "blocks/1/items/0": "**Facts before opinions** — first what happened: cycle time, incidents, what was shipped. Otherwise people discuss whatever was most memorable.",
+    "blocks/1/items/1": "**What got in the way** — no names; it's about process, not people.",
+    "blocks/1/items/2": "**One change** — not a list of seven. Just one, with an owner and a deadline.",
+    "blocks/1/items/3": "**Reviewing the past** — starts with checking the status of the previous change. This is the only thing distinguishing a retrospective from a chat.",
+    "blocks/2/text": "**Team Canvas** solves a related task: agreements that are usually implicit. Who is responsible for what, how decisions are made during disagreements, what counts as done, how we deliver bad news, what everyone expects from others. Talking through this takes two hours and eliminates most future conflicts.",
+    "blocks/3/text": "First after team growth: listed twelve problems, wrote down all, did nothing.\n\nSecond — structured. Facts: cycle time 22 days, 18 spent waiting; two urgent fixes derailed plans.\nBlocker: tasks arrive directly from sales, bypassing the queue.\nChange: any urgent task passes through the PM, who has the right to say \"into the next sprint.\" Owner — PM. Deadline — two weeks.\n\nThird began with a review: urgent tasks dropped to three instead of nine. One change worked, took on the next.\n\nA quarter later, the team voluntarily suggested revising the definition of \"done.\"",
+    "blocks/3/title": "Polka, an eleven-person retrospective",
+    "blocks/4/text": "If the same point is raised a third time, it's not forgetfulness: the team lacks authority to change it. Then the PM's task is to escalate the issue where authority lies, rather than running a fourth retrospective.",
+    "blocks/4/title": "A recurring complaint is a signal that the solution lies outside team authority",
+    "blocks/5/text": "A retrospective doesn't cure issues lying outside the team: headcount shortage, conflicting departmental goals, vague strategy. It fixes well what the team influences, while creating a harmful illusion of progress where it doesn't.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

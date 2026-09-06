@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "902bf2ea9626d3a4",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "What p95 and p99 mean",
+    "keyTakeaway": "Percentiles show how many people have a bad experience, while averages hide it, and the tail multiplied by the number of requests per session stops being a rare edge case.",
+    "sections/0/blocks/0/text": "What do three numbers in a report mean: p50 = 180 ms, p95 = 1.4 s, p99 = 6.2 s?",
+    "sections/1/blocks/0/text": "A target without a specified percentile is unachievable by definition: there will always be a request slower than any threshold. Such a target is either ignored or generates endless tail optimization.",
+    "sections/2/blocks/0/text": "A [[percentile|percentile]] is the value below which a given share of measurements falls.",
+    "sections/2/blocks/1/text": "p50 (median): half the requests are faster. p95: 95% are faster, 5% are slower. p99: 1% are slower.",
+    "sections/2/blocks/2/text": "The three numbers from the question read as follows: a typical user waits 180 ms, every twentieth user waits more than one and a half seconds, and every hundredth waits more than six.",
+    "sections/2/blocks/3/text": "**Why the [[mean|average]] lies.** Response time has an asymmetric distribution: the minimum is constrained by physics, while the maximum is unbounded. A few very slow requests skew the average without showing how many there are. An average of 200 ms is compatible with both a uniform distribution and a scenario where 95% take 50 ms and 5% take 3 seconds.",
+    "sections/2/blocks/4/text": "**How many people are behind the tail.** 1% at 6.3 million requests per day is 63 thousand requests. If one user makes 25 requests per session, the probability of encountering at least one slow request per session at p99 = 6 seconds is about 22%. That is, every fifth person sees a six-second delay at least once per visit.",
+    "sections/2/blocks/5/text": "This arithmetic is the main takeaway: **the tail, multiplied by the number of requests per session, stops being a tail.** This is why targets are set using p95 and p99 rather than the average.",
+    "sections/2/blocks/6/text": "What to look at alongside percentiles: a [[histogram|histogram]] shows the shape. Two humps usually mean two different paths—for example, a cache hit and a miss.",
+    "sections/3/blocks/0/text": "Checkout: p50 = 640 ms, p95 = 2.1 s, p99 = 11 s.",
+    "sections/3/blocks/1/text": "The 11-second p99 turned out to be almost entirely due to the payment provider—the exact one whose p95 is 14 seconds according to the contract. Our tail was someone else's tail.",
+    "sections/3/blocks/2/text": "Per-user calculation: with 20 thousand checkouts per day, 1% is 200 people daily waiting more than 11 seconds on the payment screen. With a 19% churn at peak, these 200 people are a noticeable part of the problem.",
+    "sections/3/blocks/3/text": "A separate discovery when analyzing the catalog histogram: two humps at 80 ms and 900 ms. The first is a cache hit, the second is a miss. The hit rate turned out to be 71%, not 95% as believed. The problem was not speed, but the fact that caching worked twice as poorly as expected.",
+    "sections/4/blocks/0/text": "p99.9 and higher are noisy at low volumes: at a thousand requests, that is a single measurement. Looking at them makes sense only at scale.",
+    "sections/5/blocks/0/text": "Percentiles show how many people have a bad experience, while averages hide it, and the tail multiplied by the number of requests per session stops being a rare edge case."
+  }
+}

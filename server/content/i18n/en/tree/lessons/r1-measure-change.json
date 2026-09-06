@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "e7286894a645c08c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Measuring a change, not just looking at a chart",
+    "keyTakeaway": "What counts as success is decided before release, not after. A pre-defined number tests a hypothesis; the exact same number found on a chart afterward merely confirms what you already believed.",
+    "checkQuestion": "After a release, the metric grew by 4%. What is missing to attribute this growth to the release?",
+    "blocks/0/text": "The key question of this node: **how much did changes impact value?** In the HEART lesson, we selected what to monitor continuously. Here it is different: verifying a specific change.",
+    "blocks/1/text": "**What happens if you don't answer this question.** After a release, people open a dashboard, find a metric that went up, and declare success. A metric that dropped fails to make it into the report—not out of malice, but because people were looking for confirmation.",
+    "blocks/2/title": "What to record before release",
+    "blocks/2/subtitle": "Four lines, each guarding against a specific mistake",
+    "blocks/2/items/0": "**What should change**—a single pre-defined metric.",
+    "blocks/2/items/1": "**By how much**—the exact number that will count as success. \"Will grow\" is not enough.",
+    "blocks/2/items/2": "**Over what timeframe**—an observation window chosen based on scenario frequency, not impatience.",
+    "blocks/2/items/3": "**What must not deteriorate**—a guardrail metric. This is what catches cases where you win in one area and lose in another.",
+    "blocks/3/text": "The fourth item is skipped most often, yet it is the most valuable. Almost any change improves something; the question is always at what expense.",
+    "blocks/4/text": "Recorded before release: store inventory time will drop from 90 to 70 minutes over three weeks; discrepancy rate after audit will not increase.\n\nThree weeks later: 68 minutes—success on the primary metric. But the discrepancy rate grew from 3% to 7%: people started scanning faster and missed barcodes more often, while the app silently accepted it.\n\nWithout a guardrail metric, the release would have been logged as a win. With it, it became clear that a follow-up task was needed—confirmation on a suspicious jump in stock count.",
+    "blocks/4/title": "Polka, fast scanning release",
+    "blocks/5/text": "A before/after measurement does not prove causality: seasonality, marketing, or another release could have happened in between. Causality requires a control group—a holdout or at least a segment that didn't receive the change. More on this in the experiment module.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

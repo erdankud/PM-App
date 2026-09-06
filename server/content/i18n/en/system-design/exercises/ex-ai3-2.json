@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "sourceDigest": "7fac5ac69811d151",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:08:11Z"
+  },
+  "fields": {
+    "title": "Design a Plan B",
+    "promptBlocks/0/text": "For each feature, name the Plan B and what to show the user.",
+    "promptBlocks/1/text": "Recommendation assistant 2. Automatic categorization of support tickets 3. Translation of product descriptions 4. Review moderation for profanity before publishing",
+    "referenceReasoningBlocks/0/text": "1 — offer to repeat the previous order, honest message. 2 — queue for later, internal processing, user does not see it. 3 — show original with language tag. 4 — critical: cannot publish without checking, so the review goes into a manual moderation queue, user sees \"review under review\". Rule of thumb: if an action is unsafe without AI, Plan B is not to skip, but to defer."
+  }
+}

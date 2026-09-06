@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "31f11acc7693c042",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:35Z"
+  },
+  "fields": {
+    "title": "Expand-contract: four phases instead of one",
+    "keyTakeaway": "Changing the structure of live data is a chain of releases with pauses between them, and you must plan it as a sequence where the user sees only a single link.",
+    "sections/0/blocks/0/text": "Why does an engineer say that renaming a field will take three releases if the edit itself is one line of code?",
+    "sections/1/blocks/0/text": "A PM planning a data change as a single task puts something into the sprint that physically does not fit in the sprint. Then two outcomes follow: either the deadline slips and it looks like a team problem, or the change is rushed with downtime, which costs more. Proper planning looks unusual—one product goal takes three releases—and the PM has to defend this plan.",
+    "sections/2/blocks/0/text": "[[expand-contract|Expand-contract]] is a standard technique for schema changes in a running product. The idea: old and new coexist until everyone has migrated.",
+    "sections/2/blocks/1/text": "**Phase 1. Expand.** Add the new without touching the old. A new column next to the old one, both structures exist. The user notices nothing.",
+    "sections/2/blocks/2/text": "**Phase 2. [[dual-write|Dual write]].** Code writes to both places. Reads from the old one for now. Data accumulates in the new place, errors are visible immediately, rollback is trivial.",
+    "sections/2/blocks/3/text": "**Phase 3. Migrate and switch.** [[backfill|Backfill]] populates the new location for old records. Then reading switches to the new one—usually via a [[feature-flag|feature flag]], first for a subset of users. [[shadow-read|Shadow reads]] are often added: read from the new, compare with the old, show the old. Discrepancies are caught before a human ever sees them.",
+    "sections/2/blocks/4/text": "**Phase 4. Contract.** Dual writing is turned off, the old is deleted. The only irreversible phase, and it is done last—usually weeks after the third.",
+    "sections/2/blocks/5/text": "Why this drags out: you need pauses between phases. Mobile apps do not update instantly, and old versions on users' phones keep writing the old way for months. Phase 4 cannot happen until the share of old versions becomes negligible.",
+    "sections/2/blocks/6/text": "How to plan it: **a data change is a chain of releases with pauses, not a task.** In the roadmap, it looks like four items per quarter, three of which the user will not see.",
+    "sections/3/blocks/0/text": "Transitioning an order from a single delivery address to multiple addresses.",
+    "sections/3/blocks/1/text": "*Release 1.* The \"Order delivery address\" entity appeared, the old field remained. Nothing changed.",
+    "sections/3/blocks/2/text": "*Releases 2–3, three weeks.* Dual write. Read the old way. Found and fixed two places that wrote addresses bypassing the core code—nobody knew about them, including the tech lead.",
+    "sections/3/blocks/3/text": "*Release 4, two weeks.* Backfill of eight million orders via a background process. Shadow reads showed a 0.4% discrepancy—orders created before an old migration. Handled separately.",
+    "sections/3/blocks/4/text": "*Releases 5–6.* Switch reads: 5% of users, then 50%, then everyone. Released the feature itself here—multiple addresses.",
+    "sections/3/blocks/5/text": "*Release 7, two months later.* Deleted the old field when the share of old app versions dropped below 1%.",
+    "sections/3/blocks/6/text": "Total is over three months, of which user value appeared on the fifth release. Exactly why the initial estimate of \"three weeks\" from block DS1 was honest for the feature itself and incomplete for all the work.",
+    "sections/4/blocks/0/text": "For small changes, the four phases are redundant—adding an optional field is done in one go. The technique is needed when changing a structure read by a lot of code, or when there are clients who do not update instantly.",
+    "sections/5/blocks/0/text": "Changing the structure of live data is a chain of releases with pauses between them, and you must plan it as a sequence where the user sees only a single link."
+  }
+}

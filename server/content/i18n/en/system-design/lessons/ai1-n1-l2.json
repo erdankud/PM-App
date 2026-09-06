@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "72b74f36224d50b5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "What determines response quality",
+    "keyTakeaway": "A bad response most often means missing data in the context or an unclear instruction, and replacing the model is the last lever, not the first.",
+    "sections/0/blocks/0/text": "The model response is bad. Is the model, the prompt, or the data to blame?",
+    "sections/1/blocks/0/text": "The team's first response to poor quality is usually \"let's take a stronger model\", and this is the most expensive of possible decisions. In most cases, the problem is elsewhere, and troubleshooting takes hours instead of weeks.",
+    "sections/2/blocks/0/text": "Quality is determined by four things, in order of frequency of problems.",
+    "sections/2/blocks/1/text": "**Data in context.** The model does not know what it was not given. If the answer about product ingredients is wrong, and the ingredients are not in the context, this is not a model hallucination, but missing data. The most frequent cause, and the most underestimated.",
+    "sections/2/blocks/2/text": "**Task formulation.** An unclear instruction yields an unclear response. The model does not guess implicit requirements: if the format is not set, it will be arbitrary.",
+    "sections/2/blocks/3/text": "**Examples.** Showing two or three samples of the desired response usually improves the result more than a long description of requirements.",
+    "sections/2/blocks/4/text": "**Model.** A stronger model gives a better result, but is more expensive and slower. This is the last lever, not the first.",
+    "sections/2/blocks/5/text": "Practical troubleshooting order for a bad response:",
+    "sections/2/blocks/6/items/0": "Is there information in the context for the correct answer? If not, the problem is not the model.",
+    "sections/2/blocks/6/items/1": "Is the task clear from the instruction? Read the prompt as an outsider.",
+    "sections/2/blocks/6/items/2": "Are the format and constraints explicitly stated?",
+    "sections/2/blocks/6/items/3": "Would examples help?",
+    "sections/2/blocks/6/items/4": "Only now — the model.",
+    "sections/2/blocks/7/text": "The product role here is primary: **the instruction for the model is product text.** It determines the tone, boundaries, format, and behavior in edge cases, and it should be written by the person responsible for the product.",
+    "sections/3/blocks/0/text": "The feature \"answer a question about a product\" gave poor results. Troubleshooting in order:",
+    "sections/3/blocks/1/text": "*Data.* Ingredients and allergens are present for 62% of items. For the rest, the model answered with guesses. The first fix was an explicit instruction to answer \"no data\" when there is none. Half of the problems went away.",
+    "sections/3/blocks/2/text": "*Formulation.* The instruction said \"answer questions about the product\". It didn't say what to do with non-product questions, comparison requests, or medical questions. We added it—another third went away.",
+    "sections/3/blocks/3/text": "*Examples.* Three response samples set the length and tone. Responses stopped being sometimes a single sentence, sometimes a paragraph.",
+    "sections/3/blocks/4/text": "*Model.* By this point, the quality was satisfactory. A stronger model was not needed.",
+    "sections/3/blocks/5/text": "A separate finding: the question \"is this okay for a child\" came in 4% of cases. Medical in nature. We added an explicit rule: do not answer, redirect to ingredients, and recommend consultation. This is a product decision, and without it, the model would answer willingly and incorrectly.",
+    "sections/4/blocks/0/text": "There are tasks where the model genuinely fails, and no prompt engineering helps. The sign is that quality does not improve from changes to context and instructions.",
+    "sections/5/blocks/0/text": "A bad response most often means missing data in the context or an unclear instruction, and replacing the model is the last lever, not the first."
+  }
+}

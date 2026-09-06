@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "fd0ea7b828580b3c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Roadmap: a commitment to direction, not a list of dates",
+    "keyTakeaway": "A useful roadmap answers what problems we are solving in the coming months and why those specific ones. A list of features with dates is a plan that lies to everyone right away and in the very first quarter.",
+    "checkQuestion": "Sales is asking for exact dates for three features six months out. What will you give them instead?",
+    "blocks/0/text": "Key question of the node: **which value to amplify first?**",
+    "blocks/1/title": "Roadmap by horizons",
+    "blocks/1/subtitle": "Precision drops with distance — and that's honest",
+    "blocks/1/items/0": "**Now** — what's in progress. Concrete, with an expected outcome.",
+    "blocks/1/items/1": "**Next** — problems we will tackle next. The solution isn't chosen yet.",
+    "blocks/1/items/2": "**Later** — directions and bets. No commitments and no dates.",
+    "blocks/1/items/3": "**Each item has a problem and a metric,** not a feature name. This allows changing the solution without changing the promise.",
+    "blocks/2/text": "Bad: \"March — recommendations. April — dark theme. May — social features. June — audiobooks.\"\nBy May, half isn't done, the other half isn't done right, and everyone feels deceived.\n\nWorking:\nNow — \"people drop a book on chapter two\"; goal — increase the share of people finishing their first book from 31% to 40%; testing reminders and short reading targets.\nNext — \"the first week shows no value\": onboarding and first book selection.\nLater — a bet on social reading, no solution yet.\n\nThis gives sales what they need: what to talk to customers about and what not to promise.",
+    "blocks/2/title": "Vetka, two roadmaps for the same half-year",
+    "blocks/3/text": "If it exists to report on execution, it turns into a list of promises, and the team starts picking safe tasks instead of necessary ones.",
+    "blocks/3/title": "A roadmap is a document for discussion, not for reporting",
+    "blocks/4/text": "**The link to experiments is direct.** The \"now\" horizon contains a problem, and hypotheses for it are prioritized using the same ICE/RICE. Experiment results move the roadmap, not the other way around.",
+    "blocks/5/text": "There is work with a hard date: law, contract, season. On the roadmap, it stands as a hard commitment with a date — and such items must be few, otherwise the document becomes a feature plan again.",
+    "blocks/5/title": "Boundaries of the model"
+  }
+}

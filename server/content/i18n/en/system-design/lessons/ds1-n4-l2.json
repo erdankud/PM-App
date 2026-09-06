@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "fa0251766a7f0836",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:45Z"
+  },
+  "fields": {
+    "title": "Indexes: what we pay for search speed",
+    "keyTakeaway": "Every filter in the interface is a question about the existence of an index, and every index is paid for with write speed.",
+    "sections/0/blocks/0/text": "Why is \"find order by number\" instantaneous, while \"find all orders with a total greater than a thousand\" can take seconds—and why can't you speed up everything at once?",
+    "sections/1/blocks/0/text": "Filters and sorting in the interface seem like product details: a checkbox, a dropdown. In reality, each of them is a question of whether there is an [[index|index]] behind it. A PM who doesn't ask this question at the wireframe stage finds out the answer during load testing, when it's too late to change things.",
+    "sections/2/blocks/0/text": "Without an index, the database performs a [[full-scan|full scan]]: reads all records sequentially and checks each one. Eight million orders mean eight million checks. It works predictably slowly and creates load that hurts all other queries.",
+    "sections/2/blocks/1/text": "An index is a separate ordered structure where attribute values are stored sorted with links to the records. Searching through it is like looking up a word in a dictionary: instead of flipping through everything, you immediately open the right spot. Eight million records are scanned in about twenty-three steps instead of eight million.",
+    "sections/2/blocks/2/text": "The cost consists of three parts.",
+    "sections/2/blocks/3/text": "**Space.** An index is data, and it takes up disk space. An index on a single numeric field for eight million records is hundreds of megabytes.",
+    "sections/2/blocks/4/text": "**Write speed.** Every time an order is created and modified, the database updates all its indexes. Five indexes mean five additional updates for every single record. This is exactly why you cannot \"index everything\": a table with twenty indexes reads wonderfully and writes painfully.",
+    "sections/2/blocks/5/text": "**Not every query is accelerated.** An index helps with exact matches and ranges. It does not help with substring searches in the middle of text at all—that requires a different type of index or a separate search system.",
+    "sections/2/blocks/6/text": "Two properties that explain most conversations with engineers:",
+    "sections/2/blocks/7/text": "A [[composite-index|composite index]] on multiple fields works only from left to \"right\". An index on \"store, date\" will speed up searches by store and by store with date, but not a search by date alone.",
+    "sections/2/blocks/8/text": "[[selectivity|Selectivity]]: an index is useful when it significantly narrows down the result set. An index on a \"status\" field with three values is almost useless—a third of the table is not narrowing down.",
+    "sections/3/blocks/0/text": "Order history screen: filter by date, by store, by status, search by product name.",
+    "sections/3/blocks/1/text": "Date and store are a composite index, cheap and fast. Status as a separate index is pointless due to selectivity; paired with date, it works.",
+    "sections/3/blocks/2/text": "Searching by product name inside an order is a fundamentally different task. This is a substring in text via a join table; a regular index won't help. Options: a full-text index, a separate search engine, or dropping the feature. All three have different cost orders, and the decision is made by the PM, not the engineer.",
+    "sections/3/blocks/3/text": "Special case: the admin screen \"all orders sorted by total amount.\" An index on amount would have to be updated on every order change for the sake of a screen opened twice a week. The solution is to calculate this report at night in a separate storage.",
+    "sections/4/blocks/0/text": "Everything said above applies to relational databases. In document databases, indexes work similarly; key-value stores have no value search at all. And the database itself decides whether to use an index: sometimes it reasonably prefers a full scan if it thinks the result set will be large anyway.",
+    "sections/5/blocks/0/text": "Every filter in the interface is a question about the existence of an index, and every index is paid for with write speed."
+  }
+}

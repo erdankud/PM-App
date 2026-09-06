@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "60f5804a81712340",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:01Z"
+  },
+  "fields": {
+    "title": "Designing Error Behavior",
+    "keyTakeaway": "You can only retry a request where a retry is safe, and an idempotency key makes it safe — otherwise the product treats a failure by creating duplicates.",
+    "sections/0/blocks/0/text": "The response did not arrive in ten seconds. Should you retry the request or not — and what to show the person while it's unclear?",
+    "sections/1/blocks/0/text": "Automatic retry without analysis creates [[duplicate|duplicates]]: two orders, two charges. Not retrying creates false failures where a second attempt would have helped. Both cases end up in support, and both are designed by the PM because these are decisions about money and trust, not code.",
+    "sections/2/blocks/0/text": "Four classes of situations, each with its own behavior.",
+    "sections/2/blocks/1/text": "**User error** (`422`, `409`, part of `400`). Retrying is pointless. Show specifically what is wrong and what to do. Do not log as a failure.",
+    "sections/2/blocks/2/text": "**Our error** (`400` due to defect, `500`). The user did nothing wrong. Apologize, offer a retry, be sure to log in monitoring.",
+    "sections/2/blocks/3/text": "**Access error** (`401`, `403`). Different paths: `401` — to login preserving context, `403` — explanation, do not offer login.",
+    "sections/2/blocks/4/text": "**Temporary unavailability** (`429`, `502`, `503`, `504`, timeout). Retrying makes sense, but with a delay and a limited number of attempts.",
+    "sections/2/blocks/5/text": "**Separately — a timeout on a state-changing operation.** We do not know if the request arrived. Three possibilities: did not arrive, arrived and executed, executed and the response was lost. Blind retry in two out of three cases creates a duplicate.",
+    "sections/2/blocks/6/text": "The solution is an [[idempotency-key|idempotency key]]: the client generates a token and sends it with the request. The server remembers: if a request arrives with an already seen token, it does not execute the operation again, but returns the result of the first one. Retrying becomes safe.",
+    "sections/2/blocks/7/text": "This is a technical tool, but there are three product decisions around it: **how long to wait before retrying**, **how many times to retry**, and **what to show between attempts**. A silent spinner for thirty seconds is the worst option: the person presses it again, and if there is no idempotency, they get a second order.",
+    "sections/3/blocks/0/text": "Checkout: an idempotency key is generated when opening the payment screen and lives until success or explicit cancellation. Three retries with delays of 2, 6, and 15 seconds.",
+    "sections/3/blocks/1/text": "What the person sees: up to 3 seconds, a regular indicator. From 3 to 10 — \"Placing order, this may take a few seconds\". After 10 — \"Checking payment status, do not close the app\". After three failed attempts — \"Failed to confirm payment. We will check and send a notification within 5 minutes\", plus background reconciliation with the provider.",
+    "sections/3/blocks/2/text": "The last part turned out to be more important than everything else. Prior to this, people in this situation placed the order a second time — according to support data, about 40 cases per month. The message that we will sort it out ourselves reduced this almost to zero because the person was told what to expect.",
+    "sections/4/blocks/0/text": "Idempotency must be supported both on our server and by the external provider. If the provider does not support it, you cannot retry calls to them at all — only check the status via a separate operation.",
+    "sections/5/blocks/0/text": "You can only retry a request where a retry is safe, and an idempotency key makes it safe — otherwise the product treats a failure by creating duplicates."
+  }
+}

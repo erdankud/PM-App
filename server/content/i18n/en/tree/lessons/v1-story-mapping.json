@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "92a11122ab7277a5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "Story mapping: how to see what can be cut",
+    "keyTakeaway": "A story map turns a flat list into a set of possible releases. The first slice is not \"the most important stuff,\" but the thinnest path that still works end-to-end.",
+    "checkQuestion": "Why can't you build a working release from a flat backlog sorted by priority?",
+    "blocks/0/text": "The key question of this node is the same, but now about the whole picture: **how individual tasks form a person's end-to-end workflow.**",
+    "blocks/1/text": "**What happens if you do not answer this question.** The backlog is a flat list sorted by priority. Take the top ten tasks: almost certainly, you get a set you cannot use because a step in the middle was dropped. Priority and cohesion are different things.",
+    "blocks/2/title": "Story Mapping",
+    "blocks/2/subtitle": "Two axes instead of one list",
+    "blocks/2/items/0": "**Horizontal axis**—scenario steps in the order a person goes through them. This is the backbone; it rarely changes.",
+    "blocks/2/items/1": "**Vertical axis**—options for completing a step, top to bottom by decreasing necessity.",
+    "blocks/2/items/2": "**Horizontal slice**—a release: take the top row completely, and the scenario works end-to-end.",
+    "blocks/2/items/3": "**An empty cell in the backbone**—not \"ran out of time,\" but \"the scenario doesn't work.\"",
+    "blocks/3/text": "Backbone: take order → select car → assign driver → issue waybill → close trip.\n\nFirst slice: manual order, selection from available list, manual assignment, waybill via PDF template, single-button close. Clunky, but the dispatcher goes end-to-end and stops keeping everything in Excel.\nSecond slice: auto-selection by cargo class, driver hours check, trip history.\nThird slice: accounting integration, mobile access for drivers.\n\nIn a flat backlog, \"auto-selection by cargo class\" ranked higher than \"close trip\" because people shouted louder for it. With the map, you see that without closing a trip, auto-selection has nothing to connect to.",
+    "blocks/3/title": "Dispetcher: trip planning map",
+    "blocks/4/text": "If your horizontal axis is named \"main screen, card, settings\"—that's a navigation diagram, not a story map, and you cannot slice by it.",
+    "blocks/4/title": "The backbone is built on human steps, not screens",
+    "blocks/5/text": "A map works well for one primary scenario. When there are five roles and each has its own path, a single map turns into a wall nobody reads—it's better to draw several. And a map doesn't prioritize: it shows what **can** be sliced without losing cohesion, while the decision on what to cut remains yours.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

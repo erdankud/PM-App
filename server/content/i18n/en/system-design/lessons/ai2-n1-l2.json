@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "5c5f2ea60e181a03",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:27Z"
+  },
+  "fields": {
+    "title": "Why quality drops as the corpus grows",
+    "keyTakeaway": "As the corpus grows, precision drops. Pre-search filtering usually yields more than improving the search itself — and the decision on filters is a product decision.",
+    "sections/0/blocks/0/text": "It worked on a hundred documents, but got worse on ten thousand. What changed?",
+    "sections/1/blocks/0/text": "This is the most frequent surprise in AI products: the demo works, but production does not. The cause is structural, and knowing it lets you bake the solution in immediately.",
+    "sections/2/blocks/0/text": "Three things change as the corpus grows.",
+    "sections/2/blocks/1/text": "**The number of similar documents grows.** On a hundred products, the query \"lactose-free milk\" finds the right one. On forty thousand, it finds a hundred similar ones, and the correct one might not make it to the top.",
+    "sections/2/blocks/2/text": "**[[precision|Precision]] drops while [[recall|recall]] stays the same.** To find the right item, you have to take more candidates, which dilutes the context.",
+    "sections/2/blocks/3/text": "**Heterogeneity grows.** Documents vary in type, quality, and format. Uniform chunking stops working for all of them.",
+    "sections/2/blocks/4/text": "What is done about this:",
+    "sections/2/blocks/5/text": "*Pre-search filtering.* Narrow the scope: only this store, only this category. Sharply increases precision and is almost free. A product decision — which filters are available. *Hybrid search.* Vector search finds by meaning, text search by exact matches like SKU codes and brand names. Together they are noticeably better. *Reranking.* Take 50 candidates, select the top 5 with a separate model. *Metadata.* Store category, date, and source with the chunk, and use them during selection.",
+    "sections/2/blocks/6/text": "From a product standpoint: **pre-search filtering almost always yields more than improving the search itself.** And the decision on filters is a decision about what the product knows about the request context.",
+    "sections/3/blocks/0/text": "The first version searched across the entire catalog—40 thousand items. Accuracy dropped, and items from other stores that the user does not have access to ended up in the context.",
+    "sections/3/blocks/1/text": "Filtering before search: only items from stores available at the user's address. The corpus shrank from 40 thousand to 3–6 thousand. Quality grew more than from all other improvements combined.",
+    "sections/3/blocks/2/text": "Hybrid search was added because of brands: vector search poorly distinguished between \"Domik v derevne\" and \"Prostokvashino\" — to it, these are semantically close dairy brands. The text part solved it.",
+    "sections/3/blocks/3/text": "Reranking: we take 40, return 8. It costs an extra call to a cheap model, about 0.3 kopecks, and noticeably increases the share of correct answers.",
+    "sections/3/blocks/4/text": "The metric we track: the share of queries where the required document made it into the context. Measured on a set of 200 labeled questions. This separates search problems from generation problems.",
+    "sections/4/blocks/0/text": "Improving search has a limit: some questions have no answer in the corpus, and the correct answer is \"I don't know\". Chasing hundred-percent recall is pointless.",
+    "sections/5/blocks/0/text": "As the corpus grows, precision drops, and pre-search filtering usually yields more than improving the search itself — and the decision on filters is a product decision."
+  }
+}

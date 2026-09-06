@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "152f54ace98dc2bc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Knowledge that isn't written down is lost by the company",
+    "keyTakeaway": "An experiment result lives for three weeks in a participant's head and disappears with them. A short learning card — what was tested, what was obtained, what we now consider true — pays off on the very first repeat.",
+    "checkQuestion": "The team proposes testing an idea that was already tested a year ago. How will you find out?",
+    "blocks/0/text": "Key question of the node: **what new thing did we learn?**",
+    "blocks/1/text": "**What happens if you don't answer the question.** A year later, a new product manager arrives and proposes exactly what didn't work. Nobody can confirm or refute it — they only remember that \"there was something like that.\"",
+    "blocks/2/title": "Learning Card",
+    "blocks/2/subtitle": "Half a page, written immediately after the experiment",
+    "blocks/2/items/0": "**What was assumed** — the entire hypothesis, with \"because.\"",
+    "blocks/2/items/1": "**What was done** — on whom, how many, for how long.",
+    "blocks/2/items/2": "**What was obtained** — numbers, including guardrail metrics.",
+    "blocks/2/items/3": "**What we now consider true** — conclusion in one phrase. This is the only part that people will read.",
+    "blocks/2/items/4": "**What this doesn't prove** — boundaries of the conclusion. Saves you from applying the result where it doesn't work.",
+    "blocks/3/text": "Assumed: personalized recommendations on the home screen will increase the number of books started because people find it hard to choose.\nDone: 20% of the audience, three weeks.\nObtained: started books +0.4% (insignificant), finished books −2%.\nConsider true: the problem is not choosing a book, but dropping the one already started.\nDoes not prove: that recommendations are useless altogether — we tested them only on the home screen and only for active users.\n\nA year later, this idea was proposed again. The card was found in a minute, and the conversation took ten minutes instead of six weeks of development.",
+    "blocks/3/title": "Vetka, a card that saved six weeks",
+    "blocks/4/text": "\"The test showed no effect\" is not knowledge. Knowledge is \"people don't choose because they drop what they started.\" The former closes the topic; the latter opens the next one.",
+    "blocks/4/title": "The conclusion \"it didn't work\" without a reason is useless",
+    "blocks/5/text": "**Where it lives.** The format doesn't matter: a wiki page, a table, a channel. Two things matter — a single place and the habit of looking there before proposing.",
+    "blocks/6/text": "The knowledge base gets outdated: the audience changes, the product changes. A two-year-old conclusion is a reason not to repeat blindly, not a ban on testing again with a new rationale.",
+    "blocks/6/title": "Boundaries of the model"
+  }
+}

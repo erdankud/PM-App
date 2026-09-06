@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "003701aa46c81524",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Improve Perception",
+    "promptBlocks/0/text": "Search results screen loads in 1.8 s. Optimization is impossible this quarter. Suggest four changes without speeding it up.",
+    "referenceReasoningBlocks/0/text": "card skeletons instead of a spinner; instant feedback on clicking \"Search\" — button state changes immediately; rendering order — titles and prices before images; reserving space for images so the list doesn't jump. Additionally: show first results as they are ready rather than all at once. All five take days of work, none change the response time metric."
+  }
+}

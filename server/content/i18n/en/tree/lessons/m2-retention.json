@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "2ecfbba85e641e5e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Retention: users return for value, not reminders",
+    "keyTakeaway": "Re-engagement mechanics amplify value that already exists; they don't create it out of nowhere. First find the natural frequency of the task, then build a reason to return at that exact moment.",
+    "checkQuestion": "A product is needed once a quarter. What will a daily notification achieve?",
+    "blocks/0/text": "Key node question: **how to retain users until payback?**",
+    "blocks/1/text": "The key phrase here is \"until payback\". Retention isn't needed for its own sake: a customer must stay long enough to recover their acquisition cost. This links this node to CAC and LTV calculations.",
+    "blocks/2/title": "Hook Model",
+    "blocks/2/subtitle": "Four steps of a single retention loop",
+    "blocks/2/items/0": "**Trigger** — external (notification, email) or internal (a situation where the user naturally remembers the product). The goal is converting external into internal.",
+    "blocks/2/items/1": "**Action** — the simplest valuable action. The higher the effort required, the less frequently the loop completes.",
+    "blocks/2/items/2": "**Variable reward** — an outcome that isn't identical every time: a new response, a updated number, a change in state.",
+    "blocks/2/items/3": "**Investment** — users leave something of their own in the product: data, settings, history. Every subsequent visit becomes more valuable and switching away becomes harder.",
+    "blocks/3/text": "Natural frequency: issuing invoices 2–4 times a month, certificates at month-end, reporting once a quarter.\n\nWhat failed: daily \"what's new\" summary. 4% open rate, 12% unsubscribed.\n\nWhat worked: email on the 25th \"time to close the month\" with a list of unsigned certificates. 47% open rate, 31% return to the product.\n\nThe difference is that the second aligns with the moment when the need naturally arises — rather than trying to create it artificially.",
+    "blocks/3/title": "Reestr, task frequency dictates mechanics",
+    "blocks/4/text": "**Investment is the most underrated part.** Saved counterparty details, templates, and signature history make the product their own. That's why data import during onboarding is often more important than any retention mechanic.",
+    "blocks/5/text": "A notification that doesn't align with a task costs more than it seems: it isn't just ignored, it trains users to ignore all future ones.",
+    "blocks/5/title": "Retention mechanics easily turn into annoyance",
+    "blocks/6/text": "The Hook Model describes products with a high-frequency cycle. For infrequent tasks, it's more honest to build a reliable presence at the right moment rather than a habit — and measure retention by quarters, not days.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

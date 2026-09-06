@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "e2bcabc8ed282c1d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "What to count as a signal vs. noise",
+    "keyTakeaway": "A market news item becomes a signal only if you have written down in advance which of your decisions it can change. Without this, monitoring turns into reading a feed and reacting to the loudest noise.",
+    "checkQuestion": "A competitor announced a free plan. What is the first question you will ask yourself?",
+    "blocks/0/text": "Key node question: **what happened in the market that affects our plans?** Emphasis on the second half: most of what happens does not affect plans.",
+    "blocks/1/text": "**What happens if you do not answer the question.** Every news item about a competitor triggers a meeting. The team lives in reactive mode, and the roadmap gets rewritten based on Telegram posts.",
+    "blocks/2/title": "Signal filter",
+    "blocks/2/subtitle": "Three questions before reacting",
+    "blocks/2/items/0": "**Which of our decisions does this change?** If none, it is news, not a signal.",
+    "blocks/2/items/1": "**How sustainable is this?** A one-off promotion and a business model change require different things.",
+    "blocks/2/items/2": "**What will we see on our end if this matters?** Name a metric and timeframe — then in a month you will have something to check against.",
+    "blocks/3/text": "First reaction in chat: \"we need a free plan too\".\n\nRan it through the filter. Decision it changes: entry price. Sustainability: the plan is limited to three documents per month — this is lead generation, not a model change. What we will see on our end: bounce rate on the pricing page and trial-to-paid conversion.\n\nAgreed to do nothing and check those two metrics in a month. A month later, conversion had not changed: their free plan attracted those who needed a one-off document, and those are not Reestr clients.\n\nA meeting saved, a quarter not rewritten.",
+    "blocks/3/title": "Reestr, a competitor's free plan",
+    "blocks/4/text": "An opinion leader with a large audience might write about a product that solves a different problem for a different person. That is not your competitor, even if the wording overlaps.",
+    "blocks/4/title": "Volume does not equal significance",
+    "blocks/5/text": "The filter protects against busywork but creates a risk of missing a real turning point: a regulatory shift, a payment provider exit, or the arrival of a player with a different model. That is why the filter should have exceptions — categories of events that are always evaluated, regardless of what you are doing right now.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

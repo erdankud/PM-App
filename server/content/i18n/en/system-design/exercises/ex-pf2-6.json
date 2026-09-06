@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "8612d580da35fdc9",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Optimize or Not",
+    "inputs/0/label": "620 → 450 ms, component share 40%, 1 week",
+    "inputs/1/label": "3.4 → 1.6 s, 2 weeks",
+    "inputs/2/label": "Traffic −25% at a cost of 240k/month, 1 week",
+    "inputs/3/label": "900 ms now, with a 3x growth will become 2.6 s",
+    "acceptance/0/expected": "no",
+    "acceptance/1/expected": "yes",
+    "acceptance/2/expected": "yes",
+    "acceptance/3/expected": "yes",
+    "inputs/0/choices/0": "yes",
+    "inputs/0/choices/1": "no",
+    "inputs/1/choices/0": "yes",
+    "inputs/1/choices/1": "no",
+    "inputs/2/choices/0": "yes",
+    "inputs/2/choices/1": "no",
+    "inputs/3/choices/0": "yes",
+    "inputs/3/choices/1": "no",
+    "promptBlocks/0/text": "For each proposal, say \"yes\" or \"no\" and justify.",
+    "promptBlocks/1/items/0": "Screen 620 → 450 ms, component share 40%, 1 week",
+    "promptBlocks/1/items/1": "Screen 3.4 → 1.6 s, 2 weeks",
+    "promptBlocks/1/items/2": "Traffic reduction by 25%, with traffic costs of 240k/month, 1 week",
+    "promptBlocks/1/items/3": "Screen 900 ms now, with 3x growth will become 2.6 s, 1 week",
+    "referenceReasoningBlocks/0/text": "1 — no, within the \"fast\" category, there will be no behavioral effect. 2 — yes, moving from \"irritation\" to \"expectation\". 3 — yes, saving ~720k/year for a week of work, pays off in money regardless of perception. 4 — yes, a growing problem, cheaper now. Technique: perception category, behavioral effect, money, growth — four grounds, any one is sufficient."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "e5d3676bfac3316e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:54Z"
+  },
+  "fields": {
+    "title": "Model Change as a Product Event",
+    "keyTakeaway": "A model version is pinned explicitly, a change goes through evals and a traffic split, and the rate of unjustified refusals is a separate criterion that changes between versions.",
+    "sections/0/blocks/0/text": "The provider released a new version. Should we switch?",
+    "sections/1/blocks/0/text": "Changing the model changes product behavior imperceptibly: response format, length, tone, behavior in edge cases. Products that switch automatically get regressions that cannot be linked to the cause.",
+    "sections/2/blocks/0/text": "**[[version-pinning|Version pinning]]** is the first rule of working with providers. Automatic updating means product behavior changes without your involvement and at a moment you didn't choose.",
+    "sections/2/blocks/1/text": "What changes when changing versions, besides quality:",
+    "sections/2/blocks/2/text": "*Format.* The model may start formatting responses differently, breaking parsing. *Length.* A more verbose model breaks UI constraints and increases output cost. *Refusal behavior.* The boundaries of what the model refuses to answer shift between versions. A working feature may start refusing. *Instruction following.* A prompt tuned for one version may work worse on another.",
+    "sections/2/blocks/3/text": "Switching procedure:",
+    "sections/2/blocks/4/items/0": "Run evals on the new version, compare with current.",
+    "sections/2/blocks/4/items/1": "Check cost and latency on a real profile.",
+    "sections/2/blocks/4/items/2": "Roll out to a traffic fraction, compare product metrics.",
+    "sections/2/blocks/4/items/3": "Switch completely, keeping a rollback option.",
+    "sections/2/blocks/5/text": "Item 3 is needed because evals measure what we invented, while product metrics measure reality. Covered in `AI2-N4-L2`.",
+    "sections/2/blocks/6/text": "Separately — **model refusals**. [[refusal|Refusing]] to answer a legitimate request is a product problem, and its frequency varies between versions. It is worth including in evals as a separate criterion: the share of unjustified refusals on normal requests.",
+    "sections/3/blocks/0/text": "Versions are pinned explicitly. Upgrading is a decision, not an event.",
+    "sections/3/blocks/1/text": "The first upgrade followed the procedure and revealed two things. Quality per evals grew by 4%. Average response length grew by 40% — the model became more verbose, responses stopped fitting in the card, output cost grew.",
+    "sections/3/blocks/2/text": "Prompt tweaking with an explicit length constraint restored the format. Without running evals, this would have gone to production.",
+    "sections/3/blocks/3/text": "Second case: the new version started refusing to answer questions about products with alcohol — previously it answered. The feature for an entire category stopped working. Discovered via evals, added a separate refusal criterion to the suite.",
+    "sections/3/blocks/4/text": "Fast rollback capability: the version is set in configuration, switching takes a minute. Used once.",
+    "sections/4/blocks/0/text": "Providers drop support for old versions with notice. Pinning delays the decision but does not cancel it — you need a migration plan with a window, as in `IN2-N2-L2`.",
+    "sections/5/blocks/0/text": "A model version is pinned explicitly, a change goes through evals and a traffic split, and the rate of unjustified refusals is a separate criterion that changes between versions."
+  }
+}

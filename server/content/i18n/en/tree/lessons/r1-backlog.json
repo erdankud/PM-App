@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "a94a9cf309ca12eb",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "A backlog is a queue, not a warehouse",
+    "keyTakeaway": "A backlog is prioritized end-to-end: for any two tasks, it is clear which comes first. A list where twenty tasks are marked \"high priority\" is a warehouse, and someone will still decide the order—just not you.",
+    "checkQuestion": "There are 30 tasks in the backlog, and 12 of them have \"high\" priority. What actually remains undecided here?",
+    "blocks/0/text": "The key question of this node: **what changes will occur in the product?** The backlog is the answer, recorded so that the team can pick up the next task without you.",
+    "blocks/1/text": "Polka—a fictional inventory app for small grocery stores: a clerk scans items with a phone and audits stock counts. The team consists of four people, releasing every two weeks. We will return to it across all lessons in this domain.",
+    "blocks/2/text": "**What happens if you don't answer this question.** Tasks accumulate in the tracker, priority is set via labels, and at the start of a sprint the team asks \"what are we picking up?\". Every time it requires a separate meeting because the sequence isn't documented anywhere.",
+    "blocks/3/title": "Product Backlog",
+    "blocks/3/subtitle": "Four properties without which it is just a list",
+    "blocks/3/items/0": "**Ordered.** Not by priority buckets, but strictly sequentially: first, second, third. If two tasks are \"equally important\", you still need a sequence between them.",
+    "blocks/3/items/1": "**Unevenly detailed.** Top—ready to build, bottom—a single line. Detailing items that won't be touched for six months means wasting that effort.",
+    "blocks/3/items/2": "**Estimated at the top.** Estimating bottom tasks is pointless: they will change.",
+    "blocks/3/items/3": "**Dynamic.** A backlog that hasn't changed in a month does not reflect what you learned during that month.",
+    "blocks/4/text": "The primary property is the first one. Labels like \"high / medium / low\" look like prioritization, but make no decisions: when twelve tasks are marked high, a choice is still made—just by whoever opened the tracker first.",
+    "blocks/5/text": "There were 30 tasks in the backlog, 12 labeled \"high\". Planning took forty minutes of arguing.\n\nThe PM forced themselves to order the top 12 sequentially, without labels. At position four, it turned out that \"offline scanner mode\" and \"sync on bad connection\" were the exact same task described by two different people. At position seven, \"print statement\" wasn't needed by anyone until the end of the quarter and had been added \"just in case\".\n\nOrdering took twenty minutes and eliminated two out of the twelve tasks.",
+    "blocks/5/title": "Polka, two weeks to release",
+    "blocks/6/text": "The backlog answers \"what is next\", but not \"why\". A perfectly ordered list of tasks where none moves the product forward is a common phenomenon. And sequence is not a roadmap: it tells what will be picked up next, not when it will be released.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

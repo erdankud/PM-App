@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "356ba389b870950c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:25Z"
+  },
+  "fields": {
+    "title": "Who pays for the form of the contract",
+    "keyTakeaway": "Server-side data assembly speeds up the screen and slows down its modification, so it is chosen based on what changes more often—the screen or the load on it.",
+    "sections/0/blocks/0/text": "A screen requires data from four places. Who gathers them together—the client or the server, and why is this a product choice?",
+    "sections/1/blocks/0/text": "The location of the assembly point determines how long a screen will take for a user with poor network conditions and how much time the next similar screen will take to build. An error here doesn't break anything immediately, but manifests as \"somehow every new screen takes us three weeks to make\".",
+    "sections/2/blocks/0/text": "Three approaches, and the difference between them lies in where the knowledge of what the screen needs lives.",
+    "sections/2/blocks/1/text": "**Client-assembled.** The app makes multiple requests and glues them together. The server is simple and universal. The cost—each request is a separate network trip, and on a mobile network, that's 100–300 ms per trip. Four sequential requests mean a second spent just waiting.",
+    "sections/2/blocks/2/text": "**Server-assembled for the screen.** A separate endpoint returns the ready response. One trip, minimum data. The cost—the endpoint knows about the screen, and when the screen changes, the endpoint must be changed. The number of such endpoints grows along with the number of screens.",
+    "sections/2/blocks/3/text": "**Client describes, server assembles**—the GraphQL way. One trip, exactly the required fields, and the server doesn't know about screens. The cost—server-side complexity and the need to restrict heavy queries.",
+    "sections/2/blocks/4/text": "The product selection criterion—**what changes more often, the screen or the data.** If the product actively experiments with screens, having screen knowledge on the server becomes a bottleneck: every layout tweak requires a backend release. If screens are stable and load is heavy, server-side assembly is more efficient.",
+    "sections/2/blocks/5/text": "The second consideration—**who the consumer is.** Your own client can be updated alongside the server, whereas a third-party integrator needs a stable, simple contract.",
+    "sections/3/blocks/0/text": "We split according to this criterion.",
+    "sections/3/blocks/1/text": "*Main screen and catalog*—server-side assembly via separate endpoints. These screens change rarely, load on them is maximal, and a second of loading costs conversion percentages.",
+    "sections/3/blocks/2/text": "*Personal account screens*—client-assembled from shared resources. They change frequently, load is low, and an extra 200 ms affects no one.",
+    "sections/3/blocks/3/text": "*Partner API*—shared resources only, no scenario-specific assembly. Partners have their own scenarios we don't know about, and adapting to each one is impossible.",
+    "sections/3/blocks/4/text": "A mistake we caught: a special endpoint \"like for the main screen\" was built for the order history screen. The screen changed four times in six months, and each time it meant a server release just to rearrange fields. We reverted it to shared resources.",
+    "sections/4/blocks/0/text": "The number of requests matters more than their sequence only when they are sequential. Four parallel requests cost almost as much as one; four sequential ones cost four times as much. Before building a screen-specific endpoint, check whether they can be parallelized.",
+    "sections/5/blocks/0/text": "Server-side data assembly speeds up the screen and slows down its modification, so it is chosen based on what changes more often—the screen or the load on it."
+  }
+}

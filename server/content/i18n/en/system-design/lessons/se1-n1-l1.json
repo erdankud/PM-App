@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "72cd1e67f7c3dc51",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:58Z"
+  },
+  "fields": {
+    "title": "Who You Are and What You Are Allowed",
+    "keyTakeaway": "Authentication answers the question \"who\", authorization answers \"what is allowed\", and these are different screens with different user actions.",
+    "sections/0/blocks/0/text": "What is the difference between \"failed to sign in\" and \"access denied\"?",
+    "sections/1/blocks/0/text": "Mixing these two concepts creates interfaces that lead the user in circles: a person with insufficient rights is prompted to sign in again, signs in, and gets rejected again. This was covered from the code side in `IN1-N3-L1`, and here it is covered from the mechanics side.",
+    "sections/2/blocks/0/text": "**[[authentication|Authentication]]** is establishing who is in front of us. Signing in with a password, an SMS code, or biometrics.",
+    "sections/2/blocks/1/text": "**[[authorization|Authorization]]** is determining what this subject is allowed to do. It happens after authentication and during every operation.",
+    "sections/2/blocks/2/text": "Different questions, different answers, different screens.",
+    "sections/2/blocks/3/text": "Authentication **[[authentication-factor|factors]]** come in three categories:",
+    "sections/2/blocks/4/text": "*Knowledge.* Password, PIN. *Possession.* Phone, key, authenticator app. *Inherence.* Fingerprint, face.",
+    "sections/2/blocks/5/text": "**[[2fa-mfa|Two-factor authentication]]** uses two factors from different categories. Password plus SMS code is knowledge plus possession. Password plus security question is two instances of knowledge, meaning it is not two-factor.",
+    "sections/2/blocks/6/text": "A **[[session|session]]** is the state of presence after signing in. It is usually implemented as a pair: a short-lived [[access-token|access token]] and a long-lived [[refresh-token|refresh token]]. The short lifespan of the first limits damage in case of theft; the second avoids forcing the person to sign in every hour.",
+    "sections/2/blocks/7/text": "Product decisions around sessions:",
+    "sections/2/blocks/8/text": "*Lifespan.* A compromise between security and convenience. Bank app means minutes, social network means months. *What happens on device change.* Keep sessions active or terminate them. *[[revocation|Access revocation]].* The ability to terminate a session: upon password change, sign out, or suspicion. A list of active sessions with a \"terminate\" button is a product feature that builds trust.",
+    "sections/3/blocks/0/text": "Signing in by phone number with a code is a single factor of possession. For buyers, this is enough: the cost of compromise is limited to order history and a saved card, which is protected by confirmation itself.",
+    "sections/3/blocks/1/text": "The partner account requires a password plus a code; two-factor is mandatory. The stakes are different here: access to revenue, data exports, and settings.",
+    "sections/3/blocks/2/text": "The access token lives for 15 minutes, the refresh token for 60 days. When the password is changed, all refresh tokens are revoked.",
+    "sections/3/blocks/3/text": "The active sessions screen was added after a request from partners: a chain wanted to see which employees had signed in. It also turned out to be useful for buyers — 3% use it, and these are the ones who care about security.",
+    "sections/3/blocks/4/text": "Distinguishing `401` and `403` in the interface: an expired session leads to sign-in while preserving what the person was doing; insufficient rights show an explanation and do not prompt to sign in.",
+    "sections/4/blocks/0/text": "Two-factor authentication increases security and decreases sign-in conversion. Deciding where it is mandatory and where it is optional is a product decision.",
+    "sections/5/blocks/0/text": "Authentication answers the question \"who\", authorization answers \"what is allowed\", and these are different screens with different user actions."
+  }
+}

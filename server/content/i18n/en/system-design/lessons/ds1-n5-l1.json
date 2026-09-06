@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "0ba1cad5c823e2f4",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:45Z"
+  },
+  "fields": {
+    "title": "Transactions: all or nothing",
+    "keyTakeaway": "A transaction boundary is the boundary of the \"all or nothing\" promise; beyond it, the product must design behavior for partial success.",
+    "sections/0/blocks/0/text": "A user pays for an order. Money is deducted, but the order is not created. How does the system even allow such a state—and what does it do to prevent it?",
+    "sections/1/blocks/0/text": "This is the most expensive category of bugs in a product because it cannot be fixed automatically. Data discrepancies regarding money generate support tickets, manual investigations, refunds, and ultimately a loss of trust that outlives the bug fix. A PM who does not understand where the transaction boundary lies cannot design failure behavior or support operations.",
+    "sections/2/blocks/0/text": "A [[transaction|transaction]] is a group of changes applied entirely or not at all. Within it, the database provides four guarantees known as [[acid|ACID]]; two of them matter to the product.",
+    "sections/2/blocks/1/text": "**[[atomicity|Atomicity]].** Either all changes in the group execute, or none. If something goes wrong in the middle, the database performs a [[rollback|rollback]] and returns everything to its original state. The intermediate state \"money deducted, order not created\" never exists within a single transaction.",
+    "sections/2/blocks/2/text": "**[[isolation|Isolation]].** Concurrent transactions do not see each other's intermediate states. This resolves [[race-condition|race conditions]]: two people take the last carton of milk simultaneously, both see \"stock 1\", both place an order. Without isolation, the stock becomes −1. With isolation, the second transaction waits for the first and sees 0.",
+    "sections/2/blocks/3/text": "Isolation is implemented using [[lock|locks]], and they have a cost: waiting. Under heavy contention for the same data, this becomes a bottleneck. The extreme case is a [[deadlock|deadlock]], where two operations wait for each other forever; the database detects this and cancels one of them.",
+    "sections/2/blocks/4/text": "The main limitation: **a transaction works within a single database.** As soon as an operation touches an external system—a payment provider, a partner's warehouse—atomicity is gone. The provider has already charged the money; you cannot roll them back with our transaction.",
+    "sections/2/blocks/5/text": "For such cases, other mechanisms are used: [[idempotency|idempotency]] (repeated calls do not create a second charge) and [[compensating-transaction|compensating operations]] (not a rollback, but a reverse action—a refund). Both are visible to the user and therefore require product design: what to show in the intermediate state, how long to wait, when to call support.",
+    "sections/3/blocks/0/text": "*Inside a single transaction:* create an order, create order items, decrease stock, record bonus deduction. All in one database, all either exist or don't.",
+    "sections/3/blocks/1/text": "*Outside the transaction:* charging a card. The sequence is as follows—first, the transaction creates an order with the status \"awaiting payment\", then the provider is called, then the status is changed in a separate transaction. If the provider answered with success and we failed to record it—the order remains in \"awaiting payment\" while the money is charged.",
+    "sections/3/blocks/2/text": "This state is inevitable, and the product must account for it. Solutions: an idempotency key so a retry doesn't charge twice; reconciliation with the provider every five minutes; a \"payment processing\" screen instead of an error; a rule for support. All these are product decisions, and they only appear if the PM knows that the transaction boundary passes right here.",
+    "sections/3/blocks/3/text": "*Deliberately without guarantees:* product view counter. Losing a few during a failure is not scary, and a transaction for every view would cost more than it's worth.",
+    "sections/4/blocks/0/text": "There are several isolation levels, and by default the database usually uses one that is not the strictest—some race conditions remain possible. This is a setting worth asking about if the product does anything financial. In distributed systems, a transaction across multiple services is impossible in principle, and patterns with intermediate states that are always visible to the user are used there.",
+    "sections/5/blocks/0/text": "A transaction boundary is the boundary of the \"all or nothing\" promise; beyond it, the product must design behavior for partial success."
+  }
+}

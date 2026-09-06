@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "d80f24c3cceb9989",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:51Z"
+  },
+  "fields": {
+    "title": "Limits as protection",
+    "keyTakeaway": "A limit protects not so much from abuse as from other people's mistakes, and headers with remaining limits turn it into a guidance tool rather than punishment.",
+    "sections/0/blocks/0/text": "Why limit your own clients and why can't you do without it?",
+    "sections/1/blocks/0/text": "Limits set by engineers for technical reasons accidentally define the commercial model: they decide which scenarios are available to a partner. If a PM did not participate, the product line forms by accident and is later discovered through lost sales.",
+    "sections/2/blocks/0/text": "[[rate-limit|Rate limit]] is a cap on the number of requests per interval. [[quota|Quota]] is a cap on volume per period. The first protects against spikes, the second against systematic overconsumption.",
+    "sections/2/blocks/1/text": "Three problems a limit solves:",
+    "sections/2/blocks/2/text": "*Protection against failures.* A loop in someone else's code, a retry without delay, a buggy integration. *Fair distribution.* One large partner doesn't consume all capacity. *Cost management.* Every request costs money, especially if an external service call stands behind it.",
+    "sections/2/blocks/3/text": "How a limit is applied is also a product question:",
+    "sections/2/blocks/4/text": "**Hard rejection.** Exceeded — `429`, come back later. Simple and clear. **[[throttling|Throttling]].** Requests are not rejected, but slowed down. Softer for the client, harder to operate. **[[leaky-bucket|Leaky bucket]].** We allow accumulating a reserve and spending it in a [[burst|burst]], but average frequency is limited. Fits the real behavior of integrators better than a flat cap.",
+    "sections/2/blocks/5/text": "A mandatory part of the contract — [[rate-limit-headers|rate limit headers]]: how much is left and when it resets. Without them, an integrator learns about the limit only through rejections and is forced to guess. With them, they can slow down ahead of time. This is cheap politeness that noticeably reduces support tickets.",
+    "sections/3/blocks/0/text": "Partner API: 60 requests per minute with accumulation up to 200 for bursts. Values chosen based on real profiles — 90% of partners don't even approach half of that.",
+    "sections/3/blocks/1/text": "The case for which limits were introduced: an integrator from one retail chain wrote a synchronization script polling stock for each item separately, in a loop without pauses. 12 thousand items, repeating every five minutes. This produced 40 requests per second from a single partner — twice as many as all other partners combined. The partner portal lagged for everyone until the source was found.",
+    "sections/3/blocks/2/text": "After introducing the limit, that same integrator hit `429`, read the headers, and rewrote to a batch method. The problem was solved without a single conversation — simply because the system informed them of their own mistake.",
+    "sections/4/blocks/0/text": "Too strict a limit breaks honest scenarios: initial data export upon connection requires more requests than daily operations. You should provide an initial synchronization mode with a separate limit.",
+    "sections/5/blocks/0/text": "A limit protects not so much from abuse as from other people's mistakes, and headers with remaining limits turn it into a guidance tool rather than punishment."
+  }
+}

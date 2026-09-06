@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "3e140dcb8a1ea964",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Design Degradation",
+    "inputs/0/label": "Personalized discounts service",
+    "inputs/1/label": "Geocoding service",
+    "inputs/2/label": "Reviews service",
+    "inputs/3/label": "Checkout service",
+    "acceptance/0/expected": "needed",
+    "acceptance/1/expected": "not needed",
+    "acceptance/2/expected": "needed",
+    "acceptance/3/expected": "degradation not applicable",
+    "inputs/0/choices/0": "needed",
+    "inputs/0/choices/1": "not needed",
+    "inputs/0/choices/2": "degradation not applicable",
+    "inputs/1/choices/0": "needed",
+    "inputs/1/choices/1": "not needed",
+    "inputs/1/choices/2": "degradation not applicable",
+    "inputs/2/choices/0": "needed",
+    "inputs/2/choices/1": "not needed",
+    "inputs/2/choices/2": "degradation not applicable",
+    "inputs/3/choices/0": "needed",
+    "inputs/3/choices/1": "not needed",
+    "inputs/3/choices/2": "degradation not applicable",
+    "promptBlocks/0/text": "What do we show when each component fails and is an emergency switch needed?",
+    "promptBlocks/1/text": "Personalized discounts service 2. Geocoding service 3. Reviews service 4. Checkout service",
+    "referenceReasoningBlocks/0/text": "1 — base prices without discounts, switch is needed. 2 — saved addresses work, new ones entered with manual map selection, switch not needed. 3 — product page without reviews block, switch is needed. 4 — no degradation, this is the core; the answer is redundancy, not a stripped-down mode. Rule of thumb: if the product loses core value without a component, degradation is not applicable."
+  }
+}

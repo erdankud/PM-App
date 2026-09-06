@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "f2c0ae524b5c9a99",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Acquisition strategy: how channels build up for the year",
+    "keyTakeaway": "An acquisition strategy means choosing several segments and a channel portfolio for each, with clear capacity and payback period. One working channel is not a strategy, but luck with an expiration date.",
+    "checkQuestion": "One channel brings 80% of clients and pays off well. Why is this dangerous?",
+    "blocks/0/text": "The key question of this node: **which segments to acquire and how?** In module M2, we went through channels and calculated their unit economics; here, we look at how this builds into an annual plan when you have multiple segments.",
+    "blocks/1/text": "Running example: Reestr—a fictional document management service for small businesses. After fixing its funnel, the company grows and plans the year.",
+    "blocks/2/title": "What an acquisition strategy consists of",
+    "blocks/2/subtitle": "Four decisions, made together",
+    "blocks/2/items/0": "**Segments and sequence**—who we work with first and who we deliberately decline.",
+    "blocks/2/items/1": "**Channel portfolio**—tailored to each segment. A cheap channel is usually narrow: it has a capacity, and you need to know it.",
+    "blocks/2/items/2": "**Role of channels**—some bring customers today, others build brand awareness for the future. You cannot measure them with the same ruler.",
+    "blocks/2/items/3": "**Payback period and buffer**—how many months it takes for the product to recover customer acquisition costs and how many such cycles fit into a year.",
+    "blocks/3/text": "Segment 1—sole proprietors without employees. Search by task-based queries (capacity almost maxed out, 60% of available traffic is already ours), bank partnerships—a new channel, testing it with a 300 thousand bet.\n\nSegment 2—small companies with an accountant. Partnership with accounting services: 22 clients per quarter with zero budget, capacity not yet maxed out.\n\nWho we reject: companies over 50 people—they require integrations we don't have, and the sales cycle is four times longer.\n\nRole of channels: search—today; industry publications—awareness, measured not by leads, but by the share of mentions in sales calls.\n\nReserve: 20% of the budget to test two new channels with bets.",
+    "blocks/3/title": "Reestr, annual acquisition plan",
+    "blocks/4/text": "As long as a channel works, nobody looks for a second one. When its capacity runs out or platform rules change, the company has neither alternatives nor accumulated knowledge. Build a second channel in advance, deliberately prepared for worse economics.",
+    "blocks/4/title": "Dependence on a single channel is the main growth risk",
+    "blocks/5/text": "An annual acquisition plan survives only until the first quarter of actual data: capacity turns out smaller, costs go up. It is useful to log decisions rather than lead numbers—which segments and channels we test, and at what result we stop.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

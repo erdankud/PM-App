@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "3e7f7ded100f7865",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Calculate Feature Cost",
+    "inputs/0/label": "Annual cost",
+    "inputs/0/unit": "million RUB",
+    "promptBlocks/0/text": "It is proposed to show \"how many people are viewing now\" every time a product card is opened. Requires a call to the analytics service: 0.008 RUB per call. The card is opened 900k times a day.",
+    "promptBlocks/1/items/0": "Annual cost?",
+    "promptBlocks/1/items/1": "What to offer instead?",
+    "referenceReasoningBlocks/0/text": "900,000 × 0.008 × 365 ≈ 2.6 million RUB per year. Too expensive for a decorative feature. Instead: compute the aggregate every 5 minutes and serve from cache — cost drops by about 300 times, accuracy of \"now\" drops to five-minute intervals, which is sufficient for such a feature. Technique: before adding a call to a frequent scenario, multiply by frequency and by 365."
+  }
+}

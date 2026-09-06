@@ -1,0 +1,24 @@
+{
+  "language": "en",
+  "sourceDigest": "3e8a07262bf24ded",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Calculate the prompt",
+    "inputs/0/label": "Input tokens on turn 1",
+    "inputs/0/unit": "tokens",
+    "inputs/1/label": "On turn 5",
+    "inputs/1/unit": "tokens",
+    "inputs/2/label": "On turn 15",
+    "inputs/2/unit": "tokens",
+    "promptBlocks/0/text": "Chat assistant: instruction 400 tokens, profile 250, dialogue history grows by 180 tokens per turn, retrieved data 2,000, response 300.",
+    "promptBlocks/1/items/0": "How many tokens on turn 1, 5, and 15?",
+    "promptBlocks/1/items/1": "What grows fastest and what to do about it?",
+    "referenceReasoningBlocks/0/text": "Turn 1 ≈ 2,650 input + 300 output. Turn 5 ≈ 3,370. Turn 15 ≈ 5,170. History grows the fastest — linearly with the number of turns, and it is sent in full every time. Solution: compress the early part into a summary, keep the last N turns in full. Second takeaway: the immutable part (instruction) must come first for prompt caching."
+  }
+}

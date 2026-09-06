@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "862b752cdc3bb115",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Ideas don't just appear — they are sorted through",
+    "keyTakeaway": "A good idea is almost never the first one. Systematically going through changes to an existing solution yields more viable options than trying to invent something new from scratch.",
+    "checkQuestion": "In ten minutes, a team came up with three ideas and picked the first one. What is the risk here?",
+    "blocks/0/text": "Key question of the node: **how do you get a new quality idea?** \"Quality\" here means viable for testing, not pretty.",
+    "blocks/1/text": "Vetka is a fictional subscription book reading app: 400 thousand active monthly users, subscription after a seven-day free trial. We will return to it in all lessons of this domain.",
+    "blocks/2/text": "**What happens if you don't answer the question.** The discussion boils down to \"let's think,\" someone names the first thing that comes to mind, and then everyone discusses just that. The first idea named becomes the only one considered not because it's the best.",
+    "blocks/3/title": "SCAMPER",
+    "blocks/3/subtitle": "Seven operations on what already exists",
+    "blocks/3/items/0": "**Substitute** — replace an element: another format, another channel, another payer.",
+    "blocks/3/items/1": "**Combine** — merge with something: two features into one, a product with someone else's product.",
+    "blocks/3/items/2": "**Adapt** — transfer a solution from another domain.",
+    "blocks/3/items/3": "**Modify** — amplify or attenuate: make it much bigger, much smaller, much faster.",
+    "blocks/3/items/4": "**Put to another use** — the same thing for a different task or a different person.",
+    "blocks/3/items/5": "**Eliminate** — remove a step, field, screen, role.",
+    "blocks/3/items/6": "**Reverse** — reverse the order or roles: instead of the user searching, the product suggests.",
+    "blocks/4/text": "The value of SCAMPER is not in originality, but in the **thoroughness of going through options**: it forces you to go through operations that don't come to mind on their own. Especially \"eliminate\" — the most productive and most often skipped one.",
+    "blocks/5/text": "Problem: few people reach subscription. First idea in the meeting — \"increase the trial period to 14 days.\"\n\nRan it through SCAMPER:\nEliminate — remove registration before the first book.\nSubstitute — instead of a time limit, offer one book in full with no time constraint.\nReverse — instead of the user searching for a book, the product delivers the first one ready.\nModify — shorten the trial period to three days so the decision is made while interest is high.\n\nThe last idea is the opposite of the first, and both are plausible. Before sorting through options, only one was considered.",
+    "blocks/5/title": "Vetka, seven days of free access",
+    "blocks/6/text": "Sorting through options gives quantity, not quality: out of twenty options, nineteen will be useless, and that's fine. SCAMPER works on an existing solution and doesn't help when you need to understand if you're even solving the right problem — that's a discovery issue, not generation.",
+    "blocks/6/title": "Boundaries of the model"
+  }
+}

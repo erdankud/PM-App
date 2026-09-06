@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "e86b3081b9788062",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:27Z"
+  },
+  "fields": {
+    "title": "What Is Personal Data",
+    "inputs/0/label": "Items in an order with a user ID",
+    "inputs/1/label": "Average check per store",
+    "inputs/2/label": "IP address in logs",
+    "inputs/3/label": "Search history by device ID",
+    "inputs/4/label": "Purchases in the \"baby food\" category per user",
+    "acceptance/0/expected": "personal",
+    "acceptance/1/expected": "not personal",
+    "acceptance/2/expected": "personal",
+    "acceptance/3/expected": "personal",
+    "acceptance/4/expected": "personal",
+    "inputs/0/choices/0": "personal",
+    "inputs/0/choices/1": "not personal",
+    "inputs/1/choices/0": "personal",
+    "inputs/1/choices/1": "not personal",
+    "inputs/2/choices/0": "personal",
+    "inputs/2/choices/1": "not personal",
+    "inputs/3/choices/0": "personal",
+    "inputs/3/choices/1": "not personal",
+    "inputs/4/choices/0": "personal",
+    "inputs/4/choices/1": "not personal",
+    "promptBlocks/0/text": "Mark personal data and justify.",
+    "promptBlocks/1/items/0": "List of items in an order without a name, but with a user ID",
+    "promptBlocks/1/items/1": "Average check per store",
+    "promptBlocks/1/items/2": "IP address in logs",
+    "promptBlocks/1/items/3": "Search query history by device identifier",
+    "promptBlocks/1/items/4": "Purchases in the \"baby food\" category per user",
+    "referenceReasoningBlocks/0/text": "1, 3, 4, 5 — personal. 2 — no, store aggregate. 5 additionally reveals the presence of a child, bringing it closer to a sensitive category. 3 — personal in most jurisdictions as an indirect identifier. Technique: ask if it can be linked to a person, directly or through a combination."
+  }
+}

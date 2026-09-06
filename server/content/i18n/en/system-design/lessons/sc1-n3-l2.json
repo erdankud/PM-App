@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "6ec87841428c5f7e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "Cascading Failure",
+    "keyTakeaway": "A cascading failure occurs because a slow component holds the caller's resources, and is stopped by a timeout, bulkhead, and a pre-designed fallback.",
+    "sections/0/blocks/0/text": "The recommendations service went down — why did checkout stop working?",
+    "sections/1/blocks/0/text": "A [[cascading-failure|cascading failure]] turns a minor glitch into a complete shutdown. This is the most common mechanism for major incidents: the root cause is usually trivial, and the scale is created by propagation. A product where failures are not isolated loses everything because of anything.",
+    "sections/2/blocks/0/text": "The mechanics are almost always the same: **a slow component holds the caller's resources.**",
+    "sections/2/blocks/1/text": "The recommendations service is lagging. The feed service waits for it for 30 seconds. Each wait occupies a connection. Connections run out. The feed service stops responding altogether — including requests unrelated to recommendations. Then the same thing happens to those calling the feed.",
+    "sections/2/blocks/2/text": "Precisely this scenario was analyzed using the catalog supplier example in `IN1-N5`. Here it is called by name.",
+    "sections/2/blocks/3/text": "Three tools:",
+    "sections/2/blocks/4/text": "**Timeout.** Short and on every external call. The first and cheapest. **[[bulkhead|Bulkhead]].** Limit the resources a single call type can consume. Then even a complete hang of recommendations eats up only a dedicated share of connections. **Circuit breaker.** When failures happen often, stop calling altogether and serve a fallback immediately. Covered in `SC2-N3`.",
+    "sections/2/blocks/5/text": "The product part here is **deciding what to show instead of the failed service.** Technical means isolate the failure, but the fallback is designed by the PM: an empty feed, popular items, recently viewed.",
+    "sections/3/blocks/0/text": "An incident after which bulkheads were introduced. The recommendations service started responding in 20 seconds due to an issue with its database. Eight minutes later the main screen stopped opening, another three minutes later — the catalog. Checkout worked, but you couldn't get to it.",
+    "sections/3/blocks/1/text": "Root cause — recommendations, providing 4% of the main screen's value. Consequence — complete shutdown for 20 minutes during the evening peak.",
+    "sections/3/blocks/2/text": "What was done: 300 ms timeout on recommendations, bulkhead of 10% of the connection pool, fallback — popular category items. A month later recommendations crashed again, and no one noticed except monitoring.",
+    "sections/4/blocks/0/text": "Isolation is not free: bulkheads mean that a portion of capacity is reserved and idles under normal conditions. Applying them to everything indiscriminately is inefficient, to critical paths — mandatory.",
+    "sections/5/blocks/0/text": "A cascading failure occurs because a slow component holds the caller's resources, and is stopped by a timeout, bulkhead, and a pre-designed fallback."
+  }
+}

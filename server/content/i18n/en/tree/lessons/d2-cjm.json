@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "b60fa0ef448ee3a3",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:42:25Z"
+  },
+  "fields": {
+    "title": "Journey Map: Where Exactly Things Go Wrong",
+    "keyTakeaway": "A journey map is only as useful as it is grounded in observation. Drawn from memory by the team, it just freezes your assumptions and makes them look like data.",
+    "checkQuestion": "There are seven stages on the map and exactly one drop in emotions. What should you check first?",
+    "blocks/0/text": "The same question about how a person solves the task right now, but **unfolded over time**: not just one moment, but the entire journey.",
+    "blocks/1/title": "Customer Journey Map",
+    "blocks/1/subtitle": "Rows without which a map is just a diagram",
+    "blocks/1/items/0": "**Stages** — by the user's steps, not by your screens.",
+    "blocks/1/items/1": "**Actions** — what they do, including what they do outside the product.",
+    "blocks/1/items/2": "**Thoughts and emotions** — where tension rises.",
+    "blocks/1/items/3": "**Touchpoints** — where they interact with you: product, support, email, invoice.",
+    "blocks/1/items/4": "**Pain points and opportunities** — takeaways for each stage, not a general one.",
+    "blocks/2/text": "The most valuable part of the map is **steps outside the product**. That is usually where the pain lives, and that is exactly what analytics misses: calling an employee, recalculating in another tool, messaging an accountant.",
+    "blocks/3/text": "The map was drawn based on seven interviews. Stages: set schedule → publish → changes during the week → close the month.\n\nAt the \"changes\" stage, they found a step that isn't in the product at all: the owner calls the employee to make sure they saw the shift swap. This takes 10–20 minutes a week and causes the most frustration.\n\nIn product analytics, this step is invisible: there is simply no event for it. They found it only because they asked about the entire journey, not just screens.",
+    "blocks/3/title": "Smena, a step that wasn't in the product",
+    "blocks/4/text": "A map shows a typical journey and hides variation: for a chain of six locations, it's different, and averaging is more dangerous than having no map at all. Build it by segments. Also, a map gets outdated — six months after changes, it's a museum piece on the wall.",
+    "blocks/4/title": "Limits of the model"
+  }
+}

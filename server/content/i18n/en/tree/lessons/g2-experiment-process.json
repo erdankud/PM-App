@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "1252352aa9465e92",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "How to set up an experiment so you can trust the result",
+    "keyTakeaway": "An experiment is a hypothesis, metric, expected effect size, and timeframe named before the start. Anything decided after seeing the numbers stops being a test and becomes curve fitting.",
+    "checkQuestion": "Three days into the test, variant B is winning by 6%. Why shouldn't you stop it?",
+    "blocks/0/text": "Key question of the node: **how are experiments conducted?**",
+    "blocks/1/title": "HADI",
+    "blocks/1/subtitle": "One cycle, four steps",
+    "blocks/1/items/0": "**Hypothesis** — if we do X, then metric Y will change by Z, because <reason>. Without \"because,\" the result won't teach anything.",
+    "blocks/1/items/1": "**Action** — what exactly we do, on whom, and for how long.",
+    "blocks/1/items/2": "**Data** — which metric is the main one. One. The rest are guardrail metrics to spot harm.",
+    "blocks/1/items/3": "**Insights** — what we know now, including when there is no effect.",
+    "blocks/2/title": "What is set before the start",
+    "blocks/2/subtitle": "Otherwise the result cannot be interpreted",
+    "blocks/2/items/0": "**Minimum detectable effect** — what change makes sense for the business. The required sample size and timeframe depend on it.",
+    "blocks/2/items/1": "**Duration** — a whole number of weeks to avoid day-of-week bias. Less than a week is almost always misleading.",
+    "blocks/2/items/2": "**Stopping rule** — early stopping is permissible only in case of harm, and the harm is defined in advance.",
+    "blocks/2/items/3": "**Guardrail metrics** — things that must not worsen: unsubscribes, complaints, speed.",
+    "blocks/3/text": "Testing a reminder to finish reading a book. On day three, variant B is ahead by 6%, the team celebrates and rolls it out to everyone.\n\nA month later, the metric returns to its previous level. They look closer: the first three days coincided with a weekend and the launch of a popular new title.\n\nA re-test over two weeks yields +1.2% — there is an effect, but it's one third of what was expected, and the decision to roll out would have been different.\n\nThe cost of the error isn't the test itself, but a quarter of plans built on that 6% figure.",
+    "blocks/3/title": "Vetka, peeking that cost a quarter",
+    "blocks/4/text": "**Validation Board** helps at an early stage when you test not an interface change, but the assumption itself: who the client is, what the problem is, what the solution is. There, cheap checks — interviews, a landing page, manual feature simulation — replace development, while the success criterion is still assigned in advance.",
+    "blocks/5/text": "Teams that consider only confirmation a success start tweaking: extending the test, changing metrics, segmenting the audience. A healthy share of unconfirmed hypotheses is more than half.",
+    "blocks/5/title": "A negative result is also a result",
+    "blocks/6/text": "Not everything can be tested. Rare events, long decision cycles, low traffic, price changes for existing customers — here an experiment is either impossible or more expensive than its value, so decisions are made by observation and judgment.",
+    "blocks/6/title": "Boundaries of the model"
+  }
+}

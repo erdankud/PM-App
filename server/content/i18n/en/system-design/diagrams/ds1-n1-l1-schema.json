@@ -1,0 +1,23 @@
+{
+  "language": "en",
+  "sourceDigest": "dcf5bcd0dbbdbab3",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Polka Core",
+    "nodes/0/label": "User",
+    "nodes/1/label": "Order",
+    "nodes/2/label": "Order Item",
+    "nodes/3/label": "Product",
+    "nodes/4/label": "Store",
+    "edges/0/label": "many → one",
+    "edges/1/label": "many → one",
+    "edges/2/label": "many → one",
+    "edges/3/label": "many → one"
+  }
+}

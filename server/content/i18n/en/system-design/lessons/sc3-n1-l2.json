@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "ef4592fb4b455c33",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:32Z"
+  },
+  "fields": {
+    "title": "The Economics of Reliability",
+    "keyTakeaway": "Investments in reliability pay off as long as they cost less than the damage prevented, and reducing detection time usually yields a better return per ruble than redundancy.",
+    "sections/0/blocks/0/text": "How do you know when to stop investing in reliability?",
+    "sections/1/blocks/0/text": "Reliability is the only area where it is easy to spend infinitely and impossible to reach perfection. Without a stopping criterion, the team will either underinvest or turn reliability into an end in itself.",
+    "sections/2/blocks/0/text": "The comparison is simple: **[[cost-of-downtime|cost of downtime]] vs. cost of prevention.**",
+    "sections/2/blocks/1/text": "The cost of downtime is calculated using peak hour revenue, the share of affected scenarios, and the unrecoverable portion. The latter is important: some orders not placed during an outage will be placed afterward. Deferred revenue is not a loss.",
+    "sections/2/blocks/2/text": "The cost of prevention is team effort plus infrastructure plus ongoing operations. The latter is often forgotten: cross-zone redundancy costs not just a quarter of work, but also a monthly bill and added complexity for every future change.",
+    "sections/2/blocks/3/text": "[[term-3|The break-even point]] lies where the next nine costs more than the damage prevented.",
+    "sections/2/blocks/4/text": "What is not in the arithmetic and must be considered separately:",
+    "sections/2/blocks/5/text": "*Reputation.* A public outage costs more than missed revenue. Especially at an early product stage. *Contractual obligations.* SLA penalties are direct money. *Internal trust.* A product that \"keeps going down\" loses support.",
+    "sections/2/blocks/6/text": "And the flip side: **excessive reliability also has a price** — not just money, but velocity. A team investing in the fifth nine is not building the product.",
+    "sections/3/blocks/0/text": "Calculation for the cross-zone redundancy decision.",
+    "sections/3/blocks/1/text": "Cost of an hour of downtime during evening peak: about 1 800 orders, commission ~4%, average ticket 2 400 — roughly 170 thousand rubles. Non-recoverable share based on past incidents is about 60%. Total ~100 thousand per hour.",
+    "sections/3/blocks/2/text": "Over half a year there were 4 incidents totaling 85 minutes, including 40 minutes at peak. Damage — about 70 thousand over half a year.",
+    "sections/3/blocks/3/text": "Cross-zone redundancy: a quarter of work (about 3m in team cost) plus 400 thousand a month. Over half a year — 5.4m versus the preventable 70 thousand.",
+    "sections/3/blocks/4/text": "The decision is obvious: it does not pay off by orders of magnitude. Instead, the same money went into reducing detection time — alerts, on-call rotation, automated checks. This cut the average incident duration from 21 minutes to 8, yielding 60% of the effect for 5% of the cost.",
+    "sections/3/blocks/5/text": "We ran a separate calculation for the corporate tier: compensation comes into play there, and the arithmetic changes. But even that did not make redundancy profitable given the current number of corporate clients.",
+    "sections/4/blocks/0/text": "The calculation does not work for catastrophic scenarios: data loss or a leak cannot be measured in lost revenue. Decisions for them are made not by payback, but by acceptability.",
+    "sections/5/blocks/0/text": "Investments in reliability pay off as long as they cost less than the damage they prevent, and reducing detection time usually yields a higher return per ruble than redundancy."
+  }
+}

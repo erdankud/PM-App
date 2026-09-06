@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "e2e7a1b17816983b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Read the schema",
+    "inputs/0/label": "Price at which the item was bought, in history",
+    "inputs/1/label": "Order payment split between two users",
+    "inputs/2/label": "Cancellation of a single item from an order",
+    "inputs/3/label": "All user orders for the month",
+    "inputs/4/label": "Price comparison of an item across different stores",
+    "acceptance/0/expected": "existing",
+    "acceptance/1/expected": "requires changes",
+    "acceptance/2/expected": "requires changes",
+    "acceptance/3/expected": "existing",
+    "acceptance/4/expected": "requires changes",
+    "inputs/0/choices/0": "existing",
+    "inputs/0/choices/1": "requires changes",
+    "inputs/1/choices/0": "existing",
+    "inputs/1/choices/1": "requires changes",
+    "inputs/2/choices/0": "existing",
+    "inputs/2/choices/1": "requires changes",
+    "inputs/3/choices/0": "existing",
+    "inputs/3/choices/1": "requires changes",
+    "inputs/4/choices/0": "existing",
+    "inputs/4/choices/1": "requires changes",
+    "promptBlocks/0/text": "Given the Polka schema. Mark which of the five features require schema changes and which work on the existing one.",
+    "promptBlocks/1/items/0": "Show the price at which the item was bought in history",
+    "promptBlocks/1/items/1": "Split order payment between two users",
+    "promptBlocks/1/items/2": "Cancel a single item from an order while keeping the rest",
+    "promptBlocks/1/items/3": "Show all user orders for the month",
+    "promptBlocks/1/items/4": "Compare the price of a single item across different stores",
+    "referenceReasoningBlocks/0/text": "1 and 4 — on existing (price lives in order item; order→user relation exists). 2, 3, 5 — require changes: 2 changes relationship cardinality, 3 requires item status, 5 requires a new catalog item entity. The key to the exercise is distinguishing between \"missing data\" and \"missing structure\": the first is backfilled, the second is rebuilt."
+  }
+}

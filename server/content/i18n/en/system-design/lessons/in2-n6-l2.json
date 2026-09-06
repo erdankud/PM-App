@@ -1,0 +1,40 @@
+{
+  "language": "en",
+  "sourceDigest": "1a42dcc1d071ae42",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:51Z"
+  },
+  "fields": {
+    "title": "Limits as a product",
+    "keyTakeaway": "A limit determines which scenarios are available to a partner, and thus is a product decision and a natural boundary for pricing tiers.",
+    "sections/0/blocks/0/text": "When does a restriction stop being a safeguard and become a line on the pricing page?",
+    "sections/1/blocks/0/text": "Limits set by engineers for technical reasons accidentally determine the commercial model: they decide which scenarios are available to the partner. If the product manager did not participate, the product line forms by accident and is only discovered through lost sales.",
+    "sections/2/blocks/0/text": "A limit determines what a partner can do. The difference between 60 and 600 requests per minute is the difference between \"hourly sync\" and \"real-time sync\", meaning different products.",
+    "sections/2/blocks/1/text": "Hence the natural packaging:",
+    "sections/2/blocks/2/header/0": "Tier",
+    "sections/2/blocks/2/header/1": "Limit",
+    "sections/2/blocks/2/header/2": "What it enables",
+    "sections/2/blocks/2/rows/0/0": "Basic",
+    "sections/2/blocks/2/rows/0/1": "60/min",
+    "sections/2/blocks/2/rows/0/2": "Hourly sync, manual operations",
+    "sections/2/blocks/2/rows/1/0": "Extended",
+    "sections/2/blocks/2/rows/1/1": "300/min",
+    "sections/2/blocks/2/rows/1/2": "Sync every 10 minutes, bulk exports",
+    "sections/2/blocks/2/rows/2/0": "Enterprise",
+    "sections/2/blocks/2/rows/2/1": "Custom + webhooks",
+    "sections/2/blocks/2/rows/2/2": "Real-time, events instead of polling",
+    "sections/2/blocks/3/text": "An important detail: **different operations cost differently, and counting them equally is a mistake.** Fetching a single order and exporting a monthly report are not the same unit. Mature APIs count weighted costs rather than raw requests: heavy operations consume more.",
+    "sections/2/blocks/4/text": "A second product consideration — **limits as a way to guide behavior.** If individual requests are cheap and batch requests are unrestricted, integrators will naturally shift to batching. It is cheaper to make the right path more profitable than to explain it in documentation.",
+    "sections/2/blocks/5/text": "Third — **what happens upon exceeding is also a product decision.** A hard rejection on a partner API during their peak export can stall their business process. Soft throttling with a warning is better for relationships, worse for our load.",
+    "sections/3/blocks/0/text": "Limits were repackaged along with the enterprise tier introduced in block `DS3`.",
+    "sections/3/blocks/1/text": "Basic — 60/min, included in standard connection. Enterprise — 300/min plus webhooks for stock and order changes. Webhooks proved to be a heavier argument in sales than the limit itself: retail chains want to see orders in their system immediately rather than an hour later.",
+    "sections/3/blocks/2/text": "We introduced weighted counting: getting an order — 1 unit, catalog export — 10, period report — 50. This shifted partner behavior without a single email: the share of batch requests grew from 40% to 78% in a quarter.",
+    "sections/3/blocks/3/text": "We left an initial synchronization mode separate — 2 000 requests in the first 24 hours after connection. Without it, onboarding a large retail chain hit the limit and required manual intervention every time.",
+    "sections/4/blocks/0/text": "Limits as a product work only with honest value: if the basic tier is enough for all real scenarios, the extended tier won't be bought. Artificially lowering the basic tier to sell the extended one is obvious and ruins relationships.",
+    "sections/5/blocks/0/text": "A limit determines which scenarios are available to a partner, and thus is a product decision and a natural boundary for pricing tiers."
+  }
+}

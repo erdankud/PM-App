@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "6d91b30a2556ede5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Segments: which customers are most profitable to sell to",
+    "keyTakeaway": "Segment customers by margin and cost-to-serve, not by industry vertical. Typically, a small cohort generates most of the profit, while another cohort drains margins through heavy support — yet both look identical on a top-line revenue report.",
+    "checkQuestion": "A client pays twice the average rate but consumes half of support capacity. How do you determine if they are profitable?",
+    "blocks/0/text": "Key node question: **which segments are most profitable to target?**",
+    "blocks/1/title": "ABCDX segmentation",
+    "blocks/1/subtitle": "Categorizes clients by product-market fit alignment",
+    "blocks/1/items/0": "**A** — the product solves their needs out of the box, willingness to pay is high, support cost is low. Growth is built on them.",
+    "blocks/1/items/1": "**B** — decent fit with minor workarounds, slightly higher cost-to-serve.",
+    "blocks/1/items/2": "**C** — pay reasonably, but demand custom feature tweaks that erode margins.",
+    "blocks/1/items/3": "**D** — small and low-ticket; sustainable only if support cost is near zero.",
+    "blocks/1/items/4": "**X** — poor fit by definition. Selling to them is destructive: they churn, complain, and consume team bandwidth.",
+    "blocks/2/text": "**RFM** serves a different purpose — sorting existing clients by recency, frequency, and monetary value. It is an engagement framework for customer retention. **ABC analysis** is simpler: clients (or SKUs) are ranked by revenue contribution, where typically 20% generate roughly 80%.",
+    "blocks/3/text": "Margin analysis across 120 clients net of support and custom dev costs:\n\nA — distributors with 15–40 employees, single warehouse, standard workflows: 31 clients, generating 62% of net profit. Support footprint: 20 minutes/month.\nC — multi-warehouse chains: 12 clients, paying 3x average ARR, but requesting heavy custom dev; net unprofitable.\nX — manufacturing firms: 9 clients, product fails to support their core workflows, average lifespan 5 months, responsible for 1/3 of support tickets.\n\nAction: banned sales to manufacturers, raised prices by 60% for retail chains — four churned, while the remaining eight turned profitable.",
+    "blocks/3/title": "Kedr: finding who is actually profitable",
+    "blocks/4/text": "Enterprise logos bring topline ARR and status, while small standardized clients yield actual profit margins. The temptation to build custom product for whales is huge — and often strays companies away from their core profitable niche.",
+    "blocks/4/title": "The most profitable segment often looks boring",
+    "blocks/5/text": "Segmentation is a point-in-time snapshot that ages as the product evolves — yesterday's X-tier can become a B-tier. Revisiting it every six months makes sense; doing it more frequently disrupts operational execution.",
+    "blocks/5/title": "Limitations of the model"
+  }
+}

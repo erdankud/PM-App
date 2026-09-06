@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "21d2ae623ed9c12c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:58Z"
+  },
+  "fields": {
+    "title": "A Visible Key Is No Key",
+    "keyTakeaway": "Everything in a client application is extractable, so operations involving secrets are performed on the server, and a key that lands in a repository is considered compromised even after deletion.",
+    "sections/0/blocks/0/text": "Why can you not put a payment provider key into a mobile app?",
+    "sections/1/blocks/0/text": "A key in the client is one of the most expensive mistakes: it gives outsiders the ability to act on behalf of the product. It is usually discovered via a provider bill or fraudulent transactions.",
+    "sections/2/blocks/0/text": "A **[[secret|secret]]** is a key, password, or token that grants access to a system. Anything that gets into a client app is extractable: the app can be decompiled, the traffic can be inspected.",
+    "sections/2/blocks/1/text": "Hence the rule: **there are no secrets on the client.** Not in code, not in configuration, not encrypted — the decryption key would also be on the client.",
+    "sections/2/blocks/2/text": "What this means architecturally: any operation requiring a secret is performed on the server. The client asks the server, the server executes. This was covered in `IN1-N1-L1` from the perspective of product rules, and here from the perspective of access rights.",
+    "sections/2/blocks/3/text": "Where secrets properly live:",
+    "sections/2/blocks/4/text": "A **[[secret-manager|secret manager]]** on the server. Issues keys to applications upon request, maintains an access log. **Never in the code repository.** Classic leak: a key in a commit. Even deleted, it remains in the history. **Never in logs.** A token that gets into a log is available to everyone who reads the logs.",
+    "sections/2/blocks/5/text": "**[[rotation|Rotation]]** — regular replacement. Limits damage from an unknown leak. Requires the system to be able to work with two keys simultaneously during replacement.",
+    "sections/2/blocks/6/text": "Separately — **what to do when a key leaks.** Revoke immediately, issue a new one, check the usage log for unauthorized requests. Revocation must be possible quickly, and this is verified in advance.",
+    "sections/3/blocks/0/text": "The client contains only the base API address and nothing else. Provider keys — payment, SMS, geocoding, ML models — are on the server in a secret manager.",
+    "sections/3/blocks/1/text": "Build check: a scanner searches client code for strings resembling keys. It triggered twice on test keys that ended up in debug code.",
+    "sections/3/blocks/2/text": "There was an incident with a key in the repository: an access token to an external service got into a commit and was discovered by an automated scanner in 20 minutes. Revoked, issued a new one, checked the log — no unauthorized use occurred. 20 minutes is acceptable because scanning is configured.",
+    "sections/3/blocks/3/text": "Rotation: provider keys are changed once a quarter on schedule. The first rotation showed that two services could not work with the new key without restarting — fixed.",
+    "sections/4/blocks/0/text": "Some keys are public by nature — for example, an app identifier for analytics. It is important to distinguish public identifiers from secrets that grant permissions.",
+    "sections/5/blocks/0/text": "Everything in a client application is extractable, so operations involving secrets are performed on the server, and a key that lands in a repository is considered compromised even after deletion."
+  }
+}

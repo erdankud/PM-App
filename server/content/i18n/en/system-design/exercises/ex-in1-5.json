@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "e1485a61558681e5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Plan B",
+    "promptBlocks/0/text": "For each dependency, name a Plan B and what happens without it.",
+    "promptBlocks/1/items/0": "Geocoding service (address → coordinates) during checkout",
+    "promptBlocks/1/items/1": "Recommendation service on the home screen",
+    "promptBlocks/1/items/2": "Payment provider",
+    "promptBlocks/1/items/3": "Promo code verification service",
+    "referenceReasoningBlocks/0/text": "Geocoding — user's saved addresses work without it, a new address is accepted with manual point selection on the map; without Plan B, new addresses cannot be entered. Recommendations — fallback to popular items; without Plan B, the home screen is empty, which is worse than being non-personalized. Payment — cash on delivery; without Plan B, revenue stops. Promo codes — honest error message \"verification is temporarily unavailable\", without Plan B the entire checkout is blocked for an optional feature, and this is the worst of the four options."
+  }
+}

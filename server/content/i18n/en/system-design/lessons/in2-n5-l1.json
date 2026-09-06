@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "71cc0d4cd052d139",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:51Z"
+  },
+  "fields": {
+    "title": "Who calls whom",
+    "keyTakeaway": "A webhook gives speed, polling gives control, and reliable integration usually uses both: a webhook for speed and periodic reconciliation for a guarantee.",
+    "sections/0/blocks/0/text": "A partner updated an order status. Do we find out in a second or in five minutes — and what does that depend on?",
+    "sections/1/blocks/0/text": "Recognition delay turns directly into product quality: how up-to-date statuses are, how fast notifications arrive, whether the app displays yesterday's price. The choice of mechanism determines this delay and is made once during integration.",
+    "sections/2/blocks/0/text": "**[[polling-2|Polling]].** We regularly ask \"what's new\". Simple, fully under our control, works with any API. The price is delay up to the polling interval and many empty requests. With a minute interval and a thousand objects, this is noticeable load for rare changes.",
+    "sections/2/blocks/1/text": "**[[webhook|Webhook]].** The external system calls us directly when an event occurs. Delay in seconds, no extra requests. The price is complexity: you need a public address, you must accept load at the exact moment someone else decides to create it, and you must decide what to do if you were unavailable at that moment.",
+    "sections/2/blocks/2/text": "**[[long-polling|Long polling]].** A compromise: the request hangs until news appears. Delay almost like a webhook, infrastructure almost like polling.",
+    "sections/2/blocks/3/text": "Four questions that determine the choice:",
+    "sections/2/blocks/4/text": "*How fast do you need to know?* Delivery status — minutes are acceptable. Payment confirmation — seconds. *How often do events happen?* Rare events with frequent polling is a waste of resources. *Does the provider have webhooks?* Often the question ends here. *What if we were unavailable?* A webhook might not retry. You need either a retry on their side or periodic reconciliation.",
+    "sections/2/blocks/5/text": "The last point is the main practical advice: **webhooks are almost always supplemented by periodic reconciliation.** A webhook gives speed, reconciliation gives a guarantee. Webhooks alone mean that every minute of our downtime turns into lost events.",
+    "sections/2/blocks/6/text": "Separately — **[[webhook-signature|webhook signature]].** An incoming webhook is a request from the internet that anyone can send. Without signature verification, anyone can tell us that an order is paid.",
+    "sections/3/blocks/0/text": "*Payment provider* — webhooks plus reconciliation. The webhook confirms payment in seconds. Every five minutes we reconcile payments in \"pending\" status with their API. Reconciliation catches 3–5 cases a day where the webhook did not arrive.",
+    "sections/3/blocks/1/text": "*Delivery service* — webhooks for status changes, reconciliation every 15 minutes for active orders.",
+    "sections/3/blocks/2/text": "*Catalog suppliers* — no webhooks, polling once an hour, limited by their rate limits. The product consequence regarding price freshness was covered in block `IN1`.",
+    "sections/3/blocks/3/text": "The incident that shaped this practice: during a new version rollout, the service accepted webhooks with errors for forty minutes. The provider retries three times over ten minutes, then gives up. We lost 60 payment confirmations — people paid, orders hung as unpaid. Reconciliation, introduced after this, cost two days of work and has closed such cases automatically ever since.",
+    "sections/4/blocks/0/text": "Webhooks create load we do not control: a provider can send a thousand events at once after their own outage. Accepting a webhook must be fast — put it in a queue and respond, rather than processing it synchronously.",
+    "sections/5/blocks/0/text": "A webhook gives speed, polling gives control, and reliable integration usually uses both: a webhook for speed and periodic reconciliation for a guarantee."
+  }
+}

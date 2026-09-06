@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "458e54ff7b3f89c8",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:54Z"
+  },
+  "fields": {
+    "title": "Cascade and Priorities",
+    "keyTakeaway": "A cascade is profitable with a low escalation rate and reliable result verification, when in doubt escalate up, and the model's self-assessment should not be trusted.",
+    "sections/0/blocks/0/text": "Can we use a cheap model for most requests, and an expensive one only when needed?",
+    "sections/1/blocks/0/text": "A cascade provides multiple-fold savings, but introduces a new class of errors: misjudging complexity sends a difficult request to a weak model. It is designed by the product team because the decision of \"what to do when uncertain\" is a product one.",
+    "sections/2/blocks/0/text": "**[[model-cascade|Model cascade]]** — cheap model first, expensive model upon uncertainty.",
+    "sections/2/blocks/1/text": "Three ways to determine that an expensive one is needed:",
+    "sections/2/blocks/2/text": "*Pre-call classification.* A separate small model or rules estimate complexity. Cheap, makes mistakes. *Self-assessment.* The cheap model answers and estimates confidence. Models are poorly calibrated, use with caution. *Result verification.* Programmatic check of the cheap model's response: is the format maintained, are mandatory parts present, did it pass validation. Most reliable where the result is structural.",
+    "sections/2/blocks/3/text": "Product rule: **when in doubt, escalate up.** The cost of an unnecessary expensive call is lower than the cost of a bad response.",
+    "sections/2/blocks/4/text": "The economic effect depends on the escalation rate. At 20% escalations and a 10x price difference, the cascade saves about 70%. At 60% escalations, it makes almost no sense.",
+    "sections/2/blocks/5/text": "A separate scheme is **splitting by user rather than by request.** Paying users get the strong model, everyone else gets the weak one. Simple, predictable, but means different product quality for different people, and that is a product decision with consequences for perception.",
+    "sections/3/blocks/0/text": "The cascade was applied in one feature — extracting ingredients from supplier descriptions.",
+    "sections/3/blocks/1/text": "The small model extracts the structure. Programmatic check: did the JSON parse, are mandatory fields filled, are values plausible? On failure — the medium model. On repeated failure — manual handling.",
+    "sections/3/blocks/2/text": "Escalation rate 17%, manual processing 1.2%. Catalog processing cost dropped about 4 times.",
+    "sections/3/blocks/3/text": "It works well here because the result is structural and checked programmatically. For generating user responses, we did not use a cascade: there is no reliable way to evaluate response quality before showing it, and we do not trust the model's self-assessment.",
+    "sections/3/blocks/4/text": "Splitting by users was discussed and rejected: the assistant is part of the core product, different quality for paying and non-paying users contradicts positioning. We would return to the question if a paid subscription appears.",
+    "sections/4/blocks/0/text": "A cascade complicates debugging and evals: the result depends on which path the request took. Metrics must be calculated separately per path.",
+    "sections/5/blocks/0/text": "A cascade is profitable with a low escalation rate and reliable result verification, when in doubt escalate up, and the model's self-assessment should not be trusted."
+  }
+}

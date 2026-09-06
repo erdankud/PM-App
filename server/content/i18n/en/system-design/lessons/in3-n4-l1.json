@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "3dd790f7a4b5f08f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "Promises no one ever made",
+    "keyTakeaway": "Everything consumers start relying on becomes an obligation regardless of agreements, and the only defense is to explicitly and preemptively state what is not guaranteed.",
+    "sections/0/blocks/0/text": "A partner built a workflow on a field we considered internal. Are we obligated to maintain it?",
+    "sections/1/blocks/0/text": "A product gradually accumulates obligations no one ever accepted. Every field, every format, every behavior someone starts relying on becomes a de facto promise. After a few years, change freedom disappears, and no one can name the moment it happened.",
+    "sections/2/blocks/0/text": "[[backward-compatibility|Backward compatibility]] is a new version's ability to work with old clients. The obligation to maintain it arises in two ways.",
+    "sections/2/blocks/1/text": "*Explicitly.* Written in a contract or policy: these operations are stable, breaking changes in 6 months.",
+    "sections/2/blocks/2/text": "*Implicitly.* No one promised anything, but consumers rely on it, and breaking it means losing their trust. This works as an obligation regardless of formalities.",
+    "sections/2/blocks/3/text": "Implicit obligations pop up where you least expect them:",
+    "sections/2/blocks/4/text": "*Element order in lists,* which you didn't guarantee, but someone relies on it. *Identifier format.* You wrote \"string,\" output numbers — someone parses it as a number. *Error messages.* Text is parsed by code because the error code wasn't specific enough. *Timings.* \"Usually arrives in a second\" becomes an expectation. *Side effects.* An operation does something extra besides its main job, and people rely on it.",
+    "sections/2/blocks/5/text": "The defense is **explicit limitation of what is promised.** The contract states not only what is guaranteed, but also what is not: order is undefined, identifier format is opaque, error text may change, error codes will not.",
+    "sections/2/blocks/6/text": "This is cheap at the start and nearly impossible to introduce later. Declaring \"order was never guaranteed\" after three years of stable ordering is formally true and practically useless.",
+    "sections/2/blocks/7/text": "The second tool is **measurement.** An obligation arises when someone relies on something; knowing who relies on what is only possible via usage logs.",
+    "sections/3/blocks/0/text": "Three cases of implicit obligations.",
+    "sections/3/blocks/1/text": "*Position order in an order.* Never guaranteed, happened to match addition order. Query optimization changed it, and three partners got discrepancies in pick lists — their systems relied on the order. Reverted by adding explicit sorting and writing it into the contract.",
+    "sections/3/blocks/2/text": "*Error text on product unavailability.* An integrator from one chain parsed it as a string because error code `409` was shared across several cases. Changing the wording broke their parsing. The right takeaway is not \"their fault,\" but \"error codes were insufficiently detailed\": we added subcodes.",
+    "sections/3/blocks/3/text": "*Webhook delay.* Usually a second. One chain built a workflow on the assumption that a webhook would arrive within five seconds. When things slowed down, their workflow broke. Here we refused: timing was never promised, and we are not ready to promise it. But we added an explicit caveat to the documentation that wasn't there before.",
+    "sections/3/blocks/4/text": "The team's general takeaway: **if consumers rely on undescribed behavior, it's usually a documentation flaw rather than their fault.**",
+    "sections/4/blocks/0/text": "Absolute compatibility is impossible and unnecessary. The goal is to consciously choose what is promised rather than discovering it by accident.",
+    "sections/5/blocks/0/text": "Everything consumers begin to rely on becomes an obligation regardless of agreements, and the only protection is to explicitly state in advance what is not guaranteed."
+  }
+}

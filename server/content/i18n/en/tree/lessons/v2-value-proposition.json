@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "582389902aad334d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:47:35Z"
+  },
+  "fields": {
+    "title": "Value proposition is an answer, not a description",
+    "keyTakeaway": "A value proposition exists only in pairs: on the left is the customer's job, pain, and gain; on the right is what exactly you do for each of them. An item on the right with nothing to answer on the left is a feature without a reason.",
+    "checkQuestion": "The team proposes adding an executive dashboard. How do you verify that this is a value proposition and not just decoration?",
+    "blocks/0/text": "Key node question: **what value propositions solve customer jobs?**",
+    "blocks/1/text": "Domain end-to-end example: Dispetcher is a fictional internal product of the Surma transport company: 60 vehicles, long-haul trucking, route planning, and driver assignment. In block V1, we determined whose need this was and what counts as done. Here, we look at how a need becomes a solution.",
+    "blocks/2/text": "**What happens if you do not answer the question.** A list of features appears, where everyone likes a different feature. You can debate such a list endlessly: any feature will find a defender, and none has a verifiable reason.",
+    "blocks/3/title": "Value Proposition Canvas",
+    "blocks/3/subtitle": "Two halves that must match",
+    "blocks/3/items/0": "**Left side — customer profile:** jobs, pains, gains (we collected these in D2).",
+    "blocks/3/items/1": "**Right side — your solution:** what relieves pain (pain reliever), what creates gain (gain creator), which part of the product is responsible for it.",
+    "blocks/3/items/2": "**Fit** is not the whole picture, but the links between the sides: every element on the right is tied to an element on the left.",
+    "blocks/3/items/3": "**Test:** cover the left half. If the right half still sounds convincing, you described features, not value.",
+    "blocks/4/text": "Feature: \"Automatic assignment of drivers to routes.\"\n\nValue proposition:\nThe dispatcher's pain — on Monday morning, they manually reconcile 60 vehicles and 74 drivers, spending two hours and assigning a driver without the required license category once a week on average.\nWhat we do — offer assignments in seconds and prevent assigning a driver who lacks the required category.\nGain — Monday planning wraps up by 9:30 instead of 11:00, and there are no category errors.\n\nThe former can be discussed forever. The latter is tested two weeks after release.",
+    "blocks/4/title": "Dispetcher: two formulations",
+    "blocks/5/text": "The left side usually collects fifteen items, while you only have enough capacity for three. They are picked using two criteria: how often the pain occurs and what a person does when it occurs. A pain that is bypassed with a single habit is almost never worth building for.",
+    "blocks/5/title": "Not every pain deserves an answer",
+    "blocks/6/text": "**The reverse direction is also useful.** Take what is already in the backlog and try to tie it to the left half. Usually, a third cannot be tied — that is the cheapest way to cut the plan.",
+    "blocks/7/text": "The canvas does not tell you how many people experience the pain or how much they will pay for it. It checks the coherence of the idea, not its size: unit economics are calculated separately in the \"Economics\" domain.",
+    "blocks/7/title": "Model boundaries"
+  }
+}

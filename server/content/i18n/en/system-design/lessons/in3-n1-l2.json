@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "71db3934ffa3c992",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "Life of the platform after launch",
+    "keyTakeaway": "Platform cost is ongoing support and slower product changes, not API development, and deprecation rules are published before you need them.",
+    "sections/0/blocks/0/text": "The API is public, developers have arrived. What happens to the product now that didn't happen before?",
+    "sections/1/blocks/0/text": "The cost of a platform is not development, it's operations. Companies underestimate it several times over and discover this a year later, when every product change hits ecosystem coordination roadblocks, and developer support takes a full-time person.",
+    "sections/2/blocks/0/text": "Four new ongoing commitments.",
+    "sections/2/blocks/1/text": "**Developer support.** Questions, debugging other people's errors, \"it's not working\" (usually it is). Volume grows linearly with the number of integrations. Good documentation and clear error messages cut this in half, and this is the highest ROI platform investment.",
+    "sections/2/blocks/2/text": "**Slower product changes.** Every change is checked for ecosystem compatibility. Some solutions become impossible not because they are complex, but because they will break other people's products.",
+    "sections/2/blocks/3/text": "**Responsibility for ecosystem quality.** A bad third-party app hits your reputation: the user doesn't distinguish who is at fault. Hence the [[app-directory|app directory]] with reviews and rules — which is another product.",
+    "sections/2/blocks/4/text": "**Access management.** Keys, revocation, rate limits, combating abuse. Third-party apps behave unpredictably not out of malice, but due to bugs.",
+    "sections/2/blocks/5/text": "What you need to set up from day one, not later:",
+    "sections/2/blocks/6/text": "*Consumer counter by operations and versions* — otherwise you cannot change anything. Covered in `IN2-N2-L2`. *[[deprecation-policy|Deprecation policy]]* — published rules with minimum notice periods. Announced in advance, it makes changes possible; introduced retroactively, it feels like a violation. *Notification channel* — developer mailing list. Without it, you have no way to support a migration window. *Sandbox* — otherwise integrators test in production, and you get junk orders.",
+    "sections/3/blocks/0/text": "Even without a public API, simplifying access to partner data brought a load. Over a quarter: 140 tickets from integrators, of which 90 were questions covered by documentation.",
+    "sections/3/blocks/1/text": "We sorted 90 tickets by topic and rewrote three documentation sections plus error messages: instead of `422 validation failed`, it became `422: the delivery_date field must be in YYYY-MM-DD format, received \"15.03.2026\"`. Tickets on these topics dropped by 70% in a month.",
+    "sections/3/blocks/2/text": "The deprecation policy was published before it was needed: a minimum of 6 months for breaking changes, 3 months for retiring operations, and notification across three channels. When the time came to change `total` in the `IN2-G-A` gateway, the conversation with partners took place within the framework of announced rules rather than as a favor.",
+    "sections/4/blocks/0/text": "A full-fledged platform with an app directory and review is a separate product with its own team. Intermediate forms — contract-based self-service for partners — deliver part of the value for a fraction of the cost.",
+    "sections/5/blocks/0/text": "Platform cost is ongoing support and slower product changes, not API development, and deprecation rules are published before you need them."
+  }
+}

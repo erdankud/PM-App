@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "d10dd0ed7593319b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Is it worth opening an API",
+    "promptBlocks/0/text": "For each product, state whether the three effects — distribution, retention, long tail — work and whether you should open a public API.",
+    "promptBlocks/1/items/0": "Grocery delivery service for customers",
+    "promptBlocks/1/items/1": "Time-tracking system for companies",
+    "promptBlocks/1/items/2": "Mobile banking app for individuals",
+    "promptBlocks/1/items/3": "Email marketing platform",
+    "referenceReasoningBlocks/0/text": "1 — none work, the buyer doesn't build processes around it. 2 — retention is strong (embedded in HR processes), long tail exists (payroll integrations), yes. 3 — distribution and tail work, but regulations make this a separate project; the decision isn't architectural. 4 — all three, it's a platform product by nature. Rule of thumb: ask whether the user builds processes around you that are painful to migrate."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "35f4e10b1b6d13aa",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:51Z"
+  },
+  "fields": {
+    "title": "An API has a user",
+    "keyTakeaway": "A public API is justified by only three effects — distribution, retention, and niche coverage — and creates an obligation more expensive than developing the API itself.",
+    "sections/0/blocks/0/text": "Partner APIs are built for integration. Public APIs are built for what — and how do they differ besides availability?",
+    "sections/1/blocks/0/text": "Companies open APIs because \"platforms do that\", and get nothing at best, or at worst an obligation to support a contract for dozens of developers without a clear return. The decision to open an API is strategic, and the price of error is years of supporting something nobody uses, or an ecosystem that holds your hands tied during every change.",
+    "sections/2/blocks/0/text": "A [[public-api|public API]] differs from a partner API not in technology, but in the fact that **you do not choose or know your consumers.** A partner signed a contract, has a contact person and obligations. A third-party developer simply grabbed a key.",
+    "sections/2/blocks/1/text": "Hence three consequences.",
+    "sections/2/blocks/2/text": "*Changes become more expensive.* You cannot call everyone. Migration windows stretch, breaking changes are effectively frozen. *Support becomes a product.* Documentation, [[sandbox|sandbox]], clear errors, examples — this is [[developer-experience|developer experience]], and it determines whether the integration takes off. *Responsibility for other products emerges.* Your outage breaks more than just you.",
+    "sections/2/blocks/3/text": "Why open one then. Three honest reasons:",
+    "sections/2/blocks/4/text": "**Distribution.** Integrations bring users. Every third-party app is a channel. **Retention.** A product around which a client has built processes is not replaced. This is the strongest effect and the most underestimated. **Long-tail coverage.** Niches you will never build yourself are covered by third parties.",
+    "sections/2/blocks/5/text": "And one dishonest one that you should learn to recognize: \"competitors have it\". This is not a reason, but anxiety.",
+    "sections/2/blocks/6/text": "What the developer is buying is not data, but **time and access.** Access to your users and savings on not building it themselves. If neither is present, the API will not be used, no matter how good it is.",
+    "sections/2/blocks/7/text": "A separate decision is **[[oauth|OAuth]] and [[scope|scopes]]**: does the app act on its own behalf or on behalf of the user. The latter is more powerful and requires a thoughtful consent screen where a person sees exactly what they are granting. This screen is product work, and it defines trust in the entire ecosystem.",
+    "sections/3/blocks/0/text": "There is no public API, only a contractual partner API. The question was discussed twice.",
+    "sections/3/blocks/1/text": "The first time under the slogan \"let's build a platform\". We broke it down by three reasons: no distribution (our users don't look for integrations), retention doesn't work (buyers don't build processes around grocery delivery), long tail is not in sight. We declined.",
+    "sections/3/blocks/2/text": "The second time — from the partners' side. Retail chains have their own accounting systems, and dozens of integration contractors revolve around them. Here distribution and retention work: a retail chain with Polka built into its accounting system doesn't leave. This led not to a public API, but to **simplifying partner access**: self-service key issuance, sandbox, documentation without asking a manager.",
+    "sections/3/blocks/3/text": "Result for the quarter: time to connect a new retail chain dropped from three weeks to four days, and two integrators built ready-made modules for popular accounting systems we never commissioned.",
+    "sections/4/blocks/0/text": "A public API does not have to be free and does not have to be complete. A limited set of operations with clear value works better than full access to everything.",
+    "sections/5/blocks/0/text": "A public API is justified by only three effects — distribution, retention, and niche coverage — and creates an obligation more expensive than developing the API itself."
+  }
+}

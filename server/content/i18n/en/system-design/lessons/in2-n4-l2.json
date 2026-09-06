@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "0581fb99d3eedb62",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:51Z"
+  },
+  "fields": {
+    "title": "Delivery guarantees and ordering",
+    "keyTakeaway": "The practically achievable guarantee is \"at-least-once\", and an idempotent receiver makes it safe, rather than hunting for a way to deliver exactly once.",
+    "sections/0/blocks/0/text": "Will the message definitely arrive? And once, or maybe twice? And in the correct order?",
+    "sections/1/blocks/0/text": "Incorrect assumptions about guarantees produce the most elusive product defects: a bonus credited twice, an order status that rolled backward, a delivery notification arriving before a shipping notification. Each seems like a fluke on its own, but together they build a feeling of an unreliable product.",
+    "sections/2/blocks/0/text": "Three levels of guarantee, of which practically two exist.",
+    "sections/2/blocks/1/text": "**[[at-most-once|At most once]].** Sent and forgotten. It can get lost, there will be no duplicate. Suitable where a loss is harmless: updating a view counter.",
+    "sections/2/blocks/2/text": "**[[at-least-once|At least once]].** We retry until we get confirmation. It will not be lost, but if confirmation is lost, it will arrive twice. The standard for everything important.",
+    "sections/2/blocks/3/text": "**[[exactly-once|Exactly once]].** What everyone wants. In a distributed system, this is generally unreachable: there is always a gap between \"executed\" and \"confirmed\", and a failure in that gap is indistinguishable from non-execution.",
+    "sections/2/blocks/4/text": "The practical takeaway, and it is more important than theory: **\"at-least-once\" delivery plus an idempotent receiver yields the effect of \"exactly-once\".** Not by eliminating duplicates, but by making them harmless. This is why the previous node is a prerequisite for this one.",
+    "sections/2/blocks/5/text": "[[message-ordering|Message ordering]] is the second guarantee not provided by default. Messages are processed in parallel, and \"shipped\" can overtake \"assembled\".",
+    "sections/2/blocks/6/text": "Three ways to cope:",
+    "sections/2/blocks/7/text": "*Not depending on order.* Each message carries the full state, not a delta. The handler simply applies the latest one. *Timestamp or version.* The receiver drops messages older than the one already applied. Cheap and works almost always. *Ordering within a key.* Many queues guarantee order for messages with the same key — for example, for a single order. At the cost of parallelism.",
+    "sections/2/blocks/8/text": "The second method is usually sufficient, and the product decision here is which field to treat as the version.",
+    "sections/3/blocks/0/text": "Order statuses arrive from the delivery service via webhooks, ordering is not guaranteed. Twice we observed an order showing as \"delivered\", then as \"in transit\".",
+    "sections/3/blocks/1/text": "We solved it with versions: each status has an event timestamp from the supplier, and any status with a timestamp earlier than the already applied one is dropped. An hour of work, problem closed.",
+    "sections/3/blocks/2/text": "Bonus accrual: \"at-least-once\" delivery, handler is idempotent by order ID. Retries happen regularly — about 40 per day according to logs — and none lead to double crediting. This is a working \"exactly-once\" implementation.",
+    "sections/3/blocks/3/text": "The dead-letter queue is reviewed once a day. Over a month, 15–30 messages end up there, usually due to data the handler did not expect. Reviewing takes half an hour and regularly uncovers product edge cases that no one would have known about otherwise.",
+    "sections/4/blocks/0/text": "Guarantees depend on the specific queue technology and its configuration. The question \"what are our guarantees\" has a concrete answer, and you should know it before designing, rather than figuring it out from incidents.",
+    "sections/5/blocks/0/text": "The practically achievable guarantee is \"at-least-once\", and an idempotent receiver makes it safe, rather than hunting for a way to deliver exactly once."
+  }
+}

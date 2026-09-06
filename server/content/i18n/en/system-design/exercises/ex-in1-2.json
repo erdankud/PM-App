@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "sourceDigest": "04897752966cf951",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Read the API",
+    "inputs/0/label": "Full catalog export time",
+    "inputs/0/unit": "min",
+    "promptBlocks/0/text": "Supplier API returns items with fields: SKU, name, price, category, barcode, stock. Retrieval method — filter by category and modification date, 50 records per request, 20 requests per minute, no webhooks. Catalog size is 30 thousand items.",
+    "promptBlocks/1/items/0": "How long does it take to export the entire catalog?",
+    "promptBlocks/1/items/1": "Which two of three features are possible: \"in stock now\", \"new arrivals this week\", \"product ingredients\"?",
+    "promptBlocks/1/items/2": "What product limitation stems from the lack of webhooks?",
+    "referenceReasoningBlocks/0/text": "30 000 / 50 = 600 requests at 20 per minute — 30 minutes. Possible: \"in stock\" (has stock) and \"new arrivals\" (has modification date filter). \"Ingredients\" is impossible — no field, requires negotiation with supplier. Without webhooks, price changes are learned on the next export; with a 30-minute export, updating more often than once an hour is unrealistic, meaning prices can be stale for up to an hour — and this must be decided at the product level."
+  }
+}

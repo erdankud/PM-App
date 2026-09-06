@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "7a32823f7a83b1f0",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "Replicas and lag: where delay comes from",
+    "keyTakeaway": "A replica speeds up reads at the cost of data delay, and the product must decide in advance on which screens this delay is acceptable.",
+    "sections/0/blocks/0/text": "A user leaves a review, refreshes the page — no review. Ten seconds later, it appears. What happened between those moments?",
+    "sections/1/blocks/0/text": "Such situations reach support as a bug, waste team time, and end with the verdict \"works as intended\" — which means to the user \"we don't care\". Proper behavior here is designed, and the product manager designs it because this is an interface question, not a database one.",
+    "sections/2/blocks/0/text": "When a single database is no longer enough for reads, [[replica|replicas]] are added — copies updated automatically. Writes go to the [[primary-replica|primary]], reads come from followers. Reads are usually dozens of times more frequent than writes, so this separation gives a lot and costs little.",
+    "sections/2/blocks/1/text": "The price is [[replication-lag|replication lag]]. The follower does not catch up with the primary instantly: usually tens of milliseconds, under load — seconds, during a failure — minutes. All this time, the replica returns stale data.",
+    "sections/2/blocks/2/text": "Hence two behavioral models between which the product chooses.",
+    "sections/2/blocks/3/text": "**[[strong-consistency|Strong consistency]]:** reads immediately after a write return the written data. Achieved by reading from the primary. More expensive and does not scale.",
+    "sections/2/blocks/4/text": "**[[eventual-consistency-2|Eventual consistency]]:** data will converge, but not immediately. Cheap, scales, requires product design.",
+    "sections/2/blocks/5/text": "It is also appropriate to mention [[cap-theorem|CAP]]. There are many formulations, but the product needs one: **during a [[network-partition|network partition]] between nodes, the system is forced to choose — either reply with potentially stale data, or not reply at all.** There is no third option. The choice is made in advance and is a product choice: for a news feed, the correct answer is to show old data; for warehouse stock before write-off, it is to refuse.",
+    "sections/3/blocks/0/text": "Three decisions for the exact same replica.",
+    "sections/3/blocks/1/text": "*Catalog and product cards* — read from the replica. A lag of seconds on a product description bothers no one.",
+    "sections/3/blocks/2/text": "*Stock levels during checkout* — read from the primary. Selling something that does not exist is more expensive than putting a slight load on the primary. And the check is repeated within the transaction anyway.",
+    "sections/3/blocks/3/text": "*User order history* — from the replica, but with a caveat, which the next lesson covers: immediately after checkout, a person opens their history and does not find their order there. This is the worst possible moment for lag.",
+    "sections/4/blocks/0/text": "Lag is not constant: it is small during quiet times and grows precisely when the load is high, that is, when there are the most users. You must design for the bad case, not the average one. And replicas only solve read scaling — writes remain in one place.",
+    "sections/5/blocks/0/text": "A replica speeds up reads at the cost of data delay, and the product must decide in advance on which screens this delay is acceptable."
+  }
+}

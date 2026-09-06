@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "fffdf1057cf58030",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:39Z"
+  },
+  "fields": {
+    "title": "Error budget",
+    "keyTakeaway": "An error budget turns the choice between speed and reliability into arithmetic and permits taking risks precisely as far as the target allows.",
+    "sections/0/blocks/0/text": "How does a reliability target turn into a tool for managing development pace?",
+    "sections/1/blocks/0/text": "The conflict between speed and stability is solved either by negotiations at every release or by a rule. The first takes time and ruins relationships; the second works on its own. The error budget is the mechanism that turns this conflict into arithmetic.",
+    "sections/2/blocks/0/text": "[[error-budget|Error budget]] is the flip side of SLO. A target of 99.9% means that 0.1% failure is **permitted**. Over 30 days, this is 43 minutes.",
+    "sections/2/blocks/1/text": "Permitted is the key word. The budget is not a loss, but a resource: it can be spent on releases, experiments, migrations. Not spending the budget means you moved slower than you could have.",
+    "sections/2/blocks/2/text": "The rule everything is built around:",
+    "sections/2/blocks/3/text": "*Budget remains* — we release freely, take risks, experiment. *Budget is exhausted* — new features stop, the team works on reliability until the window shifts.",
+    "sections/2/blocks/4/text": "The value of the rule is that it **removes arguments.** Not \"engineers want stability, PM wants features\", but \"budget is 43 minutes, 31 spent, we have 12 minutes left until the end of the month\". The conversation becomes about a number.",
+    "sections/2/blocks/5/text": "The second effect is the right attitude toward risk. A team with an untouched budget should release more boldly.",
+    "sections/2/blocks/6/text": "Practical details: a 30-day rolling window instead of a calendar one, otherwise amnesty hits on the first of the month. Large planned work is budgeted in advance. And the budget is calculated by SLI, not feelings.",
+    "sections/3/blocks/0/text": "Introduced for checkout. 99.9% over 30 rolling days is 43 minutes.",
+    "sections/3/blocks/1/text": "First month: 68 minutes spent, mostly due to the reviews incident from gate `SC1-G-B`. The rule worked — no new features released for two weeks, timeouts and circuit breakers built. The product roadmap shifted, and this was discussed at leadership level.",
+    "sections/3/blocks/2/text": "Second month: 9 minutes. A conversation that never happened before appeared: the team proposed rolling out a risky index change during the day rather than at night because the budget allowed it. Previously, such things were always done at night out of caution.",
+    "sections/3/blocks/3/text": "The third month showed the tool's boundary: 41 minutes, of which 38 were a single provider incident beyond our control. Formally the budget is nearly exhausted, substantively the team had nothing to do with it. Added a rule: incidents caused by external providers are counted separately, but recorded as a reason to reinforce Plan B.",
+    "sections/4/blocks/0/text": "The budget works with leadership backing. If releases continue anyway when it is exhausted, the tool turns into a report.",
+    "sections/5/blocks/0/text": "An error budget turns the choice between speed and reliability into arithmetic and permits taking risks precisely as far as the target allows."
+  }
+}

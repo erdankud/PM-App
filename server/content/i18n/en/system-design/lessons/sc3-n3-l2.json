@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "25da64da0e05b641",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:32Z"
+  },
+  "fields": {
+    "title": "Failover as a Product Event",
+    "keyTakeaway": "Failover breaks operations, loses unreplicated data, and hits cold caches, so it must be practiced under load, and its product consequences must be designed in advance.",
+    "sections/0/blocks/0/text": "The region is down, switching to backup. What happens to the user?",
+    "sections/1/blocks/0/text": "Failover is neither instantaneous nor free, and its product consequences include lost data, broken sessions, and repeated actions. If not designed in advance, they turn a controlled event into a second-order incident.",
+    "sections/2/blocks/0/text": "What happens during [[failover|failover]]:",
+    "sections/2/blocks/1/text": "*Interruption of current operations.* Everything running gets cut off. Users get errors. *Loss of unreplicated data.* With asynchronous replication, data from the last seconds or minutes has not arrived — this is the actual RPO of the failover. *Broken sessions.* If sessions are stored locally, everyone gets logged out. *Cold caches.* The backup region runs slowly for the first few minutes until caches warm up. Under full load, this can crash it. *External webhooks.* Providers keep sending to the old address until DNS updates.",
+    "sections/2/blocks/2/text": "The last two are why unverified failovers usually fail: the backup site either cannot handle full load or misses incoming events.",
+    "sections/2/blocks/3/text": "Hence the practice: **failover is tested regularly through drills under real load.** Some companies keep the backup region running on a fraction of traffic precisely for this reason.",
+    "sections/2/blocks/4/text": "[[failback|Failback]] is a separate operation, often more complex than failover: while the backup ran, data accumulated that needs to be brought back.",
+    "sections/2/blocks/5/text": "Product decisions made in advance: what to show during failover, whether users get logged out, what to do with broken operations, whom to notify.",
+    "sections/3/blocks/0/text": "Inter-zone failover is automatic, taking about two minutes. Product behavior: the app shows \"restoring connection\" and retries requests with jitter — without jitter, all clients hit the database simultaneously and finish off the newly revived database.",
+    "sections/3/blocks/1/text": "Sessions are moved to a shared storage accessible from all zones — otherwise, every failover would log everyone out.",
+    "sections/3/blocks/2/text": "Quarterly failover drill at 6 AM on Sunday. The first one found three problems: caches were cold and the database could not handle the load, provider webhooks went nowhere for 4 minutes, and the order queue had a single handler instance tied to a zone — that same finding from `SC1-N3-L1`.",
+    "sections/3/blocks/3/text": "It took three drills for failover to become predictable.",
+    "sections/4/blocks/0/text": "Automatic failover can trigger falsely and switch to backup when there is no real issue. The trigger threshold requires tuning, and failover itself is a separate metric.",
+    "sections/5/blocks/0/text": "Failover breaks operations, loses unreplicated data, and hits cold caches, so it must be practiced under load, and its product consequences must be designed in advance."
+  }
+}

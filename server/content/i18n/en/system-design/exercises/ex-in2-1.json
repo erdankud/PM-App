@@ -1,0 +1,40 @@
+{
+  "language": "en",
+  "sourceDigest": "810643084bd7459e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Where to collect data",
+    "inputs/0/label": "Home screen, 5 sources, peak load",
+    "inputs/1/label": "Profile settings screen",
+    "inputs/2/label": "Partner API for network report",
+    "inputs/3/label": "6-week experiment screen",
+    "acceptance/0/expected": "server",
+    "acceptance/1/expected": "client",
+    "acceptance/2/expected": "shared resources",
+    "acceptance/3/expected": "client",
+    "inputs/0/choices/0": "client",
+    "inputs/0/choices/1": "server",
+    "inputs/0/choices/2": "shared resources",
+    "inputs/1/choices/0": "client",
+    "inputs/1/choices/1": "server",
+    "inputs/1/choices/2": "shared resources",
+    "inputs/2/choices/0": "client",
+    "inputs/2/choices/1": "server",
+    "inputs/2/choices/2": "shared resources",
+    "inputs/3/choices/0": "client",
+    "inputs/3/choices/1": "server",
+    "inputs/3/choices/2": "shared resources",
+    "promptBlocks/0/text": "For each screen, state where to collect: client, server, shared resource.",
+    "promptBlocks/1/items/0": "Home screen, 5 sources, changes once a year, peak load",
+    "promptBlocks/1/items/1": "Profile settings screen, 3 sources, changes monthly",
+    "promptBlocks/1/items/2": "Partner API for network report",
+    "promptBlocks/1/items/3": "Experiment screen, lives for 6 weeks",
+    "referenceReasoningBlocks/0/text": "1 — server, endpoint tailored to the screen: load is heavy, screen is stable. 2 — client from shared resources: changes frequently, load is low. 3 — shared resources: partner scenarios are unknown to us. 4 — client: experiment should not require a server release for every tweak. Criterion: what changes more often — the screen or the load on it."
+  }
+}

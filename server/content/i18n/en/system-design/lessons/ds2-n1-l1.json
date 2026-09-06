@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "d937ba3d5428edba",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:45Z"
+  },
+  "fields": {
+    "title": "Normalization: one fact in one place",
+    "keyTakeaway": "Normalization gives a fact a single point of change; duplicating a fact is a risk, capturing a snapshot of a fact is a necessity, and the PM must distinguish between them.",
+    "sections/0/blocks/0/text": "Why is the store name stored in the stores table rather than next to every order—wouldn't that mean having to look it up less often?",
+    "sections/1/blocks/0/text": "A PM who does not understand the principle perceives the proposal to \"duplicate data for speed\" as purely technical and does not participate in the decision. But what gets decided there is a product question: are we willing to let the exact same thing be called different names in two places of the product. The answer depends on what kind of thing it is, and the PM knows this, not the engineer.",
+    "sections/2/blocks/0/text": "[[normalization|Normalization]] is organizing the schema so that each fact is stored in exactly one place. The store name \"Romashka\" lives in a single row of the stores table. Orders reference it.",
+    "sections/2/blocks/1/text": "The point is not saving space—space is cheap. The point is that a fact has a single point of change. The store was renamed—we edit one row, and the product immediately shows the new name everywhere.",
+    "sections/2/blocks/2/text": "The opposite situation is called an [[update-anomaly|update anomaly]]: if the store name lived in every order, renaming it would require updating 400 thousand records. Missed some—and the product has two different names for the same store. This is not an abstract risk: anomalies surface on screens, in reports, and in emails to users, and users usually find them.",
+    "sections/2/blocks/3/text": "Two more types of anomalies useful for product thinking:",
+    "sections/2/blocks/4/text": "*Insertion anomaly.* You cannot create a new store until it has at least one order—because store data lives only inside orders. The product cannot express \"store connected, but hasn't sold anything yet\".",
+    "sections/2/blocks/5/text": "*Deletion anomaly.* By deleting a store's last order, you also delete the store itself. The product loses data it never intended to lose.",
+    "sections/2/blocks/6/text": "In practice, people discuss the [[normal-form|third normal form]], and it is enough. The rule is simple: an attribute describes the entity it lives in, and nothing more.",
+    "sections/3/blocks/0/text": "The schema is normalized almost everywhere, and one exception was made intentionally: the price in an order item duplicates the product price.",
+    "sections/3/blocks/1/text": "This looks like a violation, but it is not. Product price and purchase price are different facts. The first changes, the second is fixed forever. Storing them in one place is impossible because they are different things that happened to coincide at the moment of checkout.",
+    "sections/3/blocks/2/text": "A useful check: **is it duplication or a snapshot?** Duplication is one fact in two places, and they must match. A snapshot is capturing a value at a point in time, and it must not change. The first is dangerous, the second is necessary.",
+    "sections/4/blocks/0/text": "Normalization optimizes writes and integrity, not reads. A fully normalized schema requires joining many tables for every query, and on some screens this becomes too slow. That's when the next lesson kicks in.",
+    "sections/5/blocks/0/text": "Normalization gives a fact a single point of change; duplicating a fact is a risk, capturing a snapshot of a fact is a necessity, and the PM must distinguish between them."
+  }
+}

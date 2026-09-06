@@ -13,21 +13,46 @@ from sqlalchemy.orm import Session
 from app import tree_content
 from app.models import TermEncounter
 
-# Как читается каждый примитив нотации — для VoiceOver и для описания схемы словами.
+# Как читается каждый примитив нотации — для скринридера и для описания схемы словами.
+# Описание строится из структуры, поэтому оно всегда совпадает с нарисованным; ради
+# этого словарь и держится здесь, а не в контенте.
 NODE_WORDS = {
-    "client": "клиент",
-    "service": "сервис",
-    "store": "хранилище",
-    "cache": "кэш",
-    "queue": "очередь",
-    "external": "внешняя система",
-    "boundary": "граница",
-    "actor": "участник",
+    "ru": {
+        "client": "клиент",
+        "service": "сервис",
+        "store": "хранилище",
+        "cache": "кэш",
+        "queue": "очередь",
+        "external": "внешняя система",
+        "boundary": "граница",
+        "actor": "участник",
+    },
+    "en": {
+        "client": "client",
+        "service": "service",
+        "store": "store",
+        "cache": "cache",
+        "queue": "queue",
+        "external": "external system",
+        "boundary": "boundary",
+        "actor": "actor",
+    },
 }
 EDGE_WORDS = {
-    "sync": "синхронно вызывает",
-    "async": "асинхронно отправляет в",
-    "data": "передаёт данные в",
+    "ru": {
+        "sync": "синхронно вызывает",
+        "async": "асинхронно отправляет в",
+        "data": "передаёт данные в",
+    },
+    "en": {
+        "sync": "calls synchronously",
+        "async": "sends asynchronously to",
+        "data": "passes data to",
+    },
+}
+_FRAME = {
+    "ru": ("Схема «{title}».", "Схема.", "Элементы: ", "Связи: "),
+    "en": ('Diagram "{title}".', "Diagram.", "Elements: ", "Links: "),
 }
 
 
@@ -48,18 +73,23 @@ def mark_seen(db: Session, user_id: str, term_ids: list[str]) -> None:
         known.add(term_id)
 
 
-def describe_diagram(diagram: dict[str, Any]) -> str:
+def describe_diagram(diagram: dict[str, Any], language: str = "ru") -> str:
     """Схема словами.
 
     Структура даёт то, чего не даёт картинка: описание строится автоматически и
     всегда совпадает с тем, что нарисовано (спека System Design §10).
     """
     labels = {node["id"]: node["label"] for node in diagram["nodes"]}
-    parts = [f"Схема «{diagram['title']}»." if diagram.get("title") else "Схема."]
+    titled, untitled, elements, links_word = _FRAME.get(language, _FRAME["ru"])
+    node_words = NODE_WORDS.get(language, NODE_WORDS["ru"])
+    edge_words = EDGE_WORDS.get(language, EDGE_WORDS["ru"])
+    dash = " — " if language == "ru" else " - "
+
+    parts = [titled.format(title=diagram["title"]) if diagram.get("title") else untitled]
     parts.append(
-        "Элементы: "
+        elements
         + ", ".join(
-            f"{node['label']} — {NODE_WORDS.get(node['type'], node['type'])}"
+            f"{node['label']}{dash}{node_words.get(node['type'], node['type'])}"
             for node in diagram["nodes"]
         )
         + "."
@@ -67,17 +97,17 @@ def describe_diagram(diagram: dict[str, Any]) -> str:
     if diagram["edges"]:
         links = []
         for edge in diagram["edges"]:
-            verb = EDGE_WORDS.get(edge["type"], edge["type"])
+            verb = edge_words.get(edge["type"], edge["type"])
             tail = f" ({edge['label']})" if edge.get("label") else ""
             links.append(
                 f"{labels.get(edge['from'], edge['from'])} {verb} "
                 f"{labels.get(edge['to'], edge['to'])}{tail}"
             )
-        parts.append("Связи: " + "; ".join(links) + ".")
+        parts.append(links_word + "; ".join(links) + ".")
     return " ".join(parts)
 
 
-def diagram_view(diagram: dict) -> Any:
+def diagram_view(diagram: dict, language: str = "ru") -> Any:
     """Схема для клиента: примитивы плюс описание словами.
 
     Живёт здесь, а не в роутере, потому что схему отдают и урок, и упражнение, —
@@ -102,5 +132,5 @@ def diagram_view(diagram: dict) -> Any:
         ],
         # Схема — структура, поэтому текстовое описание строится само: у картинки
         # такой возможности нет (спека SD §10).
-        text_description=describe_diagram(diagram),
+        text_description=describe_diagram(diagram, language),
     )

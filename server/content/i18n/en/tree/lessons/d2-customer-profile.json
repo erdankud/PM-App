@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "0983975ede53fdf5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:42:56Z"
+  },
+  "fields": {
+    "title": "Describe the customer through their job, not their age",
+    "keyTakeaway": "A useful customer profile consists of jobs, pains, and gains. Demographics belong in it only if they change behavior—and they almost never do.",
+    "checkQuestion": "“Cafe owners, 30–45 years old, small business.” Which of this will be useful during design?",
+    "blocks/0/text": "Key node question: **who is our customer?** In block D1, we figured out what happens in the product; here, we look at who this person is and why they act the way they do.",
+    "blocks/1/text": "Recall our ongoing example: Smena is a shift scheduling service for small cafes and stores. The owner pays; the owner and employees use it.",
+    "blocks/2/text": "**What happens if you don't answer the question.** You get a persona like “Irina, 34 years old, coffee shop owner, loves order.” You cannot derive a single decision from this: any screen fits and doesn't fit such a description equally well.",
+    "blocks/3/title": "Customer Profile",
+    "blocks/3/subtitle": "Three parts, all observable and verifiable",
+    "blocks/3/items/0": "**Jobs**—what the person is trying to do: functional, social, emotional.",
+    "blocks/3/items/1": "**Pains**—what gets in the way, what they fear, what costs too much.",
+    "blocks/3/items/2": "**Gains**—how they know things got better. Not “convenience,” but an observable outcome.",
+    "blocks/3/items/3": "**Check:** every item must be backed by something you saw or heard, not assumed.",
+    "blocks/4/text": "Useless: “Irina, 34, owner of a two-location coffee shop, values simplicity.”\n\nUseful:\nJobs—fill the schedule for the week by Sunday; avoid running out of baristas on Saturday; send monthly hours to the accountant.\nPains—employees swap shifts in messenger chats without telling her; calculating hours manually led to a mistake and an argument once.\nGains—by Sunday evening the schedule is set and nobody DMs her.\n\nThe second description clearly shows what to measure and build. The first one doesn't.",
+    "blocks/4/title": "Smena: two descriptions of one owner",
+    "blocks/5/text": "A cafe owner's age changes nothing. But the number of locations changes everything: with one location, the schedule stays in their head; with five, it doesn't.",
+    "blocks/5/title": "Demographics belong in the profile only if they change behavior",
+    "blocks/6/text": "A profile is a generalization, so it always contains assumptions. Mark what is backed by observation and what is an assumption: six months from now, distinguishing them will be impossible. Also, a profile describes a person, not a situation—the same person behaves differently under schedule panic versus calm conditions.",
+    "blocks/6/title": "Model limitations"
+  }
+}

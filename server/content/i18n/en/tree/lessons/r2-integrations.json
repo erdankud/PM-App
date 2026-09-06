@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "23c344eb0c55b490",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Integrations: someone else's system means someone else's decisions",
+    "keyTakeaway": "Integration is not \"connecting an API,\" but an agreement on contract, failures, and ownership. Key questions: what happens when the other side is unavailable, and who fixes it when it breaks at night.",
+    "checkQuestion": "An integration with the cash register returned an item with an empty barcode. Who will notice, and what will the seller see?",
+    "blocks/0/text": "Key node question: **how will the product integration happen?**",
+    "blocks/1/text": "**What happens if you don't answer the question.** Integration is treated as a technical detail and handed entirely to engineering. A month later, stock levels diverge across three stores, and no one can tell whose data is correct.",
+    "blocks/2/title": "What a PM must clarify before starting",
+    "blocks/2/subtitle": "Five questions, none of them technical",
+    "blocks/2/items/0": "**Who owns the data** — whose single source of truth wins in case of divergence. This is a business decision, not an engineering one.",
+    "blocks/2/items/1": "**What happens during downtime** — queue and retry, explicit failure with a message, or silent loss. The third occurs more often than it seems.",
+    "blocks/2/items/2": "**How often and with what delay** — once a minute or once a day; the user must understand how fresh the displayed data is.",
+    "blocks/2/items/3": "**What to do on divergence** — who resolves it, where it is visible, whether there is a manual override.",
+    "blocks/2/items/4": "**Who is responsible on failure** — your support or theirs; it's better to have an agreement before the first incident.",
+    "blocks/3/text": "Agreed: cash register owns prices, Polka owns stock counts.\n\nCash register is offline: Polka displays the last known price with a label \"data as of 14:20.\" The seller sees that the price is stale, which is better than an empty field.\n\nStock divergence: once a day a list is generated, and the shift supervisor inspects it at the end of the day. Nothing is automatically overwritten — the cost of an error is higher than saved time.\n\nA two-week pilot in one store: during this time, found that the cash register was sending weighted items as units. Across forty stores, this would have cost a week of debugging.",
+    "blocks/3/title": "Polka and the Ritm cash register",
+    "blocks/4/text": "If data simply fails to deliver during downtime without signaling anyone, divergence accumulates for weeks and is discovered during inventory. Always ask what happens to an undelivered message.",
+    "blocks/4/title": "\"Silent loss\" — the most expensive failure mode",
+    "blocks/5/text": "An agreement with another team is not a guarantee. Versions change, fields disappear. Therefore, integration must have monitoring on your side: can you see if data stopped coming in, and how quickly will you know.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

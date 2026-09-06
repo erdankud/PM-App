@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "0300230a7bd6412a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Acquisition cost: how much you can pay for a customer",
+    "keyTakeaway": "The upper limit of customer cost is set by your unit economics, not the market: how much revenue they bring over their lifetime and how quickly they pay back the cost. Without these two numbers, talking about a \"cheap\" or \"expensive\" channel is meaningless.",
+    "checkQuestion": "A lead costs 800 ₽. What two numbers are missing to understand if it is cheap or expensive?",
+    "blocks/0/text": "Key node question: **how to acquire at a targeted cost?**",
+    "blocks/1/title": "Three numbers calculated together",
+    "blocks/1/subtitle": "Individually, each one misleads",
+    "blocks/1/items/0": "**CAC** — total acquisition costs divided by the number of paying customers, not the number of leads.",
+    "blocks/1/items/1": "**LTV** — how much revenue a paying customer brings over all time, minus service costs.",
+    "blocks/1/items/2": "**Payback period** — how many months it takes for a customer to pay back CAC. For a product without cash reserves, this number is more important than the LTV to CAC ratio.",
+    "blocks/1/items/3": "**Benchmark:** An LTV/CAC ratio around three is considered healthy, but it is a byproduct, not the goal; look at payback period and where the LTV forecast comes from.",
+    "blocks/2/text": "Both yield leads at 800 ₽.\n\nSearch: 20% reach payment → CAC = 4 000 ₽. Average bill 1 200 ₽/mo, lifetime 14 months → LTV ≈ 16 800 ₽. Payback period — 3.3 months.\n\nSocial media: 3% reach payment → CAC = 26 700 ₽. Same 16 800 ₽ LTV. Channel is unprofitable, even though lead cost was identical.\n\nUntil conversion to payment is calculated, lead cost means nothing.",
+    "blocks/2/title": "Reestr, two channels with identical lead costs",
+    "blocks/3/text": "If a product is six months old, you don't know how long people stay: you only know they haven't left for six months. A cautious approach is to calculate actual LTV based on the observed timeframe and recalculate every quarter.",
+    "blocks/3/title": "LTV on a new product is a forecast, not a fact",
+    "blocks/4/text": "**What to do when a channel is expensive.** There are three levers, and you change them one at a time: lower touch cost (creative, bid), increase conversion to payment (offer, onboarding), or increase LTV (price, retention). The third is usually the strongest and the slowest.",
+    "blocks/5/text": "Averages across all customers hide distinct segments. It is helpful to calculate CAC and LTV separately by channel: often one channel holds all the profit while another burns through it, making everything look acceptable on average.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

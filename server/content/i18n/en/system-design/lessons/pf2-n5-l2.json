@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "a5c4167f99adce0c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:58:39Z"
+  },
+  "fields": {
+    "title": "Cost and Margin",
+    "keyTakeaway": "Unit cost must fall with scale, and if it does not, the reason is usually external services, and the levers there are product and negotiation, not technical.",
+    "sections/0/blocks/0/text": "How does an architectural decision reflect in gross margin?",
+    "sections/1/blocks/0/text": "A product can grow in revenue and not grow in profit if unit cost grows alongside volume. This is usually discovered late—when growth has already happened.",
+    "sections/2/blocks/0/text": "[[gross-margin|Gross margin]] is the share of revenue after direct costs. Infrastructure and external services are direct costs, and they enter it directly.",
+    "sections/2/blocks/1/text": "Key question: **does unit cost grow with volume or fall?**",
+    "sections/2/blocks/2/text": "*Falls*—[[economies-of-scale|economies of scale]]: [[fixed-variable-costs|fixed costs]] are spread across a larger number of users. Good sign.",
+    "sections/2/blocks/3/text": "*Does not change*—costs are purely variable. Neutral.",
+    "sections/2/blocks/4/text": "*Grows*—alarming sign. Usually means something scales non-linearly: data accumulates, requests get more complex with volume growth, more expensive architecture is required.",
+    "sections/2/blocks/5/text": "Product decisions affecting margin through infrastructure:",
+    "sections/2/blocks/6/text": "*Action frequency.* A function called on every open is more expensive than one called on click. *Stored volume.* Retention period from `DS2-N6` is a direct cost line. *External services.* The most expensive part because the unit price is fixed and does not drop with scale. *Data freshness.* A real-time requirement is multiple times more expensive than an hour delay.",
+    "sections/2/blocks/7/text": "The latter is often underestimated: the product requirement \"real-time\" can cost more than the rest of the feature.",
+    "sections/3/blocks/0/text": "Cost dynamics per active user over a year: 9.1 → 8.4 → 7.9 → 7.5 RUB. Falling—economies of scale are working.",
+    "sections/3/blocks/1/text": "The breakdown showed that the compute part is falling, while external calls per user are stable. With a threefold growth, the share of external calls in costs will grow from 23% to 38%.",
+    "sections/3/blocks/2/text": "Hence the strategic conclusion: **further reduction of unit cost rests on external services,** and the levers there are negotiation (volume discounts) and product (calling less frequently), not technical.",
+    "sections/3/blocks/3/text": "Commission calculation: at an average check of 2,400 and a 4% commission, revenue per order is 96 RUB, direct costs 35 RUB, gross margin 64%. Out of 35 RUB, 29 RUB is the payment provider commission. Negotiations to lower it from 1.2% to 0.9% would yield more than any infrastructure optimization.",
+    "sections/4/blocks/0/text": "Gross margin does not account for the team and development—the largest item for most products. Infrastructure savings make sense when comparable to these costs.",
+    "sections/5/blocks/0/text": "Unit cost must fall with scale, and if it does not, the reason is usually external services, and the levers there are product and negotiation, not technical."
+  }
+}

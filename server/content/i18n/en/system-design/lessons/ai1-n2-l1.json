@@ -1,0 +1,40 @@
+{
+  "language": "en",
+  "sourceDigest": "da21868dd2410071",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "Two different things",
+    "keyTakeaway": "Training happened once and does not change with calls, inference remembers nothing, therefore current data is passed via context, and fine-tuning changes behavior, not knowledge.",
+    "sections/0/blocks/0/text": "Why does the model not know about a product we added yesterday, and why is \"fine-tuning\" not the answer?",
+    "sections/1/blocks/0/text": "Mixing up training and inference leads to false expectations: the team promises that the model will \"learn\" product data, and a month later it turns out that is not how it works. Distinguishing them takes five minutes and saves months.",
+    "sections/2/blocks/0/text": "**[[training|Training]]** is tuning model [[weights|weights]] on large volumes of text. Happens once, at the provider, costs millions. The result is a model that knows the language and the world at the time of training.",
+    "sections/2/blocks/1/text": "**[[inference|Inference]]** is running the model to get a response. Happens on every query. Weights do not change. The model remembers nothing.",
+    "sections/2/blocks/2/text": "From this follow three consequences:",
+    "sections/2/blocks/3/text": "*The model does not know about your data* unless you put it in the context. *The model does not know about events after training.* The cutoff date is a property of the model. *Talking to the model teaches it nothing.* Nothing is saved.",
+    "sections/2/blocks/4/text": "**[[fine-tuning|Fine-tuning]]** is an intermediate option: additional tuning on your own data. Costs money, requires a dataset of examples, and most importantly — **it is poorly suited for transferring knowledge.** Fine-tuning is good at changing *how* the model responds — style, format, instruction following. It is bad at transferring *what* it knows: facts, changing data, current catalog.",
+    "sections/2/blocks/5/text": "For knowledge, the right answer is to put it in the context. Hence RAG, which is covered in `AI2-N1`.",
+    "sections/2/blocks/6/text": "Rule of thumb:",
+    "sections/2/blocks/7/header/0": "Task",
+    "sections/2/blocks/7/header/1": "Tool",
+    "sections/2/blocks/7/rows/0/0": "Provide current data to the model",
+    "sections/2/blocks/7/rows/0/1": "Context",
+    "sections/2/blocks/7/rows/1/0": "Change response style and format",
+    "sections/2/blocks/7/rows/1/1": "Instruction and examples, then fine-tuning",
+    "sections/2/blocks/7/rows/2/0": "Teach a specific task",
+    "sections/2/blocks/7/rows/2/1": "Examples, then fine-tuning",
+    "sections/2/blocks/7/rows/3/0": "Add knowledge about your product",
+    "sections/2/blocks/7/rows/3/1": "Context, not fine-tuning",
+    "sections/3/blocks/0/text": "We discussed fine-tuning twice.",
+    "sections/3/blocks/1/text": "*First time* — so the model \"knows the catalog\". Rejected: the catalog changes daily, fine-tuning takes weeks, and after every change it becomes outdated. Knowledge goes through context.",
+    "sections/3/blocks/2/text": "*Second time* — so responses match the brand tone and format. Here fine-tuning would fit, but we tried prompt examples first. Three samples gave 90% of the required effect for free. Postponed.",
+    "sections/3/blocks/3/text": "Separately: questions about products added today work because the catalog is injected into the context. Questions about changes in delivery rules did not work because the rules were only in the manually updated instruction. Moved them to the same data as the catalog.",
+    "sections/4/blocks/0/text": "Fine-tuning is justified for a large volume of repetitive queries where it allows using a smaller and cheaper model. This is cost optimization, not a way to transfer knowledge.",
+    "sections/5/blocks/0/text": "Training happened once and does not change with calls, inference remembers nothing, therefore current data is passed via context, and fine-tuning changes behavior, not knowledge."
+  }
+}

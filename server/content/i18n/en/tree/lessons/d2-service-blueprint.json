@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "f42c74d3d556deed",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "What Happens Behind the Scenes",
+    "keyTakeaway": "When people and processes are involved in a service, the problem in front of the customer's eyes usually originates behind the scenes. A Blueprint shows this connection, and without it, you are fixing a symptom on display.",
+    "checkQuestion": "A customer complains that an answer arrives on the third day. Where should you look for the cause?",
+    "blocks/0/text": "Continuing the same question for the case when **the product is not just an interface**, but also the people, processes, and systems around it.",
+    "blocks/1/title": "Service Blueprint",
+    "blocks/1/subtitle": "A journey map plus everything invisible to the customer",
+    "blocks/1/items/0": "**Customer actions** — the top layer, same as in CJM.",
+    "blocks/1/items/1": "**Frontstage employee actions** — what the customer observes: a support response, a phone call.",
+    "blocks/1/items/2": "**Backstage employee actions** — what happens behind the scenes: checks, approvals, manual operations.",
+    "blocks/1/items/3": "**Systems and processes** — what is involved, where data moves manually.",
+    "blocks/1/items/4": "**Line of visibility** — the boundary between what the customer sees and what they do not. Problems are usually born below it.",
+    "blocks/2/text": "Complaint: “you write to support — they answer on the third day.”\n\nAbove the line of visibility, everything looks simple: an email was sent, there is no reply.\n\nBelow: the ticket drops into a shared inbox, an operator exports it to a spreadsheet once a day, questions about calculating hours go to the company accountant, and the accountant replies once every two days because it is not their main job.\n\nFixing the support interface was pointless: the three days were built from two manual handoffs behind the line of visibility.",
+    "blocks/2/title": "Smena: three days for a response",
+    "blocks/3/text": "A Blueprint is needed where people and manual processes are involved; for a fully self-serve product, it degenerates into an architecture diagram. And it is heavy: drawing it for the entire product takes weeks, so teams take one problematic scenario.",
+    "blocks/3/title": "Model boundaries"
+  }
+}

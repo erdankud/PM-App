@@ -51,17 +51,21 @@ def generation_allowed() -> bool:
     return settings.allow_audio_generation
 
 
-def status_of(lesson_id: str) -> Job | None:
+def _key(lesson_id: str, language: str) -> str:
+    return f"{lesson_id}:{language}"
+
+
+def status_of(lesson_id: str, language: str = "ru") -> Job | None:
     with _lock:
-        return _jobs.get(lesson_id)
+        return _jobs.get(_key(lesson_id, language))
 
 
-def _run(lesson: dict) -> None:
-    lesson_id = lesson["id"]
+def _run(lesson: dict, language: str = "ru") -> None:
+    lesson_id = _key(lesson["id"], language)
     try:
-        turns, provider, model = audio_script.generate(lesson)
-        audio_script.write_script(lesson, turns, provider, model)
-        audio.synthesize(lesson)
+        turns, provider, model = audio_script.generate(lesson, language=language)
+        audio_script.write_script(lesson, turns, provider, model, language=language)
+        audio.synthesize(lesson, language)
     except Exception as error:  # noqa: BLE001 - в статус уходит причина, наружу текст не идёт
         logger.warning("audio generation failed for %s: %s", lesson_id, error)
         with _lock:
@@ -72,23 +76,26 @@ def _run(lesson: dict) -> None:
     logger.info("audio overview built for %s", lesson_id)
 
 
-def start(lesson: dict) -> Job:
+def start(lesson: dict, language: str = "ru") -> Job:
     """Запускает сборку. Повторный запуск при живой задаче её не дублирует."""
-    lesson_id = lesson["id"]
+    key = _key(lesson["id"], language)
     with _lock:
-        current = _jobs.get(lesson_id)
+        current = _jobs.get(key)
         if current is not None and current.status == "generating":
             return current
-        job = Job(lesson_id)
-        _jobs[lesson_id] = job
+        job = Job(key)
+        _jobs[key] = job
 
-    threading.Thread(target=_run, args=(lesson,), daemon=True, name=f"audio-{lesson_id}").start()
+    threading.Thread(
+        target=_run, args=(lesson, language), daemon=True, name=f"audio-{key}"
+    ).start()
     return job
 
 
-def forget(lesson_id: str) -> None:
+def forget(lesson_id: str, language: str = "ru") -> None:
     """Убирает завершённую задачу, чтобы прошлая ошибка не липла к новой попытке."""
+    key = _key(lesson_id, language)
     with _lock:
-        job = _jobs.get(lesson_id)
+        job = _jobs.get(key)
         if job is not None and job.status != "generating":
-            del _jobs[lesson_id]
+            del _jobs[key]

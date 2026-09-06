@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "ddabf51861afebc9",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "The funnel: where exactly you lose people",
+    "keyTakeaway": "A single conversion rate number tells you nothing. Calculate the transition between adjacent steps and separately by acquisition source: drop-offs almost always sit in a single step and a single channel, while averages hide it.",
+    "checkQuestion": "Visit-to-paid conversion rate is 1.2%. What do you need to find out before changing anything?",
+    "blocks/0/text": "Key node question: **are we hitting our target acquisition metrics?** The question sounds like \"how many paying users\", but you cannot act on that single number.",
+    "blocks/1/text": "Reestr is a fictional electronic document management service for small businesses: invoices, certificates, signatures. Sold on a subscription basis, with a 14-day free trial. We will return to it throughout all lessons in this domain.",
+    "blocks/2/text": "**What happens if you do not answer the question.** There is an overall conversion rate, it is low, and discussions shift to \"we need to redesign the website\". They redesign the website, conversion does not move: the loss was somewhere else.",
+    "blocks/3/title": "Sales Funnel",
+    "blocks/3/subtitle": "A sequence of steps, not a single number",
+    "blocks/3/items/0": "**Steps** — states a person goes through: visit → registration → first document → payment.",
+    "blocks/3/items/1": "**Transition** — percentage of people moving from one step to the next. This is the only number you can work with.",
+    "blocks/3/items/2": "**End-to-end analytics** — linking the source of a visit with what the person did next; without it, you know where they came from, but not who stayed.",
+    "blocks/3/items/3": "**Rule:** first find the step with the biggest drop-off, then the segment within it, and only then come up with a solution.",
+    "blocks/4/text": "Overall visit-to-paid conversion rate: 1.2%. Broken down by steps:\nvisit → registration 8%, registration → first document 41%, first document → payment 37%.\n\nThe biggest drop-off is obvious — the entry step. But breaking it down by source changes the picture: paid search converts to registration at 3%, while accounting Telegram channels convert at 21%.\n\nThis means the website works fine for those who arrive prepared and does not work for cold traffic. \"Redesigning the website\" and \"stopping cold traffic acquisition\" are very different decisions, and the second one is free.",
+    "blocks/4/title": "Reestr, quarterly results",
+    "blocks/5/text": "If payment comes on day 14 and you divide this month's payments by this month's visits, you are dividing one group of people by another. As traffic grows, this underestimates conversion; as traffic falls, it overestimates it.",
+    "blocks/5/title": "Calculate cohorts, not calendar months",
+    "blocks/6/text": "The funnel describes the user journey as linear, but people return, leave, and come back again from a different source. It also says nothing about those who never reached it. And it shows where the loss occurs, but not why — interviews and session recordings answer the \"why\", which was covered in the discovery domain.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

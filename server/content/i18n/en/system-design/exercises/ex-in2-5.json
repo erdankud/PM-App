@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "81b7660970eb92e9",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Webhook or polling",
+    "inputs/0/label": "Payment confirmation",
+    "inputs/1/label": "Supplier catalog update",
+    "inputs/2/label": "Delivery status change",
+    "inputs/3/label": "Partner details change",
+    "acceptance/0/expected": "webhook",
+    "acceptance/1/expected": "polling",
+    "acceptance/2/expected": "webhook",
+    "acceptance/3/expected": "polling",
+    "inputs/0/choices/0": "webhook",
+    "inputs/0/choices/1": "polling",
+    "inputs/1/choices/0": "webhook",
+    "inputs/1/choices/1": "polling",
+    "inputs/2/choices/0": "webhook",
+    "inputs/2/choices/1": "polling",
+    "inputs/3/choices/0": "webhook",
+    "inputs/3/choices/1": "polling",
+    "promptBlocks/0/text": "Choose the mechanism and state what you will supplement it with.",
+    "promptBlocks/1/items/0": "Payment confirmation",
+    "promptBlocks/1/items/1": "Supplier catalog update",
+    "promptBlocks/1/items/2": "Delivery status change",
+    "promptBlocks/1/items/3": "Partner details change",
+    "referenceReasoningBlocks/0/text": "1 — webhook plus reconciliation every 5 minutes, latency is critical, loss is unacceptable. 2 — scheduled polling, they don't have webhooks, latency is tolerable. 3 — webhook plus reconciliation every 15 minutes for active orders. 4 — polling once a day, events are rare. Anywhere you use a webhook: signature verification is mandatory and reconciliation is mandatory, because our downtime turns into lost events."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "language": "en",
+  "sourceDigest": "dcb3a113ed5748a5",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Estimate index size",
+    "inputs/0/label": "Index size",
+    "inputs/0/unit": "MB",
+    "inputs/1/label": "Index updates per day",
+    "promptBlocks/0/text": "Polka has 8 million orders. The PM wants an order amount filter on the admin screen, which is opened twice a week.",
+    "promptBlocks/1/items/0": "Roughly how much space will an index on a single numeric field take?",
+    "promptBlocks/1/items/1": "How many times a day will the database update it if 20 thousand orders are created daily and each changes status three times?",
+    "promptBlocks/1/items/2": "Is it worth creating the index?",
+    "referenceReasoningBlocks/0/text": "about 200–400 MB — any answer between 100 MB and 1 GB is acceptable, order of magnitude matters more than the exact number. Updates — 20,000 creations + 60,000 modifications = 80 thousand per day. For eight screen views a month, this is a bad deal: 10 thousand index updates per single view. The right solution is a nightly report in a separate store. General rule: divide maintenance cost by usage frequency."
+  }
+}

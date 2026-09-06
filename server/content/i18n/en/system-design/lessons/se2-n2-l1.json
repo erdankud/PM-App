@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "26410e7c303260f2",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "What Should Be Logged",
+    "keyTakeaway": "Action logs record logins, permissions, access to personal data, exports, and supplier actions, must be technically tamper-evident, and their transparency to the client is a sales argument.",
+    "sections/0/blocks/0/text": "A client asks: \"which of our employees exported the buyer database in March?\" Can we answer?",
+    "sections/1/blocks/0/text": "The absence of a log makes investigation, mandatory reporting, and dispute resolution impossible. This question usually arises at the moment when the log is already gone and the event has already happened.",
+    "sections/2/blocks/0/text": "**[[audit-log|Audit log]]** differs from technical logs: it is about who did what, not about what happened in the system.",
+    "sections/2/blocks/1/text": "What gets recorded:",
+    "sections/2/blocks/2/text": "*Who.* Subject identifier, including when our employee acts on behalf of the client. *What.* Action type and object. *When.* Time accurate to the second. *From where.* Address, device — for investigations. *Result.* Success or denial. Denials matter: a series of denials is a sign of probing.",
+    "sections/2/blocks/3/text": "What actions get into the log:",
+    "sections/2/blocks/4/text": "**Mandatory:** login and logout, permission changes, access to personal data in volume, exports and data dumps, security settings changes, data deletion, our support actions on behalf of the client.",
+    "sections/2/blocks/5/text": "**As appropriate:** viewing individual records — the volume can be huge; changes to regular data.",
+    "sections/2/blocks/6/text": "Key property — **[[tamper-evidence|tamper evidence]]**: a record cannot be changed or deleted, and this must be ensured technically, not by a rule. A log that an administrator can edit is useless for an investigation.",
+    "sections/2/blocks/7/text": "Second — **retention period**. Questionnaires usually require 6–12 months. This is a separate line in retention and separate expenses.",
+    "sections/3/blocks/0/text": "Logged events: logins, changes to employee roster and permissions, all exports, viewing the buyer list, changing store settings, our support actions.",
+    "sections/3/blocks/1/text": "Viewing an individual order is not logged — the volume would be larger than the orders themselves. Compromise: records the fact of opening the personal data section and the number of records viewed per session.",
+    "sections/3/blocks/2/text": "This compromise — a product decision, discussed: full traceability versus volume. Volume won, with the caveat that a full mode is possible for the enterprise tier.",
+    "sections/3/blocks/3/text": "The log is available to the client in the account: filters by employee, action, period. Export to file.",
+    "sections/3/blocks/4/text": "Separate entry — actions by our support. The partner sees that a Polka employee accessed their account, when and for which ticket. This proved to be a strong argument in negotiations: transparency instead of promises.",
+    "sections/4/blocks/0/text": "The log itself contains personal data and follows the same rules: access to it is restricted, retention period is defined, account deletion affects it — with caveats for legally required records.",
+    "sections/5/blocks/0/text": "Action logs record logins, permissions, access to personal data, exports, and supplier actions, must be technically tamper-evident, and their transparency to the client is a sales argument."
+  }
+}

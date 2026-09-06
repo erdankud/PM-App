@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "28150ceda458f189",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:50Z"
+  },
+  "fields": {
+    "title": "The List That Must Exist",
+    "keyTakeaway": "There are usually twice as many data recipients as the team remembers, and an outbound integration inventory regularly reveals data flows nobody knew about.",
+    "sections/0/blocks/0/text": "How many external services receive your users' data?",
+    "sections/1/blocks/0/text": "The answer is usually an order of magnitude larger than the team thinks: analytics, crash reporting, ads, mailings, support, payments, delivery, models. Each one is a [[subprocessor|subprocessor]], and the product is responsible to its users for every single one.",
+    "sections/2/blocks/0/text": "The **[[controller-processor|controller]]** determines the processing purposes—that is you. The **processor** processes on instructions—that is your vendors. Responsibility to the user remains with the controller.",
+    "sections/2/blocks/1/text": "What is required for each vendor:",
+    "sections/2/blocks/2/text": "*[[dpa-2|DPA]].* Defines what can be done with the data. *Listing in a public directory.* Users have the right to know where their data goes. *Notification on list changes.* Corporate contracts often require advance notice. *Geography assessment.* Where data is processed.",
+    "sections/2/blocks/3/text": "The most common gap is that **the list does not exist.** It is assembled in one day and then maintained whenever a new service is connected.",
+    "sections/2/blocks/4/text": "How to assemble it: go through all outgoing integrations, including SDKs in the mobile app. Analytics and ad SDKs transmit data, and often more than the team assumes.",
+    "sections/2/blocks/5/text": "A separate question is **what exactly is transmitted.** Often more than necessary just because it is easier that way: the event is sent entirely, including fields the service does not need. Covered in `SE1-N4-L1` as a leakage vector.",
+    "sections/3/blocks/0/text": "The inventory found 11 recipients instead of the expected 6.",
+    "sections/3/blocks/1/text": "The four unexpected ones: a crash reporting SDK (transmitting device ID and model), a push notification service (token and ID), an address verification service (full addresses), and an ad network in the web version (behavior and ID).",
+    "sections/3/blocks/2/text": "The last one turned out to be legacy: an ad pixel had been placed during an old experiment, nobody remembered it, and data had been leaking for two years.",
+    "sections/3/blocks/3/text": "Inventory results:",
+    "sections/3/blocks/4/text": "*Removed:* the ad pixel, and transmission of the full address to the verification service (switched to transmitting without apartment numbers). *Contracted:* DPA with all remaining vendors, public list in the privacy policy. *Automated:* build-time check ensuring the set of sent fields does not change without an explicit decision.",
+    "sections/3/blocks/5/text": "The subprocessor list has since become an item that passes corporate questionnaires without preparation.",
+    "sections/4/blocks/0/text": "Not every transfer is subprocessing: services acting as independent controllers have a different status. Classification is done with legal counsel.",
+    "sections/5/blocks/0/text": "There are usually twice as many data recipients as the team remembers, and an outbound integration inventory regularly reveals data flows nobody knew about."
+  }
+}

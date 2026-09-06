@@ -1,0 +1,43 @@
+{
+  "language": "en",
+  "sourceDigest": "80a071c0c48f3e0d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:27Z"
+  },
+  "fields": {
+    "title": "What to measure in the product, not in the lab",
+    "keyTakeaway": "Evals catch regressions, product metrics show value, and implicit signals like question rewriting are more informative than explicit feedback.",
+    "sections/0/blocks/0/text": "Evals are green, users are unhappy. How is that possible?",
+    "sections/1/blocks/0/text": "Evals measure what we decided to measure. The gap between them and real experience is common, and without product metrics it remains invisible.",
+    "sections/2/blocks/0/text": "Two levels of measurement, and both are needed.",
+    "sections/2/blocks/1/text": "**Offline — evals.** Fast, cheap, reproducible. Catches regressions. Does not reflect real usage.",
+    "sections/2/blocks/2/text": "**Online — product metrics.** Slow, noisy, reflects the truth.",
+    "sections/2/blocks/3/text": "What to measure online:",
+    "sections/2/blocks/4/text": "*Usage.* The share of users who tried the feature and the share who returned. Retention is the strongest signal of usefulness. *Completion.* The share of requests brought to a result versus drop-offs. *Explicit feedback.* \"Useful\" and \"inaccurate\" ratings. Low volume, but high quality. *Implicit signals.* Rewriting a question right after an answer is a sign of failure. Leaving the feature without action. Repeating the same question. *Impact on goals.* Conversion, average order value, support tickets.",
+    "sections/2/blocks/5/text": "The last one is most important and most frequently unmeasured: **an AI feature must move a product metric, not just work.**",
+    "sections/2/blocks/6/text": "Typical causes of the gap between evals and reality:",
+    "sections/2/blocks/7/text": "*The eval set does not reflect real requests.* Created by the team rather than gathered from logs. *Measuring the wrong thing.* The answer is factually correct but useless. *The problem is not the answer.* Slow, unclear, feature not found.",
+    "sections/3/blocks/0/text": "Online metrics for the \"ask about a product\" feature:",
+    "sections/3/blocks/1/header/0": "Metric",
+    "sections/3/blocks/1/header/1": "Value",
+    "sections/3/blocks/1/rows/0/0": "Share of users who tried it",
+    "sections/3/blocks/1/rows/0/1": "18%",
+    "sections/3/blocks/1/rows/1/0": "Within-week retention",
+    "sections/3/blocks/1/rows/1/1": "41%",
+    "sections/3/blocks/1/rows/2/0": "Rewriting after answer",
+    "sections/3/blocks/1/rows/2/1": "9%",
+    "sections/3/blocks/1/rows/3/0": "\"Inaccurate\" rating",
+    "sections/3/blocks/1/rows/3/1": "0.8%",
+    "sections/3/blocks/1/rows/4/0": "Conversion among feature users",
+    "sections/3/blocks/1/rows/4/1": "+12%",
+    "sections/3/blocks/2/text": "Rewriting in 9% of cases was a metric absent from evals that turned out more useful than ratings: people rarely click \"inaccurate\", but willingly re-ask.",
+    "sections/3/blocks/3/text": "Analyzing rewrites yielded the quarter's main conclusion: half of them were questions where the answer was correct, but too generic. Evals missed this because the criterion was \"fact is correct\", not \"answer is useful\".",
+    "sections/3/blocks/4/text": "We added a \"specificity\" criterion and replenished the set with 40 examples from rewrites. The share of rewrites dropped to 5%.",
+    "sections/4/blocks/0/text": "Online metrics are noisy and lag behind. Prompt decisions are made using evals, product decisions using online data.",
+    "sections/5/blocks/0/text": "Evals catch regressions, product metrics show value, and implicit signals like question rewriting are more informative than explicit feedback."
+  }
+}

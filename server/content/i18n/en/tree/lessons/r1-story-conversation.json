@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "47824410ee7f901d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Card, conversation, confirmation",
+    "keyTakeaway": "A task in a tracker is not a specification, but a reminder to talk. Value is born in conversation, while only what was agreed to check remains on the card.",
+    "checkQuestion": "A developer read the card and didn't ask a single question. Is that a good sign?",
+    "blocks/0/text": "The same key question, but about **how a task moves from head to work without loss of meaning**.",
+    "blocks/1/text": "**What happens if you don't answer the question.** The product manager writes a long card, the developer skims it and does it their own way. Both sides are confident they were understood. Divergence surfaces at the demo.",
+    "blocks/2/title": "User Story Conversation Canvas",
+    "blocks/2/subtitle": "Three parts often reduced to one",
+    "blocks/2/items/0": "**Card** — a short reminder: who, what, why. It does not have to be complete.",
+    "blocks/2/items/1": "**Conversation** — where understanding is actually built. Fifteen minutes together: product manager, developer, QA engineer.",
+    "blocks/2/items/2": "**Confirmation** — what remains after the conversation: conditions by which we accept the task as done.",
+    "blocks/2/items/3": "Rule: **the longer the card, the shorter the conversation** — and vice versa.",
+    "blocks/3/text": "If no questions were asked about a task, it usually means not \"everything is clear,\" but \"skimmed carelessly\" or \"assumed on their own.\" A good task generates two or three clarifications.",
+    "blocks/3/title": "Lack of questions is a bad sign",
+    "blocks/4/text": "Card: \"As a seller, I want to see item divergence immediately after scanning so that I don't have to reconcile the entire list at the end.\"\n\nQuestions raised during the conversation:\n— What if the item is not in the store database? (missed detail: show as \"unknown,\" do not block)\n— Is divergence calculated from the recorded stock at the start of the day or at the moment of scanning? (at the start of the day)\n— What if the seller scanned the same item twice? (the second time adds one unit, that's normal)\n\nNot one of the three cases was in the card. Each of them would have broken the task during acceptance. Twelve minutes versus a day of rework.",
+    "blocks/4/title": "Polka, a twelve-minute conversation",
+    "blocks/5/text": "A conversation doesn't scale via text: attempting to write it down completely brings us back to a long card that no one reads. And it doesn't replace acceptance criteria — on the contrary, the conversation is needed to formulate them.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "language": "en",
+  "sourceDigest": "efc83c866764bc2b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Prioritization: what to do first when everything is important",
+    "keyTakeaway": "Priority is not an importance rating, but a comparison. Working models compare gain against effort and factor in the cost of each week of delay; any \"importance\" scale without a denominator produces a list where everything is at the top.",
+    "checkQuestion": "Two tasks are rated 5 out of 5 in importance each. What do you need to know to choose between them?",
+    "blocks/0/text": "Key node question: **which tasks to send to implementation first?**",
+    "blocks/1/text": "Domain running example: Polka is a fictional inventory app for small grocery stores: a clerk scans items with a phone and reconciles stock counts. The team has four people, releasing once every two weeks. In module R1, we covered how to describe a change; here, how to plan its delivery.",
+    "blocks/2/text": "**What happens if you don't answer the question.** Order is set by whoever asked loudest or came last. A quarter later, the team is busy, yet no goal has moved — and no one can explain why they were doing those specific tasks.",
+    "blocks/3/title": "Impact / Effort",
+    "blocks/3/subtitle": "The cheapest model, suitable for quick sorting",
+    "blocks/3/items/0": "**Impact** — how much the change moves the goal. Evaluated together with those who know the user.",
+    "blocks/3/items/1": "**Effort** — engineering effort, including testing and deployment, not just coding.",
+    "blocks/3/items/2": "**Four quadrants:** high impact and low effort are done right away; low impact and high effort are skipped completely; the other two are subject to debate.",
+    "blocks/3/items/3": "**Weak spot:** both axes are subjective, making the matrix good for weeding out the obvious, but poor for resolving disputes.",
+    "blocks/4/title": "WSJF",
+    "blocks/4/subtitle": "When it matters that delay also costs money",
+    "blocks/4/items/0": "**Cost of Delay** — what we lose every week this is missing: missed revenue, churn risk, legal deadline.",
+    "blocks/4/items/1": "**Job Size** — team estimate in any units, as long as they are consistent.",
+    "blocks/4/items/2": "**Priority = Cost of Delay ÷ Job Size.** A small task with rapidly rising cost overtakes a large and important one.",
+    "blocks/4/items/3": "**The main value is not the number,** but the question \"what does a week without this cost\" — often there is no answer, which is a result in itself.",
+    "blocks/5/text": "A. Stock export to accounting. Requested by two stores. Weekly cost ~0: they reconcile manually and manage fine. Job size — 2 weeks.\nB. Scanner fails on crumpled barcodes. Affects 40% of inventories, clerks enter codes by hand, taking an hour longer per inventory. Weekly cost is high and constant. Job size — 3 days.\nC. Support for the new export format for the Gastronom retail chain. Deadline — March 1, after which the contract won't be renewed. Five weeks until March. Job size — 2 weeks.\n\nOrder: B (three days, relieves pain immediately), then C (cost of delay spikes at the deadline), then A.\n\nNotice: A was requested loudest — in an email from the chain owner.",
+    "blocks/5/title": "Polka, three tasks, and one sprint",
+    "blocks/6/text": "For task C, it is zero for four weeks and catastrophic on the fifth. Such tasks are easy to miss because \"it's not on fire yet.\" They are scheduled by counting backward from the deadline, not by priority.",
+    "blocks/6/title": "Cost of delay is not always linear",
+    "blocks/7/text": "**GIST** adds another layer on top of prioritization: Goals, Ideas, Step Projects, and Tasks. The point is that ideas don't go into the plan in full: first, a small step project is released to validate the hypothesis, and only confirmed ideas get expanded.",
+    "blocks/8/text": "No model calculates priority for you: the inputs are human estimates. The value is that the model makes reasoning visible, shifting the debate from \"I think this is important\" to \"here is your estimate of the weekly cost, where did it come from.\"",
+    "blocks/8/title": "Model boundaries"
+  }
+}

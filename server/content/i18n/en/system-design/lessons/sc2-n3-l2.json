@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "a8fa76ddca4a822d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "What the User Sees During Retries",
+    "keyTakeaway": "The duration of retries for a synchronous operation is determined by user patience, not system capabilities, and after exhaustion you need a product outcome, not an error message.",
+    "sections/0/blocks/0/text": "The system retries the request three times for a total of 23 seconds. What happens on the screen during this time?",
+    "sections/1/blocks/0/text": "Resilience mechanisms are designed by engineers, but their manifestations are seen by the user. Twenty-three seconds of honest waiting is worse than a failure at five if the person does not understand what they are waiting for.",
+    "sections/2/blocks/0/text": "Rule: **total retry time must fit into user patience, not system capabilities.**",
+    "sections/2/blocks/1/text": "For a synchronous operation where a person is waiting, a reasonable limit is 5–10 seconds. This is one or two attempts, not three with exponential backoff.",
+    "sections/2/blocks/2/text": "For a background operation, retries can last minutes and hours — the constraint there is different: **relevance.** An order notification delivered six hours later is harmful. Hence the rule from `IN2-N4-L1` about messages older than two hours.",
+    "sections/2/blocks/3/text": "Three product decisions around retries:",
+    "sections/2/blocks/4/text": "*How long to wait synchronously before moving to deferred.* \"Didn't work out in 8 seconds — we accept and confirm with a notification\". *What to show between attempts.* Text escalation from `IN1-N3-L2`. *What to do after exhaustion.* Failure, deferred processing, or switching to Plan B.",
+    "sections/2/blocks/5/text": "An important case — **different behavior for different operations.** Payment: we retry longer because the alternative is worse. Avatar upload: one attempt, failure immediately — the person will press it themselves.",
+    "sections/3/blocks/0/text": "Checkout: three attempts, 2/6/15 seconds, up to 23 seconds total. The screen escalates text, after 10 seconds a \"Minimize\" button appears with the promise of a notification. 8% use it.",
+    "sections/3/blocks/1/text": "Promo code check: one attempt, 2-second timeout, on failure — \"Failed to check code, please try again\". It makes no sense to retry here: the person is right there and will press it themselves, and waiting is annoying.",
+    "sections/3/blocks/2/text": "Sending a notification to the store: up to 10 attempts over an hour, then a failure queue and a call from an operator. There is no human in the loop, delivery is what matters.",
+    "sections/3/blocks/3/text": "Supplier catalog update: 3 attempts with intervals up to 5 minutes, then we work on cache and notify. The user does not know about this at all.",
+    "sections/4/blocks/0/text": "Long retries hold resources. A hundred waiting operations of 20 seconds each mean a hundred occupied connections, and at peak load this in itself becomes a problem.",
+    "sections/5/blocks/0/text": "The duration of retries for a synchronous operation is determined by user patience, not system capabilities, and after exhaustion you need a product outcome, not an error message."
+  }
+}

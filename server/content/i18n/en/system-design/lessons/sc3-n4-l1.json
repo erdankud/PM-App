@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "6a51af11abe8b9cd",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:32Z"
+  },
+  "fields": {
+    "title": "From Plan to Verification",
+    "keyTakeaway": "A load test answers \"will it be enough\", a stress test answers \"where is the ceiling\", drills answer \"does degradation work\", and the right profile matters more than the right number.",
+    "sections/0/blocks/0/text": "A campaign is in a month. How do we know if we will survive it without waiting for the campaign?",
+    "sections/1/blocks/0/text": "Testing takes days, lack of testing means hours of downtime at the moment of maximum attention. At the same time, the only person who knows the expected numbers is the PM, and without them capacity planning turns into guesswork.",
+    "sections/2/blocks/0/text": "Three tools that answer different questions.",
+    "sections/2/blocks/1/text": "**[[load-testing|Load testing]].** Will we survive the given load? We feed the expected profile and look at response time and errors. Answers the question \"is it enough\".",
+    "sections/2/blocks/2/text": "**[[stress-testing|Stress testing]].** Where do we break? We increase load until failure. Answers the question \"what is our headroom\" and finds the bottleneck — usually it is not where expected.",
+    "sections/2/blocks/3/text": "**[[game-day|Game days]].** Does what we built work? We disable a component in the live system and see if degradation kicks in. Answers the question \"are we lying to ourselves\".",
+    "sections/2/blocks/4/text": "Order of application: a stress test once to know the ceiling; load tests before every major event; drills regularly.",
+    "sections/2/blocks/5/text": "What the PM must provide for planning — four numbers:",
+    "sections/2/blocks/6/text": "*Expected peak* in requests per second, calculated using `SC1-N1-L1`. *Spike shape:* how fast load grows. *Scenario profile:* what exactly users will do. A registration spike loads the system differently than a browsing spike. *Date and duration.*",
+    "sections/2/blocks/7/text": "The latter is often missed: a test reproducing an average profile will not find the issue that occurs during mass registration.",
+    "sections/3/blocks/0/text": "Pre-event checklist:",
+    "sections/3/blocks/1/items/0": "Calculation of expected peak and shape — PM.",
+    "sections/3/blocks/1/items/1": "Checking external provider limits — payments, geocoding, SMS.",
+    "sections/3/blocks/1/items/2": "Load test at 150% of expected peak with the correct profile.",
+    "sections/3/blocks/1/items/3": "Pre-scaling the minimum number of instances.",
+    "sections/3/blocks/1/items/4": "Checking kill switches.",
+    "sections/3/blocks/1/items/5": "On-call duty during the event.",
+    "sections/3/blocks/2/text": "Item 2 made it to the checklist after an incident where the system survived, but geocoding with its 50 requests per second limit did not, and half of the new users could not enter their address.",
+    "sections/3/blocks/3/text": "Item 3 is about the profile. The first campaign test ran an average profile and everything passed. In reality, new users arrived, and the load fell on registration and SMS, which were barely involved in the test.",
+    "sections/4/blocks/0/text": "Testing on a copy of the environment gives an approximate result: less data, different caches, external providers replaced by stubs. It shows the order of magnitude and finds gross problems, but guarantees nothing.",
+    "sections/5/blocks/0/text": "A load test answers \"will it be enough\", a stress test answers \"where is the ceiling\", drills answer \"does degradation work\", and the right profile matters more than the right number."
+  }
+}

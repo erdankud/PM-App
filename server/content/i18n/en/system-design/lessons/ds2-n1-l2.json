@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "52267ed34a2211d3",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:45Z"
+  },
+  "fields": {
+    "title": "Denormalization: speed in exchange for risk",
+    "keyTakeaway": "Denormalization buys read speed at the risk of inconsistency, and is acceptable precisely to the extent that the inconsistency is unnoticeable or harmless to the user.",
+    "sections/0/blocks/0/text": "A screen takes three seconds to open, and the engineer suggests \"putting the data side by side.\" What exactly are you agreeing to buy and what are you paying with?",
+    "sections/1/blocks/0/text": "[[denormalization|Denormalization]] is a decision that looks good when made and presents the bill half a year later. The bill arrives in the form of discrepancies: one value in one place of the product, another elsewhere, and nobody knows which one is correct. Sorting it out costs more than the saved seconds if denormalization was applied in the wrong place.",
+    "sections/2/blocks/0/text": "Denormalization is the deliberate storage of a single fact in multiple places for the sake of read speed. Three forms, from safe to risky.",
+    "sections/2/blocks/1/text": "**[[materialized-view|Materialized view]].** The database itself calculates the query result and stores it as a table, updating it on a schedule or upon changes. Safe because synchronization is done by the database, not code. Limitation—updating costs resources, and data lags behind.",
+    "sections/2/blocks/2/text": "**Counter or aggregate in the parent record.** A store stores the number of orders and average rating so they don't have to be calculated every time. Moderate risk: the counter is updated by code and can diverge from reality. Treated with a nightly reconciliation.",
+    "sections/2/blocks/3/text": "**Copy of an attribute in a child record.** Store name next to an order. The riskiest form, because when the original changes, all copies must be updated, and there can be hundreds of thousands of them. Used rarely and usually means it is actually a snapshot.",
+    "sections/2/blocks/4/text": "The key question for any denormalization: **what happens when the copies diverge?** Three possible answers determine whether the solution is acceptable.",
+    "sections/2/blocks/5/text": "*No one will notice* — meaning denormalization is safe. Product view counts can lag behind.",
+    "sections/2/blocks/6/text": "*They will notice and fix it via reconciliation* — acceptable if reconciliation is written immediately, not \"later\".",
+    "sections/2/blocks/7/text": "*The user will notice and decide the product is lying* — unacceptable. This happens with prices, inventory levels, totals.",
+    "sections/3/blocks/0/text": "Three cases.",
+    "sections/3/blocks/1/text": "*Number of orders for a store* — a counter. A discrepancy of a few units bothers no one, nightly reconciliation fixes it. Accepted.",
+    "sections/3/blocks/2/text": "*Store rating* — a materialized view, recalculated once an hour. They initially wanted to calculate it on every review, but it turned out that during bulk review imports this brings the database down. A one-hour delay in rating goes unnoticed by the user.",
+    "sections/3/blocks/3/text": "*Product inventory next to the card in the catalog* — rejected. The catalog lives in a document database, inventory in a relational one, and the copy would lag by minutes. People would add out-of-stock items to their cart and find out at checkout. This is precisely the third case: the user decides the product is lying. Instead of a copy, inventory is queried via a separate call when opening the card—slower by 40 ms, but honest.",
+    "sections/4/blocks/0/text": "Denormalization is not the only way to speed up reads: indexes, caches, and replicas solve some of the same tasks without duplicating facts. Before duplicating, it's worth asking why none of those worked.",
+    "sections/5/blocks/0/text": "Denormalization buys read speed at the risk of inconsistency, and is acceptable precisely to the extent that the inconsistency is unnoticeable or harmless to the user."
+  }
+}

@@ -8,6 +8,7 @@ evaluator is told to write in.
 
 from __future__ import annotations
 
+import json
 import re
 
 from conftest import onboard, read_all_lessons, start_gate
@@ -65,7 +66,7 @@ def test_unknown_values_degrade_readably():
 # --- Authored content --------------------------------------------------------
 
 
-def test_lessons_and_gate_scenarios_are_written_in_the_content_language():
+def test_lessons_and_gate_scenarios_are_written_in_the_authored_language():
     content = tree_content.tree_content()
     assert content["lessons"], "no lessons authored"
     for lesson in content["lessons"].values():
@@ -87,7 +88,7 @@ def test_lessons_and_gate_scenarios_are_written_in_the_content_language():
             assert _russian(card["content"]), f"{scenario['id']}/{card['id']}"
 
 
-def test_tree_titles_are_written_in_the_content_language():
+def test_tree_titles_are_written_in_the_authored_language():
     content = tree_content.tree_content()
     for block in content["tree"]["blocks"]:
         assert _russian(block["title"]), block["id"]
@@ -188,3 +189,188 @@ def test_language_choice_does_not_change_the_score(client):
         ).json()["feedback"]["score"]
 
     assert scores["ru"] == scores["en"]
+
+
+# --- Перевод -----------------------------------------------------------------
+#
+# Английский корпус — наложение поверх авторского русского. Проверяется не качество
+# перевода (это дело вычитки), а границы: что переводится, что нет, и не разъезжается
+# ли перевод с исходником.
+
+
+def test_the_rubric_is_never_translated():
+    """Балл не должен зависеть от языка — и не может, потому что переводить нечего.
+
+    Рубрика, веса вариантов и QA-фикстуры существуют в одном экземпляре: в карте
+    переводимых путей их нет. Единственное исключение — `remediation.gap`, который
+    видит человек после несданного гейта.
+    """
+    from app.i18n_content import translatable
+
+    for kind in tree_content.KINDS:
+        for scenario in tree_content.tree_content(kind)["scenarios"].values():
+            for path in translatable("scenario", scenario):
+                if path.startswith("rubric"):
+                    assert re.fullmatch(r"rubric/remediation/\d+/gap", path), path
+                assert not path.startswith("qaSubmissions"), path
+                assert "rubricNote" not in path, path
+
+
+def test_translations_are_current_and_complete():
+    """Наполовину переведённый файл читается как поломка, а не как «ещё не перевели».
+
+    Устаревшее наложение (урок правили после перевода) не применяется молча — здесь
+    это ошибка, чтобы расхождение нашлось в CI, а не на экране.
+    """
+    from app.i18n_content import TRANSLATED_LANGUAGES, digest, translatable
+    from scripts.translate_content import sources
+
+    for language in TRANSLATED_LANGUAGES:
+        for doc_kind, path in sources(
+            list(tree_content.KINDS),
+            ["tree", "lesson", "scenario", "exercise", "glossary", "diagram"],
+        ):
+            overlay = tree_content.overlay_path(path, language)
+            if not overlay.exists():
+                continue
+            payload = json.loads(overlay.read_text(encoding="utf-8"))
+            document = json.loads(path.read_text(encoding="utf-8"))
+            assert payload["sourceDigest"] == digest(doc_kind, document), (
+                f"{overlay.name}: перевод отстал от исходника"
+            )
+            missing = set(translatable(doc_kind, document)) - set(payload["fields"])
+            assert not missing, f"{overlay.name}: не переведено {len(missing)} полей"
+
+
+def test_a_translated_lesson_reads_in_english():
+    """Перевод есть — значит, кириллицы в нём не осталось."""
+    from app.i18n_content import translatable
+
+    translated = [
+        lesson_id
+        for kind in tree_content.KINDS
+        for lesson_id, lesson in tree_content.tree_content(kind, "en")["lessons"].items()
+        if not _russian(lesson["title"])
+    ]
+    if not translated:
+        return  # корпус ещё не переведён — это состояние, а не сбой
+
+    lesson = tree_content.lesson(translated[0], "en")
+    for path, value in translatable("lesson", lesson).items():
+        assert not _russian(value), f"{lesson['id']}/{path}"
+
+
+def test_the_authored_lesson_is_untouched_by_translation():
+    """Наложение кладётся на копию: русский урок остаётся русским."""
+    lesson_id = next(iter(tree_content.tree_content("product")["lessons"]))
+    tree_content.lesson(lesson_id, "en")
+    assert _russian(tree_content.lesson(lesson_id)["title"])
+
+
+def test_the_translation_validator_guards_figures_without_crying_wolf():
+    """Проверка чисел должна ловить подделку и не ловить нормальный перевод.
+
+    Ложное срабатывание здесь стоит дорого: одна претензия отклоняет пакет из
+    десяти файлов, и прогон по корпусу теряет их все.
+    """
+    from app.services.translation import validate
+
+    def check(russian: str, english: str) -> list[str]:
+        return validate({"a": russian}, {"a": english})
+
+    # Числительное словом и «сутки» в переводе законно становятся цифрой.
+    assert not check(
+        "Волна из сорока клиентов. Первые сутки — лотерея.",
+        "A wave of 40 customers. The first 24 hours are a lottery.",
+    )
+    assert not check("Отток вырос за две недели.", "Churn grew over 2 weeks.")
+    # Разделители разрядов у языков разные, число — то же самое.
+    assert not check("1 400 аккаунтов, среднее 3,1", "1,400 accounts, average 3.1")
+
+    # Изменённая цифра — брак.
+    assert check("Отток вырос с 9% до 16%.", "Churn grew from 9% to 20%.")
+    # Подделанная статистика рядом с настоящей — тоже.
+    assert check("Отток вырос с 9%.", "Churn grew from 9% among 3000000 users.")
+    # Сбитая разметка термина уводит ссылку в никуда.
+    assert check("В [[sla|SLA]] записано 99,9%", "The [[slo|SLA]] says 99.9%")
+
+
+def test_a_disputed_field_is_isolated_rather_than_failing_the_batch():
+    """Одно спорное поле не должно уносить с собой правильно переведённые.
+
+    Пакет везёт около десяти файлов ради экономии запросов; если брак одного
+    абзаца отклоняет весь пакет, экономия превращается в потери.
+    """
+    from app.services.translation import failing_paths
+
+    source = {"a": "Отток вырос с 9% до 16%.", "b": "Волна из сорока клиентов."}
+    translated = {"a": "Churn grew from 9% to 20%.", "b": "A wave of 40 customers."}
+
+    assert failing_paths(source, translated) == {"a"}
+
+
+def test_the_translation_respects_the_length_limits_of_the_schema():
+    """Английский бывает длиннее русского, а схема контента ограничивает поле.
+
+    Без этой проверки перевод молча ломает `validate_content`, и увидеть это
+    можно только на следующем прогоне — когда переведены уже сотни файлов.
+    """
+    from app.i18n_content import max_length
+    from app.services.translation import validate
+
+    # Предел берётся из той же схемы, что проверяет авторский контент.
+    assert max_length("scenario", "decisionOptions/0/consequence") == 1200
+    assert max_length("scenario", "evidenceCards/2/title") == 60
+
+    caps = {"a": 1200}
+    assert validate({"a": "коротко"}, {"a": "x" * 1201}, None, caps)
+    assert not validate({"a": "коротко"}, {"a": "x" * 1200}, None, caps)
+
+
+def test_an_oversized_batch_is_split_rather_than_lost(monkeypatch):
+    """Обрезанный по лимиту вывода ответ — это «пакет велик», а не «перевод плохой».
+
+    Разные модели держат разный объём вывода, и заранее он неизвестен: единственный
+    надёжный ответ — разделить пакет и перевести половины.
+    """
+    from app.ai.base import ProviderError
+    from app.services import translation
+
+    seen: list[int] = []
+
+    def fake_call(system, prompt, log, model=None):
+        import json as _json
+
+        # Из промпта достаём, сколько полей просили: большой пакет «не влезает».
+        fields = _json.loads(prompt[prompt.index("{") :])
+        seen.append(len(fields))
+        if len(fields) > 2:
+            raise ProviderError("provider_output_truncated", "не поместилось")
+        return _json.dumps({key: "Translated." for key in fields}), "test-model"
+
+    monkeypatch.setattr(translation, "_call", fake_call)
+
+    source = {f"f{index}": "Русский текст." for index in range(4)}
+    result, _, problems = translation.translate_fields(source)
+
+    assert not problems
+    assert set(result) == set(source)
+    # Сначала попробовали целиком, потом половинами.
+    assert seen[0] == 4 and max(seen[1:]) <= 2
+
+
+def test_length_floors_apply_to_the_author_and_ceilings_to_everyone():
+    """`minLength` — правило для автора, `maxLength` — свойство продукта.
+
+    Английский законно короче русского: «Согласиться на 99.95%. Ноль недель.» —
+    35 знаков, "Agree to 99.95%. Zero weeks." — 28. Требовать от перевода добрать
+    до тридцати значит просить дописать воды. Верхняя граница остаётся: текст
+    обязан поместиться на экран, на каком бы языке он ни был.
+    """
+    authored = tree_content.gate_scenario_schema("ru")
+    translated = tree_content.gate_scenario_schema("en")
+
+    option = lambda schema: schema["properties"]["decisionOptions"]["items"]["properties"]
+    assert option(authored)["description"]["minLength"] == 30
+    assert "minLength" not in option(translated)["description"]
+    assert option(translated)["description"]["maxLength"] == 320

@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "0805dededf461066",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Analyze Threats",
+    "promptBlocks/0/text": "Feature: customers leave product photos in reviews. Find five threats by category and propose solutions.",
+    "referenceReasoningBlocks/0/text": "disclosure — documents, faces, address accidentally end up in the photo; solution: warning, moderation, stripping geolocation metadata. Tampering — uploading a malicious file disguised as an image; file type check and re-compression. Denial of service — uploading huge files; size and count limits. Disclosure — EXIF metadata contains shooting coordinates; mandatory deletion. Privilege escalation — file path allows guessing others'; unguessable identifiers. A key finding is usually EXIF: the buyer's home coordinates in a public review."
+  }
+}

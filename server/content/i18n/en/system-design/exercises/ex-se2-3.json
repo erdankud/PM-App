@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "270a4b52f07abc12",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Minimize Collection",
+    "promptBlocks/0/text": "A food delivery registration form collects: name, phone, email, date of birth, gender, address, workplace, how you heard about us. What to remove and what to replace?",
+    "referenceReasoningBlocks/0/text": "remove date of birth (unless there is a specific function), gender, workplace. Make email optional — phone is already there. 'How you heard' is not personal data, but unnecessary friction at registration; move it to a survey later. Address — not at registration, but at the first order: it is not needed before the order. Name and phone remain. Takeaway: ask for each field what function uses it today."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "language": "en",
+  "sourceDigest": "aea62ee55f21d722",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Business model: how a product turns value into revenue",
+    "keyTakeaway": "A business model is an interconnected web: target audience, value proposition, channels, monetization engine, and cost drivers. It is validated via unit economics — analyzing revenue and cost per customer, not aggregate revenue.",
+    "checkQuestion": "Revenue is growing, but cash on hand is shrinking. Which two numbers should you check first?",
+    "blocks/0/text": "Key node question: **how does the product monetize value?** In section S2, we analyzed markets and customer segments; here, we focus on translating them into a sustainable business model.",
+    "blocks/1/text": "Running example: Kedr is a fictional cloud warehouse WMS for small distributors, 120 clients, 40 thousand rubles per month subscription fee.",
+    "blocks/2/title": "Business Model Canvas",
+    "blocks/2/subtitle": "Nine building blocks; focus on interdependencies",
+    "blocks/2/items/0": "**Customer segments** and **Value proposition** — who you serve and what value you deliver.",
+    "blocks/2/items/1": "**Channels** and **Customer relationships** — how you reach and retain customers.",
+    "blocks/2/items/2": "**Revenue streams** — what clients pay for and what value metric is used: per seat, per location, or per volume.",
+    "blocks/2/items/3": "**Key resources, Key activities, and Key partners** — core internal competencies versus external integrations.",
+    "blocks/2/items/4": "**Cost structure** — fixed vs. variable costs, isolating expenses that scale with customer count.",
+    "blocks/2/items/5": "**Validation:** shifting one block impacts adjacent ones. Moving to channel partners changes both pricing structure and cost dynamics.",
+    "blocks/3/title": "Unit economics",
+    "blocks/3/subtitle": "Calculated per customer unit, not at company scale",
+    "blocks/3/items/0": "**LTV per client** — average recurring payment multiplied by average lifetime.",
+    "blocks/3/items/1": "**Variable costs** — incremental expenses per client: hosting, support, commissions, onboarding.",
+    "blocks/3/items/2": "**Contribution margin per unit** = LTV minus variable costs. If negative, scaling amplifies cash drain.",
+    "blocks/3/items/3": "**CAC and Payback Period** — acquisition cost and months to break even on acquisition spend.",
+    "blocks/3/items/4": "**Fixed overhead** is covered by cumulative contribution margin: dictates unit count needed to reach breakeven.",
+    "blocks/4/text": "Average client: 40,000 ₽/month, 26 months tenure → 1,040,000 ₽ LTV.\nVariable costs: cloud hosting 3,000 ₽/month, support 4,000 ₽/month, onboarding 60,000 ₽ one-time → 242,000 ₽ over lifespan.\nContribution margin: 798,000 ₽. CAC: 180,000 ₽ (direct sales, two-month cycle). Payback period: ~5.5 months.\n\nHowever, segmented view paints a different picture: retail chains run 21,000 ₽/month in support plus custom dev, driving contribution margin negative; manufacturers churn at 5 months, failing to pay back CAC.\n\nThe blended average looked healthy, masking two money-losing segments.",
+    "blocks/4/title": "Kedr: where unit economics broke",
+    "blocks/5/text": "Clients pay monthly while customer acquisition and onboarding are paid upfront. Faster growth widens this working capital gap: this is cash flow crunch, not unprofitability, solved by annual prepayments, onboarding fees, or working capital financing.",
+    "blocks/5/title": "Revenue grows while cash shrinks — usually a cash flow timing issue",
+    "blocks/6/text": "Unit economics for early-stage products rely on assumed LTV retention figures that lack historical proof. It is safer to calculate economics based strictly on observed cohorts and recalculate quarterly.",
+    "blocks/6/title": "Limitations of the model"
+  }
+}

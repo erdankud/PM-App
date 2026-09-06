@@ -1,0 +1,23 @@
+{
+  "language": "en",
+  "sourceDigest": "a1d9d44e48a0fe1f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Calculate custom infrastructure ROI",
+    "inputs/0/label": "Monthly API cost",
+    "inputs/0/unit": "thousand RUB",
+    "inputs/1/label": "Volume growth multiplier for custom to become cheaper",
+    "inputs/1/unit": "x",
+    "promptBlocks/0/text": "Volume is 40 million tokens per day, API cost is 15 RUB per million input tokens. An accelerator covers the load at 55% utilization, rental is 260 thousand/month, operations cost is estimated at 0.3 FTE.",
+    "promptBlocks/1/items/0": "What is cheaper?",
+    "promptBlocks/1/items/1": "At what volume does the balance tip?",
+    "promptBlocks/1/items/2": "Which argument matters more than the math?",
+    "referenceReasoningBlocks/0/text": "API ≈ 40 × 15 × 30 = 18 thousand/month — significantly cheaper than the 260 thousand rental. Tips the scale at about 15 times higher volume, and even then, only under steady utilization. The argument that trumps the math is data control: if a corporate client or regulator demands it, economics take a back seat. Even then, you first check the zero-retention mode with the provider."
+  }
+}

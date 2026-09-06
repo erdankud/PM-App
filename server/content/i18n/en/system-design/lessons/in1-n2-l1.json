@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "sourceDigest": "870b936a33611ba8",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:01Z"
+  },
+  "fields": {
+    "title": "API as a Contract",
+    "keyTakeaway": "An API is an agreement on what can be asked, and a PM must distinguish between \"no data\" and \"data not provided\" because it determines whether a feature is impossible or requires negotiation.",
+    "sections/0/blocks/0/text": "What exactly does an engineer mean when they say \"they don't have that in the API\", and why is it not the same as \"they don't have that data\"?",
+    "sections/1/blocks/0/text": "The difference between \"no data\" and \"data exists but isn't served\" determines whether a feature is possible at all or if it's a matter of negotiating with a partner. A PM who does not distinguish these cases either turns down what is possible or promises the impossible.",
+    "sections/2/blocks/0/text": "[[api|API]] is a set of operations that one system provides to another. It is a [[contract|contract]]: both parties agreed on what can be asked, in what format, and what will come in response.",
+    "sections/2/blocks/1/text": "An operation is described by four things.",
+    "sections/2/blocks/2/text": "**[[endpoint|Endpoint]]** — the address of the operation. `/v1/orders/4471` — \"order with this number\".",
+    "sections/2/blocks/3/text": "**[[http-method|Method]]** — what we are doing. [[term-2|`GET`]] to retrieve, `POST` to create, `PATCH` to modify, `DELETE` to remove. The distinction is not a formality: `GET` is safe and repeatable, `POST` creates and if repeated will create a second one.",
+    "sections/2/blocks/4/text": "**Input** — [[query-parameter|parameters]] in the address (filters, page) and [[request-body|body]] for creation and modification. Plus [[header|headers]]: [[access-token|access token]], version, format.",
+    "sections/2/blocks/5/text": "**Output** — [[status-code|response code]] and data, usually in [[json|JSON]].",
+    "sections/2/blocks/6/text": "The product essence of the contract is that **it restricts both parties.** The provider cannot silently remove a field — they have consumers. We cannot request something that is not in the contract, even if they have the data.",
+    "sections/2/blocks/7/text": "Hence three different situations that sound identical:",
+    "sections/2/blocks/8/text": "*No data.* The provider does not collect it. Cannot be solved by anything other than changing their product.",
+    "sections/2/blocks/9/text": "*Data exists, not exposed in the API.* Solved by a request for modification. The timeline depends on their priorities, but this is a negotiation.",
+    "sections/2/blocks/10/text": "*Data exists and is exposed, but inconveniently.* Requires five requests instead of one, or lacks a filter. Solved on our side at the cost of complexity.",
+    "sections/2/blocks/11/text": "The question to the engineer is formulated accordingly: not \"can this be done\", but \"is this missing from the contract or do they not have it at all\".",
+    "sections/3/blocks/0/text": "Three integrations, three situations.",
+    "sections/3/blocks/1/text": "*Payment provider.* Need to show the last four digits of the card in history. The field is not in the contract. Requested — it turned out the data exists, exposed within three weeks per their schedule. Situation two.",
+    "sections/3/blocks/2/text": "*Delivery service.* Need to show the courier on the map. Data on the courier's location is not collected by them at all — only statuses \"accepted\", \"in transit\", \"delivered\". Situation one, feature closed.",
+    "sections/3/blocks/3/text": "*Catalog supplier.* Need products by category. The method exists, but there is no category filter — only an export of the entire catalog at once, 40 thousand items. Situation three: fetch everything once a day and filter on our side.",
+    "sections/4/blocks/0/text": "The contract describes the shape, but not the meaning. The `status` field can be named the same and mean different things in different versions. Discrepancy of meaning with matching shape is the most unpleasant type of failure because nothing crashes.",
+    "sections/5/blocks/0/text": "API is an agreement on what can be asked, and a PM must distinguish between \"no data\" and \"data not provided\" because it determines whether a feature is impossible or requires negotiation."
+  }
+}

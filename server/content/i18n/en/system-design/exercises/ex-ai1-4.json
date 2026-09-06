@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "sourceDigest": "04ee4352e4c62731",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Assemble context within budget",
+    "promptBlocks/0/text": "Budget 6,000 tokens. Available: instruction 400, profile 300, dialogue history 2,400, found products 5,000, delivery rules 800.",
+    "promptBlocks/1/text": "Assemble the context and explain what you are cutting.",
+    "referenceReasoningBlocks/0/text": "instruction 400 and profile 300 are mandatory. Found products are the main value, but 5,000 won't fit: trim to 3,500 by picking the most relevant. History — compress into summary up to 600. Delivery rules — include only if the question is about delivery, determined before call. Reserve 200. Total ≈ 5,000–5,800. Key decision: trim by relevancy search, not by chopping off the end."
+  }
+}

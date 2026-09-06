@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "9f86d04af60e7b9b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Internal view: what the company can and cannot actually do",
+    "keyTakeaway": "A core strength is proven by outcomes and hard to replicate, not just an internal self-image. Almost every strength imposes a constraint: it defines what you explicitly choose not to do.",
+    "checkQuestion": "\"Our strength is a strong engineering team.\" How do you verify if that is true?",
+    "blocks/0/text": "Key node question: **what internal capabilities and constraints exist?**",
+    "blocks/1/title": "SWOT done honestly",
+    "blocks/1/subtitle": "It usually turns into four lists of compliments — here is how to avoid that",
+    "blocks/1/items/0": "**Strengths** — strictly backed by evidence: repeatable results others fail to match. \"We deploy in three days vs. two weeks for competitors\" — yes; \"customer focus\" — no.",
+    "blocks/1/items/1": "**Weaknesses** — facts hurting performance right now: lead times, churn, unit cost.",
+    "blocks/1/items/2": "**Opportunities and threats** — external factors, building on the previous lesson.",
+    "blocks/1/items/3": "**The key is intersections:** which strength captures an opportunity, which weakness exposes you to a threat. The value of SWOT lies entirely in these pairs.",
+    "blocks/2/text": "**Company lifecycle stage** clarifies decisions that might look nonsensical on the surface. A young startup relies on brute-force sales and key individuals; a scale-up drowns in missing process; a mature company defends turf and moves slowly. Demanding enterprise order from a fast-growing company is asking for the impossible.",
+    "blocks/3/text": "Strength: 3-day implementation vs 2 weeks for a major competitor. Evidence: 34 onboardings last year, averaging 3.4 days.\nWeakness: missing integrations with two popular ERPs; caused 11 lost deals out of 27 unclosed ones over the year.\nOpportunity: mandatory product labeling effective September 1 — all clients must upgrade.\nThreat: major competitor announced a cloud version at half our price.\n\nActionable intersection: deployment speed + mandatory labeling = we can convert customers before September while the competitor takes two weeks per setup. This became our H2 strategic priority.\n\nSecond intersection: missing integrations + low-cost competitor = whenever a deal degrades into price comparison, we lose twice as fast.",
+    "blocks/3/title": "Kedr: an honest breakdown",
+    "blocks/4/text": "Fast customer support becomes a competitive advantage only if rivals cannot match it due to structural reasons: different sales model, scale, or SLAs. Otherwise, it is just a temporary state.",
+    "blocks/4/title": "Easily copied strengths are not true advantages",
+    "blocks/5/text": "SWOT does not prioritize initiatives or compare options. It simply synthesizes the picture prior to decision-making; the decision itself relies on finances and trade-offs.",
+    "blocks/5/title": "Limitations of the model"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "a396d64bf24cdf9a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "Metrics system: what to monitor to notice in time",
+    "keyTakeaway": "Metrics are organized into a hierarchy: one main metric, a few explaining metrics underneath that account for it, and guardrail metrics alongside that must not worsen. A flat list of thirty numbers shows nothing.",
+    "checkQuestion": "The main metric went up, but support complains about a flood of tickets. What is missing in the metrics system?",
+    "blocks/0/text": "Key question of the node: **which metrics should be monitored?**",
+    "blocks/1/text": "**What happens if you do not answer this question.** Every team has its own dashboard, the numbers do not match, and during meetings, people discuss whichever metric happened to grow. Bad news comes from support, not from the data.",
+    "blocks/2/title": "Hierarchy of metrics",
+    "blocks/2/subtitle": "Three levels and one side list",
+    "blocks/2/items/0": "**North Star** — one per product or per period. It reflects the value received rather than activity: not “logins”, but “schedules closed on time”.",
+    "blocks/2/items/1": "**Input metrics** — what it consists of: reach, frequency, depth. They answer the question “why did the North Star change”.",
+    "blocks/2/items/2": "**Operational** — what a specific team manages over a week.",
+    "blocks/2/items/3": "**Guardrail metrics** — what should not worsen: churn, complaints, speed, support load. Without them, growth in the North Star metric can turn out to be harmful.",
+    "blocks/3/text": "North Star: the share of cafes that completed their weekly schedule before Sunday. Currently 44%.\n\nInput metrics:\n— share of owners opening the product on Friday–Saturday;\n— share of employees confirming shifts on time;\n— average number of manual edits after publication.\n\nOperational: schedule publication time, share of notifications delivered on time.\n\nGuardrails: churn, support tickets per 100 customers, share of cafes returning to spreadsheets.\n\nWhen the North Star grew from 39% to 44%, input metrics showed it was due to employee confirmations — and the next quarter was planned in an hour.",
+    "blocks/3/title": "Smena: a system instead of a list",
+    "blocks/4/text": "If a team is rewarded for the number of closed schedules, schedules will start being closed formally. The defense is guardrail metrics and periodic checks that the metric still means what it was introduced for.",
+    "blocks/4/title": "A metric becomes a bad metric as soon as it becomes a target",
+    "blocks/5/text": "**Breakdowns are more important than averages.** The same system of metrics, viewed across segments, channels, and cohorts, answers most questions faster than any research. That is why breakdowns are built into tracking in advance.",
+    "blocks/6/text": "Metrics show what is happening, and almost never why. The system is needed to notice in time and ask the right question; the answer comes from observing people.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

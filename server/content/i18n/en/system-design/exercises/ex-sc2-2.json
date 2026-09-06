@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "sourceDigest": "547e3b6eb7b5985b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Calculate a Chain",
+    "inputs/0/label": "Chain availability",
+    "inputs/0/unit": "%",
+    "promptBlocks/0/text": "Checkout goes through gateway 99.95%, order service 99.9%, database 99.95%, payment provider 99.9%, bonus service 99.5%.",
+    "promptBlocks/1/items/0": "What is the availability of the chain?",
+    "promptBlocks/1/items/1": "Can we promise 99.9%?",
+    "promptBlocks/1/items/2": "What is the cheapest thing to change?",
+    "referenceReasoningBlocks/0/text": "product ≈ 99.2%, about 5.8 hours per month. You cannot promise 99.9%. The cheapest fix is removing the bonus service from the critical path — it is the weakest and least critical: checkout without burning points, accruing them later. This yields ≈99.7%. Next, a payment plan B takes the provider out, yielding ≈99.8%. Rule of thumb: shorten the critical path instead of strengthening every link."
+  }
+}

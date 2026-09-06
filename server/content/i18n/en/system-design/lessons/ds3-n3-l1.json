@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "9ae5fe309c24f68e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:35Z"
+  },
+  "fields": {
+    "title": "Three isolation models",
+    "keyTakeaway": "The isolation model determines what data promises the product can make to a corporate client, and is chosen long before the client asks the question.",
+    "sections/0/blocks/0/text": "A major client asks: \"where is our data physically located, and can other clients of yours see it?\" What do you answer?",
+    "sections/1/blocks/0/text": "The answer to this question is determined by architecture chosen long before the deal, and changing it by negotiations is impossible. A PM who learns the isolation model at the moment a client asks cannot confirm or deny—and the deal stalls for weeks while things get sorted out.",
+    "sections/2/blocks/0/text": "[[multi-tenancy|Multi-tenancy]] is serving multiple organizations with a single system. A [[tenant|tenant]] is a client as an isolation unit. Three models.",
+    "sections/2/blocks/1/text": "**[[shared-schema|Shared schema]].** All tenants in the same tables, separated by a `tenant_id` column. Cheap, easy to update, resources used efficiently. Risk—[[cross-tenant-leak|leak]]: one forgotten filter in a single query exposes another company's data. This is the heaviest category of B2B incidents because it breaks the product's main promise. Fixed not by carefulness, but by making filtering mandatory at the data access layer rather than writing it per developer. Another risk—[[noisy-neighbour|noisy neighbor]]: a heavy report from a major client slows down everyone else.",
+    "sections/2/blocks/2/text": "**[[schema-per-tenant|Schema per tenant]].** Each client has their own set of tables in a shared database. Isolation is stronger, accidental leaks are nearly impossible. Cost: migrations are applied to each schema separately, and with a thousand clients this is a separate engineering task. Limit—hundreds of tenants.",
+    "sections/2/blocks/3/text": "**[[database-per-tenant|Database per tenant]].** Complete isolation, separate update schedules, ability to host the database in the required country. Expensive: infrastructure per client, operations get complex, cross-client analytics require separate aggregation. Justified for dozens of large clients, not thousands of small ones.",
+    "sections/2/blocks/4/text": "Mature products arrive at a mixed model: mass segment in a shared schema, large clients moved to separate databases on demand. This is a product decision—it determines what can be sold and at what price.",
+    "sections/3/blocks/0/text": "Partner stores are tenants. Shared schema model: 900 partners, each with their own dashboard.",
+    "sections/3/blocks/1/text": "Isolation is ensured by data access going through a layer that automatically injects the partner filter. You can write a query bypassing it, but that requires consciously circumventing the common mechanism rather than forgetting a line. The difference is fundamental.",
+    "sections/3/blocks/2/text": "The noisy neighbor problem showed up on Monday morning and was solved by moving reports to an analytical data store—that same story from block DS1.",
+    "sections/3/blocks/3/text": "New situation: a chain of 40 stores in negotiations demands that their data be stored separately from competitors' data, and asks for confirmation. In the shared schema, such confirmation cannot be given—the data sits in the same tables. This is not a trust issue, but a question of what the product can do.",
+    "sections/4/blocks/0/text": "The isolation model does not replace access permissions within a tenant: a store employee shouldn't see everything the owner sees. That is a separate layer.",
+    "sections/5/blocks/0/text": "The isolation model determines what data promises the product can make to a corporate client, and is chosen long before the client asks the question."
+  }
+}

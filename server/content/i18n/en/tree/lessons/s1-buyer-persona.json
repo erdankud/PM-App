@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "c89fed44f5abe129",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Who signs and what they fear",
+    "keyTakeaway": "An objection is a voiced risk, not an argument. Responding to it with a feature list is useless: the person signing the contract risks their reputation, and that is the risk you need to address.",
+    "checkQuestion": "Is \"too expensive\" from the business owner the same objection as \"too expensive\" from the warehouse manager?",
+    "blocks/0/text": "Key node question: **what arguments and counterarguments to use?** The answer depends not on the product, but on who is in front of you and what they stand to lose.",
+    "blocks/1/text": "Kedr is a fictional cloud warehouse management service for small distributors: receiving, putaway, dispatch. Sold through a sales team, average check is 40 thousand rubles a month, deal cycle is about two months. We will return to it in every lesson in this domain.",
+    "blocks/2/text": "**What happens if you do not answer the question.** The salesperson responds to any objection with a feature walkthrough. The client politely agrees and takes time \"to think,\" never returning.",
+    "blocks/3/title": "Buyer Persona",
+    "blocks/3/subtitle": "A portrait of the decision-maker, not the user",
+    "blocks/3/items/0": "**Role in the decision** — who initiates, who approves, who can block. Often three different people.",
+    "blocks/3/items/1": "**What success means to them** — how they are evaluated at their job.",
+    "blocks/3/items/2": "**What they risk by saying \"yes\"** — this is where almost all objections live.",
+    "blocks/3/items/3": "**Who they have to justify it to** — the decision is almost always pitched to someone else.",
+    "blocks/4/text": "A Buyer Persona is not the same as a user persona. A user evaluates convenience; a buyer evaluates risk. Everyone in the warehouse might love the product, yet it will not sell because the warehouse does not sign the deal.",
+    "blocks/5/items/0": "\"Too expensive\" from the owner — \"I do not understand what I get for this money\": needs an ROI calculation",
+    "blocks/5/items/1": "\"Too expensive\" from the warehouse manager — \"they will cut my other budget\": needs a discussion on trade-offs",
+    "blocks/5/items/2": "\"I need to consult\" — almost always \"I have nothing to justify this decision to my boss\": needs leave-behind materials",
+    "blocks/5/items/3": "\"Everything works fine for us\" — \"switching costs more than the problem\": needs a switching cost estimate, not a feature list",
+    "blocks/6/text": "Warehouse manager at a demo: \"We do not have time for implementation.\"\n\nThe salesperson kept replying that onboarding takes two weeks and that we configure everything ourselves. The deal stalled for a month.\n\nOn the fourth meeting, the real issue surfaced: his risk was that warehouse operations would halt during transition, and he would be held responsible. Whether it takes two weeks or four does not matter; what matters is what happens if something goes wrong.\n\nThe deal moved forward when we offered to run in parallel with the old system for the first month. Not a single new feature was needed for this.",
+    "blocks/6/title": "Kedr: an objection handled wrong",
+    "blocks/7/text": "A persona is a generalization, and a real person is always different. It is useful for prep work and harmful if used to make assumptions instead of asking questions. Also, it describes the purchase decision, not renewal: renewals involve different people and different risks.",
+    "blocks/7/title": "Limitations of the model"
+  }
+}

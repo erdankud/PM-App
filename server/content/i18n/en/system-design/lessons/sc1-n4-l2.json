@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "d94dc91e54e8981c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:39Z"
+  },
+  "fields": {
+    "title": "Invalidation and stampede",
+    "keyTakeaway": "Event-based invalidation is precise, but misses bypass changes, so it is backed by TTL, and TTL jitter protects the database from a simultaneous miss.",
+    "sections/0/blocks/0/text": "The price was changed, but the app shows the old one. How fast will it update and why is this harder than it seems?",
+    "sections/1/blocks/0/text": "Invalidation is a notoriously hard problem, and the product consequences of mistakes in it are directly visible: an old price, a disappeared item that is actually in stock, a change that \"did not save\". Every such case looks like a breakage to the user.",
+    "sections/2/blocks/0/text": "Three cache update strategies.",
+    "sections/2/blocks/1/text": "**By time.** A record lives for its TTL and expires. Simple, predictable, data gets stale for up to the TTL duration. **[[invalidation|By event]].** When the source changes, the cache is explicitly dropped. Precise, but requires all places that make changes to know about the cache. A forgotten place means permanently stale data. **Overwrite.** When data changes, we immediately put the new value. Most precise, works when there is a single point of change.",
+    "sections/2/blocks/2/text": "Practice is a combination: events for important things, TTL as insurance against forgotten places.",
+    "sections/2/blocks/3/text": "**[[cache-stampede|Cache stampede]]** is a distinct problem that appears as load grows. A thousand requests miss the same key simultaneously, and a thousand requests hit the database all at once. The database, which ran fine at a 99% hit rate, gets all the load at once.",
+    "sections/2/blocks/4/text": "Occurs in two cases: a popular key's TTL expired, or the cache was restarted. The second is a typical cause of crashes right after a release.",
+    "sections/2/blocks/5/text": "Three remedies: TTL jitter (not exactly 10 minutes, but 9-11), request coalescing on recalculation (one misses, the rest wait for its result), [[cache-warming|warming]] before turning on traffic.",
+    "sections/3/blocks/0/text": "Price: overwrite on change plus a 60-second TTL as insurance. Price changes go through a single service, so overwrite is reliable.",
+    "sections/3/blocks/1/text": "Product card: event-based invalidation via `product.updated` plus a 10-minute TTL. The event catches edits, TTL insures against bypass changes.",
+    "sections/3/blocks/2/text": "A stampede happened twice. First time — after a release with a cache restart: the database operated at its limit for 90 seconds, some requests failed. Introduced warming for the top 1000 products before switching traffic.",
+    "sections/3/blocks/3/text": "The second time was subtler: all products in a category had their TTL expire simultaneously because they were cached at once during import. ±15% jitter solved it.",
+    "sections/4/blocks/0/text": "Perfect invalidation does not exist. The right approach is to define the allowable staleness window for each data type and ensure it, rather than striving for zero.",
+    "sections/5/blocks/0/text": "Event-based invalidation is precise, but misses bypass changes, so it is backed by TTL, and TTL jitter protects the database from a simultaneous miss."
+  }
+}

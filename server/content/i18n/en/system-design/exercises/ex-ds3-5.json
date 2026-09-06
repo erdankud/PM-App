@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "efd05a655514453b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Write a section",
+    "promptBlocks/0/text": "Feature: user subscribes to a price drop on an item and receives a push. Write the \"Data\" section covering eight points.",
+    "referenceReasoningBlocks/0/text": "Entity \"Price subscription\" — user, catalog item, price at subscription time (snapshot), drop threshold, date. Volume — around hundreds of thousands per quarter. Read — by catalog item on price change, by user for screen. Storage — until unsubscribe or a year of inactivity. On account deletion — deleted. Source of truth internal. Nothing irreversible if catalog item already exists; if not — it's irreversible and discussed separately. Check: can you draw a table from this without questions."
+  }
+}

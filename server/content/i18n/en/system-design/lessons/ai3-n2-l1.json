@@ -1,0 +1,39 @@
+{
+  "language": "en",
+  "sourceDigest": "312ac44984ccad8d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:54Z"
+  },
+  "fields": {
+    "title": "The Model as an External Dependency",
+    "keyTakeaway": "An AI provider is an external dependency with four failure modes, including a refusal to answer, and a plan B for each feature is designed in advance.",
+    "sections/0/blocks/0/text": "The model provider is down for 20 minutes. What does the user see?",
+    "sections/1/blocks/0/text": "An AI provider is just as much of an [[external-dependency|external dependency]] as a payment gateway, and obeys the rules from `IN1-N5`. The difference is that people often think of it as part of the product rather than someone else's system — and fail to design a plan B.",
+    "sections/2/blocks/0/text": "Four ways an AI provider fails, and they differ from regular ones:",
+    "sections/2/blocks/1/text": "*Outage.* Regular failure. *Slowdown.* More dangerous: generation is already slow, doubling it exceeds user patience. *Rate limiting.* Providers limit tokens per minute. During a spike, it hits limits faster than expected. *Refusal to answer.* The model is available and refuses. Technically a success, product-wise a failure.",
+    "sections/2/blocks/2/text": "[[ai-fallback|Plan B]] by levels:",
+    "sections/2/blocks/3/text": "**Another model.** [[model-cascade|Cascade]] or another provider. Requires the prompt to work on both — verified by evals beforehand. **Cached response.** For recurring queries. **Non-generative replacement.** Show data without the model: ingredients as is, list of products without recommendation. **Honest refusal.** With explanation and timeframe.",
+    "sections/2/blocks/4/text": "The fourth level is more acceptable for AI features than for payments: the feature is usually auxiliary. But the decision must be made, not left to chance.",
+    "sections/2/blocks/5/text": "Separately — **rate limits as a product constraint.** The provider gives N tokens per minute. During a spike, the feature stops working for some people. Exactly who gets refused is a product decision: priority to paying users, priority to started sessions, a fair queue.",
+    "sections/3/blocks/0/text": "Plan B by feature:",
+    "sections/3/blocks/1/header/0": "Feature",
+    "sections/3/blocks/1/header/1": "On Failure",
+    "sections/3/blocks/1/rows/0/0": "Product answer",
+    "sections/3/blocks/1/rows/0/1": "Show description and ingredients as is, without an answer",
+    "sections/3/blocks/1/rows/1/0": "Cart recommendation",
+    "sections/3/blocks/1/rows/1/1": "Offer to repeat past order",
+    "sections/3/blocks/1/rows/2/0": "Question classification",
+    "sections/3/blocks/1/rows/2/1": "Skip, treat as product question",
+    "sections/3/blocks/1/rows/3/0": "Review summarization",
+    "sections/3/blocks/1/rows/3/1": "Show last 5 reviews",
+    "sections/3/blocks/2/text": "The second option turned out valuable on its own: \"repeat past order\" was used by 14% even when the assistant was working.",
+    "sections/3/blocks/3/text": "Limits: when exhausted, priority goes to users with an active recommendation session — interrupting mid-session is worse than not starting. New users see \"assistant is busy, try again in a minute\".",
+    "sections/3/blocks/4/text": "Slowdown: 12-second timeout on generation, if exceeded — plan B. Introduced after an incident where the provider took 40 seconds to respond and people waited because streaming created the illusion of work.",
+    "sections/4/blocks/0/text": "Switching between providers requires prompts and formats to be compatible. This limits the use of specific features of a single provider.",
+    "sections/5/blocks/0/text": "An AI provider is an external dependency with four failure modes, including a refusal to answer, and a plan B for each feature is designed in advance."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "92dad795b4484fa9",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Write criteria",
+    "promptBlocks/0/text": "Feature: product review summarization. Write items 1, 3, 5, 6 of the section.",
+    "referenceReasoningBlocks/0/text": "Task — brief summary of main opinions from product reviews; does not do — does not evaluate the product on behalf of the store, does not answer questions, does not mention specific authors. Quality — all claims backed by reviews ≥ 98%, no author mentions 100%, length within 60–90 words 100%, no store-side evaluative judgments 100%. Fallback — with fewer than 5 reviews, summarization is skipped and reviews are shown as-is. Prohibited — mentioning names, reproducing insults, making medical conclusions."
+  }
+}

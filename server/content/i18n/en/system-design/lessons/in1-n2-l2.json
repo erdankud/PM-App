@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "1abf54455031288f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:01Z"
+  },
+  "fields": {
+    "title": "How to Read Someone Else's API in Twenty Minutes",
+    "keyTakeaway": "Response fields, filters, and limits of someone else's API define the boundaries of product capabilities, and a PM can read them themselves in twenty minutes.",
+    "sections/0/blocks/0/text": "A partner sent a link to the documentation. What can be understood from it without being an engineer, and what conclusions can be drawn before talking to the team?",
+    "sections/1/blocks/0/text": "Integration assessment usually goes through an engineer, and that is correct. But a PM capable of understanding the boundaries of the possible in twenty minutes comes to this conversation with a hypothesis and refines it rather than receiving a verdict. The difference is calendar days on every integration and better solutions because product trade-offs are discussed immediately.",
+    "sections/2/blocks/0/text": "Five things visible in any documentation that define product capabilities.",
+    "sections/2/blocks/1/text": "**List of operations.** Usually the first page. Scan the names: what can be retrieved, what can be created. The absence of an operation in the list is the boundary of the possible.",
+    "sections/2/blocks/2/text": "**Response fields.** Open the example response and read the field names. This is precisely the data you will be able to show the user, and not a single bit more.",
+    "sections/2/blocks/3/text": "**Filters and sorting.** Look at the parameters for list retrieval operations. If there is a date filter — you can make a period. If there is no status filter — either you fetch everything and filter yourself, or the feature doesn't exist.",
+    "sections/2/blocks/4/text": "**[[pagination|Pagination]] and limits.** How many records are returned at a time and how many requests per minute are allowed. From this, you calculate how long it takes to download the entire volume. Forty thousand products at a hundred per request with a limit of 60 requests per minute is almost seven minutes of continuous work, which is already a product constraint on catalog update frequency.",
+    "sections/2/blocks/5/text": "**[[webhook|Webhooks]].** Are there event notifications or will you have to [[polling|poll]]. This determines whether you learn about a change in seconds or minutes.",
+    "sections/2/blocks/6/text": "A practical technique: **list the response fields in a column and mark which ones are needed for your screen.** Missing ones form the negotiation list. This takes ten minutes and replaces two meetings.",
+    "sections/3/blocks/0/text": "Evaluating a new supplier's API before integration.",
+    "sections/3/blocks/1/text": "Item fields: SKU, name, price, category, barcode, weight, image. Missing: ingredients, shelf life, country of origin. Three out of seven planned fields are missing from the product page—making it immediately clear the page will be poorer than those of current suppliers, and this is a conversation to have before signing, not after.",
+    "sections/3/blocks/2/text": "Limits: 100 items per request, 30 requests per minute. The catalog has 12 thousand items—four minutes for a full export. Updating more often than once an hour makes no sense, and their prices change twice a day. Good enough.",
+    "sections/3/blocks/3/text": "No webhooks. This means we learn about price changes on the next export, up to an hour delay. Product consequence: between exports our price might be outdated, and we either accept this or recheck the price at checkout. We chose the latter for expensive items.",
+    "sections/3/blocks/4/text": "Twenty minutes with the documentation yielded three product decisions and one negotiation point.",
+    "sections/4/blocks/0/text": "Documentation often lags behind reality: a described field might not be populated, or a limit might be different. Testing in the [[sandbox|sandbox]] is mandatory before making promises. And volume in the docs says nothing about stability—a pretty API can crash once a week.",
+    "sections/5/blocks/0/text": "Response fields, filters, and limits of someone else's API define the boundaries of product capabilities, and a PM can read them on their own in twenty minutes."
+  }
+}

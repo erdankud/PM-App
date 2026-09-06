@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "95037af25175977b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Verify at Scale",
+    "inputs/0/label": "Recalculating recommendations on every open",
+    "inputs/1/label": "Storing all events for 3 years",
+    "inputs/2/label": "SMS verification for every order",
+    "inputs/3/label": "Full-text search across the entire catalog",
+    "inputs/4/label": "Persistent connection to the app",
+    "acceptance/0/expected": "linear",
+    "acceptance/1/expected": "superlinear",
+    "acceptance/2/expected": "linear",
+    "acceptance/3/expected": "superlinear",
+    "acceptance/4/expected": "linear",
+    "inputs/0/choices/0": "linear",
+    "inputs/0/choices/1": "superlinear",
+    "inputs/1/choices/0": "linear",
+    "inputs/1/choices/1": "superlinear",
+    "inputs/2/choices/0": "linear",
+    "inputs/2/choices/1": "superlinear",
+    "inputs/3/choices/0": "linear",
+    "inputs/3/choices/1": "superlinear",
+    "inputs/4/choices/0": "linear",
+    "inputs/4/choices/1": "superlinear",
+    "promptBlocks/0/text": "For each solution, describe how costs behave with a 10x growth.",
+    "promptBlocks/1/items/0": "Recalculating recommendations on every screen open",
+    "promptBlocks/1/items/1": "Storing all events for 3 years",
+    "promptBlocks/1/items/2": "SMS verification for every order",
+    "promptBlocks/1/items/3": "Full-text search querying the entire catalog",
+    "promptBlocks/1/items/4": "Persistent connection to the app for instant updates",
+    "referenceReasoningBlocks/0/text": "1 — linear by users, but expensive; fixed with background recalculation. 2 — superlinear due to accumulation. 3 — linear, does not drop, will start dominating as it grows. 4 — superlinear: gets more expensive from both the number of requests and catalog size. 5 — linear by concurrent users, but with a high coefficient. Rule of thumb: look for things that depend on both the number of operations and the total volume."
+  }
+}

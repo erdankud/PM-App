@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "912bd999f0af2d4b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:25Z"
+  },
+  "fields": {
+    "title": "To wait or not to wait",
+    "keyTakeaway": "An operation stays synchronous if the user cannot proceed without the result, and goes to the background if they can—everything else follows from that.",
+    "sections/0/blocks/0/text": "Order cancellation happens instantly, but purchase history export \"will be ready in a few minutes\". Why can't it work the same way?",
+    "sections/1/blocks/0/text": "A product manager who demands instant execution where it's impossible gets either a refusal or, worse, agreement—and the product ends up making the user wait for thirty seconds. The reverse error: making something asynchronous that could have been instant, forcing the person to wait for a notification about something that should have happened immediately.",
+    "sections/2/blocks/0/text": "[[synchronous|Synchronous operation]]: the client sends a request and waits for the result within the same connection. Simple, clear, works as long as the operation is fast.",
+    "sections/2/blocks/1/text": "[[asynchronous|Asynchronous operation]]: the server accepts the request, replies \"accepted\", and does the work later. The client learns the result later through [[polling|polling]] or a notification.",
+    "sections/2/blocks/2/text": "Four reasons drive an operation to become asynchronous, and all of them are product-distinguishable:",
+    "sections/2/blocks/3/text": "*Slow.* More than a few seconds. The connection shouldn't hang, and the user shouldn't stare at the screen.",
+    "sections/2/blocks/4/text": "*Unpredictably slow.* Generating a yearly report can take a second or a minute depending on the volume. A synchronous operation with unpredictable duration is a source of timeouts.",
+    "sections/2/blocks/5/text": "*Depends on an external system.* We don't control the provider's speed. Asynchrony isolates us from their slowness.",
+    "sections/2/blocks/6/text": "*Can be done later without losing meaning.* Sending an email, recalculating recommendations, updating the search index.",
+    "sections/2/blocks/7/text": "Conversely, an operation must be synchronous if **the user cannot proceed without knowing the result.** Payment, availability check, login. Here, asynchrony doesn't simplify things—it shifts uncertainty onto the user.",
+    "sections/2/blocks/8/text": "The intermediate case, the most common one in products: **part synchronous, part asynchronous.** An order is created synchronously—the user needs to see that it exists. Store notification, email, analytics update—asynchronous; none of these should delay the response.",
+    "sections/3/blocks/0/text": "Breaking down checkout according to this principle:",
+    "sections/3/blocks/1/text": "*Synchronous (up to 1.5 s):* stock check, order creation, card charge, responding to the user with the order number. *Asynchronous:* store notification, buyer SMS, bonus accrual, recommendation update, analytics export.",
+    "sections/3/blocks/2/text": "Before splitting, everything happened in a single request, and checkout took up to 9 seconds because it waited for the SMS provider. The provider lagged—checkout lagged. Moving it to the background reduced the wait time to 1.4 seconds and simultaneously removed the dependency on external availability: even if the SMS provider goes down, orders still get placed.",
+    "sections/3/blocks/3/text": "The reverse case, where a mistake was made: promo code verification was made asynchronous for the sake of screen speed. The user entered the code, saw \"verifying\", and got the result two seconds later. This turned out worse than waiting those same two seconds on the button: people didn't understand whether the code was applied or not and entered it again. We reverted it to synchronous.",
+    "sections/4/blocks/0/text": "Asynchrony is not free: it requires a queue, state tracking, and failure handling for background tasks. For an operation taking 300 ms, this complexity is wasted.",
+    "sections/5/blocks/0/text": "An operation stays synchronous if the user cannot proceed without the result, and goes to the background if they can—everything else follows from that."
+  }
+}

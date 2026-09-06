@@ -1,0 +1,22 @@
+{
+  "language": "en",
+  "sourceDigest": "9ba62aa1be0cc8fe",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Calculate Load",
+    "inputs/0/label": "Average RPS",
+    "inputs/1/label": "Peak RPS",
+    "inputs/2/label": "Additional RPS from newsletter",
+    "promptBlocks/0/text": "Product: 400k active daily, 1.6 sessions per person, 18 requests per session, peak coefficient 4.",
+    "promptBlocks/1/items/0": "Average RPS and peak?",
+    "promptBlocks/1/items/1": "A newsletter is planned for the entire database, expected conversion is 12% in the first hour. How much will be added to the peak?",
+    "promptBlocks/1/items/2": "What product lever will reduce this spike?",
+    "referenceReasoningBlocks/0/text": "400,000 x 1.6 x 18 = 11.5M per day, ~133 average RPS, ~530 at peak. Newsletter: 48k conversions per hour, but uneven — half in the first 10 minutes, which is ~40 sessions per second x 18 requests ≈ 700 additional RPS, more than a double increase. Lever — send in waves over 3 hours, the spike drops about sixfold with the same result."
+  }
+}

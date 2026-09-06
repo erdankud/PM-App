@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "f80c034951ba1d01",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:41:18Z"
+  },
+  "fields": {
+    "title": "HEART: How to Choose What to Track in a Product",
+    "keyTakeaway": "A metric without a goal and a signal is just a number. First, \"what do we want,\" then \"what behavioral change shows this,\" and only then \"how do we measure it.\"",
+    "checkQuestion": "Why can DAU growth happen alongside a drop in product value?",
+    "blocks/0/text": "The key question of this node: **what is currently happening in the product?** Any product has dozens of numbers, and almost none of them mean anything on their own.",
+    "blocks/1/text": "**What happens if you don't answer this question.** The team looks at what is easy to measure: visits, installs, DAU. These numbers grow from marketing and don't show that people have stopped finishing what they started.",
+    "blocks/2/title": "HEART",
+    "blocks/2/subtitle": "Five categories; pick the ones relevant to your task, not all at once",
+    "blocks/2/items/0": "**Happiness** — what people think: ratings, NPS, post-action feedback.",
+    "blocks/2/items/1": "**Engagement** — how deeply people use it: actions per session, flow depth.",
+    "blocks/2/items/2": "**Adoption** — how many completed the key action for the first time.",
+    "blocks/2/items/3": "**Retention** — how many return and after how long.",
+    "blocks/2/items/4": "**Task success** — whether people complete a specific task and how long it takes.",
+    "blocks/3/title": "Goal → Signal → Metric",
+    "blocks/3/subtitle": "The mandatory part of HEART that gets dropped most often",
+    "blocks/3/items/0": "**Goal** — what we want to achieve, in words: \"owner creates a weekly schedule quickly.\"",
+    "blocks/3/items/1": "**Signal** — what behavior shows this is happening: \"schedule is saved without edits within an hour of starting.\"",
+    "blocks/3/items/2": "**Metric** — how we measure it: \"share of weekly schedules saved in a single session.\"",
+    "blocks/4/text": "Goal: employee understands shift swap status without asking the owner.\nSignal: after a swap request, the employee does not open a chat with the owner within a day.\nMetric: share of swaps with no follow-up message to the owner — currently 41%.\n\nBy itself, \"41%\" means nothing. Tied to a goal and signal, it becomes a statement you can disprove.",
+    "blocks/4/title": "Smena, single screen",
+    "blocks/5/text": "HEART describes the user value of a single feature or product, not the business. It does not replace revenue, margin, or acquisition cost. And don't pick all five categories at once: a set of five metrics that no one tracks is worse than one metric reviewed every week.",
+    "blocks/5/title": "Limits of the model"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "3ef14b836d913c8a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:25Z"
+  },
+  "fields": {
+    "title": "Versions and the migration window",
+    "keyTakeaway": "A breaking change is rolled out through a migration window with a measurable share of remaining clients, and you cannot shut down without a version-based consumer counter.",
+    "sections/0/blocks/0/text": "A breaking change is needed after all. How do you execute it without stopping a single client?",
+    "sections/1/blocks/0/text": "A breaking change without a migration window is a choice between \"break partners\" and \"never change anything\". Both outcomes are bad: the first costs trust, the second freezes the product. A properly organized window takes time and planning, and the product manager plans it because it's a question of timelines and partner communication.",
+    "sections/2/blocks/0/text": "Three ways to denote a version, and they are not equivalent.",
+    "sections/2/blocks/1/text": "**In the URI:** `/v1/orders`, `/v2/orders`. Transparent, easy to debug, easy to route traffic. The flip side—everything is versioned at once, and moving to `v2` means a full transition.",
+    "sections/2/blocks/2/text": "**In the header:** the client specifies the required version in a separate field. More flexible, URIs stay stable. Harder to read and easier to forget.",
+    "sections/2/blocks/3/text": "**By fields:** new fields appear alongside old ones, there is no version as such, old ones are marked deprecated and live for years. Gentle for clients, but the contract gradually accumulates clutter.",
+    "sections/2/blocks/4/text": "The practice of most products is a combination: the major version in the URI changes rarely, while minor evolution happens via field additions.",
+    "sections/2/blocks/5/text": "The [[migration-window|migration window]] is the period when both versions run. Here is what it looks like:",
+    "sections/2/blocks/6/items/0": "Release the new version, the old one works without changes.",
+    "sections/2/blocks/6/items/1": "Announce [[deprecation|deprecation]] of the old one with a shutdown date. For external partners, a reasonable timeframe is six months or more.",
+    "sections/2/blocks/6/items/2": "Measure who is still using the old one. Without this metric, shutting down blindly is impossible.",
+    "sections/2/blocks/6/items/3": "Send targeted reminders to those who remain.",
+    "sections/2/blocks/6/items/4": "Shut down—usually starting with a short test period so the stragglers notice.",
+    "sections/2/blocks/7/text": "Point 3 is the one people forget. **You cannot shut down a version without knowing who uses it.** Logging consumers by version is the first thing done when introducing versioning, not the last.",
+    "sections/2/blocks/8/text": "For mobile clients, versions have a quirk: an app of an old version lives on a phone as long as the user doesn't update, which can be years. Shutting down an API version means breaking the app for those people, so soft forced updates are usually introduced first.",
+    "sections/3/blocks/0/text": "The partner API transitioned from `v1` to `v2` during inventory structure changes: it went from a single number to a breakdown by warehouse networks.",
+    "sections/3/blocks/1/text": "The window was eight months. Four months in, 34 partners out of 900 remained on `v1`. Sent targeted emails; six months in, 11 remained, including 3 large retail chains. Spoke with them personally, and helped one with integration.",
+    "sections/3/blocks/2/text": "Two weeks before shutdown, we ran a one-hour test shutdown during business hours—it brought back two more who were \"just about to do it\". Shut down on schedule, no incidents.",
+    "sections/3/blocks/3/text": "The consumer counter by partner turned out to be the key, not the total one. The total one showed that `v1` accounted for 2% of traffic, and that looked harmless—until it turned out those 2% represented three chains with major turnover.",
+    "sections/4/blocks/0/text": "Supporting two versions has a cost: code, tests, documentation, operations. Maintaining more than two simultaneously almost always means the migration stalled.",
+    "sections/5/blocks/0/text": "A breaking change is rolled out through a migration window with a measurable share of remaining clients, and you cannot shut down without a version-based consumer counter."
+  }
+}

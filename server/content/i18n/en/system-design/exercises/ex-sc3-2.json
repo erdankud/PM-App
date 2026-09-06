@@ -1,0 +1,42 @@
+{
+  "language": "en",
+  "sourceDigest": "952a8430620320cb",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:08:11Z"
+  },
+  "fields": {
+    "title": "Assign RPO and RTO",
+    "inputs/0/label": "Orders — RPO",
+    "inputs/1/label": "Catalog from supplier — RPO",
+    "inputs/2/label": "Support chat history — RPO",
+    "inputs/3/label": "Analytics events — RPO",
+    "inputs/4/label": "Uploaded photos — RPO",
+    "acceptance/0/expected": "5 minutes",
+    "acceptance/1/expected": "24 hours",
+    "acceptance/2/expected": "1 hour",
+    "acceptance/3/expected": "24 hours",
+    "acceptance/4/expected": "24 hours",
+    "inputs/0/choices/0": "5 minutes",
+    "inputs/0/choices/1": "1 hour",
+    "inputs/0/choices/2": "24 hours",
+    "inputs/1/choices/0": "5 minutes",
+    "inputs/1/choices/1": "1 hour",
+    "inputs/1/choices/2": "24 hours",
+    "inputs/2/choices/0": "5 minutes",
+    "inputs/2/choices/1": "1 hour",
+    "inputs/2/choices/2": "24 hours",
+    "inputs/3/choices/0": "5 minutes",
+    "inputs/3/choices/1": "1 hour",
+    "inputs/3/choices/2": "24 hours",
+    "inputs/4/choices/0": "5 minutes",
+    "inputs/4/choices/1": "1 hour",
+    "inputs/4/choices/2": "24 hours",
+    "promptBlocks/0/text": "For each data type, assign and justify.",
+    "promptBlocks/1/text": "Orders 2. Catalog from supplier 3. Support chat history 4. Analytics events 5. User-uploaded photos",
+    "referenceReasoningBlocks/0/text": "1 — RPO 5 minutes, RTO 1 hour: unrecoverable and critical. 2 — RPO 24 hours, RTO hours: recoverable from source. 3 — RPO 1 hour, RTO hours: unrecoverable, but does not block the product. 4 — RPO 24 hours, RTO 2 days: recalculated from events. 5 — RPO 24 hours, RTO 24 hours: unrecoverable, but does not block. Rule of thumb: the main question is not \"how important is it\", but \"where do we get it if we lose it\"."
+  }
+}

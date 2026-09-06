@@ -35,11 +35,12 @@ from app.services import audio, audio_script
 DEFAULT_DELAY = 7.0
 
 
-def lessons_for(names: list[str]) -> list[dict]:
+def lessons_for(names: list[str], language: str = "ru") -> list[dict]:
+    """Уроки в том языке, на котором будет разговор: обзор пишется по тексту урока."""
     if names:
         found = []
         for name in names:
-            lesson = tree_content.lesson(name)
+            lesson = tree_content.lesson(name, language)
             if lesson is None:
                 raise SystemExit(f"нет урока {name}")
             found.append(lesson)
@@ -47,7 +48,7 @@ def lessons_for(names: list[str]) -> list[dict]:
     return [
         lesson
         for kind in tree_content.KINDS
-        for lesson in tree_content.tree_content(kind)["lessons"].values()
+        for lesson in tree_content.tree_content(kind, language)["lessons"].values()
     ]
 
 
@@ -58,13 +59,25 @@ def main() -> None:
     parser.add_argument("--force", action="store_true", help="переписать даже свежие сценарии")
     parser.add_argument("--delay", type=float, default=DEFAULT_DELAY, help="пауза между запросами")
     parser.add_argument("--limit", type=int, help="остановиться после N сгенерированных")
+    parser.add_argument("--language", default="ru", help="язык обзора")
+    parser.add_argument(
+        "--translated-only",
+        action="store_true",
+        help="только уроки, у которых перевод на этот язык уже готов",
+    )
     args = parser.parse_args()
 
-    targets = lessons_for(args.lessons)
+    targets = lessons_for(args.lessons, args.language)
+    if args.translated_only:
+        from app.i18n_content import CYRILLIC
+
+        # Урок без перевода отдаётся по-русски. Писать по нему английский обзор
+        # значит получить разговор по-русски в английских голосах.
+        targets = [l for l in targets if not CYRILLIC.search(l["title"])]
     written = skipped = failed = 0
 
     for index, lesson in enumerate(targets, start=1):
-        if not args.force and audio.load_script(lesson) is not None:
+        if not args.force and audio.load_script(lesson, args.language) is not None:
             skipped += 1
             continue
         if args.limit and written >= args.limit:
@@ -72,13 +85,16 @@ def main() -> None:
         print(f"[{index:3}/{len(targets)}] {lesson['id']}", flush=True)
         try:
             turns, provider, model = audio_script.generate(
-                lesson, mock=args.mock, log=lambda m: print(f"      {m}", flush=True)
+                lesson,
+                mock=args.mock,
+                log=lambda m: print(f"      {m}", flush=True),
+                language=args.language,
             )
         except ProviderError as error:
             failed += 1
             print(f"      не вышло: {error.code} {error}", flush=True)
             continue
-        audio_script.write_script(lesson, turns, provider, model)
+        audio_script.write_script(lesson, turns, provider, model, args.language)
         written += 1
         print(f"      реплик: {len(turns)}  провайдер: {provider}", flush=True)
         if not args.mock and args.delay:

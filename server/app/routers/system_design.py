@@ -10,7 +10,7 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException, Query, status
 
 from app import tree_content
-from app.deps import CurrentUser, DbSession
+from app.deps import ContentLanguage, CurrentUser, DbSession
 from app.models import ExerciseAttempt, utcnow
 from app.schemas import (
     DiagramView,
@@ -28,8 +28,8 @@ from app.services import glossary as glossary_service
 router = APIRouter(tags=["system-design"])
 
 
-def _exercise_or_404(exercise_id: str) -> dict:
-    exercise = tree_content.exercise(exercise_id)
+def _exercise_or_404(exercise_id: str, language: str = "ru") -> dict:
+    exercise = tree_content.exercise(exercise_id, language)
     if exercise is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "exercise_not_found"}
@@ -49,8 +49,10 @@ def _attempt(db: DbSession, user_id: str, exercise_id: str) -> ExerciseAttempt |
 
 
 @router.get("/exercises/{exercise_id}", response_model=ExerciseResponse)
-def get_exercise(exercise_id: str, user: CurrentUser, db: DbSession) -> ExerciseResponse:
-    exercise = _exercise_or_404(exercise_id)
+def get_exercise(
+    exercise_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> ExerciseResponse:
+    exercise = _exercise_or_404(exercise_id, language.value)
     previous = _attempt(db, user.id, exercise_id)
     return ExerciseResponse(
         id=exercise["id"],
@@ -63,9 +65,9 @@ def get_exercise(exercise_id: str, user: CurrentUser, db: DbSession) -> Exercise
         inputs=[ExerciseInputView(**item) for item in exercise["inputs"]],
         submitted_values=(previous.submitted_values or {}) if previous else {},
         diagrams=[
-            glossary_service.diagram_view(diagram)
+            glossary_service.diagram_view(diagram, language.value)
             for diagram in (
-                tree_content.diagram(block["diagramId"])
+                tree_content.diagram(block["diagramId"], language.value)
                 for block in exercise["promptBlocks"]
                 if block["type"] == "diagram_ref"
             )
@@ -109,8 +111,11 @@ def submit_exercise(
     payload: ExerciseSubmitRequest,
     user: CurrentUser,
     db: DbSession,
+    language: ContentLanguage,
 ) -> ExerciseSubmitResponse:
-    exercise = _exercise_or_404(exercise_id)
+    # Эталон разбора приходит на языке читателя; приёмка сверяется с ним же, иначе
+    # выбранный вариант перестал бы совпадать с эталоном при смене языка.
+    exercise = _exercise_or_404(exercise_id, language.value)
     attempt = _attempt(db, user.id, exercise_id)
     if attempt is None:
         attempt = ExerciseAttempt(user_id=user.id, exercise_id=exercise_id)
@@ -132,6 +137,7 @@ def submit_exercise(
 def get_glossary(
     user: CurrentUser,
     db: DbSession,
+    language: ContentLanguage,
     block_id: str | None = Query(default=None),
     q: str | None = Query(default=None, max_length=64),
 ) -> GlossaryResponse:
@@ -139,7 +145,7 @@ def get_glossary(
     seen = glossary_service.seen_term_ids(db, user.id)
     needle = (q or "").strip().lower()
     terms = []
-    for term in tree_content.glossary_terms():
+    for term in tree_content.glossary_terms(language=language.value):
         if block_id and term["blockId"] != block_id:
             continue
         if needle and needle not in term["term"].lower() and needle not in term["termEn"].lower():
@@ -160,8 +166,10 @@ def get_glossary(
 
 
 @router.get("/glossary/{term_id}", response_model=TermView)
-def get_term(term_id: str, user: CurrentUser, db: DbSession) -> TermView:
-    term = tree_content.glossary_term(term_id)
+def get_term(
+    term_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> TermView:
+    term = tree_content.glossary_term(term_id, language.value)
     if term is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "term_not_found"}
@@ -180,13 +188,13 @@ def get_term(term_id: str, user: CurrentUser, db: DbSession) -> TermView:
 
 
 @router.get("/diagrams/{diagram_id}", response_model=DiagramView)
-def get_diagram(diagram_id: str, user: CurrentUser) -> DiagramView:
+def get_diagram(
+    diagram_id: str, user: CurrentUser, language: ContentLanguage
+) -> DiagramView:
     """Для полноэкранного просмотра из глоссария; в уроке схемы едут вместе с ним."""
-    diagram = tree_content.diagram(diagram_id)
+    diagram = tree_content.diagram(diagram_id, language.value)
     if diagram is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "diagram_not_found"}
         )
-    from app.routers.tree import _diagram_view
-
-    return _diagram_view(diagram)
+    return glossary_service.diagram_view(diagram, language.value)

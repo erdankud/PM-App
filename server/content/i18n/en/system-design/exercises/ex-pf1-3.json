@@ -1,0 +1,18 @@
+{
+  "language": "en",
+  "sourceDigest": "451ee641a98ffb7f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Break Down Time",
+    "promptBlocks/0/text": "Screen opens in 3.2 s. Known: 5 sequential requests, RTT 130 ms, total server processing 900 ms, response 620 KB, speed 1.5 Mbps, rendering 250 ms, cold start adds 200 ms.",
+    "promptBlocks/1/items/0": "Break down the time.",
+    "promptBlocks/1/items/1": "What will yield the biggest gain?",
+    "referenceReasoningBlocks/0/text": "network 5 × 130 = 650, server 900, transfer 620 KB / 1.5 Mbps ≈ 3.3 s — here is the problem, the numbers do not add up, meaning transfer happens in parallel with something or speed is higher. Even at twice the speed, transfer ≈ 1.6 s — the largest component. The biggest gain is reducing response size, then combining five requests into one. Server optimization is third, though people usually start with it."
+  }
+}

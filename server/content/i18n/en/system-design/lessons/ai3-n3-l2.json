@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "4716a08982876957",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "Vendor Lock-In",
+    "keyTakeaway": "Lock-in is created by prompt tuning and specific features, mitigated by an abstraction layer and independent evals, and the goal is to know the cost of switching, not to eliminate it.",
+    "sections/0/blocks/0/text": "How expensive is it to switch model providers?",
+    "sections/1/blocks/0/text": "[[vendor-lock-in|Vendor lock-in]] in AI builds up unnoticeably: prompts are tuned to a specific model, specific features are used, evals are calibrated. After a year, switching takes months instead of days.",
+    "sections/2/blocks/0/text": "What creates lock-in, in increasing order:",
+    "sections/2/blocks/1/text": "*Call format.* Easy, an abstraction layer solves it. *Model-specific prompt tuning.* A prompt polished for one model works worse on another. Requires retuning and running evals. *Specific features.* Prompt caching, structured output, special modes — implemented differently. *Fine-tuned models.* Do not transfer. *Built-in provider tools.* Search, code execution — you will have to build these yourselves.",
+    "sections/2/blocks/2/text": "What reduces lock-in:",
+    "sections/2/blocks/3/text": "**Abstraction layer** over calls. Cheap, done immediately. **Provider-agnostic evals.** Allow comparing candidates in hours. **Regular alternative checks.** Once a quarter, run evals on another provider. Provides both knowledge of switching costs and bargaining power. **Caution with proprietary features.** Use them, but know how to replace them.",
+    "sections/2/blocks/4/text": "Product consideration: **lock-in is not always bad.** A specific feature providing a noticeable advantage can be worth the lock-in. It's bad when lock-in happens accidentally and no one knows its price.",
+    "sections/3/blocks/0/text": "The abstraction layer was built immediately — calls go through our own interface.",
+    "sections/3/blocks/1/text": "Once a quarter we run evals on two alternative providers. Takes a day, yields a \"quality, price, latency\" table for each function.",
+    "sections/3/blocks/2/text": "The last run showed that for classification and rephrasing, an alternative provider is 40% cheaper at the same quality. We switched these two steps. For response generation, we stayed with the current one — the quality difference is 6% in its favor.",
+    "sections/3/blocks/3/text": "We use prompt caching, knowing that the alternative handles it differently. Switching estimate — three days to retune the prompt assembly pipeline.",
+    "sections/3/blocks/4/text": "We intentionally have no fine-tuned models: that is the strictest form of lock-in, and prompts are working well enough for now.",
+    "sections/4/blocks/0/text": "Complete independence from providers is expensive and usually doesn't pay off: it means giving up features that only one has. The goal is to know the switching cost, not to drive it to zero.",
+    "sections/5/blocks/0/text": "Lock-in is created by prompt tuning and specific features, mitigated by an abstraction layer and independent evals, and the goal is to know the cost of switching, not to eliminate it."
+  }
+}

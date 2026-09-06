@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "5882a15906c9afb6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "How much money can actually be made here",
+    "keyTakeaway": "Calculate bottom-up: the number of clients you can actually serve multiplied by the average check. A top-down estimate carved out as a percentage from a large market report crumbles under the first question.",
+    "checkQuestion": "\"The warehouse software market is 20 billion, let us take 1%\". What is wrong with this calculation?",
+    "blocks/0/text": "Key node question: **what growth limitations exist if nothing changes?** This question is not for investors, but for you: it shows when your current strategy hits a ceiling.",
+    "blocks/1/text": "**What happens if you do not answer the question.** The team grows sales, hits a wall, and does not understand why. The wall was visible in advance: the serviceable segment turned out to be several times smaller than assumed.",
+    "blocks/2/title": "TAM / SAM / SOM",
+    "blocks/2/subtitle": "Three distinct questions, not three numbers in a row",
+    "blocks/2/items/0": "**TAM** — total spending on this problem in principle. Needed to understand if there is a business here at all.",
+    "blocks/2/items/1": "**SAM** — spending by those you can actually reach: your geography, customer size, sales channel.",
+    "blocks/2/items/2": "**SOM** — what you will realistically capture over a foreseeable period given your team and channel.",
+    "blocks/2/items/3": "**Calculate bottom-up:** number of customers × average check × frequency. Top-down is only for sanity-checking the order of magnitude.",
+    "blocks/3/text": "Top-down: nationwide warehouse software market is 20 billion rubles a year; \"taking 1%\" gives 200 million. A nice, useless number: it includes factories, retail chains, and customs warehouses that Kedr cannot sell to.\n\nBottom-up: there are about 9,000 distributors in the country with 5 to 50 warehouse workers. About half already have automated warehouses, making them unreachable in the coming years. That leaves 4,500. At a check of 40 thousand a month, SAM is about 2.2 billion a year.\n\nSOM: a sales team of four closes 6 deals a month with a two-month cycle. Over two years, that is 144 clients — about 69 million a year.\n\nThe second calculation is uncomfortable yet useful: it proves the ceiling is dictated by sales team capacity, not market size.",
+    "blocks/3/title": "Kedr: two calculations",
+    "blocks/4/text": "Most often, the constraint is the sales channel, not the number of potential clients. A bottom-up calculation reveals this immediately, while a top-down model hides it.",
+    "blocks/4/title": "The ceiling is rarely the market",
+    "blocks/5/text": "Market sizing is an exercise in assumptions: shift a segment boundary, and the figure triples. That is why documented assumptions matter more than final numbers. Plus, market size says nothing about whether clients will choose to pay you specifically.",
+    "blocks/5/title": "Limitations of the model"
+  }
+}

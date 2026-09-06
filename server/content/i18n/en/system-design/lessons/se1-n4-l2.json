@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "0a44b62b1fa44f92",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:58Z"
+  },
+  "fields": {
+    "title": "What to Do When a Leak Happens",
+    "keyTakeaway": "In a leak, the first steps are to stop, assess the volume, document everything, and check timeline obligations, while notifying when in doubt costs less than silence.",
+    "sections/0/blocks/0/text": "A leak has been discovered. What does the product manager do in the first hours?",
+    "sections/1/blocks/0/text": "Reaction to a leak determines the damage more than the leak itself. Delaying notification is a regulatory risk; incorrect communication is a reputational risk; failing to assess the volume makes both impossible.",
+    "sections/2/blocks/0/text": "The roles are the same as in an incident in `SC2-N6-L1`, but with the legal contour added.",
+    "sections/2/blocks/1/text": "First actions, in parallel:",
+    "sections/2/blocks/2/text": "**Stop.** Close the path: revoke access, close storage, turn off the feature.",
+    "sections/2/blocks/3/text": "**Assess the volume.** What data, for how many people, over what period. Without this, neither notification nor a fix is possible.",
+    "sections/2/blocks/4/text": "**Document.** Logs, state snapshots. They will be needed for both the post-mortem and the regulator.",
+    "sections/2/blocks/5/text": "**Determine obligations.** Many jurisdictions require notifying the regulator within a deadline — often 72 hours — and notifying victims if the risk to them is significant. The clock starts from the moment of discovery.",
+    "sections/2/blocks/6/text": "The product part is **communication with users.** Rules:",
+    "sections/2/blocks/7/text": "*Notify if there is risk to the individual.* A leak of anonymized statistics is not that case. A leak of addresses and phone numbers is. *Be specific.* What data, for what period, what we did, what the person should do. *Do not minimize.* \"Minor incident\" when addresses leak destroys trust more than the leak itself. *Provide an action.* Change password, check sessions, where to contact.",
+    "sections/2/blocks/8/text": "What is prepared in advance: notification template, volume assessment procedure, lawyer's contact, decision on who decides to send notifications.",
+    "sections/3/blocks/0/text": "The procedure was written after the cache incident, when 40 minutes were spent figuring out who to call in the first place.",
+    "sections/3/blocks/1/text": "Procedure: the finder stops the issue and calls the on-call person; the on-call person assesses the volume; the product manager and lawyer decide on notification; the product manager prepares communication.",
+    "sections/3/blocks/2/text": "Regarding the cache incident: 60 people were affected, the data was recent order contents, without payment data. We decided to notify, even though formally the risk threshold was debatable. We wrote an email describing what happened and offering apologies.",
+    "sections/3/blocks/3/text": "The reaction was unexpected: three replies with gratitude for honesty, zero complaints. Lesson: notifying when in doubt is cheaper than silence.",
+    "sections/3/blocks/4/text": "The notification template is now prepared in advance and approved by the lawyer. Filled out in 20 minutes.",
+    "sections/4/blocks/0/text": "Notification obligations vary across jurisdictions and data types. The decision is made with a lawyer, not independently.",
+    "sections/5/blocks/0/text": "In a leak, the first steps are to stop, assess the volume, document everything, and check timeline obligations, while notifying when in doubt costs less than silence."
+  }
+}

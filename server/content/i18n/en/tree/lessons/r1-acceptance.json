@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "c110564c6badf1e6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Acceptance testing is verification, not a showcase",
+    "keyTakeaway": "When accepting a result, verify pre-recorded conditions against real data. A demo showing the happy path verifies nothing—it only shows that a happy path exists.",
+    "checkQuestion": "Everything worked during the demo, but a day later users found a bug in the exact same spot. How did that happen?",
+    "blocks/0/text": "Continuing the same question: **how well does the result match the requirements**, and how to see this before users do.",
+    "blocks/1/text": "**What happens if you don't answer this question.** The demo turns into a slide show: the developer guides through a path that definitely works, everyone nods. Bugs hide in paths that were never touched during the demo.",
+    "blocks/2/title": "How to perform acceptance",
+    "blocks/2/subtitle": "Three rules, each counteracting a specific illusion",
+    "blocks/2/items/0": "**You lead, not the author.** The person who built it unconsciously avoids weak spots.",
+    "blocks/2/items/1": "**Follow written conditions.** Open the acceptance criteria and go through them sequentially, rather than watching a freeform presentation.",
+    "blocks/2/items/2": "**On production-like data.** A test store with ten items won't reveal what a store with four thousand items will.",
+    "blocks/3/title": "Test Case",
+    "blocks/3/subtitle": "The language used to pass verification tasks to someone else",
+    "blocks/3/items/0": "**Precondition**—what must be true before starting: item exists in the database, stock count is 12.",
+    "blocks/3/items/1": "**Steps**—what we do, concise and unambiguous.",
+    "blocks/3/items/2": "**Expected result**—what should happen; checked with a single \"yes\" or \"no\".",
+    "blocks/3/items/3": "A test case is needed where verification will be **repeated**: during regression testing, when handoff to another person, or during automation.",
+    "blocks/4/text": "According to acceptance criteria, everything matched in the test store. The PM opened the data export of a real store: 4,200 items.\n\nThe very first scan took eight seconds instead of the promised single second—search ran linearly through the entire list. On ten items, this wasn't noticeable at all.\n\nThe acceptance criterion was written as \"result appears in no more than a second\", but was verified on data where it couldn't fail anyway. The condition was right, the test was wrong.",
+    "blocks/4/title": "Polka, acceptance testing on four thousand items",
+    "blocks/5/text": "Acceptance testing answers the question \"did we build what was agreed upon\", staying silent on whether it helped. A task can pass acceptance flawlessly and not move a single metric—those are different questions and different steps.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

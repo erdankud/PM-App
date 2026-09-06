@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "e25cb448c9613952",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Write the Section",
+    "promptBlocks/0/text": "Feature: a buyer can share a shopping list with another person via a link. Write the section covering seven points.",
+    "referenceReasoningBlocks/0/text": "data — new 'Shared List' entity with a link; opening it shows items, but not name, address, or past order amounts. Basis — consent, user action. Minimization — we do not store who opened the link. Storage — 30 days from creation. Account deletion — lists are deleted, links stop working. Access — anyone with the link, hence the identifier is unguessable and link revocation is available. Threats — triage triggers (communication between users), review needed: link enumeration, disclosure via forwarding, search engine indexing."
+  }
+}

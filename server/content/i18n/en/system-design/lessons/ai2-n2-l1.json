@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "d7fbb58006040a51",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:27Z"
+  },
+  "fields": {
+    "title": "Meaning as a number",
+    "keyTakeaway": "Vector search is good for meaning and bad for exact matches, numbers, and negations, so it is supplemented with filters and text search.",
+    "sections/0/blocks/0/text": "How does search find \"lactose-free milk\" for the query \"dairy for intolerance\"?",
+    "sections/1/blocks/0/text": "Vector search feels like magic and is therefore either overestimated or underestimated. Understanding the mechanics at a metaphorical level is enough to predict where it will work.",
+    "sections/2/blocks/0/text": "**[[embedding|Embedding]]** is the representation of text as a set of numbers. Texts close in meaning get close sets. The measure of closeness is the distance between them.",
+    "sections/2/blocks/1/text": "Metaphor: each text gets coordinates in a semantic space. \"Milk\" and \"kefir\" are close. \"Milk\" and \"drill\" are far apart.",
+    "sections/2/blocks/2/text": "**[[vector-search|Vector search]]** turns a query into an embedding and finds the nearest ones. Hence the ability to find by meaning without word matches.",
+    "sections/2/blocks/3/text": "What vector search does well:",
+    "sections/2/blocks/4/text": "*Synonyms and paraphrases.* \"Lactose intolerance\" finds \"lactose-free\". *Semantic closeness.* \"Something for breakfast\" finds cereal and yogurt. *Different languages,* if the embedding model is multilingual.",
+    "sections/2/blocks/5/text": "What it does poorly:",
+    "sections/2/blocks/6/text": "*Exact matches.* SKU codes, brand names, numbers. For the model, \"Domik v derevne\" and \"Prostokvashino\" are almost identical. *Negations.* \"Milk without sugar\" and \"milk with sugar\" are very close in semantic space because they differ by one word. This is a regular trap. *Numerical conditions.* \"Cheaper than 200 rubles\" cannot be expressed by meaning — a filter is needed. *Freshness and priorities.* An embedding does not know that one document is newer than another.",
+    "sections/2/blocks/7/text": "Hence the rule: **vector search complements traditional search, it does not replace it.** Numerical and exact conditions are handled by filters and text search, meaning by vectors.",
+    "sections/3/blocks/0/text": "Three cases that defined the search architecture.",
+    "sections/3/blocks/1/text": "*Works.* \"Something for tea\" finds cookies, candy, jam. No shared words at all.",
+    "sections/3/blocks/2/text": "*Does not work without help.* \"Milk without palm oil\" found milk with palm oil with the same probability. Solved by a metadata filter on ingredients plus an explicit rule in the model instruction to check for negation.",
+    "sections/3/blocks/3/text": "*Does not work at all.* \"Prostokvashino 3.2%\" — vector search returned any milk of that fat content. Solved by hybrid search: the text part catches the brand.",
+    "sections/3/blocks/4/text": "Negations turned out to be the most frequent cause of incorrect answers after chunking. We introduced a rule: if the query contains \"without\", \"not\", \"except\", additional ingredient filtering is applied, and the model receives an explicit instruction to check.",
+    "sections/4/blocks/0/text": "Embedding quality depends on the model, and for narrow domains, general models perform worse. This must be tested on your own data, not on promises.",
+    "sections/5/blocks/0/text": "Vector search is good for meaning and bad for exact matches, numbers, and negations, so it is supplemented with filters and text search."
+  }
+}

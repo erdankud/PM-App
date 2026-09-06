@@ -1,0 +1,27 @@
+{
+  "language": "en",
+  "sourceDigest": "3c46ee2adeee3928",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "Load Balancer and Instance Health",
+    "keyTakeaway": "Health checks must distinguish \"process is alive\" from \"service is capable of working\", and simultaneous check failures across all instances turn a partial problem into a total one.",
+    "sections/0/blocks/0/text": "How are requests distributed among ten servers and what happens when one of them breaks?",
+    "sections/1/blocks/0/text": "A misconfigured [[health-check|health check]] leads to requests continuing to go to a broken instance — some users get errors while monitoring shows everything is fine on average. This is one of the most elusive problems: the product works for 90% and doesn't work for 10%.",
+    "sections/2/blocks/0/text": "The [[load-balancer|load balancer]] distributes requests among instances. Distribution methods vary, but from a product perspective, two other mechanisms matter more.",
+    "sections/2/blocks/1/text": "**Health check.** The balancer regularly asks the instance if it is alive. Doesn't answer — taken out of rotation.",
+    "sections/2/blocks/2/text": "A nuance: **what exactly is checked.** A simple check answers \"alive\" as long as the process is running, even if the service lost connection to the database. Then the balancer keeps sending requests there, and users get errors. A good check verifies the ability to perform work.",
+    "sections/2/blocks/3/text": "The reverse extreme is also dangerous: if the check queries the database, then when the database slows down, all instances are simultaneously declared unhealthy and taken out of rotation. The product dies entirely due to a problem it would have survived partially.",
+    "sections/2/blocks/4/text": "**[[graceful-shutdown|Graceful shutdown]].** When stopping an instance — for example, during a release — it must first stop accepting new requests, then finish current ones, then shut down. Without this, every release cuts off some requests. With 40 releases a week, this is a noticeable share of errors written off as \"network\".",
+    "sections/3/blocks/0/text": "The health check is two-tiered. Fast — process is alive, responds in 10 ms. Deep — database and cache availability, runs every 30 seconds and affects rotation with a delay.",
+    "sections/3/blocks/1/text": "This separation appeared after an incident: database slowdown caused deep checks to fail on all instances at once, the balancer took all of them out of rotation and returned 503 on 100% of requests. A problem that would have affected 30% of operations became one-hundred percent due to a protective mechanism.",
+    "sections/3/blocks/2/text": "Graceful shutdown was discovered via a metric: with every release, 0.3% of requests ended in a cutoff. Over a week — thousands. Setup took a day and removed a whole class of errors that had been considered network noise for two years.",
+    "sections/4/blocks/0/text": "Load balancing doesn't help if the bottleneck is the database: ten application instances in front of a single overloaded database work no better than two.",
+    "sections/5/blocks/0/text": "Health checks must distinguish \"process is alive\" from \"service is capable of working\", and simultaneous check failures across all instances turn a partial problem into a total one."
+  }
+}

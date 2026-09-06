@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "ce0e2cd567060ba3",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:58Z"
+  },
+  "fields": {
+    "title": "Five Typical Paths",
+    "keyTakeaway": "Most leaks happen through compromised access, open storage, and permission check errors, and the product area of responsibility is the latter plus deciding what data even exists.",
+    "sections/0/blocks/0/text": "How do data leaks happen most often — hacking or something else?",
+    "sections/1/blocks/0/text": "Viewing a leak as a hacker attack leads to defending against the wrong things. Most real leaks happen more simply, and some of the paths are created by product decisions.",
+    "sections/2/blocks/0/text": "Five paths, in order of frequency.",
+    "sections/2/blocks/1/text": "**Compromised employee access.** Stolen password, phishing, [[social-engineering|social engineering]]. The most frequent path. Two-factor authentication for employees closes most of it.",
+    "sections/2/blocks/2/text": "**Exposed storage.** A backup, log storage, test database accessible without a password due to a configuration error. Discovered by scanners in hours.",
+    "sections/2/blocks/3/text": "**[[excessive-privileges|Excessive privileges]].** An employee or service has broader access than necessary. A leak happens not because someone is malicious, but because a compromised account opens more than it should.",
+    "sections/2/blocks/4/text": "**Through the product.** An error in permission checks: a parameter in a request allows getting someone else's data. A separate case is a cache without a user identifier, as in `SC1-N4-L1`.",
+    "sections/2/blocks/5/text": "**Through third parties.** A contractor, integration, analytics service. Data leaks on their side.",
+    "sections/2/blocks/6/text": "What of this is the product manager's domain:",
+    "sections/2/blocks/7/text": "*Through the product* — directly: permission checks on every operation, cache keys, request parameters. *Excessive privileges* — directly: the permissions model from `SE1-N1-L2`. *Through third parties* — directly: deciding who to transfer what data to.",
+    "sections/2/blocks/8/text": "And a general lever: **minimization.** Data that does not exist cannot leak. Data that is not transferred to a contractor cannot leak at the contractor's end.",
+    "sections/3/blocks/0/text": "Three cases in two years, all non-hacker incidents.",
+    "sections/3/blocks/1/text": "*Cache without an identifier.* The feed was cached without tying it to the user, and some people saw someone else's feed. 40 minutes, dozens of people. A product error.",
+    "sections/3/blocks/2/text": "*Test database with real data.* A production copy for debugging on a server without access restrictions. Discovered ourselves during an audit. Since then — only anonymized data in test environments, with automatic anonymization upon copying.",
+    "sections/3/blocks/3/text": "*Analytics service.* Full delivery addresses were going into event tracking. Not a leak, but a transfer to a third party without a legal basis. Removed, left only the city.",
+    "sections/3/blocks/4/text": "Rule after the third case: **the list of fields going to external services is checked on every event change.** Automated check: if a field from the black list appears in an event, the build fails.",
+    "sections/4/blocks/0/text": "It is impossible to completely eliminate leaks. The goal is to close frequent paths and limit the volume of potential damage through minimization.",
+    "sections/5/blocks/0/text": "Most leaks happen through compromised access, open storage, and permission check errors, and the product area of responsibility is the latter plus deciding what data even exists."
+  }
+}

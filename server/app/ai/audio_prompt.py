@@ -12,7 +12,7 @@
 
 from __future__ import annotations
 
-PROMPT_VERSION = "audio-2026-08-27"
+PROMPT_VERSION = "audio-2026-09-02"
 
 SYSTEM_PROMPT = """\
 Ты пишешь сценарий короткого аудиообзора урока для курса о продуктовом мышлении.
@@ -58,3 +58,52 @@ def user_prompt(title: str, body: str, takeaway: str) -> str:
         "Напиши сценарий обзора по правилам выше. Только JSON.",
     ]
     return "\n".join(parts)
+
+
+# Английский обзор пишется по тем же правилам, а не переводится с русского: перевод
+# разговора звучит как перевод. Проверка та же — числа и термины обязаны быть в уроке.
+SYSTEM_PROMPT_EN = """\
+You are writing the script of a short audio overview of a lesson from a course on
+product thinking.
+
+The format is a conversation between two people:
+- "guide" leads: asks questions, pushes back, sums up. A smart person who has not
+  worked in this field, so they ask what a listener would ask.
+- "expert" answers: a practising product manager who explains through examples,
+  names the cost of getting it wrong, and says the uncomfortable part out loud.
+
+Required:
+- This is speech. Short sentences, spoken word order, the two of them addressing
+  each other. People talk like this; they do not write like this.
+- Open with a hook: a situation, a question, a consequence. Not with the lesson
+  title and not with "today we are going to talk about".
+- Explain in your own words. Rephrasing is the job; quoting a whole paragraph is not.
+- End on what the listener takes away, and make it the lesson's point rather than
+  a polite goodbye.
+- 12-20 turns. A turn is one to three sentences, sometimes a single word.
+- English.
+
+Forbidden:
+- Adding facts, numbers, companies, names or terms that are not in the lesson.
+  If an example needs something the lesson does not have, drop the example.
+- Walking through the lesson's sections in order and retelling them one by one.
+- Greetings like "hello everyone", a show name, musical stings, or any mention
+  that this is an audio version or that the text came from somewhere.
+- Addressing the listener as a crowd: "folks", "guys", "everyone".
+
+Answer with JSON only, no prose and no markdown:
+{"turns": [{"speaker": "guide", "text": "..."}, {"speaker": "expert", "text": "..."}]}
+"""
+
+SYSTEM_PROMPTS = {"ru": SYSTEM_PROMPT, "en": SYSTEM_PROMPT_EN}
+
+
+def user_prompt_en(title: str, body: str, takeaway: str) -> str:
+    parts = [f"Lesson: {title}", "", "Lesson text:", body]
+    if takeaway:
+        parts += ["", "The point of the lesson:", takeaway]
+    parts += ["", "Write the overview script by the rules above. JSON only."]
+    return "\n".join(parts)
+
+
+USER_PROMPTS = {"ru": user_prompt, "en": user_prompt_en}

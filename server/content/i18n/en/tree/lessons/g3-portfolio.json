@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "d663c3ee45562327",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Portfolio: which products a company needs simultaneously",
+    "keyTakeaway": "Products in a portfolio play different roles: some bring in money now, others grow on that money, and still others are bets on the future. The mistake is demanding the same metrics from all of them.",
+    "checkQuestion": "A new stream is given the same margin requirements as the core product. What will happen?",
+    "blocks/0/text": "Key question of the node: **which products does the company need?**",
+    "blocks/1/title": "Product roles in a portfolio",
+    "blocks/1/subtitle": "BCG matrix in practical terms",
+    "blocks/1/items/0": "**Cash cows** — high share in a mature market. They generate cash and require efficiency, not growth.",
+    "blocks/1/items/1": "**Stars** — high share in a growing market. They require investment so as not to lose position.",
+    "blocks/1/items/2": "**Question marks** — low share in a growing market. These are bets: some will become stars, some will close. Demanding profit from them means killing them.",
+    "blocks/1/items/3": "**Dogs** — low share in a mature market. Candidates for closure or for turning into a narrow profitable niche.",
+    "blocks/2/text": "Book subscription — core, 92% of revenue, mature market. Goal: retention and cost of sales. Few experiments, low risk.\n\nAudio versions — growing market, our share is small. Goal: not profit, but demand validation and cost per hour produced. Separate budget, separate metrics, right to shut down in a year.\n\nSelling individual books without subscription — small share, mature market, support costs more than revenue. Candidate for closure; decision postponed for the second year in a row.\n\nThe main benefit of such a discussion is to stop comparing apples to oranges in a general meeting.",
+    "blocks/2/title": "Vetka, three products and three different conversations",
+    "blocks/3/text": "Bets require leadership attention even more than money. Three new directions usually mean that none of them gets enough of either.",
+    "blocks/3/title": "A company rarely handles more than one or two bets at once",
+    "blocks/4/text": "The matrix relies on market share and growth — numbers that are often estimates. It should be used as a language for discussing roles, not as a calculation tool.",
+    "blocks/4/title": "Boundaries of the model"
+  }
+}

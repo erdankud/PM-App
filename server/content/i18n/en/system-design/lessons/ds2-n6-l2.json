@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "2492361524db7572",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "What actually happens during deletion",
+    "keyTakeaway": "\"Delete\" means different technical actions in different parts of the system, and the product promise must describe what actually happens.",
+    "sections/0/blocks/0/text": "A user clicked \"delete account\". What disappeared, what remained, and what did we have the right to promise them?",
+    "sections/1/blocks/0/text": "Here the product makes a promise for which it is legally responsible. The promise \"we will delete all your data\" is literally unfeasible in any system with backups, and it must be formulated precisely. At the same time, you cannot hide behind technology: the right to be forgotten is real, and it must be fulfilled.",
+    "sections/2/blocks/0/text": "Three different actions that look identical in the interface.",
+    "sections/2/blocks/1/text": "**[[soft-delete|Soft delete]].** The record is marked as deleted and stops showing up. Physically remains. Reversible, safe, does not break links. But the data hasn't gone anywhere, and in a leak, it will leak.",
+    "sections/2/blocks/2/text": "**[[hard-delete|Hard delete]].** The record is wiped. Irreversible. Breaks everything linking to it — hence [[cascade-delete|cascades]], which sometimes take away more than expected.",
+    "sections/2/blocks/3/text": "**[[anonymization|Anonymization]].** The record remains, the connection to the person is severed irreversibly: name, phone, address are wiped, sum and category remain. A compromise covering most cases: the person is gone, statistics remain.",
+    "sections/2/blocks/4/text": "Separately — [[pseudonymization|pseudonymization]]: the identifier is replaced with a dummy one, but the mapping is stored somewhere. This is **not** anonymization and provides almost no protection during a leak.",
+    "sections/2/blocks/5/text": "Four places people forget about that determine what can be promised:",
+    "sections/2/blocks/6/text": "*Backups.* Backups are stored for weeks. Selectively deleting a record from a backup is generally impossible. Standard practice — backups expire over time, and data disappears along with them.",
+    "sections/2/blocks/7/text": "*Analytical data warehouse.* A separate system where data has already traveled. Deletion must reach there too, and this is separate work.",
+    "sections/2/blocks/8/text": "*Logs.* Phone and address often settle in logs. Fixed not by deletion, but by preventing them from getting there in the first place.",
+    "sections/2/blocks/9/text": "*External systems.* Payment provider and delivery service store their own data by their own rules, and our promises do not apply to them.",
+    "sections/2/blocks/10/text": "Hence an honest wording that is both executable and sufficient: we delete from active systems immediately, from backups — within their retention period, part of the data is stored anonymously and by law.",
+    "sections/3/blocks/0/text": "Account deletion:",
+    "sections/3/blocks/1/text": "*Immediately:* profile, phone, addresses, cart, reviews are anonymized, sessions are terminated, export to analytics is stopped.",
+    "sections/3/blocks/2/text": "*Within a day:* deletion reaches the analytical data warehouse and search index.",
+    "sections/3/blocks/3/text": "*Within 30 days:* backups expire.",
+    "sections/3/blocks/4/text": "*Remains forever:* payment documents by law; anonymized purchase facts without connection to a person.",
+    "sections/3/blocks/5/text": "The wording in the interface appeared after the third redesign. The first version promised \"complete deletion of all data\" — the lawyer rejected it as unfeasible. The second was so precise it was scary. The third says simply that personal data is deleted immediately, disappears from copies within a month, and anonymized purchase statistics remain and are not connected to the person in any way.",
+    "sections/3/blocks/6/text": "A special case to anticipate in advance: **account deletion with an unfinished order.** The courier is already on the way, the address is needed. The solution — deletion is queued and executed after order completion, explained to the user. Whoever did not think about this in advance learns about the problem at the moment cascade deletion takes away an active delivery.",
+    "sections/4/blocks/0/text": "Requirements vary by jurisdiction: execution timelines, data volume, right to export. If a product operates in multiple countries, a single policy might not work out — and this is an architectural limitation, not a legal detail.",
+    "sections/5/blocks/0/text": "\"Delete\" means different technical actions in different parts of the system, and the product promise must describe what actually happens."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "c1a4db4bc0736032",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:43:09Z"
+  },
+  "fields": {
+    "title": "Empathy Map: assembling scattered pieces into one picture",
+    "keyTakeaway": "An empathy map doesn't generate new knowledge; it organizes what you've already gathered so the gaps become visible. An empty section isn't a flaw in the map—it's a list of what you haven't discovered yet.",
+    "checkQuestion": "The 'what they do' section is empty, while 'what they think' has ten items. What does this tell you?",
+    "blocks/0/text": "The same question about the customer, but regarding **working with what you've already collected**: interview notes, support tickets, observations—usually scattered all over.",
+    "blocks/1/title": "Empathy map",
+    "blocks/1/subtitle": "Six sections around a person",
+    "blocks/1/items/0": "**Sees**—what is around them: workspace, other tools, other people.",
+    "blocks/1/items/1": "**Hears**—what colleagues, bosses, and industry peers say.",
+    "blocks/1/items/2": "**Thinks and feels**—what bothers them, what they truly want.",
+    "blocks/1/items/3": "**Says and does**—how they behave publicly; the gap between this and the previous section is the most interesting part.",
+    "blocks/1/items/4": "**Pains**—obstacles and risks.",
+    "blocks/1/items/5": "**Gains**—what they want to achieve.",
+    "blocks/2/text": "The map adds value in two places. First: **the gap between 'says' and 'thinks'** almost always highlights a real barrier. Second: **empty sections** are a direct list of what you don't know, which is more honest than filling them with guesses.",
+    "blocks/3/text": "Says: \"We love everything, it's convenient.\"\nDoes: keeps running a parallel schedule in phone notes.\n\nThe discrepancy was explained like this: she doesn't trust that the employee saw the change. The product showed that the notification was sent, but didn't show that it was read.\n\nThe 'sees' section was empty—nobody looked at what else was open on her desk. That empty section turned out to be the map's most useful result.",
+    "blocks/3/title": "Smena, discrepancy",
+    "blocks/4/text": "An empathy map is filled with data, not imagination: a map completed by a team without talking to real people just locks in your assumptions and gives them false authority. It is a synthesis tool, not a research tool—do interviews and observations first, then build the map.",
+    "blocks/4/title": "Model limitations"
+  }
+}

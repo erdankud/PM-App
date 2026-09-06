@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "sourceDigest": "3ac87167948d65a0",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:27Z"
+  },
+  "fields": {
+    "title": "Plan Game Days",
+    "promptBlocks/0/text": "Pick three scenarios for the first game days and explain the order.",
+    "promptBlocks/1/text": "Available: disable recommendations, payment provider outage, database restore from backup, zone switch, search outage, communication procedure check.",
+    "referenceReasoningBlocks/0/text": "start with optional and reversible — recommendations, search. Then communication: cheap, breaks nothing, almost always finds issues. Then payment provider during off-peak hours. Database restore and zone switch are later, they are the riskiest and require preparation. Technique: order by increasing risk, not by importance."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "22e2f8247f007de4",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "Bigger Server vs More Servers",
+    "keyTakeaway": "What does not store state scales horizontally, and the product growth ceiling is usually determined by the write database or someone else's limit.",
+    "sections/0/blocks/0/text": "Load doubled. Why in one case is the solution an hour of work, and in another — a quarter?",
+    "sections/1/blocks/0/text": "Products run into scaling ceilings suddenly: up to a certain point, growth was handled by buying a larger server, and it went unnoticed. A PM who knows where the ceiling is puts the work into the plan in advance; one who does not learns about it at the moment when growth has already happened.",
+    "sections/2/blocks/0/text": "**[[scaling-up|Vertical scaling]]** — the same component on a more powerful machine. Requires no code changes, done in hours. Limited by a physical ceiling: the largest machine is finite, and the price grows non-linearly — twice as powerful costs four times as much.",
+    "sections/2/blocks/1/text": "**[[scaling-out|Horizontal scaling]]** — more machines. Virtually no ceiling, cost is linear. Requires the component to allow it.",
+    "sections/2/blocks/2/text": "The condition for horizontal scaling is **[[stateless|statelessness]]**: the service remembers nothing between requests, any request can be handled by any instance. Then adding a machine is trivial.",
+    "sections/2/blocks/3/text": "[[stateful|Stateful services]] scale poorly because state must be split or synchronized. The main one is the database, and that is precisely why it usually turns out to be the [[bottleneck|bottleneck]].",
+    "sections/2/blocks/4/text": "Hence the practical picture of most products:",
+    "sections/2/blocks/5/header/0": "Component",
+    "sections/2/blocks/5/header/1": "How it scales",
+    "sections/2/blocks/5/rows/0/0": "Web servers, application services",
+    "sections/2/blocks/5/rows/0/1": "Horizontally, easily",
+    "sections/2/blocks/5/rows/1/0": "Cache",
+    "sections/2/blocks/5/rows/1/1": "Horizontally, moderately",
+    "sections/2/blocks/5/rows/2/0": "Read database",
+    "sections/2/blocks/5/rows/2/1": "Replicas — horizontally",
+    "sections/2/blocks/5/rows/3/0": "Write database",
+    "sections/2/blocks/5/rows/3/1": "Vertically to the ceiling, then sharding",
+    "sections/2/blocks/5/rows/4/0": "External providers",
+    "sections/2/blocks/5/rows/4/1": "Does not scale at all, limited by their limits",
+    "sections/2/blocks/6/text": "The last row is often missed: our ceiling can be determined by someone else's limit, and no amount of our hardware will change that.",
+    "sections/3/blocks/0/text": "Application services — horizontally, autoscaling by load. Growth here is not a problem.",
+    "sections/3/blocks/1/text": "Database writes — vertically. Current server is loaded at 40% at peak, the next level provides about double the headroom, beyond that is user-key sharding, analyzed in `DS2-N5`.",
+    "sections/3/blocks/2/text": "The real ceiling was not ours: the payment provider supports 200 transactions per second by contract. At a peak of 370 requests per second and a checkout share of about 4% — that is 15 transactions, plenty of headroom. But with a campaign doubling the peak and doubling conversion, the figure approaches 60, and during a sale it might hit the limit.",
+    "sections/3/blocks/3/text": "Conclusion for planning: before major campaigns, not only our capacities are checked, but also provider limits. This is a separate checklist item.",
+    "sections/4/blocks/0/text": "Horizontal scaling is not free: more machines mean more network calls, more complex operations, more expensive debugging. As long as vertical scaling works, it is simpler.",
+    "sections/5/blocks/0/text": "What does not store state scales horizontally, and the product growth ceiling is usually determined by the write database or someone else's limit."
+  }
+}

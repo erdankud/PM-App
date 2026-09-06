@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "556953acd893ca17",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:01Z"
+  },
+  "fields": {
+    "title": "The Data Section in a Spec",
+    "keyTakeaway": "The data section describes the product's data requirements, not the database structure, and its sufficiency is tested by whether one can work from it without clarifications.",
+    "sections/0/blocks/0/text": "A feature spec went to the team and came back with eight questions, six of which were about data. What should have been written right away?",
+    "sections/1/blocks/0/text": "Each round of clarifications takes an average of two to three calendar days: the spec goes out, sits, comes back, is discussed. Three rounds eat up a week on a feature that could have been built in two. Multiply that by the number of features in a quarter.",
+    "sections/2/blocks/0/text": "Eight items. This is not a template for the sake of a template — each one closes a question that would otherwise be asked.",
+    "sections/2/blocks/1/text": "**1. Which entities appear or change.** A new entity, new attributes on an existing one, changes in relations. If nothing changes — state so, that is also information.",
+    "sections/2/blocks/2/text": "**2. What is a snapshot and what is a reference.** For each attribute duplicating data from elsewhere: do we freeze it at a point in time or reflect the current state? Covered in `DS2-N1-L1`, and this is the first thing the team will ask.",
+    "sections/2/blocks/3/text": "**3. Volume and growth.** How many records will appear immediately and how many will be added. An order of magnitude is enough: thousands per month or millions require different solutions.",
+    "sections/2/blocks/4/text": "**4. How it is read.** What criterion we search by, what we filter, what we sort. This determines indexes. If there is a filter in the mockup, it must be here.",
+    "sections/2/blocks/5/text": "**5. Retention period and what happens afterwards.** From `DS2-N6-L1`. The absence of an answer means \"forever\", and it is better to state this explicitly.",
+    "sections/2/blocks/6/text": "**6. What happens on account deletion.** Deleted, anonymized, or kept. Skipped most often and surfaces latest.",
+    "sections/2/blocks/7/text": "**7. Source of truth and owner,** if data comes from outside the product.",
+    "sections/2/blocks/8/text": "**8. Reversibility.** Are there any irreversible decisions among them according to the criterion from `DS3-N1-L1`. If yes — name them explicitly so they can be discussed separately.",
+    "sections/2/blocks/9/text": "A good check for the section's readiness: **can you draw the schema change from it without asking anything?** If not, something is missing from the eight points.",
+    "sections/3/blocks/0/text": "Data section for the \"Favorites\" feature, third revision.",
+    "sections/3/blocks/1/text": "*Entities:* new \"Favorites\" — user, catalog item, addition date. Plus new \"Catalog Item\" and relation to product. *Snapshot or reference:* price at the time of addition is a snapshot, needed for the \"price dropped\" notification. Name is a reference, must update. *Volume:* 1.2 million records for the first quarter, then about 400k per month. Catalog items around 60k, growing slowly. *Reading:* by user sorted by date; by catalog item for price drop notifications. Two indexes. *Retention:* as long as the user is active. After a year of inactivity — deleted along with other data. *Account deletion:* deleted completely, no traces left. *Source of truth:* internal, no external systems. *Reversibility:* creation of a catalog item is irreversible — it becomes the core of the catalog, and its cardinality cannot be replayed later. Requires separate discussion.",
+    "sections/3/blocks/2/text": "Eight lines instead of three rounds of clarifications. The last point, by the way, is the exact one that determined the outcome of the gate in block DS1.",
+    "sections/4/blocks/0/text": "The section does not replace design: the team still decides how exactly to structure the data. It removes questions about what the product needs, rather than how to build it.",
+    "sections/5/blocks/0/text": "The data section describes the product's data requirements, not the database structure, and its sufficiency is tested by whether one can work from it without clarifications."
+  }
+}

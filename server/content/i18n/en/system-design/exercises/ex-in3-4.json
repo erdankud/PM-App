@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "192d3d97d2ffd1e8",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Find implicit promises",
+    "promptBlocks/0/text": "What can become a commitment here and how to restrict it in advance?",
+    "promptBlocks/1/items/0": "Order list is returned sorted by date",
+    "promptBlocks/1/items/1": "Order identifier looks like `PL-240815-4471`",
+    "promptBlocks/1/items/2": "Webhook arrives in 1.2 seconds on average",
+    "promptBlocks/1/items/3": "On error, the response body contains a `message` field with text",
+    "referenceReasoningBlocks/0/text": "1 — if sorting is not declared but stable, clients will rely on it; either guarantee it explicitly or do not return a stable order from the start. 2 — parsing the identifier structure; declare it opaque and do not promise the format. 3 — timing will become an expectation; explicitly state that delivery time is not guaranteed. 4 — code will start parsing the text; provide sufficiently detailed error codes so this isn't needed, and declare the text mutable."
+  }
+}

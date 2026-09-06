@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "569532e7000e4947",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "Choreography instead of calls",
+    "keyTakeaway": "Events make adding reactions cheap at the price of the scenario no longer being readable in one place, which is compensated for by a correlation ID and a live event registry.",
+    "sections/0/blocks/0/text": "Placing an order no longer \"calls\" a store notification — it publishes an event. What does this change for the product besides response speed?",
+    "sections/1/blocks/0/text": "[[event-driven-architecture|Event-driven architecture]] makes adding new reactions almost free while making it almost impossible to answer the question \"what happens after an order is placed.\" A PM who doesn't understand this tradeoff rejoices at the speed of the first features and doesn't understand why a year later no one can describe the full scenario.",
+    "sections/2/blocks/0/text": "Two ways to connect process steps.",
+    "sections/2/blocks/1/text": "**[[orchestration|Orchestration]].** There is a conductor component that knows the entire sequence: create order, charge money, notify store, accrue bonuses. The scenario is read in one place. Adding a step means editing the conductor.",
+    "sections/2/blocks/2/text": "**[[choreography|Choreography]].** A component publishes an event, and the rest decide for themselves whether to react. No one knows the whole picture. Adding a reaction touches no one.",
+    "sections/2/blocks/3/text": "Product consequences of choreography:",
+    "sections/2/blocks/4/text": "*Pros.* A new feature plugs in without modifying existing ones. Teams work independently. One subscriber failing does not break the others.",
+    "sections/2/blocks/5/text": "*Cons.* The entire scenario is not written down anywhere. Understanding what happens after an action requires gathering all subscribers. A year later, this knowledge lives in the heads of one or two people.",
+    "sections/2/blocks/6/text": "*Cons.* Debugging gets harder: the chain is distributed, and \"why didn't the SMS arrive\" turns into an investigation.",
+    "sections/2/blocks/7/text": "Hence the mandatory tools without which choreography becomes unmanageable:",
+    "sections/2/blocks/8/text": "**[[correlation-id|Correlation ID]].** An operation tag travels through all events. It reconstructs the entire chain from the user action to the final consequence. Without it, [[traceability|traceability]] is impossible, and support cannot answer a client's question.",
+    "sections/2/blocks/9/text": "**Event registry.** A live list: what events exist, what they mean, who is subscribed. A document that must be maintained — otherwise in a year no one knows what breaks when things change.",
+    "sections/2/blocks/10/text": "Mature product practice is mixed: critical financial scenarios are explicitly orchestrated, side effects go via events.",
+    "sections/3/blocks/0/text": "Order placement: orchestration until payment confirmation (create → check stock → charge → confirm), then the `order.created` event and seven subscribers.",
+    "sections/3/blocks/1/text": "The boundary is chosen by the criterion: **everything without which an order is not considered placed is orchestration; everything else is events.** This is also the transaction boundary from `DS1-N5` and the synchronicity boundary from `IN1-N4`, and the coincidence is not accidental.",
+    "sections/3/blocks/2/text": "The correlation ID was introduced after an incident where a buyer received neither SMS nor push, but bonuses were credited. The investigation took two days: we had to manually match logs across four services. Now support enters the order number and sees the entire chain with timestamps — investigation takes minutes.",
+    "sections/3/blocks/3/text": "The event registry appeared when changing the `order.created` structure revealed there were nine subscribers instead of seven: two were added by neighboring teams without telling anyone.",
+    "sections/4/blocks/0/text": "Events are not suitable where an immediate result is needed. Availability checks cannot be an event — the caller needs an answer now.",
+    "sections/5/blocks/0/text": "Events make adding reactions cheap at the price of the scenario no longer being readable in one place, which is compensated for by a correlation ID and a live event registry."
+  }
+}

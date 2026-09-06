@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "74de6c4c5b26bbc7",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Release notes are written for the user",
+    "keyTakeaway": "Release notes answer the question \"what should I do differently now\", not \"what we built\". A change that changes nothing for the reader does not belong in them.",
+    "checkQuestion": "\"Refactoring the signing module, dependency updates.\" Who is this addressed to?",
+    "blocks/0/text": "Key node question: **which changes should be communicated to users?** Emphasis on \"which\": communicating everything is the same as communicating nothing.",
+    "blocks/1/text": "**What happens if you do not answer the question.** Release notes turn into a tracker dump. People stop reading them, and when a truly important change comes along, it goes unnoticed too.",
+    "blocks/2/title": "What makes it into release notes",
+    "blocks/2/subtitle": "Filtering by a single criteria",
+    "blocks/2/items/0": "**Changes what a person does** — included, first.",
+    "blocks/2/items/1": "**Removes what people complained about** — included, referencing how it was before.",
+    "blocks/2/items/2": "**Requires user action** — must be included and kept separate.",
+    "blocks/2/items/3": "**Changes nothing on the outside** — excluded, no matter how much work went into it.",
+    "blocks/3/text": "From tracker: \"Document list query optimized. Signing module refactoring. Dependencies updated. Mass selection added.\"\n\nFor user: \"You can now sign multiple certificates at once: check the boxes and click “Sign”. Previously you had to open each one — this was the most requested feature.\"\n\nOne change out of four, but people will actually read it.",
+    "blocks/3/title": "Reestr, two versions of the same release notes",
+    "blocks/4/text": "Short release notes do not replace breaking change notifications: if a user must take action, communicate this separately and in advance, not as a line item in a general list.",
+    "blocks/4/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "411e941f6295fcaa",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "When there are too many options to invent",
+    "keyTakeaway": "If a decision consists of several independent parts, you should iterate through the values of each part rather than full solutions. The resulting combinations are more than any group will say out loud.",
+    "checkQuestion": "Trial period: what independent parameters does it have?",
+    "blocks/0/text": "The same key question, but for the case when **the decision space is large, and intuition gives three or four options out of a hundred.**",
+    "blocks/1/title": "Morphological analysis",
+    "blocks/1/subtitle": "Decompose the decision into parameters and iterate over values",
+    "blocks/1/items/0": "**1. Name parameters** — independent parts of the decision.",
+    "blocks/1/items/1": "**2. List values for each** — without evaluating.",
+    "blocks/1/items/2": "**3. Combine** — take one value from each parameter.",
+    "blocks/1/items/3": "**4. Filter** — most combinations are impossible, and that is fine; the interesting ones are those that are possible and hadn't crossed anyone's mind.",
+    "blocks/2/text": "Parameters and values:\n— Duration: 3 days / 7 days / no limit\n— Limitation: by time / by one book / by number of pages\n— Registration moment: before the first page / after the first chapter / when trying to save progress\n— What happens at the end: access is blocked / only the started book remains / saved quotes remain\n\n3 × 3 × 3 × 3 = 81 combinations. Half are meaningless, but among the rest was one no one had mentioned out loud: no limit, restriction to one book, registration when attempting to save progress.\n\nThis became the best hypothesis of the quarter.",
+    "blocks/2/title": "Vetka: trial period parameters",
+    "blocks/3/text": "A mindmap solves an adjacent task: it helps **find the parameters themselves** when the list is not obvious. You expand the task from the center, and the branches that turn out to be independent are candidates for parameters.",
+    "blocks/4/text": "The method causes a combinatorial explosion: with five parameters and five values each, that is three thousand options, and you cannot review them all. It is useful while there are three or four parameters. And it does not evaluate: enumeration generates options, while the decision on what to test is made separately.",
+    "blocks/4/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "2f0f38e8455905fc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Monetization: how to increase customer revenue",
+    "keyTakeaway": "Customer lifetime revenue grows through four levers: price, retention, expansion, and pricing structure. Price is the fastest and most intimidating lever, while account expansion is usually the cheapest.",
+    "checkQuestion": "What happens to LTV if you raise prices by 15% and churn 5% of clients?",
+    "blocks/0/text": "Key node question: **how to increase LTV?**",
+    "blocks/1/title": "Four levers",
+    "blocks/1/subtitle": "Adjust one at a time, otherwise you cannot isolate the impact",
+    "blocks/1/items/0": "**Price** — direct and underrated. A modest price hike almost never triggers a proportional churn spike.",
+    "blocks/1/items/1": "**Retention** — every additional month of client lifetime adds a full subscription check.",
+    "blocks/1/items/2": "**Expansion** — more warehouses, more seats, add-on modules. Upselling an existing customer is cheaper than acquiring a new one.",
+    "blocks/1/items/3": "**Pricing structure** — the value metric charged for. The pricing metric should scale alongside the value delivered to the client.",
+    "blocks/2/text": "Current state: 120 clients × 40,000 ₽ = 4.8 million ₽ per month.\n\nA 15% price increase with 5% customer churn:\n114 × 46,000 = 5.24 million ₽. Revenue increases by +9%, while supporting six fewer clients.\n\nFor the price hike to be net-negative, churn would need to exceed 13% — whereas market benchmarks show a 3–6% churn for a 15% increase.\n\nCaution: evaluate by customer segment. Retail chains have different price elasticity, while for micro-clients 15% might hit budget hard caps.",
+    "blocks/2/title": "Kedr: the math behind a price hike",
+    "blocks/3/text": "**The value metric matters more than price point.** If Kedr charges per seat, clients optimize by sharing a single login — costing you both revenue and data hygiene. If you charge per warehouse location or shipment volume, billings naturally scale with delivered value without friction.",
+    "blocks/4/text": "You can raise prices for new sign-ups tomorrow. Existing clients require advance notice, clear rationale, and often grandfathering options. Price discrimination between new and legacy accounts is standard practice.",
+    "blocks/4/title": "Price increases for legacy clients require a dedicated plan",
+    "blocks/5/text": "Monetization levers work only when the core product actually solves the user's problem. Raising prices on a leaky product accelerates churn and skews elasticity data.",
+    "blocks/5/title": "Limitations of the model"
+  }
+}

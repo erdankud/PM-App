@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "1d1add1a1e68a51c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:50Z"
+  },
+  "fields": {
+    "title": "The Section That Passes Review",
+    "keyTakeaway": "A seven-point section captures data, basis, minimization, retention, deletion, access, and threats, and is sufficient if it allows evaluating processing lawfulness without questions.",
+    "sections/0/blocks/0/text": "How to structure data decisions so legal and security do not send the spec back?",
+    "sections/1/blocks/0/text": "Each round of clarifications costs calendar days. A section covering typical questions eliminates most of them before the first reading.",
+    "sections/2/blocks/0/text": "Seven points.",
+    "sections/2/blocks/1/text": "**1. What data is affected.** New fields, new sources, new recipients.",
+    "sections/2/blocks/2/text": "**2. Legal basis for processing.** For each new type: contract, legal obligation, legitimate interest, consent.",
+    "sections/2/blocks/3/text": "**3. Minimization.** What was decided not to collect and why. Shows the question was thought through.",
+    "sections/2/blocks/4/text": "**4. Retention period.** For each new type. No answer implies \"forever.\"",
+    "sections/2/blocks/5/text": "**5. Deletion.** What happens upon account deletion: deleted, anonymized, retained due to obligations.",
+    "sections/2/blocks/6/text": "**6. Access.** Who sees this data: roles, our employees, partners, subprocessors.",
+    "sections/2/blocks/7/text": "**7. Threat analysis.** Link to the result if the feature went through triage, or rationale for why it did not.",
+    "sections/2/blocks/8/text": "Plus **consents**, if applicable: which one, when requested, how revoked, what happens upon refusal.",
+    "sections/2/blocks/9/text": "Sufficiency check: **can a lawyer determine processing lawfulness from this section without asking questions?**",
+    "sections/3/blocks/0/text": "Section for the courier messaging feature, abbreviated:",
+    "sections/3/blocks/1/text": "> **Data.** New entity \"Message\": order, sender, text, timestamp. Proxy number instead of direct. Parties' direct numbers are not disclosed. > > **Basis.** Contract performance—communication is necessary for delivery. > > **Minimization.** We do not store parties' numbers in chat logs. We do not store courier geolocation in messages. We do not index text for search. > > **Retention.** 30 days after order completion, then deletion. For dispute tickets—6 months. > > **Account deletion.** Buyer messages are anonymized, text retained 30 days for investigating delivery disputes, then deleted. > > **Access.** Order parties. Support—upon request, with an audit log. Partner store does not see it. Subprocessors—proxy number provider. > > **Threats.** Review from 12.03, table of 6 threats, two mitigations changed the feature. > > **Consents.** Not required, basis is contract performance.",
+    "sections/3/blocks/2/text": "The section passed review on the first try. Before introducing the template, similar features went through two or three rounds.",
+    "sections/4/blocks/0/text": "The template does not replace the review: it documents decisions, while they are made during discovery and threat modeling.",
+    "sections/5/blocks/0/text": "A seven-point section captures data, basis, minimization, retention, deletion, access, and threats, and is sufficient if it allows evaluating processing lawfulness without questions."
+  }
+}

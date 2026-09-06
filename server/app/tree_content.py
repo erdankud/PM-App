@@ -20,6 +20,7 @@ from jsonschema import Draft7Validator
 
 from app.config import settings
 from app.content import ContentError
+from app.i18n_content import AUTHORED_LANGUAGE, apply_overlay
 
 # Two trees share one grammar (spec SD §1): the product map and System Design. Each
 # has its own directory and its own single entry point — everything must be reachable
@@ -39,34 +40,59 @@ def _schema(name: str) -> dict[str, Any]:
     return json.loads((settings.content_dir / name).read_text(encoding="utf-8"))
 
 
-@lru_cache
-def tree_schema() -> dict[str, Any]:
-    return _schema("tree.schema.json")
+def _without_min_length(node: Any) -> Any:
+    """Схема без нижних границ длины.
+
+    `minLength` — правило для автора («не пиши описание варианта одним словом»), а
+    не свойство данных. Английский законно короче русского: «Согласиться на 99.95%.
+    Ноль недель.» — 35 знаков, "Agree to 99.95%. Zero weeks." — 28. Требовать от
+    перевода добрать до тридцати значит просить дописать воды.
+
+    `maxLength` остаётся: это ограничение продукта — текст обязан поместиться.
+    """
+    if isinstance(node, dict):
+        return {
+            key: _without_min_length(value)
+            for key, value in node.items()
+            if key != "minLength"
+        }
+    if isinstance(node, list):
+        return [_without_min_length(item) for item in node]
+    return node
+
+
+def _for_language(schema: dict[str, Any], language: str) -> dict[str, Any]:
+    return schema if language == AUTHORED_LANGUAGE else _without_min_length(schema)
 
 
 @lru_cache
-def lesson_schema() -> dict[str, Any]:
-    return _schema("lesson.schema.json")
+def tree_schema(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
+    return _for_language(_schema("tree.schema.json"), language)
 
 
 @lru_cache
-def gate_scenario_schema() -> dict[str, Any]:
-    return _schema("gate-scenario.schema.json")
+def lesson_schema(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
+    return _for_language(_schema("lesson.schema.json"), language)
 
 
 @lru_cache
-def exercise_schema() -> dict[str, Any]:
-    return _schema("exercise.schema.json")
+def gate_scenario_schema(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
+    return _for_language(_schema("gate-scenario.schema.json"), language)
 
 
 @lru_cache
-def glossary_schema() -> dict[str, Any]:
-    return _schema("glossary.schema.json")
+def exercise_schema(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
+    return _for_language(_schema("exercise.schema.json"), language)
 
 
 @lru_cache
-def diagram_schema() -> dict[str, Any]:
-    return _schema("diagram.schema.json")
+def glossary_schema(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
+    return _for_language(_schema("glossary.schema.json"), language)
+
+
+@lru_cache
+def diagram_schema(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
+    return _for_language(_schema("diagram.schema.json"), language)
 
 
 def _tree_dir(kind: str = DEFAULT_KIND) -> Path:
@@ -77,8 +103,29 @@ def _read(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def load_tree_file(kind: str = DEFAULT_KIND) -> dict[str, Any]:
-    return _read(_tree_dir(kind) / "tree.json")
+def overlay_path(path: Path, language: str) -> Path:
+    """Где лежит перевод этого файла: то же относительное имя под `i18n/<язык>`."""
+    return settings.content_dir / "i18n" / language / path.relative_to(settings.content_dir)
+
+
+def _localised(path: Path, doc_kind: str, language: str) -> dict[str, Any]:
+    """Авторский файл с наложенным переводом, если он есть и не устарел.
+
+    Отсутствие перевода — не ошибка: файл показывается на языке оригинала. Так
+    частично переведённый корпус работает, а не падает.
+    """
+    document = _read(path)
+    if language == AUTHORED_LANGUAGE:
+        return document
+    candidate = overlay_path(path, language)
+    overlay = _read(candidate) if candidate.exists() else None
+    return apply_overlay(doc_kind, document, overlay, language)
+
+
+def load_tree_file(
+    kind: str = DEFAULT_KIND, language: str = AUTHORED_LANGUAGE
+) -> dict[str, Any]:
+    return _localised(_tree_dir(kind) / "tree.json", "tree", language)
 
 
 def load_gates_file(kind: str = DEFAULT_KIND) -> dict[str, Any]:
@@ -102,9 +149,13 @@ def diagram_paths(kind: str = DEFAULT_KIND) -> list[Path]:
     return sorted((_tree_dir(kind) / "diagrams").glob("*.json"))
 
 
-def load_glossary_file(kind: str = DEFAULT_KIND) -> dict[str, Any]:
+def load_glossary_file(
+    kind: str = DEFAULT_KIND, language: str = AUTHORED_LANGUAGE
+) -> dict[str, Any]:
     path = _tree_dir(kind) / "glossary.json"
-    return _read(path) if path.exists() else {"version": 1, "terms": []}
+    if not path.exists():
+        return {"version": 1, "terms": []}
+    return _localised(path, "glossary", language)
 
 
 # --- Validation --------------------------------------------------------------
@@ -127,9 +178,10 @@ def validate_tree(
     exercises: list[dict[str, Any]] | None = None,
     glossary: dict[str, Any] | None = None,
     diagrams: list[dict[str, Any]] | None = None,
+    language: str = AUTHORED_LANGUAGE,
 ) -> list[str]:
     """Structural rules the JSON schemas cannot express on their own."""
-    errors = _schema_errors(Draft7Validator(tree_schema()), tree)
+    errors = _schema_errors(Draft7Validator(tree_schema(language)), tree)
     if errors:
         return errors
 
@@ -162,7 +214,7 @@ def validate_tree(
 
     lesson_ids: set[str] = set()
     for lesson in lessons:
-        for error in _schema_errors(Draft7Validator(lesson_schema()), lesson):
+        for error in _schema_errors(Draft7Validator(lesson_schema(language)), lesson):
             errors.append(f"lesson {lesson.get('id', '?')}: {error}")
         if lesson["id"] in lesson_ids:
             errors.append(f"lesson {lesson['id']}: duplicate id")
@@ -194,7 +246,7 @@ def validate_tree(
     for scenario in scenarios:
         errors.extend(
             f"scenario {scenario['id']}: {error}"
-            for error in validate_gate_scenario(scenario, lesson_ids, blocks)
+            for error in validate_gate_scenario(scenario, lesson_ids, blocks, language)
         )
         # A gate never leans on a ring above its own: a first-ring exam must not
         # require second-ring knowledge (spec SD §2.4).
@@ -212,7 +264,7 @@ def validate_tree(
 
     errors.extend(
         _content_errors(lessons, exercises or [], glossary or {"terms": []}, diagrams or [],
-                        blocks, node_ids)
+                        blocks, node_ids, language)
     )
 
     # A published block is one a learner can actually finish.
@@ -285,6 +337,7 @@ def _content_errors(
     diagrams: list[dict[str, Any]],
     blocks: dict[str, Any],
     node_ids: set[str],
+    language: str = AUTHORED_LANGUAGE,
 ) -> list[str]:
     """Glossary, exercises and diagrams — the rules from the System Design spec §8."""
     errors: list[str] = []
@@ -292,7 +345,7 @@ def _content_errors(
     if glossary.get("terms"):
         errors.extend(
             f"glossary: {error}"
-            for error in _schema_errors(Draft7Validator(glossary_schema()), glossary)
+            for error in _schema_errors(Draft7Validator(glossary_schema(language)), glossary)
         )
     terms: dict[str, dict[str, Any]] = {}
     for term in glossary.get("terms", []):
@@ -306,7 +359,7 @@ def _content_errors(
     for diagram in diagrams:
         errors.extend(
             f"diagram {diagram.get('id', '?')}: {error}"
-            for error in _schema_errors(Draft7Validator(diagram_schema()), diagram)
+            for error in _schema_errors(Draft7Validator(diagram_schema(language)), diagram)
         )
         diagram_ids.add(diagram["id"])
         declared = {node["id"] for node in diagram.get("nodes", [])}
@@ -322,7 +375,7 @@ def _content_errors(
     for exercise in exercises:
         errors.extend(
             f"exercise {exercise.get('id', '?')}: {error}"
-            for error in _schema_errors(Draft7Validator(exercise_schema()), exercise)
+            for error in _schema_errors(Draft7Validator(exercise_schema(language)), exercise)
         )
         exercise_ids.add(exercise["id"])
         if exercise["nodeId"] not in node_ids:
@@ -388,10 +441,13 @@ def _content_errors(
 
 
 def validate_gate_scenario(
-    scenario: dict[str, Any], lesson_ids: set[str], blocks: dict[str, Any]
+    scenario: dict[str, Any],
+    lesson_ids: set[str],
+    blocks: dict[str, Any],
+    language: str = AUTHORED_LANGUAGE,
 ) -> list[str]:
     """Schema, the v0.1 editorial rules, plus the lesson links v0.2 adds."""
-    errors = _schema_errors(Draft7Validator(gate_scenario_schema()), scenario)
+    errors = _schema_errors(Draft7Validator(gate_scenario_schema(language)), scenario)
     if errors:
         return errors
 
@@ -462,21 +518,28 @@ def validate_roles(roles_doc: dict[str, Any], tree: dict[str, Any]) -> list[str]
 
 
 @lru_cache
-def tree_content(kind: str = DEFAULT_KIND) -> dict[str, Any]:
+def tree_content(
+    kind: str = DEFAULT_KIND, language: str = AUTHORED_LANGUAGE
+) -> dict[str, Any]:
     """Validated tree, lessons, gates, scenarios and — for System Design — the
-    exercises, glossary and diagrams that go with them."""
-    tree = load_tree_file(kind)
-    lessons = [_read(p) for p in lesson_paths(kind)]
+    exercises, glossary and diagrams that go with them.
+
+    `language` выбирает наложение перевода. Структура, рубрики и QA-фикстуры от него
+    не зависят — переводится только то, что читает человек.
+    """
+    tree = load_tree_file(kind, language)
+    lessons = [_localised(p, "lesson", language) for p in lesson_paths(kind)]
     gates = load_gates_file(kind)["gates"]
-    scenarios = [_read(p) for p in gate_scenario_paths(kind)]
-    exercises = [_read(p) for p in exercise_paths(kind)]
-    diagrams = [_read(p) for p in diagram_paths(kind)]
-    glossary = load_glossary_file(kind)
+    scenarios = [_localised(p, "scenario", language) for p in gate_scenario_paths(kind)]
+    exercises = [_localised(p, "exercise", language) for p in exercise_paths(kind)]
+    diagrams = [_localised(p, "diagram", language) for p in diagram_paths(kind)]
+    glossary = load_glossary_file(kind, language)
 
     errors = validate_tree(
         tree, lessons, gates, scenarios,
         root_block_id=TREES[kind]["root"],
         exercises=exercises, glossary=glossary, diagrams=diagrams,
+        language=language,
     )
     if errors:
         raise ContentError(f"Invalid {kind} tree content:\n  " + "\n  ".join(errors))
@@ -487,6 +550,7 @@ def tree_content(kind: str = DEFAULT_KIND) -> dict[str, Any]:
 
     return {
         "kind": kind,
+        "language": language,
         "root": TREES[kind]["root"],
         "tree": tree,
         "blocks": {block["id"]: block for block in tree["blocks"]},
@@ -505,7 +569,7 @@ def tree_content(kind: str = DEFAULT_KIND) -> dict[str, Any]:
 
 
 @lru_cache
-def all_content() -> dict[str, Any]:
+def all_content(language: str = AUTHORED_LANGUAGE) -> dict[str, Any]:
     """Both trees merged for lookup by id.
 
     Ids are globally unique across the two trees (`D1` vs `DS1`), so services can keep
@@ -520,7 +584,7 @@ def all_content() -> dict[str, Any]:
     }
     merged["trees"] = {}
     for kind in KINDS:
-        content = tree_content(kind)
+        content = tree_content(kind, language)
         merged["trees"][kind] = content
         for key in (
             "blocks", "lessons", "lessons_by_block", "gates", "gate_by_block",
@@ -536,60 +600,68 @@ def kinds() -> tuple[str, ...]:
     return KINDS
 
 
-def blocks_of(kind: str) -> list[dict[str, Any]]:
-    return tree_content(kind)["tree"]["blocks"]
+def blocks_of(kind: str, language: str = AUTHORED_LANGUAGE) -> list[dict[str, Any]]:
+    return tree_content(kind, language)["tree"]["blocks"]
 
 
 def all_blocks() -> list[dict[str, Any]]:
     return [block for kind in KINDS for block in blocks_of(kind)]
 
 
-def block(block_id: str) -> dict[str, Any] | None:
-    return all_content()["blocks"].get(block_id)
+def block(block_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["blocks"].get(block_id)
 
 
 def kind_of_block(block_id: str) -> str | None:
     return all_content()["kind_of_block"].get(block_id)
 
 
-def lesson(lesson_id: str) -> dict[str, Any] | None:
-    return all_content()["lessons"].get(lesson_id)
+def lesson(lesson_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["lessons"].get(lesson_id)
 
 
-def lessons_for_block(block_id: str) -> list[dict[str, Any]]:
-    return all_content()["lessons_by_block"].get(block_id, [])
+def lessons_for_block(
+    block_id: str, language: str = AUTHORED_LANGUAGE
+) -> list[dict[str, Any]]:
+    return all_content(language)["lessons_by_block"].get(block_id, [])
 
 
-def gate(gate_id: str) -> dict[str, Any] | None:
-    return all_content()["gates"].get(gate_id)
+def gate(gate_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["gates"].get(gate_id)
 
 
-def gate_for_block(block_id: str) -> dict[str, Any] | None:
-    return all_content()["gate_by_block"].get(block_id)
+def gate_for_block(
+    block_id: str, language: str = AUTHORED_LANGUAGE
+) -> dict[str, Any] | None:
+    return all_content(language)["gate_by_block"].get(block_id)
 
 
-def scenario(scenario_id: str) -> dict[str, Any] | None:
-    return all_content()["scenarios"].get(scenario_id)
+def scenario(scenario_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["scenarios"].get(scenario_id)
 
 
-def exercise(exercise_id: str) -> dict[str, Any] | None:
-    return all_content()["exercises"].get(exercise_id)
+def exercise(exercise_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["exercises"].get(exercise_id)
 
 
-def exercise_for_node(node_id: str) -> dict[str, Any] | None:
-    return all_content()["exercise_by_node"].get(node_id)
+def exercise_for_node(
+    node_id: str, language: str = AUTHORED_LANGUAGE
+) -> dict[str, Any] | None:
+    return all_content(language)["exercise_by_node"].get(node_id)
 
 
-def diagram(diagram_id: str) -> dict[str, Any] | None:
-    return all_content()["diagrams"].get(diagram_id)
+def diagram(diagram_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["diagrams"].get(diagram_id)
 
 
-def glossary_terms(kind: str = "system_design") -> list[dict[str, Any]]:
-    return list(tree_content(kind)["glossary"].values())
+def glossary_terms(
+    kind: str = "system_design", language: str = AUTHORED_LANGUAGE
+) -> list[dict[str, Any]]:
+    return list(tree_content(kind, language)["glossary"].values())
 
 
-def glossary_term(term_id: str) -> dict[str, Any] | None:
-    return all_content()["glossary"].get(term_id)
+def glossary_term(term_id: str, language: str = AUTHORED_LANGUAGE) -> dict[str, Any] | None:
+    return all_content(language)["glossary"].get(term_id)
 
 
 def dependents(block_id: str) -> list[str]:

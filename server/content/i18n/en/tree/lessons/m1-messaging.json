@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "0e610517ce8d6a35",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Feature, benefit, proof",
+    "keyTakeaway": "A message consists of three parts, and the third is usually skipped. A feature without a benefit is a tech spec; a benefit without proof is a promise with no reason to believe it.",
+    "checkQuestion": "\"Saves the accountant's time.\" What is missing in this phrase?",
+    "blocks/0/text": "Key node question: **what exactly is the benefit for consumers?** Not \"what the product can do\", but what changes in a specific person's life.",
+    "blocks/1/text": "**What happens if you do not answer the question.** A feature list appears on the website. The reader cannot translate it into their situation and leaves — not because the product is bad, but because translation is work, and you should be doing it.",
+    "blocks/2/title": "A three-part message",
+    "blocks/2/subtitle": "B2B Messaging Canvas in its shortest form",
+    "blocks/2/items/0": "**For whom** — not \"for business\", but for a person in a specific role and situation.",
+    "blocks/2/items/1": "**Feature** — what the product does.",
+    "blocks/2/items/2": "**Benefit** — what changes for this person. Test: can you notice this without the product?",
+    "blocks/2/items/3": "**Proof** — a number, case study, guarantee, or demo. What makes the benefit verifiable.",
+    "blocks/3/items/0": "Feature: \"browser document signing\" → Benefit: \"no need to travel to counterparties\" → Proof: \"average signing time for clients dropped from 4 days to 6 hours\"",
+    "blocks/3/items/1": "Feature: \"certificate templates\" → Benefit: \"a certificate is prepared in a minute instead of half an hour\" → Proof: \"measured across 40 clients, median 52 seconds\"",
+    "blocks/3/items/2": "\"Saves the accountant's time\" is a benefit without a feature and without proof: it is unclear how and by how much.",
+    "blocks/4/text": "Before: \"Electronic document management. Invoices, certificates, signatures, integrations, API\".\n\nAfter: \"For small business accountants: sign certificates with counterparties in hours, not days. Our clients' signing time dropped from 4 days to 6 hours\".\n\nVisit-to-registration conversion grew from 8% to 11% on cold traffic. Not a single feature was changed.",
+    "blocks/4/title": "Reestr, two homepage versions",
+    "blocks/5/text": "Proof must be real: an invented number works once and costs you your reputation. If there is no number, it is more honest to show a demo or name a client than to round up to a pretty figure. And messaging does not save a product that does not solve a problem — it only removes an unnecessary barrier for someone looking for a solution.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

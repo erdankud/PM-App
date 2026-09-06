@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "b585c361a8ba68ce",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:47:35Z"
+  },
+  "fields": {
+    "title": "Technologies and trends: distinguishing the wave from the noise",
+    "keyTakeaway": "Technology is useful when it removes a specific constraint of your product. The question is not \"should we use something new,\" but \"what became possible that was previously too expensive\" — and who is ready to use it now.",
+    "checkQuestion": "The board of directors demands adding AI. How do you translate this into a product decision?",
+    "blocks/0/text": "Key node question: **what market trends can be leveraged?**",
+    "blocks/1/text": "**What happens if you do not answer the question.** The product either chases every shiny new thing and spends quarters on features customers don't need, or fails to notice a shift that devalued its main advantage.",
+    "blocks/2/title": "Technology Adoption Curve",
+    "blocks/2/subtitle": "The exact same novelty means different things to different customers",
+    "blocks/2/items/0": "**Innovators and early adopters** — try things for the technology itself, forgive flaws, pay little.",
+    "blocks/2/items/1": "**Early majority** — waits for proof and others' experience. Between them and the previous group lies the most dangerous chasm.",
+    "blocks/2/items/2": "**Late majority and laggards** — adopt when the old way stops working or regulators require it.",
+    "blocks/2/items/3": "**Practical takeaway:** your segment determines whether you are early or late. For carriers with 30 vehicles, \"early\" comes several years later than for IT companies.",
+    "blocks/3/title": "Hype cycle in brief",
+    "blocks/3/subtitle": "Useful as a reminder, not as a forecast",
+    "blocks/3/items/0": "**Peak of inflated expectations** — many promises, few working implementations.",
+    "blocks/3/items/1": "**Trough of disillusionment** — real constraints emerge; this is usually when the technology becomes practical.",
+    "blocks/3/items/2": "**Plateau of productivity** — it is clear where it works and how much it costs.",
+    "blocks/3/items/3": "**How to use this:** ask not \"what stage is the technology at,\" but \"are its constraints already known.\" Until they are known, embedding it into a product is expensive.",
+    "blocks/4/text": "Automated document recognition at cargo intake.\n→ Removes constraint: dispatcher types waybills manually, 6 minutes per trip.\n→ Constraints are known, cost is calculated. Let's do it.\n\nPredicting demand for return legs based on our data.\n→ Removes constraint: dispatcher searches for return cargo manually.\n→ But data currently covers only three years for 60 vehicles — too little to predict on new routes. Postpone and gather data intentionally.\n\nAutonomous trucks.\n→ Removes none of our constraints on a five-year horizon.\n→ Monitor, don't plan.",
+    "blocks/4/title": "Surma: three technologies and one question for each",
+    "blocks/5/text": "The right answer is not to argue, but to reframe the request as a product question: what constraint do we want to remove, and how much does it cost today? It often turns out that the goal can be solved more simply, and sometimes — that technology actually solves a long-standing bottleneck.",
+    "blocks/5/title": "\"Adding AI\" is not a requirement, but a request for translation",
+    "blocks/6/text": "A trend does not create demand for your product. It changes the cost of capabilities and customer expectations; the product manager's job is to spot this before competitors do and not confuse it with noise.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

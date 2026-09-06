@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "86efbfc725d24e3b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Definition of Done: one definition for the entire team",
+    "keyTakeaway": "Definition of Done is a common baseline for any task, while acceptance criteria are specific requirements. The former is written once and changed rarely; the latter is written anew every time.",
+    "checkQuestion": "How does DoD differ from the acceptance criteria you write for a task?",
+    "blocks/0/text": "The key question of this node: **how well does the result match the requirements?** It starts with a drier question: what does \"done\" actually mean in this team?",
+    "blocks/1/text": "**What happens if you don't answer this question.** A task moves to \"done\", and then turns out there are no tests, documentation wasn't touched, and it isn't enabled in production. It gets discussed anew every time, always with frustration.",
+    "blocks/2/title": "Definition of Done",
+    "blocks/2/subtitle": "A common baseline, identical for all tasks",
+    "blocks/2/items/0": "Written by the **team**, not the PM: these are their commitments, not your demands.",
+    "blocks/2/items/1": "Contains what is **always applicable**: code is reviewed, automated tests exist for the new path, errors are logged, feature is behind a flag.",
+    "blocks/2/items/2": "Contains nothing **feature-specific**—that belongs to acceptance criteria.",
+    "blocks/2/items/3": "Lives in a visible place and **changes rarely**: revising the DoD is a separate decision, not a argument during handoff.",
+    "blocks/3/items/0": "DoD: \"automated test exists for the new path\"—applies to any task",
+    "blocks/3/items/1": "Acceptance criterion: \"if discrepancy exceeds 5 units, the product card is highlighted\"—applies only to this task",
+    "blocks/3/items/2": "DoD: \"change can be disabled via flag without deployment\"—always",
+    "blocks/3/items/3": "Acceptance criterion: \"unknown product does not block scanning continuation\"—applies here",
+    "blocks/4/text": "The \"product discrepancy\" task was moved to \"done\". During the demo, it turned out to crash on older Android versions because it was tested on a single device.\n\nThe team added one line to the DoD: \"tested on at least two Android versions, including the oldest supported one\". The line appeared once and has applied to all tasks ever since, rather than being debated for every issue.",
+    "blocks/4/title": "Polka, an argument that happened once",
+    "blocks/5/text": "DoD does not guarantee you built the right thing: a task can pass all checklist items and address the wrong problem. Also, a lengthy DoD stops work—if it has fifteen items, people stop following it entirely rather than partially.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

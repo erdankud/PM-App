@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "sourceDigest": "bb5ab2f74ee70700",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "Refusing Part to Save the Rest",
+    "keyTakeaway": "During overload, dropping part of the requests saves the rest, and the decision on what to drop first is a product decision.",
+    "sections/0/blocks/0/text": "Load is twice the capacity. Serve everyone slowly or half normally?",
+    "sections/1/blocks/0/text": "A system without a shedding mechanism under overload degrades to complete inoperability: queues grow, response time exceeds timeouts, and eventually no one is served. \"Everyone slowly\" in practice means \"no one\".",
+    "sections/2/blocks/0/text": "[[backpressure|Backpressure]] is a signal to the source to slow down. In queues, it is refusing to accept new work until old work is sorted out. In synchronous calls, it is rejecting with `429`.",
+    "sections/2/blocks/1/text": "[[load-shedding|Load shedding]] is the conscious rejection of a subset of requests for the sake of the rest's operability. Sounds bad, but the alternative is worse.",
+    "sections/2/blocks/2/text": "Mechanics are simple: if the system processes 400 requests per second and 800 arrive, without shedding the queue grows infinitely, response time goes beyond timeout, and all 800 get an error after a long wait. With shedding, 400 are served normally, 400 get a fast clear rejection.",
+    "sections/2/blocks/3/text": "The product part is **what to shed.** This is [[traffic-prioritization|prioritization]], and the product manager does it:",
+    "sections/2/blocks/4/text": "*By scenario.* Checkout is more important than viewing history. *By user.* Active clients are more important than bots and scrapers. *By request type.* Writes are more important than reads because reads can be retried.",
+    "sections/2/blocks/5/text": "Practical hierarchy for a consumer product: completing a started action → starting a new action → viewing → background and analytics.",
+    "sections/2/blocks/6/text": "Separately — **what rejection looks like.** Not \"error\", but \"many orders right now, please try in a minute\" with auto-retry. An honest overload message is perceived noticeably better than an incomprehensible glitch.",
+    "sections/3/blocks/0/text": "Priorities that activate when load exceeds 85%:",
+    "sections/3/blocks/1/items/0": "Completing a started order — never shed.",
+    "sections/3/blocks/1/items/1": "Adding to cart, authorization — not shed.",
+    "sections/3/blocks/1/items/2": "Catalog and search — shed at 95%, cached results shown.",
+    "sections/3/blocks/1/items/3": "Order history, profile — shed at 90%.",
+    "sections/3/blocks/1/items/4": "Partner dashboard — shed at 85%.",
+    "sections/3/blocks/1/items/5": "Analytics and background — paused at 85%.",
+    "sections/3/blocks/2/text": "Logic: a person who started checkout must finish it. Refusal mid-payment is more expensive than order history unavailability.",
+    "sections/3/blocks/3/text": "Applied three times in six months. In the worst case, the partner dashboard was unavailable for 25 minutes, checkout worked without glitches. Partners didn't complain — they were written to in advance.",
+    "sections/4/blocks/0/text": "Prioritization requires the system to distinguish request types before processing them. If everything goes in a single stream, there is nothing to choose from, and this is an architectural requirement laid down in advance.",
+    "sections/5/blocks/0/text": "During overload, dropping part of the requests saves the rest, and the decision on what to drop first is a product decision."
+  }
+}

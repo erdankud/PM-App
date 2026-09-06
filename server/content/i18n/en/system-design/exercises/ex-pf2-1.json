@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "59075d38a7e1d966",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Build a Budget",
+    "inputs/0/label": "Backend budget after reserve",
+    "inputs/0/unit": "ms",
+    "inputs/1/label": "Critical path",
+    "inputs/1/unit": "ms",
+    "promptBlocks/0/text": "Target for the catalog screen is 1.2 s at p95. Known: connection already established, RTT 120 ms, rendering 200 ms, response transfer 150 ms. Break down the remainder into server calls: catalog, stock, prices, banners — and state what runs in parallel.",
+    "referenceReasoningBlocks/0/text": "leaves 1,200 − 120 − 200 − 150 = 730 ms for the server, minus a 15% reserve (110 ms) = 620 ms. Catalog, prices, and banners are independent — parallel. Stock depends on the product list from the catalog — sequential after it. Critical path: catalog (300) + stock (250) + assembly (40) = 590 ms. Prices and banners fit within the parallel 300 ms. A 30 ms reserve is a bit tight, should trim the catalog."
+  }
+}

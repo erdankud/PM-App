@@ -1,0 +1,43 @@
+{
+  "language": "en",
+  "sourceDigest": "152df773e23f9824",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "Four words you cannot do without",
+    "keyTakeaway": "The model remembers nothing between calls, the entire context is sent anew each time, and tokens are the unit of measurement for cost, speed, and volume.",
+    "sections/0/blocks/0/text": "An engineer says: \"we put the history in context, but we hit the window, and the prompt costs more than the response\". What does this mean?",
+    "sections/1/blocks/0/text": "AI features are discussed in a language that a product manager often does not know, which pushes them out of quality and cost decisions—meaning precisely those decisions that are product-related. The vocabulary here is small: four concepts cover most of the conversations.",
+    "sections/2/blocks/0/text": "**[[llm|Language model]]** predicts the continuation of text. Everything else is a consequence of this.",
+    "sections/2/blocks/1/text": "**[[token|Token]]** is a unit of text for the model. Not a letter and not a word: approximately 3–4 characters for English, usually less for Russian—one Russian word often takes 2–3 tokens. Practical estimate: a page of text is about 500–700 tokens in Russian.",
+    "sections/2/blocks/2/text": "Tokens are the unit of measurement for everything: cost, speed, context volume.",
+    "sections/2/blocks/3/text": "**[[prompt|Prompt]]** is everything fed to the input. Usually consists of parts:",
+    "sections/2/blocks/4/text": "*[[system-prompt|System instruction]]* — role, rules, constraints. Set by the product, the user does not see it. *Data* — what we work with: product description, order history, found documents. *User query.*",
+    "sections/2/blocks/5/text": "**[[context|Context]]** is everything the model sees during generation: the prompt plus the already generated part of the response. The model remembers nothing between queries: each call starts from scratch, and all \"memory\" is what we put into the context ourselves.",
+    "sections/2/blocks/6/text": "The last one is the most important product consequence. **The dialog is not stored in the model.** For the model to \"remember\" previous messages, they are sent anew with each query. This is where both the cost and the context volume grow with each turn of the conversation.",
+    "sections/3/blocks/0/text": "The feature \"pick a weekly cart\". The prompt consists of:",
+    "sections/3/blocks/1/header/0": "Part",
+    "sections/3/blocks/1/header/1": "Tokens",
+    "sections/3/blocks/1/rows/0/0": "System instruction: role, rules, response format",
+    "sections/3/blocks/1/rows/0/1": "420",
+    "sections/3/blocks/1/rows/1/0": "Catalog of available items in the store (abbreviated)",
+    "sections/3/blocks/1/rows/1/1": "2 800",
+    "sections/3/blocks/1/rows/2/0": "User purchase history for 3 months",
+    "sections/3/blocks/1/rows/2/1": "900",
+    "sections/3/blocks/1/rows/3/0": "User query",
+    "sections/3/blocks/1/rows/3/1": "30",
+    "sections/3/blocks/1/rows/4/0": "**Total input**",
+    "sections/3/blocks/1/rows/4/1": "**4 150**",
+    "sections/3/blocks/1/rows/5/0": "Response",
+    "sections/3/blocks/1/rows/5/1": "~600",
+    "sections/3/blocks/2/text": "The input-to-output ratio is 7 to 1. This is typical and explains the phrase \"the prompt costs more than the response\": we pay for both, and the input is much larger.",
+    "sections/3/blocks/3/text": "The first version put the full catalog—40 thousand tokens. It worked, cost ten times more, and responded twice as slowly. Reducing the catalog to the relevant part is the main optimization in this feature, and it is a product optimization: the decision on which items to consider relevant is not made by the engineer.",
+    "sections/4/blocks/0/text": "Tokenization depends on the model, and the estimate \"word ≈ 2.5 tokens\" for Russian is approximate. For budget calculations, it is better to measure on real data.",
+    "sections/5/blocks/0/text": "The model remembers nothing between calls, the entire context is sent anew each time, and tokens are the unit of measurement for cost, speed, and volume."
+  }
+}

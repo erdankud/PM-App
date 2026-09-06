@@ -45,6 +45,49 @@ def check(kind: str) -> tuple[list[str], dict]:
 
 
 
+def check_translations() -> list[str]:
+    """Полнота и современность переводов.
+
+    Считается по файлам, а не по полям: наполовину переведённый урок читается как
+    поломка приложения, а не как «этот урок ещё не переведён». Устаревшее наложение
+    (исходник правили после перевода) не применяется — здесь оно видно цифрой,
+    чтобы не выяснять это по пропавшему на экране английскому.
+    """
+    from app import tree_content
+    from app.i18n_content import TRANSLATED_LANGUAGES, digest, translatable
+    from scripts.translate_content import sources
+
+    problems: list[str] = []
+    for language in TRANSLATED_LANGUAGES:
+        translated = stale = incomplete = 0
+        pairs = sources(
+            list(tree_content.KINDS),
+            ["tree", "lesson", "scenario", "exercise", "glossary", "diagram"],
+        )
+        for doc_kind, path in pairs:
+            overlay = tree_content.overlay_path(path, language)
+            if not overlay.exists():
+                continue
+            document = _read(path)
+            payload = _read(overlay)
+            if payload.get("sourceDigest") != digest(doc_kind, document):
+                stale += 1
+                continue
+            missing = set(translatable(doc_kind, document)) - set(payload.get("fields") or {})
+            if missing:
+                incomplete += 1
+                problems.append(
+                    f"{language}/{path.name}: не переведено {len(missing)} полей"
+                )
+                continue
+            translated += 1
+        print(
+            f"\nПеревод ({language}): {translated} из {len(pairs)} файлов"
+            f" (устарело: {stale}, неполных: {incomplete})"
+        )
+    return problems
+
+
 def check_audio_scripts() -> list[str]:
     """Сценарии обзоров: заглушки не публикуются, отставшие от урока — тоже.
 
@@ -57,22 +100,29 @@ def check_audio_scripts() -> list[str]:
 
     problems: list[str] = []
     total = stale = 0
-    for kind in tree_content.KINDS:
-        for lesson in tree_content.tree_content(kind)["lessons"].values():
-            path = audio.script_path(lesson)
-            if not path.exists():
-                continue
-            total += 1
-            if audio.load_script(lesson) is None:
-                stale += 1
-                continue
-            script = json.loads(path.read_text(encoding="utf-8"))
-            provider = script["generator"]["provider"]
-            if provider == "mock":
-                problems.append(f"{lesson['id']}: обзор-заглушка (provider=mock)")
-                continue
-            for problem in audio_script.validate_script(script["turns"], lesson):
-                problems.append(f"{lesson['id']}: {problem}")
+    from app.i18n_content import AUTHORED_LANGUAGE, TRANSLATED_LANGUAGES
+
+    for language in (AUTHORED_LANGUAGE, *TRANSLATED_LANGUAGES):
+        for kind in tree_content.KINDS:
+            for lesson in tree_content.tree_content(kind, language)["lessons"].values():
+                path = audio.script_path(lesson, language)
+                if not path.exists():
+                    continue
+                total += 1
+                if audio.load_script(lesson, language) is None:
+                    stale += 1
+                    continue
+                script = json.loads(path.read_text(encoding="utf-8"))
+                provider = script["generator"]["provider"]
+                if provider == "mock":
+                    problems.append(
+                        f"{lesson['id']} ({language}): обзор-заглушка (provider=mock)"
+                    )
+                    continue
+                for problem in audio_script.validate_script(
+                    script["turns"], lesson, language
+                ):
+                    problems.append(f"{lesson['id']} ({language}): {problem}")
 
     print(f"\nОбзоров: {total} (устарело к тексту урока: {stale})")
     return problems
@@ -125,6 +175,16 @@ def main() -> int:
     print(f"Уроков: {len(sd['lessons'])}  Упражнений: {len(sd['exercises'])}  "
           f"Сценариев: {len(sd['scenarios'])}")
     print(f"Терминов: {len(sd['glossary']['terms'])}  Схем: {len(sd['diagrams'])}")
+    translation_problems = check_translations()
+    if translation_problems:
+        print()
+        for problem in translation_problems[:20]:
+            print(f"  ! {problem}")
+        if len(translation_problems) > 20:
+            print(f"  ... и ещё {len(translation_problems) - 20}")
+        print("\nПереводы неполны — контент невалиден.")
+        return 1
+
     audio_problems = check_audio_scripts()
     if audio_problems:
         print()

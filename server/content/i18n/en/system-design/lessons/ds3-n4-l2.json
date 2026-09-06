@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "f8d70ccd52cd7b2b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:01Z"
+  },
+  "fields": {
+    "title": "Data Lineage and Trust in Numbers",
+    "keyTakeaway": "A metric anomaly is checked top-to-bottom along the data lineage, and having such a path is a prerequisite for trusting numbers at all.",
+    "sections/0/blocks/0/text": "A metric in the dashboard drops by 8%. How do you know whether the product dropped or the data broke?",
+    "sections/1/blocks/0/text": "Every false signal costs the team a day of investigation. Every missed signal costs more. A product where metrics are not trusted loses its ability to react quickly: any anomaly is first checked manually, and this takes time during which the problem grows.",
+    "sections/2/blocks/0/text": "[[data-lineage|Data Lineage]] is the path of a number from its origin to the chart. A typical path: user action → event in the app → server collection → transfer to storage → calculation → dashboard. Five transitions, and the number can break at each one.",
+    "sections/2/blocks/1/text": "What breaks most often:",
+    "sections/2/blocks/2/text": "*The client stops sending the event.* An app release where the event was lost. The metric drops, the product is fine. Symptom — the drop coincides with a release and is visible on only one platform.",
+    "sections/2/blocks/3/text": "*[[schema-drift|Schema Drift]].* The event format changed, the handler silently discards a part of it. Symptom — a sharp drop starting from an exact date.",
+    "sections/2/blocks/4/text": "*Definition changed.* A filter was added to the calculation. Symptom — the entire history changes, not just recent days.",
+    "sections/2/blocks/5/text": "*Export delay.* Some data has not arrived yet. Symptom — the drop is only in the latest interval and recovers on its own.",
+    "sections/2/blocks/6/text": "Hence the practice: **every key metric has a fixed lineage**, and when an anomaly occurs, it is checked top-to-bottom rather than guessed. Plus a [[data-contract|data contract]] — an agreement on the event structure between those who send it and those who calculate it. A contract violation breaks the build instead of quietly corrupting the number, which is precisely what we want.",
+    "sections/2/blocks/7/text": "A useful minimum available to any team: [[reconciliation|reconciliation]] once a day between the number of events and the number of facts in the product database. A discrepancy above the threshold triggers a notification. Cheap and catches most cases.",
+    "sections/3/blocks/0/text": "Order conversion dropped by 8% overnight. The lineage investigation took twenty minutes instead of two days.",
+    "sections/3/blocks/1/text": "The number of orders in the product database showed no changes. This means the product is fine and the data is broken. The number of \"order placed\" events dropped by 8%. Next by platform: the drop is only on Android. Next by version: only on the version released the day before. The event was lost during a refactoring of the checkout screen.",
+    "sections/3/blocks/2/text": "After this incident, two rules were established: daily event reconciliation with the database and mandatory checking of key events in the mobile app release checklist. Over the next six months, three similar losses were caught before they were noticed in the dashboard.",
+    "sections/4/blocks/0/text": "Full lineage description for all data is a major effort and usually does not pay off. It is enough to cover the 10-15 metrics that are actually looked at when making decisions.",
+    "sections/5/blocks/0/text": "A metric anomaly is checked top-to-bottom along the data lineage, and having such a path is a prerequisite for trusting numbers at all."
+  }
+}

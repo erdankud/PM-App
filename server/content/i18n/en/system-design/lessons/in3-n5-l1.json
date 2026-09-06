@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "c6496b2e3693605e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "The questionnaire that decides a deal",
+    "keyTakeaway": "Enterprise customer questionnaires overlap heavily, and a consolidated list turns them from a blocker into a clear roadmap item.",
+    "sections/0/blocks/0/text": "Before signing, a forty-point security document arrived from their side. Who answers it and what do we do with the points where the answer is \"no\"?",
+    "sections/1/blocks/0/text": "A [[vendor-questionnaire|vendor questionnaire]] arrives late in the game, when the deal is already baked into the plan. Every point answered with \"no\" means either a lost deal, urgent development, or a promise you'll have to deliver on. A PM seeing such a questionnaire for the first time during a deal can neither evaluate nor prioritize.",
+    "sections/2/blocks/0/text": "Questionnaires from different companies are similar. Main sections:",
+    "sections/2/blocks/1/text": "**Authentication and access.** Single sign-on, two-factor authentication, roles, access revocation upon employee termination. **Data.** Where it's stored, encryption, [[data-residency|residency]], retention period, deletion, export upon termination. **[[subprocessor|Subprocessors]].** List of third parties processing data. Often requires notification on list changes. **Availability.** [[sla|SLA]], disaster recovery plan, maintenance windows. **Integrations.** API, export formats, webhooks, limits, supporting their systems. **Audit.** Action logs, retention period, export capability. **Processes.** How you develop, how you respond to incidents, how you notify about breaches.",
+    "sections/2/blocks/2/text": "Three types of points, handled differently:",
+    "sections/2/blocks/3/text": "*Yes.* Answer and attach proof. *No, but cheap.* Log export, extra role — weeks of work. Usually done for a specific deal. *No, and expensive.* Residency, single sign-on, custom SLA. Quarters. This is a product decision: build it or walk away from the segment.",
+    "sections/2/blocks/4/text": "A practice that pays off many times over: **collect questionnaires from three or four clients and make a consolidated list.** Points appearing everywhere are not client requirements, but segment requirements, and they belong on the roadmap, not a single deal.",
+    "sections/3/blocks/0/text": "The questionnaire from Domashny retail chain from gateway `DS3-G-A` was the first. 38 points: 24 \"yes,\" 9 \"no, cheap,\" 5 \"no, expensive.\"",
+    "sections/3/blocks/1/text": "The five expensive ones: data residency, single sign-on for retail staff, SLA with penalties, full audit log export, 24-hour breach notification.",
+    "sections/3/blocks/2/text": "Residency was covered by an enterprise pricing tier. Breach notification turned out to be a process, not development — we wrote a policy in a day. The other three entered the roadmap after we found out two other chains asked the same things.",
+    "sections/3/blocks/3/text": "The consolidated sheet was made after the third questionnaire. Item overlap was around 70%. This turned \"client requirements\" into \"enterprise segment requirements\" and allowed us to plan ahead instead of reacting during a deal.",
+    "sections/3/blocks/4/text": "Bonus finding: the nine cheap items took about a week each to build, but were always urgent and always broke sprint plans. After the consolidated sheet, they were built ahead of time as a batch in three weeks.",
+    "sections/4/blocks/0/text": "Not all questionnaire requirements are justified: some are copied from templates and don't apply. You can and should discuss them — the client's security team is usually ready to talk if you explain rather than refuse.",
+    "sections/5/blocks/0/text": "Enterprise customer questionnaires overlap heavily, and a consolidated list turns them from a blocker into a clear roadmap item."
+  }
+}

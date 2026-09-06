@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "8d301d710198cbe0",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Find the Leak Path",
+    "inputs/0/label": "Feed cache keyed by 'feed' without user ID",
+    "inputs/1/label": "Production database copy on the development server",
+    "inputs/2/label": "Sending the full address to analytics",
+    "inputs/3/label": "Logging the request body on error",
+    "inputs/4/label": "Viewing an order via direct link without owner check",
+    "acceptance/0/expected": "creates a leak path",
+    "acceptance/1/expected": "creates a leak path",
+    "acceptance/2/expected": "creates a leak path",
+    "acceptance/3/expected": "creates a leak path",
+    "acceptance/4/expected": "creates a leak path",
+    "inputs/0/choices/0": "creates a leak path",
+    "inputs/0/choices/1": "does not create",
+    "inputs/1/choices/0": "creates a leak path",
+    "inputs/1/choices/1": "does not create",
+    "inputs/2/choices/0": "creates a leak path",
+    "inputs/2/choices/1": "does not create",
+    "inputs/3/choices/0": "creates a leak path",
+    "inputs/3/choices/1": "does not create",
+    "inputs/4/choices/0": "creates a leak path",
+    "inputs/4/choices/1": "does not create",
+    "promptBlocks/0/text": "For each decision, state whether it creates a leak path.",
+    "promptBlocks/1/items/0": "Feed cache keyed by 'feed' without user ID",
+    "promptBlocks/1/items/1": "Production database copy for debugging on the development server",
+    "promptBlocks/1/items/2": "Sending the full address to an analytics service",
+    "promptBlocks/1/items/3": "Logging the request body on error",
+    "promptBlocks/1/items/4": "Ability to view an order via direct link without owner check",
+    "referenceReasoningBlocks/0/text": "all five do. 1 — showing someone else's data. 2 — real data in an environment with weaker controls. 3 — transferring to a third party without a basis. 4 — personal data and possibly secrets in logs. 5 — direct access to someone else's data via enumeration. Takeaway: three out of five are product decisions, not engineering bugs."
+  }
+}

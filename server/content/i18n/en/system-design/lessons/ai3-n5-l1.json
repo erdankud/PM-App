@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "07a7bc9e743420db",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "The Spec Section You Can Sign Off On",
+    "keyTakeaway": "An AI feature spec defines boundaries, data sources, quality thresholds, handling of unknowns, cost, and a Plan B, and is sufficient if you can write evals from it without asking questions.",
+    "sections/0/blocks/0/text": "How do you formulate \"works well\" for a feature that answers differently every time?",
+    "sections/1/blocks/0/text": "An AI feature without acceptance criteria can be neither accepted nor rejected: discussion boils down to impressions. Criteria turn arguments into verification.",
+    "sections/2/blocks/0/text": "The spec section contains eight items.",
+    "sections/2/blocks/1/text": "**1. Task and boundaries.** What the function does and doesn't do. List of topics it does not answer.",
+    "sections/2/blocks/2/text": "**2. Data source.** Where information for the answer comes from. If RAG — what's in the corpus, how it updates.",
+    "sections/2/blocks/3/text": "**3. Quality criteria with thresholds.** From `AI2-N4-L1`: factual accuracy, grounding, format, refusals. Each with a number.",
+    "sections/2/blocks/4/text": "**4. Evaluation set.** How many examples, what it's built from, who maintains it.",
+    "sections/2/blocks/5/text": "**5. Behavior when data is missing.** What the model answers when it doesn't know. The exact phrasing is given verbatim.",
+    "sections/2/blocks/6/text": "**6. Forbidden behavior.** Topics not to answer; actions not to take. Refusal threshold — 100%.",
+    "sections/2/blocks/7/text": "**7. Cost and latency.** Cost per call, expected frequency, annual cost. TTFT and total time with targets.",
+    "sections/2/blocks/8/text": "**8. Plan B.** What to show during provider downtime or refusal.",
+    "sections/2/blocks/9/text": "Additionally — **what is fixed in configuration:** model and its version, temperature, context limit. Changing any of these is a reason to run evals.",
+    "sections/2/blocks/10/text": "Checking section sufficiency: **can you write evals from it without asking questions?**",
+    "sections/3/blocks/0/text": "Spec section for the \"ask about product\" feature, shortened:",
+    "sections/3/blocks/1/text": "> **Task.** Answers questions about product specs based on manufacturer descriptions. Does not answer: medical questions, health and diet questions, non-product questions, competitor comparisons. > > **Data.** Descriptions from supplier catalog, filter by user stores, hybrid search, top-8 after re-ranking. > > **Quality.** Relevant document in context ≥ 92%. Fact correct ≥ 95%. No claims outside context ≥ 98%. Format with citation 100%. Refusal on forbidden 100%. > > **Set.** 240 examples, from logs, updated quarterly, maintained by PM. > > **No data.** \"Not specified in description\" plus link to manufacturer card. > > **Cost.** 2.1 kop./call, 1,400 calls per day, ~107k ₽/year. TTFT ≤ 600 ms, total ≤ 2.5 s. > > **Plan B.** Description and composition as is, without an answer. > > **Configuration.** Model and version pinned, temperature 0.2, context ≤ 4,000 tokens.",
+    "sections/3/blocks/2/text": "The refusal item with a 100% threshold is the only hard one: any drop blocks release.",
+    "sections/4/blocks/0/text": "Quality thresholds are set after initial measurements, not before. The first version of the spec contains intent, the second — figures obtained by measurement.",
+    "sections/5/blocks/0/text": "An AI feature spec defines boundaries, data sources, quality thresholds, handling of unknowns, cost, and a Plan B, and is sufficient if you can write evals from it without asking questions."
+  }
+}

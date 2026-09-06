@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "68e0d8b1b24df12f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:02:14Z"
+  },
+  "fields": {
+    "title": "Privacy as a product quality",
+    "keyTakeaway": "Transparency, control, and minimization turn privacy from a constraint into a quality, and privacy-driven decisions regularly improve other product metrics as well.",
+    "sections/0/blocks/0/text": "Can privacy be an advantage rather than a constraint?",
+    "sections/1/blocks/0/text": "Privacy seen solely as a constraint gets implemented minimally and brings nothing beyond compliance. Yet it is one of the few qualities users and clients are willing to pay for and which is hard to copy quickly.",
+    "sections/2/blocks/0/text": "Three ways to turn it into a product quality.",
+    "sections/2/blocks/1/text": "**Transparency as a feature.** Show the user what is known about them and who has access to it. A \"your data\" screen with export and deletion. Costs little, noticeably increases trust.",
+    "sections/2/blocks/2/text": "**Control as a feature.** Visibility settings, separate consents, access history. Covered in `SE2-N2-L2` using the partner audit log as an example — the same technique applies to end users.",
+    "sections/2/blocks/3/text": "**Minimization as a promise.** \"We do not collect X\" is a strong statement if it is true and verifiable. Requires discipline: a single violation destroys the value.",
+    "sections/2/blocks/4/text": "In the enterprise segment, privacy converts more directly: audit log, list of sub-processors, roles, and access revocation are questionnaire items, each of which can make or break a deal.",
+    "sections/2/blocks/5/text": "A separate consideration is that **privacy and product quality are not opposites.** Minimization simplifies the system, reduces context in AI features, lowers data volume and storage costs. Several times in this course, a decision made for privacy reasons also improved other metrics.",
+    "sections/2/blocks/6/text": "The flip side: privacy limits personalization and targeting. This is a real trade-off, and you must make it consciously.",
+    "sections/3/blocks/0/text": "What became a product quality:",
+    "sections/3/blocks/1/text": "*\"Your Data\" screen* — export, deletion, list of connected services, login history. Used by 4% — not much, but these are the ones who would have left otherwise.",
+    "sections/3/blocks/2/text": "*Three separate consents* instead of one. As a byproduct, they yielded higher push conversion because people distinguish between channels.",
+    "sections/3/blocks/3/text": "*Partner audit log* — cited as a factor in three enterprise deals.",
+    "sections/3/blocks/4/text": "*Masked numbers in courier chat* — a threat-modeling solution that turned into an argument: \"your number is not visible to the courier.\"",
+    "sections/3/blocks/5/text": "What got simpler: profile field minimization reduced the signup form from seven fields to two, and signup conversion grew by 9%. The decision was made for privacy reasons, but the effect turned out to be product-driven.",
+    "sections/4/blocks/0/text": "Privacy as positioning requires consistency. A product that claims to be private and gets caught collecting excess data loses more than it gained.",
+    "sections/5/blocks/0/text": "Transparency, control, and minimization turn privacy from a constraint into a quality attribute, and decisions made for privacy regularly improve other product metrics as well."
+  }
+}

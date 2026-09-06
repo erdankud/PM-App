@@ -1,0 +1,19 @@
+{
+  "language": "en",
+  "sourceDigest": "91e139a125ccc096",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Choose an isolation model",
+    "promptBlocks/0/text": "Three deals in negotiation. For each, state what model is needed and what must be sold separately.",
+    "promptBlocks/1/items/0": "Chain of 40 stores, requires data storage in Russia and confirmation of isolation from competitors",
+    "promptBlocks/1/items/1": "200 single stores, standard terms, price-sensitive",
+    "promptBlocks/1/items/2": "Chain of 12 stores, wants custom warehouse codes and Saturday update windows",
+    "referenceReasoningBlocks/0/text": "First — database per tenant, residency is achievable only this way; sold as enterprise tier. Second — shared schema, otherwise economics don't work. Third — shared schema plus extension table for warehouse codes; Saturday update windows in a shared schema are unachievable, this must be stated honestly and either refused or spun out as well. General rule: customer requirement translates to isolation model, model translates to price line."
+  }
+}

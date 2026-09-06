@@ -80,9 +80,14 @@ def attempt_state(attempt: ChallengeAttempt | None) -> str:
     return "not_started"
 
 
-def gate_scenario(scenario_id: str) -> dict | None:
-    # Оба дерева: сценарии гейтов есть и у карты продукта, и у System Design.
-    return tree_content.scenario(scenario_id)
+def gate_scenario(scenario_id: str, language: Language = Language.RU) -> dict | None:
+    """Сценарий в языке читателя.
+
+    Оба дерева: сценарии гейтов есть и у карты продукта, и у System Design.
+    Оценщик берёт сценарий отдельно и всегда авторский — рубрика существует в одном
+    экземпляре, поэтому язык не может изменить балл.
+    """
+    return tree_content.scenario(scenario_id, language.value)
 
 
 def challenge_response(
@@ -93,7 +98,7 @@ def challenge_response(
     Consequences and the authored rubric are withheld until submission, exactly as in
     v0.1: seeing the outcome before deciding would remove the decision.
     """
-    content = gate_scenario(attempt.scenario_id)
+    content = gate_scenario(attempt.scenario_id, language)
     if content is None:
         raise LookupError(attempt.scenario_id)
 
@@ -103,7 +108,7 @@ def challenge_response(
         .filter(EvidenceInteraction.attempt_id == attempt.id)
         .order_by(EvidenceInteraction.opened_at.asc())
     ]
-    block = tree_content.block(attempt.block_id)
+    block = tree_content.block(attempt.block_id, language.value)
 
     return ChallengeResponse(
         gate_id=attempt.gate_id,

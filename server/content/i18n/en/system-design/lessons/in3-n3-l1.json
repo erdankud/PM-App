@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "4efb957c23348007",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "Team speed, not code speed",
+    "keyTakeaway": "Splitting buys release independence at the price of network failures and lost transactions, and is justified by the number of teams, not code size.",
+    "sections/0/blocks/0/text": "The team suggests splitting the monolith into services. What product question is behind this?",
+    "sections/1/blocks/0/text": "Splitting a system is a months-long engineering project sold to PMs under the slogan \"it will get faster.\" What gets faster is not the product, but releases, and even then, not always. A PM who doesn't understand what they are buying agrees to an expensive project with no success criteria.",
+    "sections/2/blocks/0/text": "[[monolith|Monolith]] — an application released as a single unit. [[microservice|Services]] — parts released independently.",
+    "sections/2/blocks/1/text": "What splitting gives you:",
+    "sections/2/blocks/2/text": "**[[team-autonomy|Release independence]].** A team ships its own code without coordinating with others. This is the main and essentially only reason. When five teams wait for a joint release, each operates at the speed of the slowest one.",
+    "sections/2/blocks/3/text": "**Failure isolation.** A recommendations crash doesn't take down checkout — if boundaries are drawn correctly.",
+    "sections/2/blocks/4/text": "**Independent scaling.** High-load parts can be scaled separately.",
+    "sections/2/blocks/5/text": "What it takes away:",
+    "sections/2/blocks/6/text": "**Network calls instead of in-memory calls.** Slower and can fail. Every boundary is a point of potential failure.",
+    "sections/2/blocks/7/text": "**Transactions across boundaries are impossible.** A direct consequence of `DS1-N5`: \"all or nothing\" works within a single database. Once you split, you lose this and get intermediate states visible to the user.",
+    "sections/2/blocks/8/text": "**Operations become an order of magnitude harder.** Monitoring, deployment, debugging — everything multiplies by the number of services.",
+    "sections/2/blocks/9/text": "The main trap is the **[[distributed-monolith|distributed monolith]]**: services are split, but have to be released together because every change touches several. All the costs of splitting, none of the benefits. It happens when boundaries are drawn by technical layers instead of product lines.",
+    "sections/2/blocks/10/text": "A sanity check a PM can apply themselves: **how many services need to be changed for a typical product task?** One — boundaries are correct. Three or four — distributed monolith.",
+    "sections/3/blocks/0/text": "We split twice, with different results.",
+    "sections/3/blocks/1/text": "*First split, unsuccessful.* We isolated a \"database service,\" \"business logic service,\" and \"API service.\" Boundaries by technical layer. Any product feature required changes in all three and coordinated releases. Six months later, we merged it back.",
+    "sections/3/blocks/2/text": "*Second split, successful.* We isolated by product areas: catalog, orders, delivery, partner cabinet. A feature inside an area touches one service. Four teams release independently; releases went from 6 to 40 per week.",
+    "sections/3/blocks/3/text": "Three cross-boundary scenarios remained, order placement being the main one. Orchestration is kept for them, and this is a deliberate complexity in three places instead of everywhere.",
+    "sections/4/blocks/0/text": "A monolith is not bad. For a single team, it is simpler in every way, and splitting before you have three or four teams is usually pure overhead. You split when release coordination becomes a noticeable time sink, not in advance.",
+    "sections/5/blocks/0/text": "Splitting buys release independence at the price of network failures and lost transactions, and is justified by the number of teams, not code size."
+  }
+}

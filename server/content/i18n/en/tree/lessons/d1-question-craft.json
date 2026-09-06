@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "1d19ddb69b4999dd",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:41:40Z"
+  },
+  "fields": {
+    "title": "How to Ask Questions Without Getting Polite Lies",
+    "keyTakeaway": "Ask about what the person has already done in a specific recent case. Anything they say about the future or what they “usually” do is a forecast and self-description, not data.",
+    "checkQuestion": "Why is “would you use a report like this?” worse than “how did you do this last month?”",
+    "blocks/0/text": "The key question of this node is the same — **how to ask questions** — but here it is about form. People want to be helpful and polite. To the question “would that be convenient for you?”, almost everyone answers “yes”, and that means nothing.",
+    "blocks/1/text": "**What happens if you ignore this.** Ten interviews confirm the idea, the feature is launched, and no one uses it. The research wasn't wrong — it measured politeness.",
+    "blocks/2/title": "Question rules",
+    "blocks/2/subtitle": "Four rules that are enough for your first year",
+    "blocks/2/items/0": "**About the past, not the future.** “What did you do when...” instead of “what would you do if...”.",
+    "blocks/2/items/1": "**About a specific case, not usually.** “Last Tuesday” instead of “as a rule”.",
+    "blocks/2/items/2": "**Without leading the answer.** Do not name the option you want to hear — it will be handed right back to you.",
+    "blocks/2/items/3": "**Stay silent after the answer.** The most valuable part usually comes after a three-second pause.",
+    "blocks/3/items/0": "“Do you need shift swap notifications?” → “How did you find out that the swap was confirmed last time?”",
+    "blocks/3/items/1": "“How often do you usually edit the schedule?” → “When was the last time you edited the schedule, and what happened then?”",
+    "blocks/3/items/2": "“Is it convenient for you to work with a spreadsheet?” → “Show me how you did it last month.”",
+    "blocks/3/items/3": "“Would you pay for a feature like this?” → “What are you buying or doing manually right now to cover this?”",
+    "blocks/4/text": "Question: “Would it be useful for you to see monthly hours for everyone?” — “Yes, of course, useful.”\nQuestion: “Show me how you calculated hours last month.” — The person opens a spreadsheet with three sheets and a formula, explaining along the way that they made a mistake once.\n\nThe first answer cannot be used. The second one is the real insight.",
+    "blocks/4/title": "Smena, two answers to the same core question",
+    "blocks/5/text": "Past behavior does not predict the reaction to something that does not exist yet. If a product changes the task itself rather than speeding up an existing one, the interview will only show the current workaround — after that, you need a prototype or an experiment, not a conversation.",
+    "blocks/5/title": "Limits of the model"
+  }
+}

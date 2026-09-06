@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "sourceDigest": "7d2859e0b6e8a5b7",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "Group generation: separate ideation from evaluation",
+    "keyTakeaway": "Ideas and criticism cannot coexist in the same room at the same time. As soon as someone says “that won't work” during generation, the flow stops — and from then on, people only discuss what was said before that phrase.",
+    "checkQuestion": "Why can a strong expert in the room reduce the number of ideas?",
+    "blocks/0/text": "The same question about a good idea, but about **how to do it together without losing half the options.**",
+    "blocks/1/text": "**What happens if you do not answer this question.** The meeting turns into an argument. Not the best idea wins, but the most insistent or senior person — and everyone else stops proposing.",
+    "blocks/2/title": "Generation rules",
+    "blocks/2/subtitle": "Four rules, each against a specific loss mechanism",
+    "blocks/2/items/0": "**Silently and in writing first.** Everyone writes on their own for five minutes — otherwise the first spoken idea anchors everyone.",
+    "blocks/2/items/1": "**Divergence and convergence separately.** First only collect, then only evaluate. Not simultaneously.",
+    "blocks/2/items/2": "**Quantity over quality.** The goal of the first stage is the number of options, not defending them.",
+    "blocks/2/items/3": "**Anonymous ideas.** Then people discuss the idea, not the person.",
+    "blocks/3/title": "Six Thinking Hats",
+    "blocks/3/subtitle": "A way to structure discussion by roles, not by people",
+    "blocks/3/items/0": "The entire group looks from one perspective at the same time: only facts, only risks, only benefits, only ideas.",
+    "blocks/3/items/1": "The point is that **no one is assigned the role of skeptic**: everyone criticizes, and all at the same time.",
+    "blocks/3/items/2": "It saves relationships rather than time: an objection stops being a personal stance.",
+    "blocks/4/text": "When there is someone in the group who “knows exactly how to do it”, others filter out their options in advance. A written first stage fixes this.",
+    "blocks/4/title": "An expert in the room reduces the number of ideas",
+    "blocks/5/text": "First: discussed out loud. In an hour — six ideas, four of them proposed by the lead developer. They took his first one.\n\nSecond: five minutes silently and in writing, then gathered on a board without names. In the same hour — 23 ideas. Two of them no one would have said out loud because they sounded naive: “give the first book in full” and “remove registration before the first page”.\n\nThe second of those later produced the best result of the quarter.",
+    "blocks/5/title": "Vetka: two meetings about the same thing",
+    "blocks/6/text": "A group is good for quantity and bad for decision-making: one person should make the choice in the end, otherwise a compromise wins that satisfies everyone and works for no one. And unconstrained generation produces ideas unrelated to the task — you set the frame before the meeting.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

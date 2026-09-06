@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "7372df36c37cd8fc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Product sunset: how to exit without burning trust",
+    "keyTakeaway": "A product is sunsetted based on pre-defined conditions, and users are offboarded according to a plan: timeframe, data migration, alternatives, money. A quiet shutdown costs more than the closure itself—it costs the reputation of the entire company.",
+    "checkQuestion": "A product decision has been made to sunset it in three months. What will you do on day one?",
+    "blocks/0/text": "The key question of this node: **how to reduce the risks of exiting the market?** This is the most uncomfortable node in the domain and the least discussed in advance.",
+    "blocks/1/title": "The sunset decision",
+    "blocks/1/subtitle": "Made based on pre-defined conditions",
+    "blocks/1/items/0": "**Signals**—what must happen for us to admit it failed: threshold not reached in so many months, unit economics don't work out, market shifted.",
+    "blocks/1/items/1": "**Alternatives to sunsetting**—narrow down to a profitable niche, hand off to a partner, switch to maintenance-only mode, sell.",
+    "blocks/1/items/2": "**Cost of continuation**—not just money, but team focus taken away from the core product.",
+    "blocks/1/items/3": "**Who decides and when**—the review date is set in advance, otherwise the product lingers on inertia for years.",
+    "blocks/2/title": "Offboarding plan",
+    "blocks/2/subtitle": "A procedure that preserves relationships",
+    "blocks/2/items/0": "**Tell them first**—directly, via email, with an exact date. Rumors and silence are worse than any news.",
+    "blocks/2/items/1": "**Give time**—usually at least a quarter for business tools.",
+    "blocks/2/items/2": "**Give access to data**—export in a clear format, with no conditions or limits.",
+    "blocks/2/items/3": "**Suggest next steps**—your own alternative product or honest advice on a third-party tool.",
+    "blocks/2/items/4": "**Settle payments**—refund advance payments, cancel auto-renewals.",
+    "blocks/2/items/5": "**Employees**—their future is addressed first, before any announcement to clients.",
+    "blocks/3/text": "Condition set a year ago: 300 paying customers in the first year. Actual result—58.\n\nAlternatives: selling failed, no niche found, support required two dedicated people full-time.\n\nPlan: email to all 58 clients four months before shutdown, document export in a standard format, refund of advance payments for the remaining period, a list of two third-party services explaining which fits whom.\n\nOut of 58 clients, 12 migrated to Reestr's main product. There was not a single public complaint; two clients sent thank-you messages for giving advance notice.",
+    "blocks/3/title": "Reestr sunsets the HR document module",
+    "blocks/4/text": "A product that is formally alive but left unfixed slowly destroys trust in the entire company. An honest sunset with a plan is almost always better than an endless agony.",
+    "blocks/4/title": "The worst option—silently stopping development",
+    "blocks/5/text": "A product manager rarely makes the sunset decision alone: it carries commitments, contracts, and reputation. Your job is to present the conditions, alternatives, and cost of continuation so that the decision is made deliberately.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

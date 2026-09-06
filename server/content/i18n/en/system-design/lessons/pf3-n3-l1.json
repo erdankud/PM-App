@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "00beb93a3c77b44c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "Full Calculation",
+    "keyTakeaway": "Build your own where it is a competitive advantage, buy where it is not, and formulate the solution with a volume threshold at which it gets reconsidered.",
+    "sections/0/blocks/0/text": "A service costs 400 thousand per month. In-house development takes three months. Which is cheaper?",
+    "sections/1/blocks/0/text": "The [[build-vs-buy|choice]] is usually made by comparing two incomplete figures: the subscription price and the development estimate. Neither reflects reality, and the decision turns out to be wrong in about half of the cases.",
+    "sections/2/blocks/0/text": "The [[tco|total cost of ownership]] of your own solution includes:",
+    "sections/2/blocks/1/text": "*Development.* Team estimate, usually underestimated by 1.5–2 times. *Infrastructure.* Your own solution runs somewhere too. *Operations.* Monitoring, on-call, incidents. Constantly. *Evolution.* Requirements change, the solution needs refinement. Usually 20–30% of development per year. *Opportunity cost.* Three months of the team's time is three months of unbuilt product. Often the largest item.",
+    "sections/2/blocks/2/text": "The total cost of buying includes:",
+    "sections/2/blocks/3/text": "*Subscription,* growing with volume. *Integration,* usually underestimated. *Limitations* that will have to be worked around. *[[vendor-lock-in|Vendor lock-in]]* and [[switching-cost|switching costs]].",
+    "sections/2/blocks/4/text": "Three questions that give an answer faster than a calculation:",
+    "sections/2/blocks/5/text": "**Is this our competitive advantage?** If yes — build, even if more expensive. If no — buy, even if cheaper to build.",
+    "sections/2/blocks/6/text": "**Do we have the expertise?** Building something you have no experience in costs multiples of the estimate.",
+    "sections/2/blocks/7/text": "**What happens in three years?** Subscription at tenfold growth can become unaffordable — then buy now with a migration plan later.",
+    "sections/3/blocks/0/text": "Three decisions.",
+    "sections/3/blocks/1/text": "*Catalog search.* Bought a ready-made engine. Not a competitive advantage, no expertise, cost at current volume is acceptable. In-house development was estimated at 2 months — meaning 2 months of unbuilt product.",
+    "sections/3/blocks/2/text": "*Recommendations.* Built ourselves. Competitive advantage for a product service: knowing the buyer's habitual set is the core of value. Ready-made solutions give general recommendations, but specific ones are needed.",
+    "sections/3/blocks/3/text": "*SMS sending.* Bought and partially regret it: 4.2 RUB per message at 600 thousand orders — 2.5 million a year. Direct connection to operators would give about 1.4 RUB, saving 1.7 million, development and approvals — 2 months. Does not cover opportunity cost yet, but will cover it at triple growth. Recorded as a threshold: at 1.5 million orders a year we return to the question.",
+    "sections/3/blocks/4/text": "The last case is the correct form of a decision: not \"yes\" or \"no\", but \"no now, yes at such-and-such volume\".",
+    "sections/4/blocks/0/text": "The calculation ignores risk: building your own might fail, buying an existing one might shut down. Both risks are real and do not translate directly into money.",
+    "sections/5/blocks/0/text": "Build in-house where it is a competitive advantage, buy where it is not, and define the solution with a volume threshold that triggers a review."
+  }
+}

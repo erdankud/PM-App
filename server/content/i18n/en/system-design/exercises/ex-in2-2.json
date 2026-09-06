@@ -1,0 +1,42 @@
+{
+  "language": "en",
+  "sourceDigest": "4b560ee26cde38a2",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Breaking or not",
+    "inputs/0/label": "Add `delivery_eta` field to response",
+    "inputs/1/label": "Rename `price` to `price_gross`",
+    "inputs/2/label": "Make `comment` optional",
+    "inputs/3/label": "Change `order_id` from number to string",
+    "inputs/4/label": "Calculate `total` including delivery",
+    "acceptance/0/expected": "non-breaking",
+    "acceptance/1/expected": "breaking",
+    "acceptance/2/expected": "non-breaking",
+    "acceptance/3/expected": "breaking",
+    "acceptance/4/expected": "breaking",
+    "inputs/0/choices/0": "breaking",
+    "inputs/0/choices/1": "non-breaking",
+    "inputs/1/choices/0": "breaking",
+    "inputs/1/choices/1": "non-breaking",
+    "inputs/2/choices/0": "breaking",
+    "inputs/2/choices/1": "non-breaking",
+    "inputs/3/choices/0": "breaking",
+    "inputs/3/choices/1": "non-breaking",
+    "inputs/4/choices/0": "breaking",
+    "inputs/4/choices/1": "non-breaking",
+    "promptBlocks/0/text": "Identify breaking changes.",
+    "promptBlocks/1/items/0": "Add `delivery_eta` field to response",
+    "promptBlocks/1/items/1": "Rename `price` to `price_gross`",
+    "promptBlocks/1/items/2": "Add `assembling` status to three existing ones",
+    "promptBlocks/1/items/3": "Make `comment` optional",
+    "promptBlocks/1/items/4": "Change `order_id` from number to string",
+    "promptBlocks/1/items/5": "Start calculating `total` including delivery instead of excluding it",
+    "referenceReasoningBlocks/0/text": "2, 5, 6 break things — and 3 conditionally. 6 is the most dangerous: format is the same, meaning is different, nothing crashes, discrepancies will be found in partner reports weeks later. 3 breaks only intolerant clients — this exact thing happened at Polka. 1 and 4 are safe. Rule of thumb: ask not \"will the structure change\", but \"can an existing client keep working as before\"."
+  }
+}

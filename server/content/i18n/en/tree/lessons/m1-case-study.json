@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "15cc7fc381b4e4a3",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "A case study without numbers is just a testimonial",
+    "keyTakeaway": "A case study answers three questions: what was happening, what was done, and what changed — and the third one must be a number. Without a number, you just get a nice story that proves nothing.",
+    "checkQuestion": "\"The client really liked the service, work became more convenient.\" What is wrong here?",
+    "blocks/0/text": "Key node question: **what results should we tell consumers about?** A case study is proof from the lesson on messaging, just expanded.",
+    "blocks/1/text": "**What happens if you do not answer the question.** An \"Our Clients\" page appears with logos and quotes like \"convenient and fast\". The reader cannot apply this to themselves because they do not know if the client was like them.",
+    "blocks/2/title": "Case study structure",
+    "blocks/2/subtitle": "Three parts, and the third one decides",
+    "blocks/2/items/0": "**Situation** — who the client is and what was broken. Detailed enough for the reader to recognize themselves.",
+    "blocks/2/items/1": "**What was done** — not a feature list, but how the process changed.",
+    "blocks/2/items/2": "**Result** — a number: it was this much, it became this much, in this timeframe.",
+    "blocks/2/items/3": "**Caveat** — what else had an effect. An honest case study is stronger than an ideal one: people believe it.",
+    "blocks/3/text": "Situation: a manufacturing company of 12 people, 60 acceptance certificates a month, a certificate took an average of 4 days by email, delaying the month-end closing as a result.\n\nWhat was done: moved signing with counterparties to the browser, starting with the eight most frequent counterparties.\n\nResult: signing time of 6 hours instead of 4 days for these eight; month-end closing stopped slipping. Measured over two months.\n\nCaveat: signing time did not change for the remaining counterparties — they are not connected yet.\n\nThe caveat did not weaken the case study: it was what turned it from an ad into a realistic description of what to expect.",
+    "blocks/3/title": "Reestr, a 500-character case study",
+    "blocks/4/text": "A case study convinces people in similar situations: a 12-person manufacturing company says nothing to a 400-employee chain. That is why you need several case studies, one per segment, rather than a single most attractive one. And client approval takes weeks — factor this into your timelines.",
+    "blocks/4/title": "Model boundaries"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "sourceDigest": "1719c9462d037f4f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "Where to look",
+    "keyTakeaway": "The server measures up to sending the response, the user experiences time until the screen is usable, and the gap between them is invisible without client metrics broken down by device.",
+    "sections/0/blocks/0/text": "Server metrics are pristine, users complain about sluggishness. What is happening?",
+    "sections/1/blocks/0/text": "Server metrics are visible to the team, client metrics often are not. As a result, problems living on the user's device remain invisible for months: reports show 120 ms, while people leave the screen.",
+    "sections/2/blocks/0/text": "The distinction is simple: **the server measures time until sending the response, the user experiences time until the screen is usable.** Between them lie the network, response parsing, rendering, and client-side code execution.",
+    "sections/2/blocks/1/text": "Typical client-side causes of sluggishness:",
+    "sections/2/blocks/2/text": "*Too much data.* The response is parsed and turned into objects. 500 records on a weak phone take hundreds of milliseconds. *Heavy rendering.* Complex screens, improperly sized images, animation [[jank|jank]]. *Blocking work on the main thread.* The UI does not respond even though data has arrived. *Sequential requests.* The client waits for one response to send the next. *Images.* Often the primary cause: 12 images at 400 KB each equal 4.8 MB.",
+    "sections/2/blocks/3/text": "How to tell without tools: if complaints concentrate on older devices or a specific platform, it is client-side. If they are uniform across everyone and correlate with load, it is server-side.",
+    "sections/2/blocks/4/text": "What needs to be measured on the client for the question to even have an answer: time to interactive for key screens, broken down by platform, app version, and network type. Without this, PMs argue over impressions.",
+    "sections/3/blocks/0/text": "The discrepancy was discovered when implementing client metrics. The server delivered the main screen in 380 ms, while median time to interactive across devices was 2.1 seconds.",
+    "sections/3/blocks/1/text": "Analysis: 340 KB of response took 180 ms to parse, 14 images loaded in parallel and choked the network, list rendering ran synchronously.",
+    "sections/3/blocks/2/text": "What was done: properly sized images instead of originals (340 KB → 90 KB total), lazy loading off-screen, rendering in batches. Time to interactive dropped to 900 ms. Server metrics did not change by a millisecond.",
+    "sections/3/blocks/3/text": "A separate discovery: on devices older than four years, the time was 4.3 seconds. Their share was 18% of the audience, and in median reports, they were invisible.",
+    "sections/4/blocks/0/text": "Client metrics are collected from working devices: those whose app crashed or failed to load do not make it into the stats. The picture is always more optimistic than reality.",
+    "sections/5/blocks/0/text": "The server measures up to sending the response, the user experiences time until the screen is usable, and the gap between them is invisible without client metrics broken down by device."
+  }
+}

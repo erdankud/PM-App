@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "5cf78e7596bbd17c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:52Z"
+  },
+  "fields": {
+    "title": "Estimate Volume",
+    "inputs/0/label": "Volume over two years",
+    "inputs/0/unit": "GB",
+    "promptBlocks/0/text": "It is proposed to store all user search queries for 2 years. 180k active users, 3 searches per session, 1.4 sessions per day, 250 bytes per write.",
+    "promptBlocks/1/items/0": "How much is that?",
+    "promptBlocks/1/items/1": "What product question does this raise?",
+    "referenceReasoningBlocks/0/text": "180,000 × 3 × 1.4 × 365 × 2 × 250 bytes ≈ 138 GB. Magnitude — hundreds of gigabytes, acceptable. The product question is not about volume, but privacy: search queries are personal data, and two years of storage requires justification under `DS2-N6`. The estimation answers \"storage is possible\", but the decision is still made on other grounds."
+  }
+}

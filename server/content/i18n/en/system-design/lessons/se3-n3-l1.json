@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "942b1745ab143a2b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:50Z"
+  },
+  "fields": {
+    "title": "Earlier, Not Before Release",
+    "keyTakeaway": "Four discovery questions and triage across six criteria filter out most features, and full reviews are run for the rest—before design, not before release.",
+    "sections/0/blocks/0/text": "Why is a security review before release a bad idea?",
+    "sections/1/blocks/0/text": "A review at the end finds design flaws when everything is already built. The choice becomes between reworking the feature or releasing with a known problem. Both options are expensive, and both stem from the timing of the review rather than work quality.",
+    "sections/2/blocks/0/text": "Three points where security can get involved:",
+    "sections/2/blocks/1/text": "**In discovery.** Before deciding what to build. Cheap, influences solution choice. **In design.** Threat modeling, discussed above. Cheap, influences architecture. **Before release.** Expensive, influences only the date.",
+    "sections/2/blocks/2/text": "The right approach is the first two; the third acts as a verification check, not as the initial meeting.",
+    "sections/2/blocks/3/text": "What should happen during discovery:",
+    "sections/2/blocks/4/text": "*What data does the feature touch?* Do new personal data types appear. *Does the access model change?* *Are there new data recipients?* *Are there compliance obligations?* Localization, consents, retention periods.",
+    "sections/2/blocks/5/text": "Four questions, five minutes, and they determine whether a full review is needed.",
+    "sections/2/blocks/6/text": "**Triage**—not every feature requires a full review. Criteria that trigger one:",
+    "sections/2/blocks/7/text": "*New personal data.* *New external recipient.* *Changes to access rights.* *Features handling money.* *Communication between users.* *Automated decisions about people.*",
+    "sections/2/blocks/8/text": "Everything else passes without a review. This is what keeps the process functional: reviewing everything stops people from doing reviews at all.",
+    "sections/2/blocks/9/text": "**[[security-review-2|Review]] by a specialist**—for features from the list. Not sign-off, but participation: the specialist joins during design rather than reading the outcome.",
+    "sections/3/blocks/0/text": "The four questions are built into the discovery template. Filled out by the PM in five minutes.",
+    "sections/3/blocks/1/text": "Triage: out of 34 features over six months, a full review was needed for 7. The rest passed through the four questions.",
+    "sections/3/blocks/2/text": "Process change yielded measurable results: previously, two features a year hit a blocker before release with an average delay of three weeks. Afterward—zero.",
+    "sections/3/blocks/3/text": "A telling case: the \"invite a friend and get a bonus\" feature triggered two criteria during discovery—inter-user communication and money. The review found an abuse scheme involving fake accounts and changed the mechanics prior to implementation: the bonus is granted after the invited user's first order rather than after registration.",
+    "sections/3/blocks/4/text": "The security specialist participates in design every two weeks on a schedule—not on demand, which removes the friction of reaching out.",
+    "sections/4/blocks/0/text": "The process works with a small number of features requiring review. With growth, you need either a dedicated person or a stricter triage.",
+    "sections/5/blocks/0/text": "Four questions in discovery and triage by six criteria filter out most features, and a full review is conducted for the remaining ones — before design, not before release."
+  }
+}

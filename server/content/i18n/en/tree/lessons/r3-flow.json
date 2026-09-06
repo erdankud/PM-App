@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "34acb60b6d8bfef9",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Where work is actually stuck",
+    "keyTakeaway": "Delivery speed is determined not by how fast code is written, but by how long a task waits between steps. Measure time from decision to user and see where it is spent.",
+    "checkQuestion": "Development takes 3 days, but the task ships in three weeks. Where to look for the difference?",
+    "blocks/0/text": "Key node question: **how to optimize value delivery flow?** In module R2, we planned a single delivery; here, how the delivery flow works and why it slows down.",
+    "blocks/1/text": "Running example: Polka is a fictional inventory app for small stores. The team grew from four people to eleven, and shipping became slower, not faster.",
+    "blocks/2/title": "Cycle time and where it gets lost",
+    "blocks/2/subtitle": "Analyzed step by step, not by gut feeling",
+    "blocks/2/items/0": "**Count from decision to user** — not from the start of development. Everything before is also time.",
+    "blocks/2/items/1": "**Each step splits in two:** work and waiting. Waiting usually makes up most of it.",
+    "blocks/2/items/2": "**Typical waiting points:** analytics queue, design waiting time, code review, QA queue, release window waiting time, sign-off approval.",
+    "blocks/2/items/3": "**Work in progress** — how many tasks are active at once. The more tasks, the longer each one waits: this is arithmetic, not discipline.",
+    "blocks/3/text": "Task: \"crumpled barcode fails to read.\" Engineering — 3 days.\n\nStep-by-step breakdown:\nwaiting for analytics — 4 days;\nwriting requirements — 1 day;\nwaiting for design — 5 days (designer shared with another product);\nengineering — 3 days;\nwaiting for code review — 2 days;\nwaiting for testing — 4 days;\nwaiting for release window (releases on Thursdays) — 3 days.\n\nWork — 4 days, waiting — 18. Speeding up engineering is pointless.\n\nWhat was done: capped work in progress at six tasks, involved designer earlier during requirements, moved to on-demand releases. Cycle time dropped from 22 days to 9 without adding a single person.",
+    "blocks/3/title": "Polka, where three weeks went",
+    "blocks/4/text": "If the bottleneck is testing or sign-off queues, hiring a developer will add tasks to the queue and lengthen the wait. Before asking for headcount, measure where work sits idle.",
+    "blocks/4/title": "Hiring doesn't always speed things up",
+    "blocks/5/text": "Reducing cycle time is not an end in itself. Shipping unneeded features fast is worse than shipping necessary ones slowly; you fix flow when user feedback arrives later than subsequent decisions are made.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

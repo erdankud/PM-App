@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "a3c6994f74d47450",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:08Z"
+  },
+  "fields": {
+    "title": "Find Single Points of Failure",
+    "promptBlocks/0/text": "Architecture: app → gateway → {order service, catalog, delivery} → database (primary + 2 replicas), auth service, queue, payment provider. Name the single points of failure and for each — what breaks for the user.",
+    "referenceReasoningBlocks/0/text": "gateway (everything), auth service (everything, because every request goes through it), primary database (writes — checkout unavailable, reads work), payment provider (payment, plan B exists), queue (notifications and background, orders go through). Catalog and delivery are not full single points of failure upon degradation. Rule of thumb: for each element ask \"what if it's gone\", and separately check small services — auth is most frequently missed."
+  }
+}

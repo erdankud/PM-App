@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "a119e64bdb05336f",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:32Z"
+  },
+  "fields": {
+    "title": "Zones, Regions, and What They Protect Against",
+    "keyTakeaway": "Multi-zone setups protect against data center failure cheaply, multi-region setups are needed for legal and geographical reasons rather than reliability, and neither protects against logic errors.",
+    "sections/0/blocks/0/text": "\"Deploy in two regions\" — what does this protect against and what does it not?",
+    "sections/1/blocks/0/text": "Multi-region setup is the most expensive reliability measure and the most frequently proposed without analysis. It protects against a narrow class of events and makes everything else more expensive — every change, every migration, every incident.",
+    "sections/2/blocks/0/text": "Three levels of geographical separation.",
+    "sections/2/blocks/1/text": "**Single server.** Hardware failure causes downtime until recovery. **Multiple [[availability-zone|availability zones]] in a single region.** Different data centers connected by a fast network. Protects against individual center failure. Inter-zone latency is single-digit milliseconds, synchronous replication is possible. Moderate cost. **Multiple [[region|regions]].** Different geographies. Protects against regional events and solves [[data-residency|data residency]] and user proximity requirements. Inter-region latency is tens or hundreds of milliseconds, synchronous replication is impractical.",
+    "sections/2/blocks/2/text": "The key distinction for the product: **data can be kept consistent between zones, but practically not between regions.** Hence all the complexities of multi-region setups.",
+    "sections/2/blocks/3/text": "Two architectures:",
+    "sections/2/blocks/4/text": "**[[active-passive|Active-passive]].** One region works, the second is in reserve. Simpler, [[failover|failover]] takes minutes, unreplicated data is lost during switchover. **[[active-active|Active-active]].** Both serve traffic. Faster for users, but requires deciding what to do upon write conflicts and creates the risk of [[split-brain|split-brain]] — both sites think they are primary and diverge.",
+    "sections/2/blocks/5/text": "Split-brain is the worst-case scenario: data diverges and cannot be reconciled automatically. This is exactly why active-active is rarely justified for transactional data.",
+    "sections/2/blocks/6/text": "Three honest reasons to go multi-region: legal data residency, latency for geographically distant users, and enterprise customer requirements. Reliability is the fourth and usually the weakest reason, because multi-zone is enough.",
+    "sections/3/blocks/0/text": "Three zones in one region. Zone failure is survived automatically, downtime is about two minutes for database switchover.",
+    "sections/3/blocks/1/text": "A second region was discussed twice. The first time under the banner of reliability: we calculated it using `SC3-N1-L2` and abandoned it, as it is orders of magnitude off from paying off. The second time for residency for the Domashny chain: there it was not reliability, but a legal requirement, and the decision was made, but in the form of a separate installation rather than active-active.",
+    "sections/3/blocks/2/text": "The distinction turned out to be crucial. A separate installation for one client takes six weeks. True multi-region with consistent data takes a quarter and brings constant complexity.",
+    "sections/4/blocks/0/text": "Multi-region does not protect against logic errors: data deleted by mistake will be deleted everywhere, a broken release will roll out everywhere. Backups and progressive rollouts protect against this, not geography.",
+    "sections/5/blocks/0/text": "Multi-zone setups protect against data center failure cheaply, multi-region setups are needed for legal and geographical reasons rather than reliability, and neither protects against logic errors."
+  }
+}

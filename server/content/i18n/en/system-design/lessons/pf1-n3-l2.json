@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "7a1b3a029ff1657e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "Tracing and how to read it",
+    "keyTakeaway": "Tracing answers three product questions—why sequential, why this call, why so many—and the answers usually yield more than code optimization.",
+    "sections/0/blocks/0/text": "There is a tool that shows a request path across all services. What does a PM see in it?",
+    "sections/1/blocks/0/text": "[[distributed-tracing|Tracing]] is usually there and usually unused by the product. At the same time, it answers product questions faster than any discussion: where the time goes, what can be parallelized, which call is redundant.",
+    "sections/2/blocks/0/text": "Tracing shows the request path as a sequence of segments: each call with its own start time and duration. Read like a Gantt chart.",
+    "sections/2/blocks/1/text": "What a PM can see without technical knowledge:",
+    "sections/2/blocks/2/text": "**What is sequential and what is parallel.** Segments one after another mean waiting. If there is no dependency between them, they can be run in parallel—and this is usually the cheapest win.",
+    "sections/2/blocks/3/text": "**What takes the most time.** The longest segment. Often an unexpected component.",
+    "sections/2/blocks/4/text": "**What is called repeatedly.** Twenty identical short segments—the classic [[n1-problem|N+1 problem]]: requesting a list triggers a request for each item.",
+    "sections/2/blocks/5/text": "**What is called in vain.** A segment whose result is not used on this screen. Happens more often than you think—usually a legacy of past versions.",
+    "sections/2/blocks/6/text": "Three questions a PM can ask based on tracing:",
+    "sections/2/blocks/7/text": "*Why are these two calls sequential?* *Why is this call here?* *Why are there twenty of them instead of one?*",
+    "sections/2/blocks/8/text": "All three regularly lead to time savings without any code optimization.",
+    "sections/3/blocks/0/text": "Checkout tracing yielded three findings in an hour.",
+    "sections/3/blocks/1/text": "*Promo code verification always ran,* even when there was no promo code. 180 ms per checkout wasted. Fix—one hour.",
+    "sections/3/blocks/2/text": "*Stock checks were done with one request per item.* Twelve items—twelve sequential calls, 480 ms. Batch request—60 ms.",
+    "sections/3/blocks/3/text": "*Recommendations service call* for \"similar products\" on the confirmation screen. The block was removed from the screen half a year ago, but the call remained. 140 ms.",
+    "sections/3/blocks/4/text": "Total 740 ms out of 1,600, without a single line of code optimized. Only removing the unnecessary and batching.",
+    "sections/4/blocks/0/text": "Tracing shows where the time goes, but not why. A slow database query is visible as a segment, but the cause — a missing index — requires a different tool.",
+    "sections/5/blocks/0/text": "Tracing answers three product questions—why sequential, why this call, why so many—and the answers usually yield more than code optimization."
+  }
+}

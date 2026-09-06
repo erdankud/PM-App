@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "a3fe1ac9923c7940",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:08:11Z"
+  },
+  "fields": {
+    "title": "Synchronous or Background",
+    "inputs/0/label": "Applying a promo code",
+    "inputs/1/label": "Sending receipt via email",
+    "inputs/2/label": "Checking delivery slot availability",
+    "inputs/3/label": "Generating annual report",
+    "inputs/4/label": "Crediting bonuses for an order",
+    "acceptance/0/expected": "synchronous",
+    "acceptance/1/expected": "background",
+    "acceptance/2/expected": "synchronous",
+    "acceptance/3/expected": "background",
+    "acceptance/4/expected": "background",
+    "inputs/0/choices/0": "synchronous",
+    "inputs/0/choices/1": "background",
+    "inputs/1/choices/0": "synchronous",
+    "inputs/1/choices/1": "background",
+    "inputs/2/choices/0": "synchronous",
+    "inputs/2/choices/1": "background",
+    "inputs/3/choices/0": "synchronous",
+    "inputs/3/choices/1": "background",
+    "inputs/4/choices/0": "synchronous",
+    "inputs/4/choices/1": "background",
+    "promptBlocks/0/text": "Distribute them and name what the user sees.",
+    "promptBlocks/1/items/0": "Applying a promo code",
+    "promptBlocks/1/items/1": "Sending receipt via email",
+    "promptBlocks/1/items/2": "Checking delivery slot availability",
+    "promptBlocks/1/items/3": "Generating annual report",
+    "promptBlocks/1/items/4": "Crediting bonuses for an order",
+    "referenceReasoningBlocks/0/text": "synchronous 1 and 3 — you cannot proceed without the result. Background 2, 4, 5. For 4, a warning before clicking and a notification after are mandatory. For 5 — crediting is shown as \"will be credited within an hour\", otherwise the user looks for points and goes to support. Trap in 1: making it asynchronous for screen speed is a mistake, the user does not understand whether the code was applied or not."
+  }
+}

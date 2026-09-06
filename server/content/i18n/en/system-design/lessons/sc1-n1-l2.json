@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "4a0c93b98c1a3bf6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:59:08Z"
+  },
+  "fields": {
+    "title": "Load Profile",
+    "keyTakeaway": "System cost is determined by the peak, not the volume, and the load profile is often cheaper to change with a product decision than to pay for with capacity.",
+    "sections/0/blocks/0/text": "Two systems process 6 million requests per day each. Why does one cost twice as much?",
+    "sections/1/blocks/0/text": "Infrastructure cost is determined by the peak, and revenue by the volume. A product with a sharp peak pays for capacity that idles 20 hours a day. Product decisions can change the load shape, and this is direct savings — but only if the PM knows such a lever exists.",
+    "sections/2/blocks/0/text": "[[load-profile|Load profile]] is the shape of distribution over time. Three typical ones.",
+    "sections/2/blocks/1/text": "**Flat.** B2B services with a global audience. Peak coefficient 1.5–2. Cheap. **Daily.** Consumer products. Peak in the evening or at lunch, almost nothing at night. Coefficient 3–6. **Event-driven.** Peaks tied to events: newsletter, sale, match start. Coefficient 10–50, and this is the most expensive profile.",
+    "sections/2/blocks/2/text": "Cost is determined by the peak because capacity is reserved for it. Autoscaling smooths the difference, but not completely: a server does not spin up instantly, and the database scales poorly.",
+    "sections/2/blocks/3/text": "Three product levers that change the shape:",
+    "sections/2/blocks/4/text": "*Smear the event.* Newsletter not to everyone at once, but in waves of 15 minutes. The peak drops multiple times, the effect for the recipient does not change. *Shift in time.* Partner reports are generated at night, not on demand in the morning. *Postpone optional things.* During a peak, background tasks are queued and processed later.",
+    "sections/2/blocks/5/text": "Separately — **[[thundering-herd|thundering herd effect]]**: many clients simultaneously request data after an event. The classic is all apps re-requesting data exactly at midnight, or all retrying a request exactly 30 seconds after a failure. Cured by random jitter: interval not 30 seconds, but from 25 to 35.",
+    "sections/3/blocks/0/text": "Daily profile with a coefficient of 5. Plus two event-driven overlays: Monday morning — partner reports, Friday evening — maximum orders.",
+    "sections/3/blocks/1/text": "The Monday peak was solved by staggering the newsletter: \"report is ready\" emails go out in waves from 8:00 to 11:00, 100 partners every 20 minutes. The dashboard peak dropped from 400 concurrent reports to 90. Not a single partner noticed the difference — they do not know what minute the email is supposed to arrive.",
+    "sections/3/blocks/2/text": "This decision took two days and saved more than a month of query optimization.",
+    "sections/3/blocks/3/text": "The thundering herd effect was caught in the app: feed updates happened on a timer synchronized with the start of the minute. Thousands of apps requested the feed in the exact same second. Jitter of ±20 seconds removed the spike entirely.",
+    "sections/4/blocks/0/text": "Not every peak can be smeared: a sale with limited quantity is synchronous by nature, and trying to stretch it breaks the product idea.",
+    "sections/5/blocks/0/text": "System cost is determined by the peak, not the volume, and the load profile is often cheaper to change with a product decision than to pay for with capacity."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "a485c3e5e530bb13",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:08:11Z"
+  },
+  "fields": {
+    "title": "Choose a Model",
+    "inputs/0/label": "Determine message language",
+    "inputs/1/label": "Extract date from text",
+    "inputs/2/label": "Write support reply",
+    "inputs/3/label": "Check text for forbidden content",
+    "acceptance/0/expected": "small",
+    "acceptance/1/expected": "small",
+    "acceptance/2/expected": "medium",
+    "acceptance/3/expected": "small",
+    "inputs/0/choices/0": "small",
+    "inputs/0/choices/1": "medium",
+    "inputs/0/choices/2": "flagship",
+    "inputs/1/choices/0": "small",
+    "inputs/1/choices/1": "medium",
+    "inputs/1/choices/2": "flagship",
+    "inputs/2/choices/0": "small",
+    "inputs/2/choices/1": "medium",
+    "inputs/2/choices/2": "flagship",
+    "inputs/3/choices/0": "small",
+    "inputs/3/choices/1": "medium",
+    "inputs/3/choices/2": "flagship",
+    "promptBlocks/0/text": "For each step, choose the class and justify it.",
+    "promptBlocks/1/text": "Determine message language 2. Extract date from text 3. Write support reply 4. Analyze 200 reviews and extract topics 5. Check text for forbidden content",
+    "referenceReasoningBlocks/0/text": "1, 2, 5 — small: simple structural tasks, cost and speed matter, result is verified programmatically. 3 — medium: text quality matters, but complex reasoning is not required. 4 — medium or flagship depending on requirements, and crucially this is not a user-facing scenario, meaning latency is not critical and it can run in the background. Rule of thumb: first ask if a person is waiting for a response."
+  }
+}

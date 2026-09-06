@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "c66f4a50ba2221b4",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:47:35Z"
+  },
+  "fields": {
+    "title": "Product concept: one page that shows where it can die",
+    "keyTakeaway": "A concept is needed not to describe a product, but to expose the assumptions it rests on. The most valuable line is the one stating what you don't know and what you test first.",
+    "checkQuestion": "The concept states \"unfair advantage — a strong team.\" Why is this not an advantage?",
+    "blocks/0/text": "Key node question: **what should the product be?** In block V2, we designed a solution within a known product; here, we build a product as a whole when it doesn't exist yet or is changing.",
+    "blocks/1/text": "End-to-end example: Surma is a fictional transport company whose internal Dispetcher tool we analyzed in V1 and V2. Now management is discussing whether to turn the internal tool into a product for other carriers.",
+    "blocks/2/title": "Lean Canvas",
+    "blocks/2/subtitle": "Nine boxes; fill them in this order",
+    "blocks/2/items/0": "**Problem** and **existing alternatives** — how the job is solved now. An empty alternatives box means you didn't look for them.",
+    "blocks/2/items/1": "**Customer segments** and **early adopters** — who hurts the most right now.",
+    "blocks/2/items/2": "**Unique value proposition** — one sentence clear to the customer, not just to you.",
+    "blocks/2/items/3": "**Solution** — three bullet points, no more. This is the most replaceable part.",
+    "blocks/2/items/4": "**Channels**, **revenue streams**, **cost structure** — how money flows in and out.",
+    "blocks/2/items/5": "**Key metrics** and **unfair advantage** — how we'll know it works, and what a competitor cannot quickly copy.",
+    "blocks/3/text": "**Unfair advantage is the box filled incorrectly most often.** Team, money, and experience are copied through hiring. What cannot be copied: access to data others don't have, a contract that cannot be duplicated, a community accumulated over years, deep integration into someone else's process.",
+    "blocks/4/text": "Problem: carriers with 30–80 vehicles plan routes in spreadsheets, empty mileage is 15–20%.\nAlternatives: spreadsheets, paper notebook, expensive systems for large fleets.\nEarly adopters: companies where a dispatcher leaves and training a new one takes long.\nValue: \"route planning with return load suggestions in five minutes.\"\nUnfair advantage: three years of proprietary data on which return legs actually get loaded on these routes — nobody has this except carriers of similar size.\nMain unverified risk: will a carrier want to hand over route data to a company that carries freight itself? This is tested first, because if the answer is \"no,\" everything collapses.",
+    "blocks/4/title": "Surma: product concept from an internal tool",
+    "blocks/5/text": "Usually, a team starts with what it knows how to do: writing code. The correct order is the opposite — start with what can kill the idea entirely. For Surma, this is a conflict of interest with future customers, and no amount of development will solve it.",
+    "blocks/5/title": "Test the most dangerous assumption first, not the most convenient one",
+    "blocks/6/text": "A canvas is a set of hypotheses on a single page, not a project plan. Its value is measured by how many boxes you replaced with verified facts over a quarter; a beautifully filled and untouched canvas is a bad sign.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

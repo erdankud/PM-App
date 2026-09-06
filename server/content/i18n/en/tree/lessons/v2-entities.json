@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "a8296890f4809fe6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "Business logic: what objects make up the product",
+    "keyTakeaway": "Before screens, you need to name system objects, their states, and state transition rules. Half of late reworks stem from an overlooked object or an unagreed state.",
+    "checkQuestion": "In Dispetcher, a trip was canceled after departure. What state is this, and how does it differ from \"canceled\" before departure?",
+    "blocks/0/text": "The key question of this node: **what objects make up the product system?** This is the most underrated node in the domain: people skip it and go straight to layouts.",
+    "blocks/1/text": "**What happens if you do not answer this question.** Development begins, and two weeks later it turns out that \"driver\" and \"employee\" are different entities with different permissions, that a trip has five states instead of two, and that the system fundamentally cannot represent cancellation after departure. Rework costs more than the feature itself.",
+    "blocks/2/title": "Entities Analysis",
+    "blocks/2/subtitle": "Four questions for each object",
+    "blocks/2/items/0": "**What is it**—a domain noun: trip, order, driver, car, waybill.",
+    "blocks/2/items/1": "**Which attributes**—only those someone looks at or filters by.",
+    "blocks/2/items/2": "**Which connections and how many**—one trip to how many drivers? One driver to how many cars? Errors happen most often here.",
+    "blocks/2/items/3": "**Which states and transitions**—which state moves to which, who has permission, and what happens to other objects as a result.",
+    "blocks/3/text": "States: draft → scheduled → assigned to driver → en route → completed.\nPlus two the team initially missed:\n\"canceled before departure\"—car and driver are freed, order returns to pool;\n\"interrupted\"—car on the road, cargo partially delivered, a new trip is needed for the remainder.\n\nThe difference is not cosmetic: in the second case, a new object appears—cargo remainder—and there is nowhere to put it.\n\nAn hour spent on the state table at the start saved rewriting the planner.",
+    "blocks/3/title": "Dispetcher: \"trip\" object",
+    "blocks/4/text": "\"A trip has one driver\" is true until long-haul routes with driver swaps come along. Ask a dispatcher if that happened last month: usually, it did.",
+    "blocks/4/title": "Test \"one-to-many\" relationships with a real example",
+    "blocks/5/text": "**How this looks in practice.** A simple table is enough: object, states, who changes it, what happens to neighboring objects. It is more useful to a developer than a mockup and shows you gaps before paying for them.",
+    "blocks/6/text": "An entity model is not a database schema. Your task is to agree on the domain meaning and rules; how it is stored is up to engineering.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

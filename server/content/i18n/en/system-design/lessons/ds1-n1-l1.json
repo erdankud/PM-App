@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "de293d21a83b20df",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:54:20Z"
+  },
+  "fields": {
+    "title": "Entities, Attributes, and Relations",
+    "keyTakeaway": "A data schema is a map of product capabilities: what is not in it will not appear on screen without changing the foundation.",
+    "sections/0/blocks/0/text": "An engineer shows you rectangles with arrows and says, \"here is our data model.\" You nod. A month later you ask to add the ability to split an order between multiple recipients, and you are quoted a three-week timeline — even though two lines of text change on the screen. The data schema explains this gap, and learning to read it is easier than it seems.",
+    "sections/1/blocks/0/text": "A PM who doesn't read the schema plans their roadmap blindly. They promise a client a feature that requires rebuilding the foundation, and find out about it at grooming. They suggest \"just adding a field\" where it means migrating eight million records. Conversely, they don't ask for obviously cheap things because they fear they are expensive. Both types of mistakes cost the same: the first breaks deadlines, the second eats up opportunities no one ever knew about.",
+    "sections/2/blocks/0/text": "An [[entity|entity]] is a type of object the product stores data about. Not a specific order, but \"orders in general.\" In the schema, an entity is drawn as a rectangle.",
+    "sections/2/blocks/1/text": "An entity has [[field|attributes]] — properties known about it. For an order, these are total amount, status, creation time. Importantly, the set of attributes is finite and fixed: if an attribute is not in the schema, the product doesn't know about it, and no screen will display it.",
+    "sections/2/blocks/2/text": "A specific instance is called a [[row|row]]. The \"Order\" entity is a blueprint, while order #4471 is a row.",
+    "sections/2/blocks/3/text": "Entities are connected by a [[relation|relation]]. A relation is not schema decoration, but a rule the database will enforce. \"An order belongs to a user\" means every order must have exactly one user, and the database will not allow creating an order without one.",
+    "sections/2/blocks/4/text": "A relation has [[cardinality|cardinality]] — how many records on one side correspond to one record on the other. Three options:",
+    "sections/2/blocks/5/text": "**One-to-one.** A user has one settings profile. Rare, usually meaning data was split intentionally — for instance, so rare heavy fields don't interfere with reading frequent light ones.",
+    "sections/2/blocks/6/text": "**[[one-to-many|One-to-many]].** A user has many orders, an order has one user. The most common case. Read by the arrow: the \"many\" side stores a reference to the \"one\" side.",
+    "sections/2/blocks/7/text": "**[[many-to-many|Many-to-many]].** A product is in many orders, an order has many products. Such a relation cannot be expressed by a single reference, so it is always implemented via a separate [[join-table|join table]] — \"Order Item.\" And this is where the product part begins: a join table almost always acquires its own attributes. An order item gets a quantity, price at the time of purchase, discount. This data cannot be put into either the product or the order — it belongs specifically to the relation.",
+    "sections/3/blocks/0/text": "Let's look at the schema and draw product conclusions without asking engineers anything.",
+    "sections/3/blocks/1/text": "*The price lives in the order item, not just in the product.* This means the product can show order history with the price that was valid at the time of purchase. The \"repeat order\" feature will be honest. If the price were only in the product, old receipts would be rewritten every time price tags changed — and both accounting and the user would see untruths.",
+    "sections/3/blocks/2/text": "*An order has one user.* This means \"split the order with a neighbor\" is not a new field, but a new relation. Timelines won't be in days.",
+    "sections/3/blocks/3/text": "*A product belongs to a store.* This means the exact same loaf of bread from two stores is two different records. The \"compare prices for the same product across stores\" feature requires a new \"Catalog Product Item\" entity uniting them. This is substantial work, and it's good to know about it before promising it at a demo.",
+    "sections/4/blocks/0/text": "The schema shows what the product can store, not what it can do. The schema doesn't say whether a specific query will run fast — for that, [[index|indexes]] are needed, which we'll cover later. And there are datastores where there is no rigid schema at all; there, these reasonings work differently.",
+    "sections/5/blocks/0/text": "A data schema is a map of product capabilities: what is not in it will not appear on screen without changing the foundation."
+  }
+}

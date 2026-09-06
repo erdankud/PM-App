@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "sourceDigest": "84183be6a4112d0a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "Postmortem That Changes the System",
+    "keyTakeaway": "A useful postmortem measures time-to-detect separately from time-to-recover and asks not \"what broke\", but \"why did this lead to such consequences\".",
+    "sections/0/blocks/0/text": "The incident is over. How to make sure it doesn't happen again, and why does it usually repeat?",
+    "sections/1/blocks/0/text": "A post-mortem ending in a list of tasks without owners is a ritual. Three cascades in half a year in `SC1-G-B` are a direct consequence of reviews after which a specific call was fixed without asking the question about the class of the problem.",
+    "sections/2/blocks/0/text": "A [[postmortem|postmortem]] is a document and discussion after an incident. A useful one contains five parts.",
+    "sections/2/blocks/1/text": "**Timeline with timestamps.** When it started, when it was detected, when it was understood, when it was fixed. This gives two metrics: [[time-to-detect|time to detect]] and [[time-to-recover|time to recover]]. The first one is often larger than the second, and that is a separate finding.",
+    "sections/2/blocks/2/text": "**Impact in product terms.** Not \"22 minutes downtime\", but \"980 lost orders, 2.3M revenue, 31 minutes of error budget\".",
+    "sections/2/blocks/3/text": "**Cause and, separately, scale factors.** The root cause is usually minor. The question \"why did this lead to a total stop\" is more important than \"what broke\".",
+    "sections/2/blocks/4/text": "**What worked.** Not just failures: if degradation worked, it needs to be recorded, otherwise people will stop maintaining it.",
+    "sections/2/blocks/5/text": "**Actions with owners and deadlines.** Each one specific, with a name and date.",
+    "sections/2/blocks/6/text": "A [[blameless-postmortem|blameless postmortem]] is not politeness, but a condition for reliability. Where culprits are sought, details are hidden, and the review becomes useless.",
+    "sections/2/blocks/7/text": "The practice that distinguishes working postmortems from ritual ones: **asking about the class, not the instance.** Not \"why did reviews go down\", but \"why is any slow service able to stop the product\". The first gives a task for a day, the second for three weeks and closes future incidents.",
+    "sections/3/blocks/0/text": "Postmortem of the reviews incident.",
+    "sections/3/blocks/1/text": "*Chronology:* slowdown from 19:31, detected at 19:49 from complaints, cause understood at 20:02. Time to detect — 18 minutes, time to recover — 13.",
+    "sections/3/blocks/2/text": "The main finding was right here: detection longer than recovery, and the slowdown graph was visible from 19:31. The problem wasn't in fixing it, but in the fact that nobody was looking.",
+    "sections/3/blocks/3/text": "*Impact:* 980 orders, 31 minutes of budget out of 43.",
+    "sections/3/blocks/4/text": "*Cause:* index rebuild. *Scale factor:* lack of timeouts on inter-service calls.",
+    "sections/3/blocks/5/text": "*What worked:* checkout kept working for those already on screen.",
+    "sections/3/blocks/6/text": "*Actions:* alerts on all services — on-call, 3 days. Timeouts and cutoffs — tech lead, 3 weeks. Ratings cache — catalog team, 3 days. Communication templates — product manager, 2 days.",
+    "sections/3/blocks/7/text": "The key difference from the previous two reviews was that the class question was asked, and a three-week task appeared instead of a one-day one.",
+    "sections/4/blocks/0/text": "Reviewing every minor glitch is a waste of time. The threshold is defined in advance, but once a quarter it is useful to review minor incidents together: often they add up to a single pattern.",
+    "sections/5/blocks/0/text": "A useful postmortem measures time-to-detect separately from time-to-recover and asks not \"what broke\", but \"why did this lead to such consequences\"."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "33b96e63d78d8ca9",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:06:44Z"
+  },
+  "fields": {
+    "title": "Gather the Recipient List",
+    "promptBlocks/0/text": "A delivery service mobile app. List likely recipients of user data and note who the team usually forgets.",
+    "referenceReasoningBlocks/0/text": "payment provider, delivery service, SMS provider, push notification service, analytics, crash reporting, mapping service, AI provider, mailing service, support system, possibly ad SDKs. People usually forget crash reporting, push notifications, maps, and ad pixels in the web version — they are added as 'technical' and not perceived as data transfer."
+  }
+}

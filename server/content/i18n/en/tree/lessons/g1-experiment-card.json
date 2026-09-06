@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "3f67f8430a2e092b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "What to write down before launching an experiment",
+    "keyTakeaway": "The decision on what you will do under each outcome is made before launch. An experiment after which only one conclusion is possible is not a test, but a way to get validation.",
+    "checkQuestion": "What will you do if the result lands right in the middle between success and failure?",
+    "blocks/0/text": "Key question of the node: **what should an experiment look like to test a hypothesis?** It begins not with split settings, but with an agreement on conclusions.",
+    "blocks/1/text": "**What happens if you do not answer this question.** The result comes back ambiguous — as it almost always does — and a discussion begins in which everyone defends what they believed before the experiment.",
+    "blocks/2/title": "Experiment Card",
+    "blocks/2/subtitle": "One page, filled out before launch",
+    "blocks/2/items/0": "**Hypothesis** — with all four parts.",
+    "blocks/2/items/1": "**Target audience** — the segment and why specifically that segment.",
+    "blocks/2/items/2": "**Decision metric** — one. Not a list of seven.",
+    "blocks/2/items/3": "**Guardrail metrics** — what must not worsen.",
+    "blocks/2/items/4": "**Duration** — timeline and volume calculated in advance.",
+    "blocks/2/items/5": "**What to do under each outcome** — grew, didn't grow, in the middle. Three lines written before launch.",
+    "blocks/3/text": "The last point is the whole point of the card. If on the line “what we do if it didn't grow” you write “try again with different copy”, that is honest; if there is nothing to write, the experiment is not needed — you have already decided.",
+    "blocks/4/text": "Hypothesis: a 3-day trial period instead of 7 days will increase conversion from 4.1% to 5% over four weeks, because the decision is made before interest cools off.\nWho: new organic users, no paid traffic — different motivation there.\nDecision metric: conversion to subscription.\nGuardrails: share of users who haven't opened a single book; second-month churn.\nDuration: four weeks, about 22 thousand people in each branch.\nIf grew to 5% and above — roll out.\nIf below 4.3% — return 7 days and test the hypothesis about when the offer is shown.\nIf in between — don't roll out, check the mechanism: see when exactly the decision is made.",
+    "blocks/4/title": "Vetka: a card for two minutes",
+    "blocks/5/text": "A card does not save a bad hypothesis: a neatly formatted test of an uninteresting change is still a waste of time. And it is useless if filled out after looking at the results.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

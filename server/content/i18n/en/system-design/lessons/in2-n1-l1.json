@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "d90cfd1e3416173b",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:25Z"
+  },
+  "fields": {
+    "title": "Three styles and their logic",
+    "keyTakeaway": "REST is predictable and fixed, GraphQL is flexible and harder to operate, and the choice between them is determined by who the consumer is—your own client or a third-party integrator.",
+    "sections/0/blocks/0/text": "Engineers argue whether to build a partner API on REST or GraphQL. What is product-related about this argument?",
+    "sections/1/blocks/0/text": "The [[api-style|API style]] determines how expensive it will be to add new screens and how convenient it is for partners. The choice is made once and lives for years, like everything in contracts. A product manager for whom this is a purely engineering question is detached from a decision that ultimately dictates the speed of their own features.",
+    "sections/2/blocks/0/text": "**[[rest|REST]].** Operations are built around [[resource|resources]]: `/orders`, `/orders/4471`, `/orders/4471/items`. Each resource returns a fixed set of fields. The method states what we are doing.",
+    "sections/2/blocks/1/text": "Strengths: predictable, easy to read, easy to cache, familiar to everyone. Weaknesses—a fixed response creates two problems.",
+    "sections/2/blocks/2/text": "[[over-fetching|Over-fetching]]: the screen needs a name and a price, but the entire item card with forty fields arrives. Traffic and time.",
+    "sections/2/blocks/3/text": "[[under-fetching|Under-fetching]]: the screen needs an order, its positions, items within positions, and the store. Four requests instead of one, each with its own network latency.",
+    "sections/2/blocks/4/text": "**[[graphql|GraphQL]].** The client describes which fields it needs and gets exactly those. A single request gathers data from related entities.",
+    "sections/2/blocks/5/text": "Strengths: both REST problems are resolved, new screens are often built without server changes. Weaknesses: harder to cache, harder to rate-limit (a client can request a heavy tree), and the [[n1-problem|N+1 problem]] arises—a naive implementation turns a single list query into a hundred database requests.",
+    "sections/2/blocks/6/text": "**[[grpc|gRPC]].** Binary format, strict schema, high speed. Used between internal services rather than for external consumers: browsers don't understand it directly, and humans can't read it by eye.",
+    "sections/2/blocks/7/text": "The practical distribution that most products arrive at: gRPC internally between services, REST or GraphQL externally for clients and partners.",
+    "sections/3/blocks/0/text": "The mobile app uses REST. The main screen was assembled with six requests—that very same under-fetching, and it was a noticeable part of the 2.8-second load time from the `DS2-G-A` gateway.",
+    "sections/3/blocks/1/text": "The chosen solution wasn't GraphQL, but a separate screen-specific endpoint: `/v1/feed` gathers everything needed on the server and returns it in a single response. This is a compromise—an endpoint tailored to a specific screen is less universal, but it avoids rebuilding the entire API.",
+    "sections/3/blocks/2/text": "The partner API for retail chains is REST because it's read by integrators on the partner side, often not the strongest ones, and predictability matters more than flexibility. Internal calls between the order service and the inventory service use gRPC.",
+    "sections/4/blocks/0/text": "Style is rarely the main reason for a slow screen. Before changing styles, check whether the issue lies in missing indexes or the number of database queries inside a single request.",
+    "sections/5/blocks/0/text": "REST is predictable and fixed, GraphQL is flexible and harder to operate, and the choice between them is determined by who the consumer is—your own client or a third-party integrator."
+  }
+}

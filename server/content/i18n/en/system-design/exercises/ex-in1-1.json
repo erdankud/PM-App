@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "2655472c3363d27c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:17Z"
+  },
+  "fields": {
+    "title": "Where the rule lives",
+    "inputs/0/label": "Minimum order amount is 500 rubles",
+    "inputs/1/label": "Phone format on input",
+    "inputs/2/label": "List of available payment methods",
+    "inputs/3/label": "Card order in feed",
+    "acceptance/0/expected": "server",
+    "acceptance/1/expected": "client",
+    "acceptance/2/expected": "server",
+    "acceptance/3/expected": "server",
+    "inputs/0/choices/0": "client",
+    "inputs/0/choices/1": "server",
+    "inputs/1/choices/0": "client",
+    "inputs/1/choices/1": "server",
+    "inputs/2/choices/0": "client",
+    "inputs/2/choices/1": "server",
+    "inputs/3/choices/0": "client",
+    "inputs/3/choices/1": "server",
+    "promptBlocks/0/text": "For each rule, state where it belongs and why.",
+    "promptBlocks/1/items/0": "Minimum order amount is 500 rubles",
+    "promptBlocks/1/items/1": "Phone format on input",
+    "promptBlocks/1/items/2": "List of available payment methods",
+    "promptBlocks/1/items/3": "Card order in feed",
+    "promptBlocks/1/items/4": "\"Item out of stock\" message text",
+    "referenceReasoningBlocks/0/text": "1 — server, will change for sure. 2 — client, instant reaction and bypassing is harmless, but duplicated on server as protection. 3 — server, otherwise new method is seen only by updated users. 4 — server, order is a product lever. 5 — server, if you want to change wording without a release; in practice often client, and this is a conscious tradeoff. Criterion: is it scary if the user bypasses it, and do you want to change it without a release."
+  }
+}

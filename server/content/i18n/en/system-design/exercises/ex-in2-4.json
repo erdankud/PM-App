@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "7770f64071306ea7",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Guarantees and ordering",
+    "inputs/0/label": "Order statuses from delivery service",
+    "inputs/1/label": "«Order placed» event for analytics",
+    "inputs/2/label": "Bonus deduction",
+    "inputs/3/label": "Courier position update on map",
+    "acceptance/0/expected": "at least once",
+    "acceptance/1/expected": "at least once",
+    "acceptance/2/expected": "at least once",
+    "acceptance/3/expected": "at most once",
+    "inputs/0/choices/0": "at least once",
+    "inputs/0/choices/1": "at most once",
+    "inputs/1/choices/0": "at least once",
+    "inputs/1/choices/1": "at most once",
+    "inputs/2/choices/0": "at least once",
+    "inputs/2/choices/1": "at most once",
+    "inputs/3/choices/0": "at least once",
+    "inputs/3/choices/1": "at most once",
+    "promptBlocks/0/text": "For each stream, choose the guarantee and address ordering.",
+    "promptBlocks/1/items/0": "Order statuses from delivery service",
+    "promptBlocks/1/items/1": "«Order placed» event for analytics",
+    "promptBlocks/1/items/2": "Bonus deduction",
+    "promptBlocks/1/items/3": "Courier position update on map",
+    "referenceReasoningBlocks/0/text": "1 — at least once, ordering is handled by event timestamp, older ones are discarded. 2 — at least once, ordering doesn't matter, duplicates are cleaned up during calculation. 3 — at least once plus an idempotent recipient based on order ID. 4 — at most once, lost coordinate is harmless, only the latest one matters. Rule of thumb: first ask what hurts more — a loss or a duplicate."
+  }
+}

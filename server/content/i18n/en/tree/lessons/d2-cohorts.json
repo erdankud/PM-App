@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "90283a8e5f15ebc0",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:42:40Z"
+  },
+  "fields": {
+    "title": "Cohorts and correlation: two ways to deceive yourself",
+    "keyTakeaway": "Mixing different cohorts into a single number makes the picture opposite to reality. And matching two graphs gives no right to claim causation, even when the mechanism seems obvious.",
+    "checkQuestion": "Overall retention is dropping, but it is growing in every cohort. How is that possible?",
+    "blocks/0/text": "Continuing the question of root causes: **two ways to get the wrong answer from the right data.**",
+    "blocks/1/title": "Cohort analysis",
+    "blocks/1/subtitle": "Comparing like with like",
+    "blocks/1/items/0": "**Cohort** — a group joined by entry time: registration month, version at install, acquisition channel.",
+    "blocks/1/items/1": "**Why:** an overall metric changes both due to behavior and user mix. A cohort removes the second factor.",
+    "blocks/1/items/2": "**Rule:** if audience composition changes, look at any metric by cohorts. Otherwise, you are measuring acquisition, not behavior.",
+    "blocks/2/text": "Overall Day 30 retention dropped from 44% to 38% over six months. Looks like product degradation.\n\nBy registration cohorts: retention grew for every monthly cohort — from 41% to 47%.\n\nExplanation: marketing increased new user influx, and new users always have lower retention. Their share of the total grew, driving the average down even though every group improved.\n\nWithout cohorts, the team would have spent six months fixing what was already improving.",
+    "blocks/2/title": "Smena: retention falling and rising at the same time",
+    "blocks/3/title": "Correlation",
+    "blocks/3/subtitle": "What it gives and what it doesn't",
+    "blocks/3/items/0": "**Gives:** a list of candidates to test and a priority on where to look.",
+    "blocks/3/items/1": "**Doesn't give:** the root cause. The link might go in the opposite direction or stem from a third common factor.",
+    "blocks/3/items/2": "**Typical trap:** “Active users visit section X more often, so we should drive everyone to X.” It might be the reverse — active users visit everything.",
+    "blocks/3/items/3": "**Verification:** controlled intervention only.",
+    "blocks/4/text": "Cohorts require volume: with a hundred registrations a month, each cohort will be noisy. And they do not answer why a new cohort is different — they only show that it is.",
+    "blocks/4/title": "Model limitations"
+  }
+}

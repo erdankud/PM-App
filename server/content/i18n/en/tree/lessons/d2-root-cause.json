@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "1debe4588986a994",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:45:10Z"
+  },
+  "fields": {
+    "title": "From metric change to root cause",
+    "keyTakeaway": "You don't cycle through hypotheses — you lay them out in a tree and cut them down with breakdowns. Each branch is either ruled out by data you already have, or stays. Usually, you are left with two or three, not ten.",
+    "checkQuestion": "A metric dropped by 8%. Where do you start if the team has six hypotheses?",
+    "blocks/0/text": "The node's key question: **why did these changes happen, and where is the growth point?** The question is not \"what happened\", but \"which of this is the root cause\".",
+    "blocks/1/text": "**What happens if you don't answer the question.** A meeting is called where everyone pitches their own hypothesis. They test the one proposed by the most persuasive person, and if it's not confirmed, they start over.",
+    "blocks/2/title": "Cause tree",
+    "blocks/2/subtitle": "Break down, don't cycle through",
+    "blocks/2/items/0": "**1. Break the metric down into components.** Orders = users × active share × frequency.",
+    "blocks/2/items/1": "**2. Find which component changed.** Usually just one.",
+    "blocks/2/items/2": "**3. Slice it by dimensions you already have** — segment, platform, source, version, geography.",
+    "blocks/2/items/3": "**4. Stop where you can act on the cause.** \"People stopped wanting it as much\" is not a cause.",
+    "blocks/3/text": "The main time-saver is step 3: a slice rules out entire branches in minutes. If the drop is isolated to a single platform, all hypotheses about price, seasonality, and marketing fall away immediately.",
+    "blocks/4/text": "Metric: number of closed schedules per week. Broken down: accounts × share of those closing × frequency. The second one changed — the share.\n\nSlices: by platform — drop only on Android; by app version — only on the version released three weeks ago; by account size — same across all.\n\nThe team's six hypotheses — seasonality, prices, competitor, churn, marketing, quality — fell away on the very first breakdown. The root cause was found in an hour: in the new Android version, the publish button slipped under the keyboard on screens of a certain height.",
+    "blocks/4/title": "Smena, 8% drop",
+    "blocks/5/text": "A tree works when a metric breaks down into parts and you have dimensions. If there are few dimensions or events are rare, several branches will remain — then it's more honest to say \"narrowed down to two\" than to pick one and call it the root cause.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

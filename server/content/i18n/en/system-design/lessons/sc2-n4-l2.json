@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "2b632aa8491b885c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "Autoscaling and Its Delay",
+    "keyTakeaway": "Autoscaling handles steady growth and does not save from sharp spikes due to startup time, so capacity for planned events is reserved in advance.",
+    "sections/0/blocks/0/text": "The system scales automatically. Why is it still unavailable during a spike?",
+    "sections/1/blocks/0/text": "Belief in autoscaling as a solution to all load problems is a typical misconception, and it leads to crashes right at the moments of campaigns. A product manager planning events must know the system's [[warm-up-time|reaction time]] because it determines whether preparation is needed.",
+    "sections/2/blocks/0/text": "[[autoscaling|Autoscaling]] adds instances as load grows. Three parameters determine if it will help.",
+    "sections/2/blocks/1/text": "**[[scaling-threshold|Scaling threshold]].** At what load to add. Too high — reaction is delayed; too low — we pay for idling.",
+    "sections/2/blocks/2/text": "**[[warm-up-time|Warm-up time]].** From decision to readiness to accept traffic. Consists of machine startup, application launch, cache warming, inclusion in rotation. Usually 60–180 seconds.",
+    "sections/2/blocks/3/text": "**[[headroom|Headroom]].** Buffer above current load covering the warm-up time.",
+    "sections/2/blocks/4/text": "Main consequence: **autoscaling copes with smooth growth and fails with sharp spikes.** A TV commercial gives a doubling in a minute; a system with a 90-second warm-up time works on old capacity for that minute.",
+    "sections/2/blocks/5/text": "Hence the planning rule: **if a spike is expected faster than the warm-up time, capacity is reserved in advance.** This is precisely the conclusion needed in gate `SC1-G-A`.",
+    "sections/2/blocks/6/text": "The second consequence — scaling down also requires caution: aggressive reduction after a peak leaves the system without headroom during a repeated spike.",
+    "sections/2/blocks/7/text": "And the third: **not everything scales.** Application — yes, write database — no. Autoscaling the application when the database is bottlenecked only increases the number of connections to it and worsens the situation.",
+    "sections/3/blocks/0/text": "Settings: threshold 60% load, minimum 8 instances, maximum 40, warm-up time about 90 seconds, headroom 40% above current.",
+    "sections/3/blocks/1/text": "The 40% headroom is chosen to cover 90 seconds at the typical growth rate of the evening peak. For planned events this is not enough — the minimum is raised manually in advance before campaigns.",
+    "sections/3/blocks/2/text": "Database limit: when the number of instances exceeds 25, the number of connections grows, and the database becomes a bottleneck before the application. A ceiling of 40 and an alert at 25 were introduced — this is a signal that scaling further is pointless and another solution is needed.",
+    "sections/3/blocks/3/text": "Scale-down case: after the morning partner peak, the system scaled down to the minimum in 5 minutes, and at 11:40 a second wave arrived. Twice this caused brief unavailability of the dashboard. Scale-down delay was increased to 20 minutes.",
+    "sections/4/blocks/0/text": "Autoscaling costs money when it operates. A sudden load spike — including from an error or an attack — can be expensive, so a ceiling is always needed.",
+    "sections/5/blocks/0/text": "Autoscaling handles steady growth and does not save from sharp spikes due to startup time, so capacity for planned events is reserved in advance."
+  }
+}

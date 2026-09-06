@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "sourceDigest": "2ad33ae9cfc3a8cc",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Migration: move people, not just data",
+    "keyTakeaway": "A transition fails not on data, but on people: the old is familiar and reliable, the new is unknown. Three things work: side-by-side operation, reversibility, and carrying over what users consider theirs.",
+    "checkQuestion": "The new version of Polka is better across all metrics, but 30 out of 40 stores won't switch. Where to look for the reason?",
+    "blocks/0/text": "Key node question: **how to transition from one version to another?**",
+    "blocks/1/text": "**What happens if you don't answer the question.** The switch date is set based on engineering readiness. On day X, half the users aren't ready, support is overwhelmed, and you can't roll back because the data is already overwritten.",
+    "blocks/2/title": "Four forces of transition",
+    "blocks/2/subtitle": "Two push forward, two pull back",
+    "blocks/2/items/0": "**Push of the old** — why the current version is bad enough that it can't be tolerated.",
+    "blocks/2/items/1": "**Pull of the new** — what the user gets. Usually the only force the team considers.",
+    "blocks/2/items/2": "**Habit** — the cost of retraining and the fact that the old version already works.",
+    "blocks/2/items/3": "**Anxiety** — what if the new fails at the most critical moment. Relieved by reversibility, not persuasion.",
+    "blocks/3/title": "How it is done in practice",
+    "blocks/3/subtitle": "A sequence that reduces the cost of error",
+    "blocks/3/items/0": "**Side-by-side operation** — a period when both versions are available. Expensive, but that's the price of a smooth transition.",
+    "blocks/3/items/1": "**Waves** — first a few loyal users, then a cohort, then everyone. Each wave gives time to fix issues found.",
+    "blocks/3/items/2": "**Carrying over personal data** — settings, history, catalogs. The user shouldn't have to enter everything from scratch.",
+    "blocks/3/items/3": "**The back button** — an option to return to the old version in the first few weeks. Very few use it, but knowing it's there relieves anxiety for everyone.",
+    "blocks/3/items/4": "**Sunsetting deadline** — announced once in advance; pushing back the deadline teaches people they don't need to hurry.",
+    "blocks/4/text": "First attempt: announced a date, migrated everyone, rolled 12 out of 40 stores back a week later — they couldn't find the divergence report they were used to.\n\nSecond attempt: three two-week waves. The first wave had five stores, which revealed that supplier catalogs weren't migrating — users would have re-entered them manually, taking two hours per store. Fixed before the second wave.\n\nThe old version was shut down after three months, with the date communicated upfront. Two rolled back, and both eventually migrated voluntarily.",
+    "blocks/4/title": "Polka 2.0, how it went",
+    "blocks/5/text": "Before switching, it is useful to run a reconciliation: check if record counts match, totals line up, and what happened to empty fields. A discrepancy found after sunsetting the old system leaves you with nothing to fix it against.",
+    "blocks/5/title": "Data is migrated with verification, not hope",
+    "blocks/6/text": "Side-by-side operation costs money and doubles support. This is a deliberate trade-off: if a transition is cheap and reversible, you can skip it — but that decision must be intentional, not accidental.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

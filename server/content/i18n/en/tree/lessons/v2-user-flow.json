@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "b433592e5cc5af48",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "User flow and screen map: where the path breaks",
+    "keyTakeaway": "A flow is designed around user decisions, not screens. Most drop-offs live in branches that aren't drawn on mockups: empty, error, no permissions, slow loading, navigated back.",
+    "checkQuestion": "A dispatcher opened planning and found no available cars. What do they see, and what can they do next?",
+    "blocks/0/text": "The key question of this node: **how is user interaction with the product structured?** We already have the objects; now comes the route along which a person interacts with them.",
+    "blocks/1/title": "User Flow",
+    "blocks/1/subtitle": "Drawn from the task, not navigation",
+    "blocks/1/items/0": "**Entry point**—where the person comes from and what they already know. There are usually several, and they aren't equivalent.",
+    "blocks/1/items/1": "**Steps and decisions**—rectangle is an action, diamond is a decision point. Each decision point must have at least two outcomes.",
+    "blocks/1/items/2": "**Screen states**—empty, loading, error, partial data, no permissions. This is the most valuable part of the diagram.",
+    "blocks/1/items/3": "**Exit**—how the path ends and where the person goes next. A dead end with no exit is a design flaw.",
+    "blocks/2/text": "Main path: order list → select order → select car → assign driver → confirm → trip scheduled. Five steps, drawn in ten minutes.\n\nBranches missing from mockups:\nno available cars → need an answer for \"when does the nearest one become free,\" otherwise the dispatcher switches to a spreadsheet and never comes back;\ndriver lacks category → block, but must show who fits;\nanother dispatcher claimed the order while this one was thinking → need to inform before confirmation, not after.\n\nThe third branch happened twice a week and was the primary cause of distrust in the system.",
+    "blocks/2/title": "Dispetcher: trip planning",
+    "blocks/3/text": "A screen map answers \"what is in the product\" and is needed for completeness. A flow answers \"how a person gets their job done\" and is needed for quality. Substituting one for the other produces a product where everything exists and nothing gets done.",
+    "blocks/3/title": "Screen map and user flow are different diagrams",
+    "blocks/4/text": "**A cheap check.** Walk through the flow out loud as the user, naming every decision. Places where you end up saying \"well, they'll figure it out somehow\" are where future support tickets live.",
+    "blocks/5/text": "A flow diagram says nothing about how usable each step is—that is learned by observing a live person. It only guarantees that the path exists end-to-end and doesn't break anywhere.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

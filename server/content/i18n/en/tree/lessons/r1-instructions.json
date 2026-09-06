@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "b703550da29f3b9a",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "A manual is a symptom, not a solution",
+    "keyTakeaway": "Every manual written should start as an attempt to eliminate the need for it. If it cannot be eliminated, the manual is written for a specific task and lives right where the user gets stuck, not in a separate document.",
+    "checkQuestion": "Store clerks don't understand how to cancel an erroneous scan. What is your first move?",
+    "blocks/0/text": "The key question of this node: **how to use the product to solve tasks?** The question sounds like \"write documentation\", but starts earlier.",
+    "blocks/1/text": "**What happens if you don't answer this question.** Support answers the exact same question twenty times a month. They write a guide, nobody reads it, the volume of questions remains unchanged.",
+    "blocks/2/title": "Order of actions",
+    "blocks/2/subtitle": "A manual is the last step, not the first",
+    "blocks/2/items/0": "**1. Eliminate.** Can we make it so the question never arises? Often this is a one-hour fix.",
+    "blocks/2/items/1": "**2. Guide at the friction point.** If you can't eliminate it—provide a quick hint right where the user pauses, not in a \"Help\" section.",
+    "blocks/2/items/2": "**3. Write.** If even that is impossible—write concise text for a specific task: \"how to cancel an erroneous scan\", not a general \"user manual\".",
+    "blocks/2/items/3": "**Verification:** volume of support tickets on this topic. If it hasn't dropped, you merely wrote documentation instead of solving the problem.",
+    "blocks/3/text": "The question was always the same: \"scanned the wrong item, how do I remove it\". The app had a cancel function—a long press on the row.\n\nThe first instinct: write a manual. Instead, they added a cancel button directly to the row of the last scanned item. Three hours of work.\n\nSupport tickets dropped to two a month—from users wanting to remove an earlier item rather than the last one. For that case, they wrote four lines of text right on the list screen.",
+    "blocks/3/title": "Polka, twenty support tickets a month",
+    "blocks/4/text": "People look for answers at the moment of friction and on the screen where they got stuck. A document residing separately from that context is read only by those paid to read it.",
+    "blocks/4/title": "Almost nobody reads the user manual",
+    "blocks/5/text": "There are domains where documentation is mandatory and non-negotiable: safety regulations, legally binding actions, pre-onboarding training. There, the goal is not to eliminate text, but to ensure it is precise.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

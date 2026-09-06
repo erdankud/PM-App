@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "c554e8610521ccec",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:16Z"
+  },
+  "fields": {
+    "title": "What events do to analytics",
+    "keyTakeaway": "Technical events are accurate and show only successful outcomes, so product behavior is measured separately, and technical event structure must not be dictated by report needs.",
+    "sections/0/blocks/0/text": "If the system already publishes events for every action, why do we need separate product analytics?",
+    "sections/1/blocks/0/text": "The temptation to use technical events as product events is great: they already exist, they are accurate, they require no client-side work. Products that yield to it find out a year later that metrics cannot be changed without affecting system operations, and half of product questions cannot be answered.",
+    "sections/2/blocks/0/text": "Technical and product events answer different questions.",
+    "sections/2/blocks/1/text": "*Technical event* — what happened in the system: `order.created`, `payment.confirmed`. Accurate, reliable, comes from the server, independent of the client.",
+    "sections/2/blocks/2/text": "*Product event* — what a person did: opened a screen, scrolled a feed, cancelled midway, left without finishing. Most of this **leaves no trace in the system at all** because it changed nothing.",
+    "sections/2/blocks/3/text": "Hence the main limitation: **technical events only show what succeeded.** Orders that were placed. Drop-offs, doubts, attempts, back-clicks are invisible — exactly what a PM cares about.",
+    "sections/2/blocks/4/text": "What you should take from technical events: facts where accuracy matters and discrepancies are unacceptable. Number of orders, amounts, statuses. This is more reliable than client-side analytics, which loses data due to network issues and ad blockers.",
+    "sections/2/blocks/5/text": "What you shouldn't: behavior. It is measured on the client.",
+    "sections/2/blocks/6/text": "Two practical rules:",
+    "sections/2/blocks/7/text": "*Do not change technical events for analytics.* As soon as event structure starts being dictated by reports, changing a report becomes changing the system. *Cross-check one against the other.* `order.created` count versus checkout product events — that exact reconciliation from `DS3-N4-L2` that catches event loss in a mobile app.",
+    "sections/3/blocks/0/text": "The separation was formalized explicitly.",
+    "sections/3/blocks/1/text": "*From technical events:* orders, revenue, statuses, cancellations, accruals. Everything that goes into partner reports and finance.",
+    "sections/3/blocks/2/text": "*From client analytics:* checkout funnel, drop-offs, filter usage, catalog browsing depth.",
+    "sections/3/blocks/3/text": "The case that defined the rule: marketing asked to add traffic source to `order.created` to calculate channel conversion. We refused — the event describes the order, not the user's path to it. Traffic source went into client analytics and links to the order via an identifier.",
+    "sections/3/blocks/4/text": "Half a year later, traffic sources were restructured three times. Each restructuring would have been a change to the event structure that nine handlers depended on.",
+    "sections/4/blocks/0/text": "For a small product, separation is overkill: while there are a dozen events, they can cover both. Separation is worth it when events have more than two subscribers.",
+    "sections/5/blocks/0/text": "Technical events are accurate and show only successful outcomes, so product behavior is measured separately, and technical event structure must not be dictated by report needs."
+  }
+}

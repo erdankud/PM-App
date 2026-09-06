@@ -1,0 +1,41 @@
+{
+  "language": "en",
+  "sourceDigest": "b5a8f5027096c143",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:08:11Z"
+  },
+  "fields": {
+    "title": "Index Budget",
+    "inputs/0/label": "`(store)`",
+    "inputs/1/label": "`(store, date)`",
+    "inputs/2/label": "`(user, date)`",
+    "inputs/3/label": "`(status)`",
+    "inputs/4/label": "`(phone)` — support, 20 requests per day",
+    "inputs/5/label": "`(amount)` — admin screen, 8 views per month",
+    "acceptance/0/expected": "remove",
+    "acceptance/1/expected": "keep",
+    "acceptance/2/expected": "keep",
+    "acceptance/3/expected": "remove",
+    "acceptance/4/expected": "keep",
+    "acceptance/5/expected": "remove",
+    "inputs/0/choices/0": "keep",
+    "inputs/0/choices/1": "remove",
+    "inputs/1/choices/0": "keep",
+    "inputs/1/choices/1": "remove",
+    "inputs/2/choices/0": "keep",
+    "inputs/2/choices/1": "remove",
+    "inputs/3/choices/0": "keep",
+    "inputs/3/choices/1": "remove",
+    "inputs/4/choices/0": "keep",
+    "inputs/4/choices/1": "remove",
+    "inputs/5/choices/0": "keep",
+    "inputs/5/choices/1": "remove",
+    "promptBlocks/0/text": "The orders table has six indexes, the budget is four. What do you remove?",
+    "promptBlocks/1/text": "`(store)` 2. `(store, date)` 3. `(user, date)` 4. `(status)` 5. `(phone)` — for support, 20 requests per day 6. `(amount)` — for admin screen, 8 views per month",
+    "referenceReasoningBlocks/0/text": "remove 1 (fully covered by the second one, working left to right), 4 (low selectivity — three values do not narrow down the dataset), 6 (10 thousand updates per single view). 2, 3, 5 remain. Protect the fifth: 20 requests a day is an active operational scenario, and without an index, searching by phone means a full scan of eight million rows."
+  }
+}

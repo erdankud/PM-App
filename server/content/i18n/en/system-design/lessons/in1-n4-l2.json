@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "8aab8f93e58f9e78",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:56:25Z"
+  },
+  "fields": {
+    "title": "What waiting looks like",
+    "keyTakeaway": "An intermediate state is a fully-fledged product screen: it must have a time limit, a clear outcome, and protection against double-tapping.",
+    "sections/0/blocks/0/text": "There is a gap between \"clicked\" and \"done\". What does the user see during this time, and why is this product work rather than design?",
+    "sections/1/blocks/0/text": "Intermediate states are designed last and as an afterthought, yet the user sees them with every action. A poorly designed wait screen generates duplicates, support tickets, and the feeling that the product is broken—even when the system works perfectly.",
+    "sections/2/blocks/0/text": "Four ways to handle waiting, from the fastest-appearing to the most honest.",
+    "sections/2/blocks/1/text": "**[[optimistic-ui|Optimistic UI]].** We show the result immediately without waiting for the server. A like is placed instantly, an item appears in the cart right away. Works when the operation is almost always successful and rollback is painless. Doesn't work where a refusal is likely or costly: showing \"paid\" before confirmation is deception.",
+    "sections/2/blocks/2/text": "**Indicator with text.** Not a spinning circle, but an explanation of what is happening. \"Checking availability\" is better than a spinner because it sets expectations for duration and explains the delay.",
+    "sections/2/blocks/3/text": "**Step-by-step progress.** For long operations: \"Checking stock → Creating order → Confirming payment\". The user sees movement, and three seconds with movement are easier to bear than two without.",
+    "sections/2/blocks/4/text": "**Deferred result.** The operation goes to the background, the screen is freed up, the result arrives via notification. The only option for truly long operations.",
+    "sections/2/blocks/5/text": "Three rules whose violation costs the most:",
+    "sections/2/blocks/6/text": "*Endless waiting is unacceptable.* Any \"in progress\" state must have a limit and transition to a clear outcome.",
+    "sections/2/blocks/7/text": "*Double-tapping must not repeat the operation.* The button gets blocked, and idempotency must also work on the server because button blocking is not protection.",
+    "sections/2/blocks/8/text": "*The user must be warned about a long operation in advance,* rather than after they start waiting. \"Generating the report will take up to 5 minutes, we'll send a notification\" before starting is entirely different from the same text appearing a minute later.",
+    "sections/3/blocks/0/text": "Exporting a year's purchase history: deferred result. Button → \"Preparing file, we'll send a notification, usually takes 2–3 minutes\" → screen is freed. The warning stands before the click, in the button description.",
+    "sections/3/blocks/1/text": "Adding to cart: optimistic UI. The item appears instantly, the counter increases locally. If the server denies it—the item disappears with an explanation. Refusals are rare, and immediacy matters more.",
+    "sections/3/blocks/2/text": "Checkout: indicator with text plus time escalation, discussed in the previous node. Optimistic UI is unacceptable here—you cannot show \"order placed\" before payment confirmation.",
+    "sections/3/blocks/3/text": "A special find: the \"Order is being placed\" screen received a \"Minimize\" button with the promise to send a notification. 8% of users use it—those for whom the wait dragged on. Previously, these people would close the app and have no idea how it ended.",
+    "sections/4/blocks/0/text": "Optimistic UI requires a thoughtful rollback, and rollback almost always looks worse than honest waiting. It should be used where the probability of failure is noticeably lower than a percentage.",
+    "sections/5/blocks/0/text": "An intermediate state is a fully-fledged product screen: it must have a time limit, a clear outcome, and protection against double-tapping."
+  }
+}

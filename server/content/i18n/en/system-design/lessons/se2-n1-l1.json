@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "c35009670a2b3fee",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "From Roles to Attributes",
+    "keyTakeaway": "Roles plus scope plus a few named restrictions cover almost all requests, while delegation and temporary access are needed by almost everyone and usually forgotten.",
+    "sections/0/blocks/0/text": "A client asks: \"a manager sees their stores, but only orders over 5 thousand, and only during working hours.\" How do you express this?",
+    "sections/1/blocks/0/text": "The access model determines who the product can serve. Too simple loses clients, too flexible loses clarity. Moving between levels takes months, so the level must be chosen deliberately.",
+    "sections/2/blocks/0/text": "**[[rbac|Role-based model]]** — permissions through roles, roles assigned to people. Clear, configurable, covers the majority. Covered in `SE1-N1-L2`.",
+    "sections/2/blocks/1/text": "**[[abac|Attribute-based model]]** — permissions computed from attributes: who the subject is, what the object is, under what conditions. Lets you express the example from the question. The cost — rules become code written by non-programmers, and understanding why access exists or not is difficult.",
+    "sections/2/blocks/2/text": "The practical middle ground most products arrive at: **roles plus scope plus a small set of named restrictions.** Not arbitrary rules, but pre-thought-out toggles: \"only own stores\", \"no buyer personal data\", \"read-only\".",
+    "sections/2/blocks/3/text": "Three mechanisms that almost everyone needs and often forgets:",
+    "sections/2/blocks/4/text": "**[[delegation|Delegation]].** A manager leaves and hands over rights to a deputy. Without a mechanism this is done by sharing a password — meaning turning off the entire access model at once.",
+    "sections/2/blocks/5/text": "**[[just-in-time-access|Temporary access]].** Rights for a duration tied to a task. Especially for our own support: an employee gets access to a client account for two hours with a justification, rather than permanently.",
+    "sections/2/blocks/6/text": "**[[guest-access|Guest access]].** An external participant — auditor, contractor — with a limited set.",
+    "sections/2/blocks/7/text": "And the **[[separation-of-duties|separation of duties]]** principle: one person should not perform an entire sensitive process. The one who adds a supplier should not approve payouts to them.",
+    "sections/3/blocks/0/text": "The \"roles plus scope\" model from `SE1` is supplemented by three toggle constraints:",
+    "sections/3/blocks/1/text": "*No buyer personal data* — for accountants and analysts. *Read-only* — for auditors and interns. *Only own stores* — for managers in chains with complex structures.",
+    "sections/3/blocks/2/text": "The attribute model was not built: out of 900 partners, arbitrary rules were requested by two, and both had enough with the combination of toggles.",
+    "sections/3/blocks/3/text": "Delegation was added after discovering that 11% of active sessions in partner accounts came from devices other than normal for that account — a sign of password sharing. The \"transfer rights for a period\" mechanism closed this.",
+    "sections/3/blocks/4/text": "Temporary access for our support: an employee requests access to a partner account, provides the ticket number, gets it for two hours. Everything is logged. Before this, support had permanent access to all accounts — classic [[excessive-privileges|excessive privileges]].",
+    "sections/4/blocks/0/text": "Model flexibility is limited by the client's ability to configure it. A model requiring training will not be used correctly.",
+    "sections/5/blocks/0/text": "Roles plus scope plus a few named restrictions cover almost all requests, while delegation and temporary access are needed by almost everyone and usually forgotten."
+  }
+}

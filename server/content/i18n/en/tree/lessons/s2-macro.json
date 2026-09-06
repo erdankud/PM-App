@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "51331af0835b53e4",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Macro environment: external changes happening around your product",
+    "keyTakeaway": "Macro analysis works only if every factor leads to a direct consequence for your decisions. A generic list like \"inflation is up, digitalization is growing\" is background noise, not analysis.",
+    "checkQuestion": "\"The central bank key rate went up.\" How do you connect this to a direct consequence for Kedr?",
+    "blocks/0/text": "Key node question: **what market opportunities and constraints exist?**",
+    "blocks/1/text": "Domain running example: Kedr is a fictional cloud warehouse management service for small distributors: receiving, putaway, dispatch. Sold via sales team, average check is 40 thousand rubles a month, deal cycle about two months. In S1 we estimated market size and sales dynamics; here we assess external trends and market positioning.",
+    "blocks/2/text": "**What happens if you do not answer the question.** Strategy gets built as if the world stands still. Then new mandatory product labeling regulations hit, and the team spends six months firefight-implementing them instead of delivering planned roadmap items.",
+    "blocks/3/title": "PESTEL",
+    "blocks/3/subtitle": "Six factor groups, each tied to an actionable outcome",
+    "blocks/3/items/0": "**Political** — government policies: subsidies, sanctions, data residency requirements.",
+    "blocks/3/items/1": "**Economic** — interest rates, FX, purchasing power, access to capital for your clients.",
+    "blocks/3/items/2": "**Social** — changing behavioral trends and workplace standards.",
+    "blocks/3/items/3": "**Technological** — cost reductions, emerging capabilities, or tech adoption by rivals.",
+    "blocks/3/items/4": "**Environmental** and **Legal** — sustainability factors and industry-specific regulations.",
+    "blocks/3/items/5": "**Rule:** frame every factor as \"X → means Y for us → action Z to take/avoid.\" Without steps two and three, it is a news item, not an analysis.",
+    "blocks/4/text": "Mandatory labeling for two more product categories starting September 1.\n→ Our clients must scan barcodes on receiving.\n→ Either we support this by August, or we lose distributors in these categories (40% of our user base).\n\nCentral bank rate hike.\n→ Distributors cut inventory and delay software rollouts.\n→ Deal cycle will lengthen; plan for three months instead of two.\n\nCloud adoption apprehension in mid-market has faded.\n→ The \"where is my data hosted?\" objection comes up less often.\n→ We cut two slides from the pitch deck to focus client attention elsewhere.",
+    "blocks/4/title": "Kedr: three external drivers and their impact",
+    "blocks/5/text": "\"The market is growing\" is not a factor. \"The number of distributors in our segment is growing 4% annually, but two-thirds of that growth comes from teams under 15 people who find our price too high\" is a factor that dictates an action.",
+    "blocks/5/title": "A factor lacking scope or timeline is useless",
+    "blocks/6/text": "The **market consolidation model** addresses an adjacent question: how the industry is structured today — fragmented, consolidating, or dominated by a few leaders. Winning strategies vary by stage: speed and niche focus win in fragmented markets, while scale and cost leadership dominate consolidated ones.",
+    "blocks/7/text": "Macro analysis defines boundaries, not strategy. It projects external shifts without dictating internal actions: your judgment bridges the gap between factor and decision, and it must be explicitly articulated.",
+    "blocks/7/title": "Limitations of the model"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "language": "en",
+  "sourceDigest": "d360c22b31a50547",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:05:32Z"
+  },
+  "fields": {
+    "title": "Packaging limits",
+    "promptBlocks/0/text": "Partner API. Propose a limit structure for three scenarios and state what goes into the paid tier.",
+    "promptBlocks/1/items/0": "Small store, updates stock once an hour",
+    "promptBlocks/1/items/1": "Chain of 40 stores, wants to see orders in their system immediately",
+    "promptBlocks/1/items/2": "Integrator connecting a new chain, initial upload of 30k items",
+    "referenceReasoningBlocks/0/text": "Base limit of 60/min covers the first scenario. The second requires webhooks — that is the substance of the paid tier, the limit itself doesn't solve it. The third requires a separate initial sync mode with a higher limit for a day, free of charge, otherwise onboarding hits the limit and requires manual work every time. Plus weighted counting: catalog export costs more than receiving an order."
+  }
+}

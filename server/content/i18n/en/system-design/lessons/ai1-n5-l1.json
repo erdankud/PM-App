@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "sourceDigest": "5eda220021b059bb",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:01Z"
+  },
+  "fields": {
+    "title": "Two phases and two metrics",
+    "keyTakeaway": "Long input hits time to first token, long output hits total time, streaming doesn't speed up but changes perception, and prompt caching requires the immutable part to come first.",
+    "sections/0/blocks/0/text": "Why does the response appear word by word and why do we wait longer for the first word than the rest?",
+    "sections/1/blocks/0/text": "AI features are slower than regular ones by an order of magnitude, and without understanding the mechanics, a product manager either sets impossible demands or settles for worse than possible.",
+    "sections/2/blocks/0/text": "Generation consists of two phases with different properties.",
+    "sections/2/blocks/1/text": "**[[prefill|Prefill]].** The model processes the entire input prompt. Time depends on input length. This is the phase up to the first token.",
+    "sections/2/blocks/2/text": "**[[decode|Decode]].** The model generates the response one token at a time. Each subsequent one depends on previous ones, so it cannot be parallelized. Speed is measured in [[tokens-per-second|tokens per second]].",
+    "sections/2/blocks/3/text": "Hence two metrics:",
+    "sections/2/blocks/4/text": "**[[ttft|TTFT]]** — from query to first fragment. Determined by input length and load. Typically from fractions of a second to several seconds.",
+    "sections/2/blocks/5/text": "**Generation speed** — tokens per second. Determines how fast the entire response appears.",
+    "sections/2/blocks/6/text": "Total time ≈ TTFT + response length / speed.",
+    "sections/2/blocks/7/text": "Practical consequence: **long input hits TTFT, long output hits total time.** These are different levers. Shorten prompt — speed up start. Shorten response — speed up end.",
+    "sections/2/blocks/8/text": "**[[streaming-2|Streaming]]** — output as it generates. Doesn't speed up, but radically changes perception: a person starts reading after a second instead of waiting ten. This is why all AI interfaces print text.",
+    "sections/2/blocks/9/text": "Two acceleration techniques worth knowing about:",
+    "sections/2/blocks/10/text": "**[[prompt-caching|Prompt caching]].** If the beginning of the prompt repeats between queries—system instruction, catalog—providers know how to reuse its processing. Saves both time and money. Requires the immutable part to go at the beginning of the prompt: this affects how the product builds context.",
+    "sections/2/blocks/11/text": "**[[batching|Batching]].** Several queries are processed together. Increases throughput, may increase latency of an individual query.",
+    "sections/3/blocks/0/text": "Product response: input around 1 200 tokens, output around 120. TTFT 380 ms, speed 90 tokens/s, total time ≈ 1.7 s.",
+    "sections/3/blocks/1/text": "Cart picking: input 4 150, output 600. TTFT 1.1 s, total time ≈ 7.8 s. With streaming, the first items appear in a second, and it feels completely different.",
+    "sections/3/blocks/2/text": "Prompt caching gave a noticeable effect: system instruction and catalog structure—3 200 tokens are immutable between queries of the same user. We restructured the prompt assembly order so that the immutable part goes first. TTFT dropped from 1.1 to 0.5 s, input cost—by about a third.",
+    "sections/3/blocks/3/text": "Restructuring the order was a product decision: we had to give up inserting personal data at the beginning, where it is \"better seen by the model\", in favor of caching. Checked with evals—quality did not change.",
+    "sections/4/blocks/0/text": "Speed numbers depend on the model, provider, and load, and change frequently. The two-phase mechanics are stable, specific values are not.",
+    "sections/5/blocks/0/text": "Long input hits time to first token, long output hits total time, streaming doesn't speed up but changes perception, and prompt caching requires the immutable part to come first."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "language": "en",
+  "sourceDigest": "7c159ac603cb82fa",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Determine protection level",
+    "inputs/0/label": "Suggesting a recipe from cart items",
+    "inputs/1/label": "Answering about shelf life",
+    "inputs/2/label": "Showing product price in answer",
+    "inputs/3/label": "Answering about diet compatibility",
+    "acceptance/0/expected": "free generation",
+    "acceptance/1/expected": "data quote or refusal only",
+    "acceptance/2/expected": "not via model at all",
+    "acceptance/3/expected": "data quote or refusal only",
+    "inputs/0/choices/0": "free generation",
+    "inputs/0/choices/1": "data quote or refusal only",
+    "inputs/0/choices/2": "not via model at all",
+    "inputs/1/choices/0": "free generation",
+    "inputs/1/choices/1": "data quote or refusal only",
+    "inputs/1/choices/2": "not via model at all",
+    "inputs/2/choices/0": "free generation",
+    "inputs/2/choices/1": "data quote or refusal only",
+    "inputs/2/choices/2": "not via model at all",
+    "inputs/3/choices/0": "free generation",
+    "inputs/3/choices/1": "data quote or refusal only",
+    "inputs/3/choices/2": "not via model at all",
+    "promptBlocks/0/text": "For each scenario, name the error cost and protection level.",
+    "promptBlocks/1/items/0": "Suggesting a recipe from cart items",
+    "promptBlocks/1/items/1": "Answering about shelf life",
+    "promptBlocks/1/items/2": "Showing product price in answer",
+    "promptBlocks/1/items/3": "Answering about diet compatibility",
+    "referenceReasoningBlocks/0/text": "1 — low, free generation. 2 — high, data quote or refusal only. 3 — not via model at all: number is rendered by the product. 4 — high and close to medical: show ingredients, do not conclude, recommend verifying. Technique: exact data is shown by the product, health judgments are never made."
+  }
+}

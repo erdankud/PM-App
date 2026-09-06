@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "ea88151b3cffc8f6",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Channels: not \"where everyone is\", but where your user is already solving this problem",
+    "keyTakeaway": "You choose a channel based on where people are already looking for a solution, and test it with a small bid. A channel that works for a neighbor says nothing about yours: they have a different product, different pricing, and a different decision cycle.",
+    "checkQuestion": "A competitor grew on paid search. Why is this a weak argument for starting with it?",
+    "blocks/0/text": "Key node question: **where and how to acquire consumers?**",
+    "blocks/1/text": "End-to-end domain example: Reestr is a fictional electronic document management service for small business: invoices, certificates, signatures. Subscription model, 14-day free trial. In module M1, we figured out who we speak to and what we say; here, we focus on how this creates a steady stream of clients.",
+    "blocks/2/text": "**What happens if you do not answer the question.** The budget goes to where \"everyone hangs out\". A quarter later, there is reach, no clients, and it is unclear whether the channel or the offer is at fault.",
+    "blocks/3/title": "How to test channels",
+    "blocks/3/subtitle": "Three questions before spending money",
+    "blocks/3/items/0": "**Intent** — is the user already searching for a solution, or are you interrupting them? Search is intent, a feed is interruption. These carry different costs and copy.",
+    "blocks/3/items/1": "**Reachability** — can you actually separate your audience from everyone else? \"Small business\" is not targeting; \"people searching 'how to issue a VAT invoice'\" is targeting.",
+    "blocks/3/items/2": "**Cycle** — how much time passes between the first touchpoint and the decision? If it's two weeks, a channel cannot be evaluated in one week.",
+    "blocks/3/items/3": "**Bid test:** minimal budget, single offer, fixed timeframe, and a predefined threshold for what lead cost signals \"it failed\".",
+    "blocks/4/text": "**The offer matters more than the channel.** The same channel yields different costs with different promises. Therefore, test copy variations within a fixed channel first, and only then compare channels against each other.",
+    "blocks/5/text": "Search for \"how to issue an invoice for sole proprietor\" — signup cost 340 ₽, every fifth person reaches payment.\nTargeted ads for \"business owners\" on social media — 210 ₽ per signup, one in thirty reaches payment. Cheap at the start, expensive at the end.\nPartnership with an accounting service — 8 clients per month without a budget, but contract negotiation took six weeks.\nIndustry channel in a messenger — 3 clients, but all of them pay for a second month.\n\nThe takeaway is not \"search is better\", but \"you need to compare channels by paid conversions, not by signups\".",
+    "blocks/5/title": "Reestr, four 60 thousand tests",
+    "blocks/6/text": "A cheap channel is usually narrow: its capacity runs out and costs rise. That is why a growing product always searches for a second channel — before the first reaches its limit, not after.",
+    "blocks/6/title": "A single channel rarely scales indefinitely",
+    "blocks/7/text": "Channels don't fix the product. If users churn in week two, any new channel just pours water faster into a leaky bucket — and does so at a higher cost.",
+    "blocks/7/title": "Model boundaries"
+  }
+}

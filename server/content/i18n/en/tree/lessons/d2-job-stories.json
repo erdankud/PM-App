@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "sourceDigest": "7af16e9c1ea433ea",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-03T00:43:25Z"
+  },
+  "fields": {
+    "title": "Situation over persona: job stories and the four forces",
+    "keyTakeaway": "Behavior is explained by the situation, not the persona. And switching to a new solution depends on four forces at once: two push forward, two hold back — and the holding forces are usually stronger because no one thinks about them.",
+    "checkQuestion": "The product is objectively better, but people aren't using it. Which two forces did you underestimate?",
+    "blocks/0/text": "The same key question, but from the other angle: **what makes a person change their behavior** — and what stops them.",
+    "blocks/1/title": "Job Story",
+    "blocks/1/subtitle": "Framing by situation, not by role",
+    "blocks/1/items/0": "**When** <situation> — the circumstances where the need arises.",
+    "blocks/1/items/1": "**I want to** <motivation> — what the person is trying to do.",
+    "blocks/1/items/2": "**so I can** <outcome> — what will change.",
+    "blocks/1/items/3": "Difference from a user story: **no role**. A role pushes you to describe the person; a situation pushes you to describe the moment. And decisions are made in the moment.",
+    "blocks/2/items/0": "“As a cafe owner, I want to see the schedule” — describes a job title",
+    "blocks/2/items/1": "“When the barista texts in sick on Saturday morning, I want to find a replacement in five minutes so the cafe opens on time” — describes a moment, making the need for speed clear",
+    "blocks/3/title": "Four Product Forces",
+    "blocks/3/subtitle": "Why people don't switch, even when the new option is better",
+    "blocks/3/items/0": "**Push from the current solution** — what is frustrating right now. Drives forward.",
+    "blocks/3/items/1": "**Pull of the new solution** — what makes your solution attractive. Drives forward.",
+    "blocks/3/items/2": "**Habit** — what holds them back: it works, everyone knows how to use it, no need to change anything.",
+    "blocks/3/items/3": "**Anxiety** — fear that the new solution will fail: data will be lost, colleagues won't understand, things will get worse.",
+    "blocks/4/text": "Product teams almost always focus only on the pull of the new solution: adding features. But the sum of forces can remain negative because anxiety and habit haven't been addressed — so no matter how much you add, the switch doesn't happen.",
+    "blocks/5/text": "Push: recalculating hours manually, risk of errors.\nPull: automated tracking, schedule visibility.\nHabit: the spreadsheet has worked for three years, everyone knows how to use it.\nAnxiety: “what if employees don't see the schedule and don't show up?”\n\nFor six months, the team kept boosting the pull — adding features. Few switched.\n\nWhat worked was something else: a “read receipt” for the schedule and the option to run the spreadsheet in parallel for the first month. That addressed anxiety and habit, rather than piling on features.",
+    "blocks/5/title": "Smena: why people weren't switching",
+    "blocks/6/text": "Forces cannot be measured directly — they are reconstructed from interviews about a specific case of switching or refusing to switch. And the model describes the decision to change solutions; it says nothing about whether the person will continue using the product long-term.",
+    "blocks/6/title": "Model limits"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "sourceDigest": "57efb90e29674f21",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:57Z"
+  },
+  "fields": {
+    "title": "Find the anomaly",
+    "promptBlocks/0/text": "In the Polka schema, the store name is duplicated in every order for reporting speed. Name three specific consequences and determine whether this is duplication or a snapshot.",
+    "referenceReasoningBlocks/0/text": "duplication, not a snapshot — store name is a single fact that must match everywhere, unlike the purchase price. Consequences: renaming requires updating hundreds of thousands of records; a partial failure leaves two names for the same store; searching by name yields conflicting results. Check: if a value must change along with the original — it's duplication; if it must stay as it was — it's a snapshot."
+  }
+}

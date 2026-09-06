@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "b74428bbbd4f9308",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "Data Subject Requests",
+    "keyTakeaway": "Self-service covers most requests and is cheaper than manual processing, and without a systems map, collecting a person's data turns into an investigation.",
+    "sections/0/blocks/0/text": "A request arrives: \"provide all my data.\" How much time will it take?",
+    "sections/1/blocks/0/text": "Data subject requests have legal deadlines — usually 30 days. A product without a process fulfills them manually, and a single request eats up days of work. With a growing number of requests this becomes a permanent load.",
+    "sections/2/blocks/0/text": "Typical rights of a person regarding their data:",
+    "sections/2/blocks/1/text": "*Access.* Get a copy of what is stored about them. *Correction.* Change incorrect data. *Deletion.* Covered above. *Portability.* Get in a machine-readable format. *Objection.* Prohibit processing for specific purposes. *Consent withdrawal.* Stop what was done based on consent.",
+    "sections/2/blocks/2/text": "What the product needs for this to work:",
+    "sections/2/blocks/3/text": "**Intake point.** A form or address known to the user. A request arriving in support chat is also a request — employees must recognize it.",
+    "sections/2/blocks/4/text": "**Identity confirmation.** Giving data to the wrong person is a leak. The verification method must exist, and it should not require new data.",
+    "sections/2/blocks/5/text": "**Inventory.** Where a person's data lives. Without a systems map, gathering turns into an investigation.",
+    "sections/2/blocks/6/text": "**Automation.** A \"download my data\" button in the interface covers most requests on its own.",
+    "sections/2/blocks/7/text": "**Deadline and tracking.** Request registration, deadline control.",
+    "sections/2/blocks/8/text": "Practical observation: **self-service is cheaper than processing.** Data export and account deletion in the interface remove most requests and improve the product along the way.",
+    "sections/3/blocks/0/text": "Self-service in profile: \"Download my data\" and \"Delete account\".",
+    "sections/3/blocks/1/text": "Export is generated asynchronously, arrives via link, contains profile, order history, reviews, consents. Format — JSON and CSV files.",
+    "sections/3/blocks/2/text": "Over a quarter: 340 self-service exports, 11 requests via support. Before the button appeared there were about 60 support requests per quarter, each taking 2–3 hours.",
+    "sections/3/blocks/3/text": "Identity confirmation for requests via support — via account login. If the person cannot log in — procedure via the same phone number.",
+    "sections/3/blocks/4/text": "Inventory: a map of six systems where a person's data might be — main database, analytics, search index, mailing system, support, payment provider. Updated when connecting a new system.",
+    "sections/3/blocks/5/text": "Tracking: requests are registered, 30-day deadline, notification 7 days before expiration. Over two years, not a single overdue one.",
+    "sections/4/blocks/0/text": "Export must contain data, not everything indiscriminately: technical logs and internal scores are usually excluded. Composition is determined with a lawyer.",
+    "sections/5/blocks/0/text": "Self-service covers most requests and is cheaper than manual processing, and without a systems map, collecting a person's data turns into an investigation."
+  }
+}

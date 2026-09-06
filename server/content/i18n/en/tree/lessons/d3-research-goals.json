@@ -1,0 +1,39 @@
+{
+  "language": "en",
+  "sourceDigest": "8dc2dff22d7a3eba",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:26:23Z"
+  },
+  "fields": {
+    "title": "Research begins with the decision that depends on it",
+    "keyTakeaway": "Useful research is tied to a decision: what we are deciding, which options we are considering, and which answer will tip the choice. Research “to better understand users” leads nowhere and never ends.",
+    "checkQuestion": "The team asks for a “satisfaction study”. What two questions will you ask before starting?",
+    "blocks/0/text": "Key question of the node: **what research is needed for the company's goals?** In blocks D1 and D2, we applied individual methods; here it is about choosing between them and setting the research task.",
+    "blocks/1/text": "End-to-end example: Smena is a fictional shift scheduling service for small cafes and stores. The company has grown: now three people handle research, and the question of “what to study next quarter” has become real.",
+    "blocks/2/text": "**What happens if you do not answer this question.** Research turns into a stream of reports that no one opens. A year later, the company has a library of knowledge and not a single decision made based on it.",
+    "blocks/3/title": "Setting a research objective",
+    "blocks/3/subtitle": "Five lines you should not start without",
+    "blocks/3/items/0": "**Decision** — what exactly we will decide based on the results. If the answer is “nothing, just find out”, research is not needed.",
+    "blocks/3/items/1": "**Options** — what we are choosing between. There must be at least two of them, otherwise the decision has already been made.",
+    "blocks/3/items/2": "**What will tip the choice** — which result will lean toward which option. Formulated before data collection.",
+    "blocks/3/items/3": "**Timeline and cost of the decision** — how much time is available and what an error will cost. An expensive and irreversible decision justifies expensive research; a cheap one does not.",
+    "blocks/3/items/4": "**What is already known** — past research and data. Half of all requests are closed here.",
+    "blocks/4/title": "Which method for which question",
+    "blocks/4/subtitle": "The method follows from the question, not vice versa",
+    "blocks/4/items/0": "**Why this is happening** — interviews and observation. Numbers are useless here.",
+    "blocks/4/items/1": "**How many people and how often** — product data, a survey on a large sample.",
+    "blocks/4/items/2": "**What a person will choose** — an experiment or observing behavior; asking is useless.",
+    "blocks/4/items/3": "**Is it clear** — a usability test with five to eight people. No more is needed: problems repeat.",
+    "blocks/4/items/4": "**Is it worth doing at all** — it is often cheaper to manually simulate a feature than to study intent.",
+    "blocks/5/text": "Request 1: “Study user satisfaction”.\nQuestions: what decision depends on it? — “none, for understanding”. Rejected.\n\nRequest 2: “Understand why cafes with one location churn in the third month”.\nDecision: whether to make a separate simplified tier or improve the current product.\nWhat will tip the choice: if they leave due to price — a tier; if because a schedule for a single location is easier to keep in a notebook — a tier won't help.\nMethod: 8 interviews with churned users plus churn breakdown by number of locations.\nTimeline: two weeks. Cost of error: a quarter of tier development.\n\nThe second study took ten days and canceled a quarter of work.",
+    "blocks/5/title": "Smena: two research requests",
+    "blocks/6/text": "If the responsible person says “we are going to do it anyway, we just want to confirm”, it is more honest not to waste time. Such studies always “confirm” — the only question is which slice of data will be picked.",
+    "blocks/6/title": "Research that cannot change a decision is a ritual",
+    "blocks/7/text": "Not everything needs to be researched. A cheap and reversible decision is easier to make and observe than to study: the cost of research must be lower than the cost of error, and this comparison is made before starting.",
+    "blocks/7/title": "Model boundaries"
+  }
+}

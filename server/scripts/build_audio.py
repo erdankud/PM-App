@@ -26,11 +26,11 @@ from app.config import settings
 from app.services import audio
 
 
-def lessons_for(names: list[str]) -> list[dict]:
+def lessons_for(names: list[str], language: str = "ru") -> list[dict]:
     if names:
         found = []
         for name in names:
-            lesson = tree_content.lesson(name)
+            lesson = tree_content.lesson(name, language)
             if lesson is None:
                 raise SystemExit(f"нет урока {name}")
             found.append(lesson)
@@ -38,7 +38,7 @@ def lessons_for(names: list[str]) -> list[dict]:
     return [
         lesson
         for kind in tree_content.KINDS
-        for lesson in tree_content.tree_content(kind)["lessons"].values()
+        for lesson in tree_content.tree_content(kind, language)["lessons"].values()
     ]
 
 
@@ -50,24 +50,25 @@ def main() -> None:
         action="store_true",
         help="не удалять файлы отредактированных уроков (по умолчанию удаляются)",
     )
+    parser.add_argument("--language", default="ru", help="язык обзора")
     args = parser.parse_args()
 
-    targets = lessons_for(args.lessons)
+    targets = lessons_for(args.lessons, args.language)
     # Урок без сценария обзора пропускается молча: сценарии пишутся отдельным
     # шагом, и отсутствие — это «ещё не сгенерирован», а не поломка.
-    without_script = [l for l in targets if not audio.has_script(l)]
-    targets = [l for l in targets if audio.has_script(l)]
-    wanted = {audio.audio_path(lesson).name for lesson in targets}
+    without_script = [l for l in targets if not audio.has_script(l, args.language)]
+    targets = [l for l in targets if audio.has_script(l, args.language)]
+    wanted = {audio.audio_path(lesson, args.language).name for lesson in targets}
     built = skipped = 0
     started = time.time()
 
     for index, lesson in enumerate(targets, start=1):
-        path = audio.audio_path(lesson)
+        path = audio.audio_path(lesson, args.language)
         if path.exists():
             skipped += 1
             continue
         mark = time.time()
-        audio.synthesize(lesson)
+        audio.synthesize(lesson, args.language)
         built += 1
         size = path.stat().st_size / 1024
         print(
@@ -78,9 +79,10 @@ def main() -> None:
 
     removed = 0
     # Устаревшее чистится только при полном прогоне: при сборке одного урока
-    # остальные файлы не «лишние», их просто не просили.
+    # остальные файлы не «лишние», их просто не просили. И только на своём языке —
+    # иначе сборка английского корпуса стёрла бы весь русский.
     if not args.keep_stale and not args.lessons:
-        for stale in Path(settings.audio_dir).glob("*.mp3"):
+        for stale in Path(settings.audio_dir).glob(f"*.{args.language}.*.mp3"):
             if stale.name not in wanted:
                 stale.unlink()
                 removed += 1

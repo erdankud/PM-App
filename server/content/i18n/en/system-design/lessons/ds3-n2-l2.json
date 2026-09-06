@@ -1,0 +1,34 @@
+{
+  "language": "en",
+  "sourceDigest": "9c6f0d8acc5a9af3",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:35Z"
+  },
+  "fields": {
+    "title": "Debt in the data model",
+    "keyTakeaway": "Debt in the data model is measured in overpayments on specific roadmap items, and in that form it becomes a discussable business decision.",
+    "sections/0/blocks/0/text": "How to tell when the schema has become a bottleneck for the product, and how to explain to the business that it is time to pay?",
+    "sections/1/blocks/0/text": "[[schema-debt|Schema debt]] differs from regular technical debt in that it accumulates quietly and presents itself in a jump. Code can be refactored gradually; data models cannot, because the data is already accumulated. A symptom appears as \"the team got slower,\" the cause is invisible, and by the time it is obvious, the cure costs a quarter.",
+    "sections/2/blocks/0/text": "Model debt accumulates for three reasons.",
+    "sections/2/blocks/1/text": "*The product moved away from the model.* The schema was designed for one scenario, the product does another. Formally it works, every feature requires a workaround.",
+    "sections/2/blocks/2/text": "*Workarounds turned to stone.* A temporary field added \"for a month\" is used in six places. Cannot be removed.",
+    "sections/2/blocks/3/text": "*Meaning diverged from the name.* The `status` field contains seven values, three of which do not mean a status.",
+    "sections/2/blocks/4/text": "Signs visible to a PM without reading code:",
+    "sections/2/blocks/5/items/0": "Estimates for similar features doubled over a year without task complexity growing.",
+    "sections/2/blocks/5/items/1": "Discussions feature phrases like \"we'll have to put this in the other field\" or \"historically it's done that way.\"",
+    "sections/2/blocks/5/items/2": "Simple product questions require data dumps and manual sorting.",
+    "sections/2/blocks/5/items/3": "New team members take a long time to understand where things are.",
+    "sections/2/blocks/5/items/4": "Discrepancies in reports pop up regularly, explained by \"data quirks.\"",
+    "sections/2/blocks/6/text": "Conversations about paying off debt are productive under one condition: **debt is translated into deferred opportunities, not a moral judgment on the code.** Not \"the schema is bad,\" but \"these four roadmap features cost twice as much as they should, and will stay that way until we fix it.\" Then you discuss investment, not purity.",
+    "sections/3/blocks/0/text": "An example of accumulation traced backward.",
+    "sections/3/blocks/1/text": "Initially, a product belonged to a single store—a correct decision for a product that worked with one store. Then chains with shared assortments appeared, and products were \"multiplied\" across branches. Then a `parent_sku` field was added to link duplicates—a workaround for a quarter. Two years later, catalog, search, analytics, and recommendations depend on `parent_sku`, and 60% of products have it filled.",
+    "sections/3/blocks/2/text": "The cost of debt was calculated across four roadmap features: favorites, price comparison, product recommendations, and category reports. Total overestimation—about 11 weeks versus 4 if the catalog item had existed as an entity.",
+    "sections/3/blocks/3/text": "The business argument was boiled down to one sentence: making the catalog item correctly takes six weeks, not making it takes seven weeks of overpayment on the already approved roadmap, and the overpayment will repeat in the next one. The decision was made in a single meeting because they discussed arithmetic, not schema quality.",
+    "sections/4/blocks/0/text": "Not every awkwardness is debt. A model that is inelegant but doesn't block any planned feature requires no payment. Debt is defined by the plan, not by taste.",
+    "sections/5/blocks/0/text": "Debt in the data model is measured in overpayments on specific roadmap items, and in that form it becomes a discussable business decision."
+  }
+}

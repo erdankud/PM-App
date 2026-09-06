@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "7df774d2892b451d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Goals: how a measurable goal differs from a slogan",
+    "keyTakeaway": "A good goal names a result, not work, and it cannot be achieved without changing anything in substance. If a goal is completed by releasing a feature, it's a work plan, not a goal.",
+    "checkQuestion": "\"Release social features by June\" — why is this not a goal?",
+    "blocks/0/text": "Key question of the node: **what targets to achieve?** In block G2 we tested hypotheses; here, it's how to set what they are tested for.",
+    "blocks/1/text": "Running example: Vetka is a fictional subscription book reading app, 400 thousand active monthly users.",
+    "blocks/2/title": "Testing a goal",
+    "blocks/2/subtitle": "Five questions; failing any of them means rework",
+    "blocks/2/items/0": "**Is it a result or work?** \"Increase the share of people finishing their first book to 40%\" is a result. \"Release reminders\" is work.",
+    "blocks/2/items/1": "**Can it be met formally?** If yes — find out how and close that loophole in advance.",
+    "blocks/2/items/2": "**Is there a number and a deadline?** Without them, a goal cannot be discussed, only retold.",
+    "blocks/2/items/3": "**Is it realistic?** The benchmark is past dynamics: a goal requiring tenfold growth without changing conditions is demotivating.",
+    "blocks/2/items/4": "**Who is accountable?** One person, not a department.",
+    "blocks/3/text": "**OKR adds a useful distinction:** the objective is phrased in words and explains why it matters, while two to four key results use numbers that show whether it was achieved. Key results are not tasks; tasks live separately and can change until the result is achieved.",
+    "blocks/4/text": "Before: \"Launch social features and increase engagement.\"\n\nAfter:\nObjective — the reader finishes their first book, because those who finish renew their subscription 2.3 times more often.\nKey Result 1 — share of readers finishing their first book up from 31% to 40%.\nKey Result 2 — share of readers dropping on chapter two down from 44% to 35%.\nGuardrail — notification unsubscribes no higher than 8%.\nOwner — reading product manager.\n\nSocial features remained on the list of hypotheses that might help with this, or might fail testing.",
+    "blocks/4/title": "Vetka, how a quarterly goal was rewritten",
+    "blocks/5/text": "As soon as people are paid for a number, a way is found to boost it without value. Therefore, a guardrail metric is placed next to every goal, specifying that its degradation zeroes out the achievement.",
+    "blocks/5/title": "A goal tied to a bonus takes on a life of its own",
+    "blocks/6/text": "Not all work belongs in goals. Support, tech debt, customer commitments exist independently; trying to express them through ambitious numbers turns goals into bureaucracy.",
+    "blocks/6/title": "Boundaries of the model"
+  }
+}

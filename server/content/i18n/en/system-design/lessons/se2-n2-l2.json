@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "e1a03bbb10ed3ef2",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "The Log as a Product",
+    "keyTakeaway": "The log transitions from a cost center to a feature when it becomes available to the client and starts signaling anomalies.",
+    "sections/0/blocks/0/text": "The log exists, no one uses it. Why is it there then?",
+    "sections/1/blocks/0/text": "A log that exists only for compliance is an expense without return. With minor refinement, it becomes a feature people pay for.",
+    "sections/2/blocks/0/text": "Three levels of usefulness.",
+    "sections/2/blocks/1/text": "**Exists.** Data is written, available upon request through support. Minimum for a questionnaire.",
+    "sections/2/blocks/2/text": "**Available.** The client views and filters themselves in the interface. Relieves load from support and increases trust.",
+    "sections/2/blocks/3/text": "**Operational.** The log not only shows the past but signals: unusual activity, mass export, login from a new location, a series of access denials.",
+    "sections/2/blocks/4/text": "The third level turns the log into a security feature. What is worth signaling:",
+    "sections/2/blocks/5/text": "*Mass export.* An employee exported ten times the usual amount. *Access off-schedule.* At night, from another country. *Series of denials.* A sign of permission brute-forcing. *Actions after dismissal.* Requires connection with the HR system, but partially visible through inactivity.",
+    "sections/2/blocks/6/text": "Who to signal — a product decision: the client administrator, us, both.",
+    "sections/2/blocks/7/text": "Separate value — **dispute resolution.** \"Who changed the price\" and \"who canceled the order\" are questions arising constantly. The log answers in seconds.",
+    "sections/3/blocks/0/text": "The log went through all three levels in a year.",
+    "sections/3/blocks/1/text": "First version — recording only, access via support. Over a quarter 40 requests of the type \"who did this\", each taking half an hour of work.",
+    "sections/3/blocks/2/text": "Second — interface in the account. Requests dropped to 4 per quarter.",
+    "sections/3/blocks/3/text": "Third — signals. Three configured: export of more than 500 records at a time, login from a new country, more than 10 access denials per hour. Sent to the partner administrator.",
+    "sections/3/blocks/4/text": "The first month of signals produced two real cases: in one chain a former employee was logging in via unrevoked access, in another an integrator was exporting the full order database daily instead of incremental synchronization — not malicious, but load and extra data for a third party.",
+    "sections/3/blocks/5/text": "In enterprise negotiations, a log with signals closes three questionnaire items at once and is mentioned as an advantage.",
+    "sections/4/blocks/0/text": "Signals get noisy and stop being read if thresholds are chosen poorly. Start with two or three with clearly anomalous thresholds.",
+    "sections/5/blocks/0/text": "The log transitions from a cost center to a feature when it becomes available to the client and starts signaling anomalies."
+  }
+}

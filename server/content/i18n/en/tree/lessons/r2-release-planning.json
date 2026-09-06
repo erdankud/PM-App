@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "b79eabeb7fa4ebaf",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "A release is a slice of a journey, not a set of features",
+    "keyTakeaway": "A good release allows the user to complete their task end-to-end, even if minimally. A release assembled from the \"most ready\" tasks often allows completing nothing.",
+    "checkQuestion": "The release includes: a new stock screen, scanner speedup, and export to 1C. What is wrong here?",
+    "blocks/0/text": "Key node question: **when to roll out changes to users?**",
+    "blocks/1/text": "**What happens if you don't answer the question.** The release is assembled from whatever got finished. The user gets half of a new process and half of an old one, while support gets tickets that didn't exist in either version.",
+    "blocks/2/title": "Story Mapping for a release",
+    "blocks/2/subtitle": "Horizontal axis is the journey, vertical is depth",
+    "blocks/2/items/0": "**Top row** — task steps left to right: start inventory → scan → resolve divergence → close.",
+    "blocks/2/items/1": "**Under each step** — implementation options from simplest to rich.",
+    "blocks/2/items/2": "**A release is a horizontal slice** cutting across all steps. It is thin, but complete.",
+    "blocks/2/items/3": "**What this prevents:** the desire to perfect one step while leaving an adjacent step broken.",
+    "blocks/3/text": "Bad: an excellent scanning screen with history, highlighting, and autocomplete. Meanwhile, there is nowhere to resolve divergence and no way to close the inventory. Unusable.\n\nGood: scanning without history, divergence listed without filters, closing with file export. Modest at every step — yet the inventory is completed end-to-end, and two weeks later you can see exactly where people struggle.\n\nIn the second case, the next release is chosen based on observation, not personal taste.",
+    "blocks/3/title": "Polka, two ways to assemble the first release",
+    "blocks/4/text": "**It is useful to state release boundaries in words, not as a list of tasks.** \"In this release, inventory can be completed end-to-end, but only for a single warehouse\" — sales and support understand this formulation, and it naturally eliminates debatable tasks.",
+    "blocks/5/text": "The more changes go out at once, the harder it is to understand what broke and what worked. Frequent delivery is primarily a way to get feedback, not just speed.",
+    "blocks/5/title": "A large, infrequent release feels safer but is almost always more expensive",
+    "blocks/6/text": "A thin slice is no excuse for poor quality. Reduce scope and depth, not reliability: a broken half of a journey is worse than no journey at all.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

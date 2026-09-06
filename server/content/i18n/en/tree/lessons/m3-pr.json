@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "3ccd958c5d825818",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:45:10Z"
+  },
+  "fields": {
+    "title": "Out-of-product communication: what they say about you when you are not in the room",
+    "keyTakeaway": "External communication works cumulatively, not like a campaign: one message repeated by everyone and confirmed by third parties. Measuring it in leads is pointless: it changes what the client brings to the table.",
+    "checkQuestion": "A publication in an industry trade journal generated zero leads. Does this mean it was useless?",
+    "blocks/0/text": "The key question of this node: **how to communicate with consumers outside the product?**",
+    "blocks/1/title": "What makes up external communication",
+    "blocks/1/subtitle": "Different tools with different speeds",
+    "blocks/1/items/0": "**One message**—what you want people to say about you. One, not five, and repeated by everyone: website, sales, support, publications.",
+    "blocks/1/items/1": "**Third-party voices**—customers, partners, industry experts. They convince better than any of your own words and cannot be bought directly.",
+    "blocks/1/items/2": "**Regular presence**—publications, speaking engagements, case breakdowns. Works over years and builds up.",
+    "blocks/1/items/3": "**Response to bad news**—a pre-arranged procedure: who speaks, how fast, what we admit. An outage, crash, or leak tests communication harder than any launch.",
+    "blocks/2/text": "Message: \"first invoice in four minutes, with no setup or training.\"\n\nWhat was done: a biweekly breakdown of common invoice errors in an industry blog, presentations at two accounting conferences, customer stories with numbers.\n\nDirect leads from this were minimal.\n\nWhat changed in two years: in 41% of deals, the customer came in already knowing who we are (up from 9%); the sales cycle shrank by a third; the argument \"who are you anyway\" disappeared from sales conversations.\n\nMeasured not by leads, but by the share of clients who knew about us before the first contact.",
+    "blocks/2/title": "Reestr, two years of building momentum",
+    "blocks/3/text": "When the service is down for four hours, there is no time to coordinate. Decide in advance: who writes, where, after how many minutes, what exactly we admit, and what we promise. Silence in such hours costs more than the outage itself.",
+    "blocks/3/title": "Crisis communication cannot be invented in the middle of a crisis",
+    "blocks/4/text": "External communication does not replace a product and does not accelerate sales in the current quarter. It changes the background against which all other efforts take place—and that is why it is evaluated over a one-year horizon, not a monthly one.",
+    "blocks/4/title": "Model boundaries"
+  }
+}

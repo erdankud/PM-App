@@ -1,0 +1,38 @@
+{
+  "language": "en",
+  "sourceDigest": "eaf9289b91f51d3e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Which hypothesis to test first",
+    "keyTakeaway": "Hypotheses are compared on three things: how many people it will reach, how much it will move the metric, and how much testing will cost. Confidence in the estimate is the fourth, and it shows most honestly what you actually know.",
+    "checkQuestion": "Two hypotheses scored the same ICE score. What do you look at next?",
+    "blocks/0/text": "Key question of the node: **which hypothesis to test first?**",
+    "blocks/1/text": "Running example of the domain: Vetka is a fictional subscription book reading app: 400 thousand active monthly users, subscription after a seven-day free trial. In block G1 we dealt with metrics; here, it's how to test ideas so that knowledge comes out of it.",
+    "blocks/2/text": "**What happens if you don't answer the question.** You test whatever the most persistent person came up with. Four experiments take place in a quarter, three of them about button color, and not a single one answers the question that money depends on.",
+    "blocks/3/title": "ICE",
+    "blocks/3/subtitle": "Fast sorting of a long list",
+    "blocks/3/items/0": "**Impact** — how much it will move the target metric if the hypothesis is true.",
+    "blocks/3/items/1": "**Confidence** — how confident we are, and crucially — where that confidence comes from: data, observation, or gut feeling.",
+    "blocks/3/items/2": "**Ease** — what testing will cost, not full implementation.",
+    "blocks/3/items/3": "**Score = average of three ratings.** The value isn't in the number, but in the conversation that happens while scoring.",
+    "blocks/4/title": "RICE",
+    "blocks/4/subtitle": "The same thing, but with reach and an honest denominator",
+    "blocks/4/items/0": "**Reach** — how many people this will affect over the period. Calculated from data, not estimated by eye.",
+    "blocks/4/items/1": "**Impact** — estimate of the effect strength, usually on a rough scale.",
+    "blocks/4/items/2": "**Confidence** — confidence multiplier: 100%, 80%, 50%.",
+    "blocks/4/items/3": "**Effort** — person-weeks for testing.",
+    "blocks/4/items/4": "**Score = R × I × C ÷ E.** Reach usually flips the list: a neat idea that affects 2% of people moves down.",
+    "blocks/5/text": "A. Personalized recommendations on the home screen. Reach 400k, Impact 2, Confidence 50%, Effort 6 weeks → 66.\nB. Reminder to finish reading a book. Reach 180k, Impact 1, Confidence 80%, Effort 1 week → 144.\nC. Remove registration before trial. Reach 90k (all new users), Impact 3, Confidence 80%, Effort 2 weeks → 108.\nD. Dark theme for reader. Reach 400k, Impact 0.5, Confidence 100%, Effort 3 weeks → 66.\n\nOrder: B → C → A → D. Notice: A looked like the main idea of the quarter, but lost to the reminder based on testing cost.",
+    "blocks/5/title": "Vetka, four hypotheses for a single quarter",
+    "blocks/6/text": "If there are neither data nor observations behind an 80% score, it's not 80%, it's \"I like it.\" It is useful to write the source next to the number: \"from funnel,\" \"from five interviews,\" \"assumption.\"",
+    "blocks/6/title": "Confidence is where people most often lie to themselves",
+    "blocks/7/text": "Estimates are subjective, and chasing precision is pointless. The model is needed to see the rationale and cut off clearly weak options, not to calculate the one true order.",
+    "blocks/7/title": "Boundaries of the model"
+  }
+}

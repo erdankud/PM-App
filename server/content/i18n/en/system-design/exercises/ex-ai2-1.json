@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "sourceDigest": "68d1cdd92c95debe",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:04:36Z"
+  },
+  "fields": {
+    "title": "Find where RAG breaks",
+    "promptBlocks/0/text": "For each symptom, state at which step the problem lies.",
+    "promptBlocks/1/items/0": "Ingredient answer is incomplete, cuts off mid-list",
+    "promptBlocks/1/items/1": "Asking 'got anything cheaper?' retrieves random items",
+    "promptBlocks/1/items/2": "Products from another city get into the context",
+    "promptBlocks/1/items/3": "Correct item found, answer is wrong",
+    "referenceReasoningBlocks/0/text": "1 — chunking: document cut right through ingredients. 2 — query transformation: pronoun without dialogue context. 3 — missing pre-search filtering by available stores. 4 — generation: instruction or model, rarest case. Technique: start with the log of what made it into context — four out of five cases are visible instantly."
+  }
+}

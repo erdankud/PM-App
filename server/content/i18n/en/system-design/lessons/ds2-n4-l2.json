@@ -1,0 +1,43 @@
+{
+  "language": "en",
+  "sourceDigest": "429ed617201bef73",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:12Z"
+  },
+  "fields": {
+    "title": "Why numbers diverge and which one to believe",
+    "keyTakeaway": "Numbers from the product and from analytics diverge predictably, and the product manager's job is not to reconcile them, but to know which one answers which question.",
+    "sections/0/blocks/0/text": "The product says 20,148 orders yesterday, the dashboard says 20,106. Who is wrong?",
+    "sections/1/blocks/0/text": "Diverging numbers undermine trust in all analytics, not just a specific figure. The team starts double-checking by hand, decisions are made slower, and sometimes based on the number they like. The product manager must understand the source of divergence, otherwise they can neither explain it nor say which number is suitable for which conversation.",
+    "sections/2/blocks/0/text": "No one is wrong — these are different numbers, and here are four reasons.",
+    "sections/2/blocks/1/text": "**Pipeline delay.** The data warehouse lags by an hour. Orders placed after the last export did not make it in.",
+    "sections/2/blocks/2/text": "**Cutoff moment.** The product counts orders by creation time, the data warehouse — by the time they entered the export. An order created at 23:58 falls into different days.",
+    "sections/2/blocks/3/text": "**Entity definition.** The product counts all orders, analytics excludes canceled and test ones. The difference is not in the data, but in what is called an \"order\".",
+    "sections/2/blocks/4/text": "**Late changes.** An order was canceled this morning. The product shows the current status, the data warehouse — the state at the moment of export.",
+    "sections/2/blocks/5/text": "Practical conclusion: **numbers from different systems should not match, and demanding a match is pointless.** The correct requirement is to know how they differ and choose according to the task.",
+    "sections/2/blocks/6/header/0": "Task",
+    "sections/2/blocks/6/header/1": "Source",
+    "sections/2/blocks/6/header/2": "Why",
+    "sections/2/blocks/6/rows/0/0": "Show a user their orders",
+    "sections/2/blocks/6/rows/0/1": "Product database",
+    "sections/2/blocks/6/rows/0/2": "Need second-level freshness",
+    "sections/2/blocks/6/rows/1/0": "Operational control today",
+    "sections/2/blocks/6/rows/1/1": "Product database or streaming",
+    "sections/2/blocks/6/rows/1/2": "Need freshness, precision is secondary",
+    "sections/2/blocks/6/rows/2/0": "Monthly report, plan, money",
+    "sections/2/blocks/6/rows/2/1": "Data warehouse",
+    "sections/2/blocks/6/rows/2/2": "Need reproducibility and a single definition",
+    "sections/2/blocks/6/rows/3/0": "Conversation with an investor",
+    "sections/2/blocks/6/rows/3/1": "Data warehouse, and only it",
+    "sections/2/blocks/6/rows/3/2": "The number must reproduce tomorrow just the same",
+    "sections/2/blocks/7/text": "The last row is more important than it seems. The property of a data warehouse is not accuracy, but **reproducibility**: the same query tomorrow will give the same number. The product database changes under your hands, and yesterday's report from it will be different today.",
+    "sections/3/blocks/0/text": "We made a rule: every metric has one official source documented, and in the interface next to the number it is indicated where it came from and as of what moment.",
+    "sections/3/blocks/1/text": "At first this was considered bureaucracy. Attitude changed after a quarterly report where revenue from two sources diverged by 1.8% and discussing the methodology ate half the meeting. Since then, the line \"source: data warehouse, data as of 09:00\" stands under every chart.",
+    "sections/4/blocks/0/text": "Some metrics fundamentally cannot live in a data warehouse — for example, everything needed in real time for operational decisions. For them, [[streaming|streaming]] processing is built, which has its own tradeoffs: fresh, but recalculating the past is difficult.",
+    "sections/5/blocks/0/text": "Numbers from the product and from analytics diverge predictably, and the product manager's job is not to reconcile them, but to know which one answers which question."
+  }
+}

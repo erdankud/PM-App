@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "54233e93e55aed6d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:53:27Z"
+  },
+  "fields": {
+    "title": "What RAG is made of",
+    "keyTakeaway": "RAG quality is determined by what ends up in the context. So debugging a bad answer starts with the retrieval log, not the model.",
+    "sections/0/blocks/0/text": "What happens between a user's question and the model's answer, if the answer is based on our data?",
+    "sections/1/blocks/0/text": "RAG is the primary way to build AI features on your own data. The quality of such a feature depends mostly on search, not the model. A product manager who treats RAG as a black box is looking for problems in the wrong place.",
+    "sections/2/blocks/0/text": "**[[rag|RAG]]** means finding relevant data and putting it into the context. Five steps, each with its own problems.",
+    "sections/2/blocks/1/text": "**1. [[chunking|Chunking]] and [[indexing|indexing]].** Documents are cut into [[chunk|chunks]] and placed into a search index. Chunk size is a product decision: small chunks are found more precisely but lose context; large chunks carry context but dilute relevance.",
+    "sections/2/blocks/2/text": "**2. Query transformation.** A user question is not always a good search query. \"Does this fit?\" is meaningless without previous context. The query is often rewritten before search.",
+    "sections/2/blocks/3/text": "**3. Search.** [[vector-search|By meaning]], by words, or [[hybrid-search|hybrid]]. Returns N candidates.",
+    "sections/2/blocks/4/text": "**4. [[reranking|Reranking]].** Selecting the best candidates using a separate model. Improves the quality of what gets into the context.",
+    "sections/2/blocks/5/text": "**5. Context assembly and generation.** The retrieved data is placed into the prompt with an instruction to answer based only on it.",
+    "sections/2/blocks/6/text": "Where it breaks, in order of frequency:",
+    "sections/2/blocks/7/text": "*The required data is missing from the index.* Data is not indexed, is outdated, or the document was not chunked. No model will save this. *The required data is there, but was not found.* A search [[recall|recall]] problem. *Extra data was found.* A [[precision|precision]] problem: relevant data is diluted, and the model gets confused. *The correct data was found, but the model answered incorrectly.* The rarest cause, and usually the first one checked.",
+    "sections/2/blocks/8/text": "Practical takeaway: **when an answer is bad, first look at what made it into the context.** This answers the question in a minute.",
+    "sections/3/blocks/0/text": "The \"ask about a product\" feature based on RAG using supplier descriptions, instructions, delivery rules, and the help section.",
+    "sections/3/blocks/1/text": "Chunking: a product description is a single complete chunk because it is short and coherent. Delivery rules are chunked by section. The help section is chunked by subheadings.",
+    "sections/3/blocks/2/text": "The first version chunked everything identically into 500 characters. Product descriptions were cut in the middle of ingredient lists, and a question about allergens retrieved half the list. The problem looked like a model hallucination, but it was a chunking error.",
+    "sections/3/blocks/3/text": "Query transformation was added after questions like \"do you have sugar-free ones?\" in a chat found nothing: the query went to search as-is, without the previous message's context.",
+    "sections/3/blocks/4/text": "Monitoring: for every answer, the retrieved data is logged. Debugging \"inaccurate\" feedback starts with this log, and in 4 out of 5 cases, the cause is immediately visible.",
+    "sections/4/blocks/0/text": "RAG does not help with tasks that require summarizing across the entire corpus: \"what products are most frequently bought together\" cannot be solved by search. This requires computation, not search.",
+    "sections/5/blocks/0/text": "RAG quality is determined by what ends up in the context. So debugging a bad answer starts with the retrieval log, not the model."
+  }
+}

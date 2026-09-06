@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "77ed8a78b9282f26",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:47:07Z"
+  },
+  "fields": {
+    "title": "Enablement: no one reads manuals, so teach through the product",
+    "keyTakeaway": "Enablement works at the moment of the task and within the interface, not in advance or in a PDF. If a feature is not being used, first check whether people know about it and understand it — and only then add training.",
+    "checkQuestion": "8% of users found a new feature. Which three reasons must be distinguished before writing a manual?",
+    "blocks/0/text": "Key node question: **how to teach users to reach their goals?**",
+    "blocks/1/text": "**What happens if you don't answer the question.** The release ends with a newsletter describing updates and a help center article. A month later, only a few use the feature, and the team concludes it isn't needed.",
+    "blocks/2/title": "Three different reasons for \"not using\"",
+    "blocks/2/subtitle": "They require different fixes, so distinguish them before taking action",
+    "blocks/2/items/0": "**Don't know** — didn't see what was added. Fixed by a hint right where the task arises.",
+    "blocks/2/items/1": "**Don't understand** — saw it, didn't understand why or got scared. Fixed by naming it in the user's language and showing a result example.",
+    "blocks/2/items/2": "**Don't need** — understood and skipped. Can't be fixed with enablement; this is a signal about the solution, not the delivery.",
+    "blocks/2/items/3": "**How to distinguish:** look at whether they reach the screen, open it, and return a second time.",
+    "blocks/3/text": "The \"partial inventory\" feature lets users scan a single shelf instead of the whole store. A month later, 8% use it.\n\nLooking at the funnel: 46% open the screen, 11% start. So they know, but don't understand.\n\nWhat was done: renamed it \"Check single shelf\" instead of \"Partial inventory\" and showed a hint right when the seller opened full inventory for the second time in a week.\n\nA month later — 34%. Not a single help article was written.",
+    "blocks/3/title": "Polka, in-task enablement",
+    "blocks/4/text": "**For complex products, the champion role works.** In every store, there is a person who figured it out first; they are trained separately and referenced by others. This is cheaper than training everyone and lasts longer than a webinar.",
+    "blocks/5/text": "If you have to explain to people why a screen is needed, most often the problem is with the screen. Enablement amplifies what is clear; it does not replace design.",
+    "blocks/5/title": "Enablement won't save a bad solution",
+    "blocks/6/text": "In-product hints quickly become noise: three pop-ups in a row and everyone stops reading. Their budget is limited, and it should be spent at the moment of the task, not at the moment of release.",
+    "blocks/6/title": "Model boundaries"
+  }
+}

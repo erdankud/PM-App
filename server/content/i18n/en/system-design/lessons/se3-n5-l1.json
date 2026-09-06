@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "39649fff51c39fe1",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:02:14Z"
+  },
+  "fields": {
+    "title": "What a certificate buys",
+    "keyTakeaway": "Certification pays off when deals are blocked by its absence, while preparation without certification delivers most of the internal value and is needed anyway.",
+    "sections/0/blocks/0/text": "The client asks about SOC 2. Do we need to get it?",
+    "sections/1/blocks/0/text": "[[certification|Certification]] takes months of work and noticeable money, and it is often obtained out of inertia — because \"everyone has it.\" The decision must rest on your segment and what the certificate replaces.",
+    "sections/2/blocks/0/text": "**[[term-5|Common standards]]** confirm that the company has information security processes in place and running. They do not guarantee the absence of vulnerabilities — they confirm the presence of processes.",
+    "sections/2/blocks/1/text": "What it gives:",
+    "sections/2/blocks/2/text": "*Shorter questionnaires.* Instead of answering 40 items, you attach a report. Saves weeks on every deal. *Access to a segment.* Some large clients will not consider vendors without a certificate. *Internal discipline.* Preparation forces you to get your processes in order.",
+    "sections/2/blocks/3/text": "What it costs:",
+    "sections/2/blocks/4/text": "*Preparation.* 3 to 9 months, depending on the starting state. *Audit.* Money, annually. *Maintenance.* Constant discipline: logs, access reviews, training, incidents.",
+    "sections/2/blocks/5/text": "When it pays off: **when deals hit a wall due to the lack of a certificate.** Calculated directly: how many deals and for what amount are blocked.",
+    "sections/2/blocks/6/text": "When it does not: a product for small businesses or consumers where no one asks.",
+    "sections/2/blocks/7/text": "Intermediate option: **prepare without getting certified.** Bring processes into compliance, answer questionnaires in detail, and get the certificate when the first deal requiring it appears. Delivers most of the internal value without the audit cost.",
+    "sections/3/blocks/0/text": "The question came up twice, the answer changed.",
+    "sections/3/blocks/1/text": "*First time,* at the first enterprise deal. Calculated: one deal, the questionnaire is handled by answers, the certificate costs half a year. Declined, passed the questionnaire.",
+    "sections/3/blocks/2/text": "*Second time,* with three retail chains in negotiations and two active. One chain listed the certificate as desirable rather than mandatory. Calculated differently: does not pay off yet, but the preparation does — getting processes in order is necessary anyway.",
+    "sections/3/blocks/3/text": "What they did: processing register, access reviews, team training, incident and breach procedures, logs. All of these were covered in previous blocks and would have been needed regardless.",
+    "sections/3/blocks/4/text": "The certification decision is postponed with a condition: we get it when the first deal is blocked by its absence. Recorded with an owner and a semi-annual review.",
+    "sections/4/blocks/0/text": "A certificate is not an indicator of security, but an indicator of having processes. A company with a certificate can have vulnerabilities; a company without one can be better protected.",
+    "sections/5/blocks/0/text": "Certification pays off when deals are blocked by its absence, while preparation without certification delivers most of the internal value and is needed anyway."
+  }
+}

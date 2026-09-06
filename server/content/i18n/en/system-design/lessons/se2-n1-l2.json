@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "901bfed732b2bc3e",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "How Permissions Break",
+    "keyTakeaway": "Permissions accumulate if they are not revoked, so you need a default lifespan, last use display, and regular review — including for your own employees' access.",
+    "sections/0/blocks/0/text": "The permissions model is designed correctly. Where do extra access rights still come from?",
+    "sections/1/blocks/0/text": "Permissions have a habit of accumulating: they are granted and not revoked. After two years a typical employee has access to what was needed for three previous tasks. Each extra access increases the damage during a compromise.",
+    "sections/2/blocks/0/text": "Four accumulation mechanisms.",
+    "sections/2/blocks/1/text": "**Granted and forgotten.** Access for a task remained forever. Fixed by default temporary access.",
+    "sections/2/blocks/2/text": "**Internal transfer.** A person changed roles, old permissions remained. Fixed by review upon role change and regular audits.",
+    "sections/2/blocks/3/text": "**[[privilege-escalation|Privilege escalation]] through combination.** Each permission separately is harmless, together they grant more. Classics: permission to change settings plus permission to view the log allows disabling logging and acting unnoticed.",
+    "sections/2/blocks/4/text": "**Service accounts.** Accounts for integrations are often created with wide permissions \"so that it definitely works\" and live for years.",
+    "sections/2/blocks/5/text": "What the product does about this:",
+    "sections/2/blocks/6/text": "*Access review.* Once a quarter the client administrator confirms the list. A mechanism in the interface, not an email. *Last use display.* A permission that hasn't been used in half a year is visible and removed. *Default expiration.* Extended permissions are granted for a period, renewed explicitly.",
+    "sections/2/blocks/7/text": "Separately — **our own access to client data.** This is the same question, and corporate questionnaires ask it. The answer \"employees have access on a need-to-know basis with logging and for a duration\" is substantially better than \"employees have access\".",
+    "sections/3/blocks/0/text": "Access review in the partner account: once a quarter the administrator is shown a list of employees with the last login date and a prompt to confirm or disable. The first review at three large chains disabled 34% of accounts.",
+    "sections/3/blocks/1/text": "Service accounts for integrations: used to have full permissions, became scope \"orders only, read-only, own store only\". One integrator complained it stopped working — it turned out they were reading data they didn't need.",
+    "sections/3/blocks/2/text": "Our access: permanent support access replaced by temporary. In questionnaires this is an item now passed with log attachments.",
+    "sections/3/blocks/3/text": "Permission combination: discovered that a store manager could disable logging in their store. Removed — logging cannot be disabled by anyone on the client side.",
+    "sections/4/blocks/0/text": "Too frequent reviews are perceived as bureaucracy and passed through without looking. A quarter is a reasonable interval; more frequent makes sense only for critical permissions.",
+    "sections/5/blocks/0/text": "Permissions accumulate if they are not revoked, so you need a default lifespan, last use display, and regular review — including for your own employees' access."
+  }
+}

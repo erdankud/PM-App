@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "2034a3c528cdf73c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:30:21Z"
+  },
+  "fields": {
+    "title": "Product strategy: a sequence of choices, not a wishlist",
+    "keyTakeaway": "Strategy answers where we play and how we win, and explicitly names what we will not do. A document that doesn't make it clear what you gave up is not a strategy.",
+    "checkQuestion": "The strategy says \"become the best reading product.\" What is missing?",
+    "blocks/0/text": "Key question of the node: **which decisions realize the vision?**",
+    "blocks/1/title": "What product strategy consists of",
+    "blocks/1/subtitle": "Four interconnected answers",
+    "blocks/1/items/0": "**Where we play** — segments, situations, geography. Always specifying where we do not play.",
+    "blocks/1/items/1": "**How we win** — what we do better and why it is hard to replicate.",
+    "blocks/1/items/2": "**How it's configured** — what capabilities and resources are needed: data, channel, partnerships, team.",
+    "blocks/1/items/3": "**What sequence** — what we do this year, what opens up only afterwards, what we give up now to make it possible.",
+    "blocks/2/text": "**Marketing mix (7Ps)** is useful as a completeness check: product, price, place, promotion, people, process, physical evidence. A strategy that only thinks through the product part usually stumbles on price or lack of sales capacity.",
+    "blocks/3/text": "Where we play: people who want to read but don't finish. Where we don't play: heavy readers who need a huge catalog and rare editions.\n\nHow we win: getting them through their first book — curation, pace, reminders at the right moment. Huge catalogs don't have this and won't make it a priority.\n\nWhat is needed: data on where exactly people drop off (have it), editorial work on recommendations (hiring), publisher partnerships for short formats (don't have, starting negotiations).\n\nWhat we give up: chasing catalog size and buying rights to new releases at any price.\n\nSequence: year one — finishing books; year two — social reading built on that reputation.",
+    "blocks/3/title": "Vetka, a two-year strategy",
+    "blocks/4/text": "Resources are finite, so winning in one place usually means agreeing to concede in another. If a document contains no trade-offs, decisions will be made from scratch every time based on circumstances.",
+    "blocks/4/title": "\"We want to be the best at everything\" is an absence of strategy",
+    "blocks/5/text": "Strategy is not a forecast. It sets the direction and decision-making rules; specific moves will change every quarter, and that's normal as long as the answers to the four questions above remain unchanged.",
+    "blocks/5/title": "Boundaries of the model"
+  }
+}

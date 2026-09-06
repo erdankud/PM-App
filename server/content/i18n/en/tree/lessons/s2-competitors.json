@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "92fe8eee40d94899",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:44:50Z"
+  },
+  "fields": {
+    "title": "Competitors: how they grow, not what features they have",
+    "keyTakeaway": "Feature matrix comparisons explain almost nothing. What explains success is the growth mechanism: where their clients come from, why they stay, and what lets them defend pricing. And you need to analyze more than just lookalike products.",
+    "checkQuestion": "A competitor has twice as many features at half the price. What question should you ask first?",
+    "blocks/0/text": "Key node question: **how do competitors scale?**",
+    "blocks/1/title": "Five Forces, brief and practical",
+    "blocks/1/subtitle": "Who is actually eroding your margins",
+    "blocks/1/items/0": "**Industry rivalry** — number of similar players and how they compete: on price or something else.",
+    "blocks/1/items/1": "**New entrants** — barrier to entry. If low, high margins do not last long.",
+    "blocks/1/items/2": "**Substitutes** — alternative ways to solve the problem. For Kedr, that is Excel and hiring a manual inventory clerk — and they are far more dangerous than direct rivals.",
+    "blocks/1/items/3": "**Supplier power** — who you depend on: cloud provider, payment gateway, data provider.",
+    "blocks/1/items/4": "**Buyer power** — whether clients can push down prices. Depends on client size and switching costs.",
+    "blocks/2/text": "A **Competition Map** visualizes this positioning along two axes that matter to clients. Use axes reflecting real customer buying criteria, not convenient comparisons.",
+    "blocks/3/text": "Competitor Yarus has been outgrowing us for three years. Team's initial take: \"they have more features.\"\n\nDeep dive revealed:\n— 60% of their leads come from eight systems integrator partners who get 20% of first-year revenue. We have no partner channel.\n— Their subscription price is lower because implementation is unbundled at 300 thousand; total year-one client spend is actually higher than ours.\n— Churn is low: three years of data and trained staff create high switching costs.\n\nTheir growth engine is distribution, not features. Copying features is useless; the real question is whether to build our own partner channel.",
+    "blocks/3/title": "Kedr: analyzing competitor growth",
+    "blocks/4/text": "Half of Kedr's lost deals are lost not to Yarus, but to \"let us stick with Excel for now.\" The substitute is free, familiar, and bypasses budget approvals — that is the true alternative to compete against.",
+    "blocks/4/title": "The primary competitor is not software",
+    "blocks/5/text": "Competitor analysis explains current and past market dynamics. It does not predict future moves or replace a position of your own: a strategy of \"copying the leader, but slightly better\" loses by default.",
+    "blocks/5/title": "Limitations of the model"
+  }
+}

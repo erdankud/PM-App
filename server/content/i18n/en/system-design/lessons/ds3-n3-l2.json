@@ -1,0 +1,29 @@
+{
+  "language": "en",
+  "sourceDigest": "fe55f10c45a70b31",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:55:35Z"
+  },
+  "fields": {
+    "title": "What multi-tenancy does to sales and pricing",
+    "keyTakeaway": "The isolation model determines the pricing tiers and the boundaries of what sales is allowed to promise, so the PM must know it before negotiations, not after.",
+    "sections/0/blocks/0/text": "How does a technical decision on isolation turn into price sheet lines and contract terms?",
+    "sections/1/blocks/0/text": "A PM who hasn't tied the isolation model to commerce discovers a gap at the worst moment: sales promised something the product can't do, or conversely—failed to sell what it can do because they didn't know. Both cases cost deals.",
+    "sections/2/blocks/0/text": "Four places where architecture meets commerce.",
+    "sections/2/blocks/1/text": "**[[data-residency|Data residency]].** The client requires storage in a specific country. In a shared schema, this means a separate installation entirely, i.e., essentially a database per tenant. The requirement looks legal but is architectural, and its cost must be known before negotiations.",
+    "sections/2/blocks/2/text": "**[[custom-fields|Custom fields]].** Major clients want to define their own attributes. A shared schema requires an extension mechanism for this—meaning that very flexibility from `DS3-N1-L2`, with its price tag. A separate database lets you simply add columns, but then client schemas diverge and updates get complex.",
+    "sections/2/blocks/3/text": "**Update schedules.** Enterprise clients often demand warnings and maintenance windows. In a shared schema, everyone updates simultaneously, and such a promise is impossible to keep. In a separate database—it is possible and sold separately.",
+    "sections/2/blocks/4/text": "**Performance guarantees.** A personal SLA on shared infrastructure is a promise you cannot keep because neighbors affect performance.",
+    "sections/2/blocks/5/text": "Hence the natural tier packaging: basic—shared schema, standard guarantees; enterprise—dedicated database, residency, update windows, personal SLA. The price difference reflects the real difference in maintenance cost, not marketing invention. This is the rare case where architecture directly suggests the product line.",
+    "sections/2/blocks/6/text": "A separate topic is **migration between models**. Moving a client from a shared schema to a separate database is possible, but it is a project: export, transfer, switch, verification. You need to plan it in advance because they will ask for it at the moment of signing.",
+    "sections/3/blocks/0/text": "The situation with the 40-store chain was broken down using this framework. The residency requirement means a separate installation: about six weeks of work and roughly 90 thousand rubles per month in infrastructure.",
+    "sections/3/blocks/1/text": "The product decision—spin this out into a separate enterprise tier instead of making an exception for a single deal. The reason is simple: the exception will have to be maintained forever and for free, while the tier pays for future requests like this as well. In negotiations, it also sounds better—not \"we will make an exception for you,\" but \"for chains, we have separate terms.\"",
+    "sections/3/blocks/2/text": "It incidentally turned out that two other chains had asked about isolation earlier and got rejected by sales because no one knew if it was possible.",
+    "sections/4/blocks/0/text": "A dedicated installation does not always enhance security intrinsically: it protects against filtering bugs, but not against compromised access. Selling it as \"more secure\" is an exaggeration; it is more honest to sell it as isolation and control.",
+    "sections/5/blocks/0/text": "The isolation model determines the pricing tiers and the boundaries of what sales is allowed to promise, so the PM must know it before negotiations, not after."
+  }
+}

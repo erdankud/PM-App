@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "bef4d5b41bea0c9d",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:00:06Z"
+  },
+  "fields": {
+    "title": "Calculating from the User, Not the Industry",
+    "keyTakeaway": "Target reliability is derived from what a person does upon failure, how often they come, and where the perceptibility threshold is, rather than from an industry figure.",
+    "sections/0/blocks/0/text": "Where does \"99.9%\" come from — and why does it mean different things for two products with the same number?",
+    "sections/1/blocks/0/text": "A target taken by analogy is either excessive or insufficient, and both options are expensive. Excessive eats up quarters of work on something nobody will notice. Insufficient imperceptibly destroys trust: users don't complain, they leave.",
+    "sections/2/blocks/0/text": "The right target is derived from three questions about the user.",
+    "sections/2/blocks/1/text": "**What does the person do when it doesn't work?** Waits — reliability can be lower. Leaves for a competitor — higher. Loses money or data — maximum.",
+    "sections/2/blocks/2/text": "A product people return to lives with 99.5%. A product where failure means a failed purchase — does not.",
+    "sections/2/blocks/3/text": "**How often do they come?** A user visiting once a month has a 0.1% chance of hitting a glitch — meaning practically never. A user visiting ten times a day will encounter it once every three months.",
+    "sections/2/blocks/4/text": "Hence an important consequence: **the probability of encountering a glitch is calculated per user, not per system.** For an active user, 99.9% is not \"almost always works\", but \"something didn't open once a quarter\".",
+    "sections/2/blocks/5/text": "**Where is the [[perceptibility-threshold|perceptibility threshold]]?** Below it, a glitch is not perceived as a problem. A failure lasting 4 seconds and disappearing after a retry is not remembered. Forty seconds are remembered. Between them is a boundary worth knowing because it determines what is worth paying for.",
+    "sections/2/blocks/6/text": "Next — **[[criticality|different targets for different scenarios]]**, as in `SC2-N1-L1`. A single figure for the entire product always means overpaying for one thing and underpaying for another.",
+    "sections/3/blocks/0/text": "The breakdown by three questions yielded a distribution differing from initial intuitions.",
+    "sections/3/blocks/1/text": "*Checkout.* The person leaves: they need to buy products now, and a neighboring app has them. Maximum target — 99.9%.",
+    "sections/3/blocks/2/text": "*Catalog.* The person waits or refreshes. Perceptibility threshold is high: short glitches are not remembered. 99.5% is enough.",
+    "sections/3/blocks/3/text": "*Order history.* Visited rarely, waited calmly. 99% — and this turned out to be a discovery: previously it was protected on par with checkout.",
+    "sections/3/blocks/4/text": "*Partner dashboard.* The partner won't leave over half an hour, but will complain. 99.5%.",
+    "sections/3/blocks/5/text": "*Partner webhooks.* Losing an event is worse than a delay — here the target is not about availability, but delivery.",
+    "sections/3/blocks/6/text": "Recalculating probability per user changed the conversation about the catalog. At 99.5%, an active user visiting twice a day encounters a glitch about once every three months. Acceptable. For checkout, the same arithmetic at 99.5% would give one failed purchase per 200 — with an average check of 2,400 this is noticeable, and the figure was raised.",
+    "sections/4/blocks/0/text": "Measured reliability and perceived reliability diverge. Glitches for users with poor network, client app errors, slow internet — none of this makes it into SLIs, but all of it makes it into the impression.",
+    "sections/5/blocks/0/text": "Target reliability is derived from what a person does upon failure, how often they come, and where the perceptibility threshold is, rather than from an industry figure."
+  }
+}

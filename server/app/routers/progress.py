@@ -29,7 +29,7 @@ def get_progress(
             status_code=status.HTTP_404_NOT_FOUND, detail={"code": "profile_missing"}
         )
 
-    content = tree_content.tree_content()
+    content = tree_content.tree_content(language=language.value)
     rows = tree_service.recompute(db, user.id)
     db.commit()
     completed = tree_service.completed_lesson_ids(db, user.id)
@@ -92,12 +92,12 @@ def get_history(
         if attempt_ids
         else {}
     )
-    scenarios = tree_content.all_content()["scenarios"]
+    scenarios = tree_content.all_content(language.value)["scenarios"]
 
     items: list[HistoryItem] = []
     for attempt in rows:
         scenario = scenarios.get(attempt.scenario_id)
-        block = tree_content.block(attempt.block_id)
+        block = tree_content.block(attempt.block_id, language.value)
         evaluation = evaluations.get(attempt.id)
         if evaluation is None:
             feedback_status = "pending"

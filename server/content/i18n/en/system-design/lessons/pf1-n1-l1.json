@@ -1,0 +1,32 @@
+{
+  "language": "en",
+  "sourceDigest": "642ccdaffca9e75c",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:57:48Z"
+  },
+  "fields": {
+    "title": "Two different metrics",
+    "keyTakeaway": "Latency is how long one user waits, throughput is how many users are served, and adding servers only fixes the latter.",
+    "sections/0/blocks/0/text": "Users complain that the app is sluggish. The engineer replies that the system is handling the load. Who is right?",
+    "sections/1/blocks/0/text": "Both are right, and the conversation will not move forward until these two metrics are separated. Mixing them up leads to the team adding servers to solve a problem that does not change because of it, while the PM wonders why things did not get better.",
+    "sections/2/blocks/0/text": "**[[latency|Latency]]** is how long a single request waits. Measured in milliseconds. This is what the user feels.",
+    "sections/2/blocks/1/text": "**[[throughput|Throughput]]** is how many requests the system processes per second. This is how many users it can handle.",
+    "sections/2/blocks/2/text": "The metrics are related, but not the same. A system can process a thousand requests per second, each taking three seconds—throughput is great, but the user waits three seconds.",
+    "sections/2/blocks/3/text": "How they are fixed:",
+    "sections/2/blocks/4/text": "*Low throughput*—more capacity, horizontal scaling, removing bottlenecks. Usually solved with money.",
+    "sections/2/blocks/5/text": "*High latency*—reducing work per request: fewer database calls, caching, less data, fewer network hops. Almost never solved with money.",
+    "sections/2/blocks/6/text": "Hence an important rule for the PM: **adding servers does not speed up an individual request.** It allows you to serve more requests with the same latency. If the complaint sounds like \"opens slowly,\" servers will not help.",
+    "sections/2/blocks/7/text": "There is also feedback: under overload, latency grows because requests wait in a queue. This is the only case where adding capacity speeds up an individual request—and it looks like a latency problem, but is actually a throughput problem.",
+    "sections/2/blocks/8/text": "A chart helps tell them apart: if latency grows with load and drops during quiet times, it is throughput. If it stays the same around the clock, it is latency.",
+    "sections/3/blocks/0/text": "Two complaints analyzed using this framework.",
+    "sections/3/blocks/1/text": "*\"The main screen opens in three seconds.\"* The same day and night. Latency. Fixed by reducing the number of requests and materializing the rating—the topic covered in gate `DS2-G-A`. Servers would not have helped.",
+    "sections/3/blocks/2/text": "*\"Everything slows down on Monday mornings.\"* Only in the 9–11 window. Throughput: partner reports were eating up resources. Fixed by load segregation, not query optimization.",
+    "sections/3/blocks/3/text": "Two similar complaints, two opposite solutions. Distinguishing between them took ten minutes of working with charts and saved a month of misdirected effort.",
+    "sections/4/blocks/0/text": "In practice, problems get mixed up: a slow request under increasing load becomes even slower because it holds onto resources longer. You should still start troubleshooting by separating them.",
+    "sections/5/blocks/0/text": "Latency is how long one user waits, throughput is how many users are served, and adding servers only fixes the latter."
+  }
+}

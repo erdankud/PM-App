@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "90cffc1ea27ecd95",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:50Z"
+  },
+  "fields": {
+    "title": "Localization and Data Geography",
+    "keyTakeaway": "Localization affects copies, logs, caches, subprocessors, and employee access—and employee access is violated most often.",
+    "sections/0/blocks/0/text": "The requirement to store data in-country—what does it affect?",
+    "sections/1/blocks/0/text": "[[data-localisation|Data localization]] looks like a database requirement, but it turns out to be a requirement for the entire chain: backups, analytics, support, AI provider. Underestimating this leads to formal compliance while actually being in violation.",
+    "sections/2/blocks/0/text": "Localization affects seven places, and three are usually forgotten:",
+    "sections/2/blocks/1/text": "*Primary database.* Obvious. *Backups.* Often in another region for reliability—a direct contradiction. *Analytics storage.* A separate system, a separate geography. *Logs.* Contain personal data and are often stored with a third-party service. *CDN and caches.* Cached personal responses physically reside at points of presence. *Subprocessors.* Each with its own geography. *Employee access.* Viewing data from another country is considered a transfer in some jurisdictions.",
+    "sections/2/blocks/2/text": "The last one is the least obvious and most frequent violation: a support team in another country views data, and that constitutes a cross-border transfer.",
+    "sections/2/blocks/3/text": "What determines the cost of compliance:",
+    "sections/2/blocks/4/text": "*A completely separate installation*—expensive, but straightforward and verifiable. *Data-type separation*—personal data locally, everything else shared. Cheaper, harder to operate. *Anonymization before transfer*—removes part of the data from the scope of the requirement.",
+    "sections/2/blocks/5/text": "The product decision—**which markets we serve.** A localization requirement in a market where we have three clients might not justify a separate installation, and the right answer is not to enter that market.",
+    "sections/3/blocks/0/text": "Localization arose in two cases.",
+    "sections/3/blocks/1/text": "*Domashniy chain.* Requirement to store in-country. Covered by a separate installation under a corporate tier, as discussed in `DS3-N3`.",
+    "sections/3/blocks/2/text": "*AI provider.* Processing region agreed via contract, as discussed in `AI3-N4-L1`.",
+    "sections/3/blocks/3/text": "When auditing the chain for the separate installation, two gaps were found: backups went to another region by default, and logs were written to a shared service. Both were fixed, but they would have been caught during a client audit.",
+    "sections/3/blocks/4/text": "Employee access: support is located in the same country, so the issue did not arise. Noted as a constraint—hiring support in another country will make it an issue.",
+    "sections/4/blocks/0/text": "Localization requirements change, and a product compliant today may not be compliant in a year. Tracking this is the legal team's responsibility, but architectural flexibility is a product decision.",
+    "sections/5/blocks/0/text": "Localization affects copies, logs, caches, subprocessors, and employee access—and employee access is violated most often."
+  }
+}

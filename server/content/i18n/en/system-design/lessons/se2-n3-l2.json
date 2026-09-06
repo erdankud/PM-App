@@ -1,0 +1,43 @@
+{
+  "language": "en",
+  "sourceDigest": "37e963e58455fc66",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T21:01:24Z"
+  },
+  "fields": {
+    "title": "Aggregation Instead of Detail",
+    "keyTakeaway": "Pseudonymization does not exempt data from rules, reliable protection is aggregation with a group threshold, and removing a name is not anonymization.",
+    "sections/0/blocks/0/text": "Analytics needs behavioral data. How to provide it without giving away personal data?",
+    "sections/1/blocks/0/text": "The conflict between data needs and personal data protection is solved either by prohibition (analytics is blind), by ignoring (risk), or correctly. The third path requires a product decision on what level of detail analytics works at.",
+    "sections/2/blocks/0/text": "Three levels of de-identification, differing in reversibility.",
+    "sections/2/blocks/1/text": "**[[pseudonymization|Pseudonymization]].** Identifier replaced with a conditional one, correspondence stored separately. Reversible if the key is available. **Is not anonymization** and does not exempt data from rules.",
+    "sections/2/blocks/2/text": "**[[anonymization|Anonymization]].** The link to a person is irreversibly broken. Data exits personal data rules — but only if truly irreversible.",
+    "sections/2/blocks/3/text": "**[[aggregation|Aggregation]].** Individual records replaced with summary indicators. The most reliable path.",
+    "sections/2/blocks/4/text": "The de-identification trap — **[[re-identification|re-identification]]**. A combination of date, neighborhood, and purchase category can uniquely point to a person. Removing the name is not enough.",
+    "sections/2/blocks/5/text": "Protection — **[[k-anonymity|group threshold]]**: an indicator is not shown if the group is smaller than k people. Typically k = 5 or 10. \"Average check in this neighborhood\" with three buyers is almost personal data.",
+    "sections/2/blocks/6/text": "Practical rule: **analytics works on aggregates, and detail is available only to those who need it for work, with logging.**",
+    "sections/2/blocks/7/text": "A special case — **data for model training.** Here the temptation to use everything is maximal, and the risk of re-identification through the model is real. The rule is the same: minimization and aggregation before, not after.",
+    "sections/3/blocks/0/text": "Data access levels:",
+    "sections/3/blocks/1/header/0": "Level",
+    "sections/3/blocks/1/header/1": "Who",
+    "sections/3/blocks/1/header/2": "What they see",
+    "sections/3/blocks/1/rows/0/0": "Aggregates",
+    "sections/3/blocks/1/rows/0/1": "Everyone in the company",
+    "sections/3/blocks/1/rows/0/2": "Metrics by stores, categories, days",
+    "sections/3/blocks/1/rows/1/0": "Pseudonymized events",
+    "sections/3/blocks/1/rows/1/1": "Analysts",
+    "sections/3/blocks/1/rows/1/2": "Behavior under a conditional identifier, without contacts",
+    "sections/3/blocks/1/rows/2/0": "Personal",
+    "sections/3/blocks/1/rows/2/1": "Support, upon request",
+    "sections/3/blocks/1/rows/2/2": "Specific order of a specific person, with a log",
+    "sections/3/blocks/2/text": "[[aggregation-threshold|Aggregation threshold]] — 10. Partner reports do not show metrics for groups smaller than 10 buyers. Appeared after a small store was able to figure out a specific regular buyer from a report.",
+    "sections/3/blocks/3/text": "Recommendation data: purchase categories under a conditional identifier, without contacts, without exact addresses. Sensitive categories — baby food, gluten-free, halal — excluded from features by decision from `SE1-N3-L1`.",
+    "sections/3/blocks/4/text": "Test environments: de-identification upon copying is automatic, names and phones are replaced with synthetic ones. Introduced after an incident with a test database.",
+    "sections/4/blocks/0/text": "Full anonymization is rarely achievable with rich behavioral data. It is more honest to treat data as pseudonymized and apply corresponding rules to it than to declare it anonymous and make a mistake.",
+    "sections/5/blocks/0/text": "Pseudonymization does not exempt data from rules, reliable protection is aggregation with a group threshold, and removing a name is not anonymization."
+  }
+}

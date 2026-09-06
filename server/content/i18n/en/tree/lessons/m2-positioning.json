@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "2762e8e83709b152",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Positioning: how you stand out in the customer's mind",
+    "keyTakeaway": "Positioning is choosing where you are intentionally worse. As long as a product is \"better across all parameters\", it lacks positioning, and in conversations, it gets compared on price.",
+    "checkQuestion": "\"We are more convenient and cheaper than competitors.\" Why is this not positioning?",
+    "blocks/0/text": "Key node question: **what is our edge over competitors?**",
+    "blocks/1/title": "Strategy Canvas",
+    "blocks/1/subtitle": "A value curve instead of a feature list",
+    "blocks/1/items/0": "**X-axis** — factors the market compares: price, implementation speed, support, feature set, reliability.",
+    "blocks/1/items/1": "**Y-axis** — how heavily each player invests in each factor.",
+    "blocks/1/items/2": "**Your curve** should differ in shape, not height. A curve that is slightly higher everywhere means \"the same thing, but more expensive\".",
+    "blocks/1/items/3": "**Four actions:** what to eliminate entirely, what to reduce, what to raise, what to create anew.",
+    "blocks/2/text": "**Perceptual Map** solves a related task: shows how products are located in customer perception along two key dimensions. Importantly, the axes come from user words, not from your view of the market.",
+    "blocks/3/text": "Factors: price, feature set, speed to first document, support, accounting integrations.\n\nMajor player: high on everything except onboarding speed — implementation takes two weeks.\nCheap player: low price, weak on everything else.\n\nReestr eliminates some features (no inventory tracking, no HR documents), reduces integrations to the single most popular one, and focuses heavily on one thing: first document in four minutes with zero implementation.\n\nWebsite headline: \"Invoices in four minutes, no implementation or training\". It turns away large accounts — and that is a deliberate choice.",
+    "blocks/3/title": "Reestr vs. two competitors",
+    "blocks/4/text": "\"Better architecture\", \"in-house dev team\" — these are not positioning: customers don't compare them. Simple test — would this come up when they explain the product to a colleague?",
+    "blocks/4/title": "The difference must be visible to the customer, not to you",
+    "blocks/5/text": "Positioning won't beat a product that solves the problem better. It decides who you are compared with and on what basis — and that is where its power ends.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

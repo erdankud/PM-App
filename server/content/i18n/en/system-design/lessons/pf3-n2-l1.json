@@ -1,0 +1,33 @@
+{
+  "language": "en",
+  "sourceDigest": "a7bf56568e158caa",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T20:58:39Z"
+  },
+  "fields": {
+    "title": "Decisions That Shape Economics",
+    "keyTakeaway": "Margin is determined by freshness requirements, isolation model, share of background work, and dependence on external services with unit pricing—and the latter is most dangerous at scale.",
+    "sections/0/blocks/0/text": "Two competing products with the same price. Why does one have a 70% margin and the other 40%?",
+    "sections/1/blocks/0/text": "The difference in margin is determined by decisions made early on, when volumes are small and costs are imperceptible. Changing them later is expensive. A PM participating in these decisions impacts product economics more than through pricing.",
+    "sections/2/blocks/0/text": "Five architectural choices with the greatest impact on margin.",
+    "sections/2/blocks/1/text": "**Data freshness requirement.** Real-time is multiple times more expensive than an hour delay: persistent connections, webhooks, recalculation per event instead of a schedule. Often a product requirement and unjustified.",
+    "sections/2/blocks/2/text": "**Client isolation level.** Shared schema vs database per tenant from `DS3-N3`—maintenance cost difference is multiples. Determines which segment is profitable.",
+    "sections/2/blocks/3/text": "**Share of work per user vs background.** Calculating on every request or once an hour for everyone. The second is dozens of times cheaper with the same result for the user.",
+    "sections/2/blocks/4/text": "**Dependence on external services with unit pricing.** Acquiring, SMS, geocoding, models. Do not decrease with scale and become the dominant item during growth.",
+    "sections/2/blocks/5/text": "**Stored volume and retention period.** Grows like an integral, and without an explicit decision, grows forever.",
+    "sections/2/blocks/6/text": "Common trait: **decisions that make cost proportional to user activity rather than the number of users are the most dangerous.** A product where an active user is 50x more expensive than an inactive one handles growth poorly—meaning it is penalized for success.",
+    "sections/3/blocks/0/text": "Economic breakdown across these five items.",
+    "sections/3/blocks/1/text": "*Freshness.* Prices—hour, stock—real time. The second is expensive, but mandatory: discrepancy is visible to the user. Live price from the `PF2-G-B` gate is an example of an unjustified requirement.",
+    "sections/3/blocks/2/text": "*Isolation.* Shared schema for 860 partners, separate for large ones on a corporate tier—the tier covers the difference.",
+    "sections/3/blocks/3/text": "*Background work.* Recommendations recalculated every 6 hours rather than on request. Calculated difference—about 340k a month.",
+    "sections/3/blocks/4/text": "*External services.* 23% of costs, with threefold growth will become 38%. The main economic risk.",
+    "sections/3/blocks/5/text": "*Storage.* Retention introduced, grows under control.",
+    "sections/3/blocks/6/text": "Strategic conclusion: **further margin improvement lies in negotiations with acquiring and in reducing SMS, not in infrastructure.** The infrastructure part is already small relative to external services.",
+    "sections/4/blocks/0/text": "Economic optimization at an early stage is premature: while the product is searching for product-market fit, maintenance cost is not the main thing. The moment is when volumes become noticeable and growth is predictable.",
+    "sections/5/blocks/0/text": "Margin is determined by freshness requirements, isolation model, share of background work, and dependence on external services with unit pricing—and the latter is most dangerous at scale."
+  }
+}

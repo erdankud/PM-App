@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "sourceDigest": "9a5818044cc104ba",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-04T19:34:33Z"
+  },
+  "fields": {
+    "title": "Activation: the moment after which a person stays",
+    "keyTakeaway": "A product usually has an action after which churn drops sharply. Onboarding's job is to get users to it as fast as possible, not to show every feature.",
+    "checkQuestion": "How do you find Reestr's aha moment without asking users?",
+    "blocks/0/text": "Key node question: **how to turn leads into active users?**",
+    "blocks/1/text": "**What happens if you do not answer the question.** Onboarding turns into a feature tour: six screens that users swipe through. There are signups, but no payments.",
+    "blocks/2/title": "Aha Moment",
+    "blocks/2/subtitle": "Found in data, not made up",
+    "blocks/2/items/0": "**Action hypotheses** — what a person could do in the first few days: created a document, invited a colleague, signed.",
+    "blocks/2/items/1": "**Cohort comparison** — how retention differs between those who did it and those who did not.",
+    "blocks/2/items/2": "**Threshold** — often it is not just the action that matters, but the count: not \"created a document\", but \"created three in the first week\".",
+    "blocks/2/items/3": "**Causality test** — correlation is not causation. Tested by intentionally driving people to perform the action and checking if retention changes.",
+    "blocks/3/text": "Hypotheses: created an invoice, signed a document, invited an accountant.\n\nRetention after 30 days:\ncreated an invoice — 34%;\nsigned a document — 51%;\ninvited an accountant — 78%.\n\nInviting an accountant looks strongest, but only 6% do it — likely because they are simply the most serious clients.\n\nTested: added an \"invite accountant\" step to onboarding and raised the share from 6% to 23%. Retention in this group was 61%: lower than 78%, but noticeably higher than average. This means a connection exists, but part of the effect was selection, not causation.",
+    "blocks/3/title": "Reestr, what was found in the data",
+    "blocks/4/text": "Every extra step before the first value drops some users. Good onboarding removes friction — auto-filling, pre-populating examples, skipping optional steps — rather than adding explanations.",
+    "blocks/4/title": "Onboarding shouldn't teach everything",
+    "blocks/5/text": "An aha moment is a property of a segment, not of the entire product. For Reestr users who are sole proprietors without employees, it is creating an invoice, while inviting an accountant makes no sense: they do not have an accountant.",
+    "blocks/5/title": "Model boundaries"
+  }
+}

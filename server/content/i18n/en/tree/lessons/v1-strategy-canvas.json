@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "sourceDigest": "9501943043e59133",
+  "translationStatus": "machine",
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-3.6-flash",
+    "promptVersion": "translate-2026-09-02",
+    "generatedAt": "2026-09-05T19:46:24Z"
+  },
+  "fields": {
+    "title": "What you are actually compared against",
+    "keyTakeaway": "The most common competitor is not another product, but a spreadsheet and a habit. You need to compare whole profiles: the winner isn't the one with more checkmarks, but the one with a different profile shape.",
+    "checkQuestion": "Why is \"a competitor has feature X, let's add X\" almost always a bad conclusion?",
+    "blocks/0/text": "The key question of this node: **what is the core value of external solutions?** Nobody comes to your product from a vacuum: the job is already being done somehow—by another product, a spreadsheet, a human, or simply by tolerating it.",
+    "blocks/1/text": "**What happens if you do not answer this question.** You take a competitor's feature list and copy it. You get the same product, but worse and later, and the only argument left is price.",
+    "blocks/2/title": "Strategy Canvas",
+    "blocks/2/subtitle": "Value profile instead of a checklist",
+    "blocks/2/items/0": "**Horizontal axis**—competing factors: speed, price, support, flexibility, entry barrier.",
+    "blocks/2/items/1": "**Vertical axis**—how heavily each solution invests in a factor.",
+    "blocks/2/items/2": "**Line**—the profile of a single solution. You plot your profile and alternative profiles.",
+    "blocks/2/items/3": "**Look at the shape, not the height.** Matching profiles mean you compete on price alone.",
+    "blocks/2/items/4": "**Be sure to add \"do nothing\"**—the status quo exists in every choice.",
+    "blocks/3/text": "Factors dispatchers actually choose by: speed of trip creation, visibility of vehicle availability, entry barrier, cost, offline trip mode.\n\nExcel: minimal entry barrier, zero cost, maximum flexibility—and total failure on vehicle visibility. Excel is where everything is done right now.\nForeign TMS: high on almost everything, but huge entry barrier and price is a dealbreaker.\n1C module: average across the board, strong accounting integration.\n\nConclusion: the real competitor is Excel, not a TMS. You win not through feature richness, but through vehicle visibility with the same low entry barrier.",
+    "blocks/3/title": "Dispetcher vs. current options",
+    "blocks/4/text": "It has zero implementation cost, zero risk, and it already works. A product that doesn't clearly beat the status quo doesn't get adopted, even if it is objectively better.",
+    "blocks/4/title": "\"Do nothing\" is the strongest alternative",
+    "blocks/5/text": "You choose the factors on the horizontal axis—and that is the main source of error. Pick those where you are strong, and you get a pretty picture that means nothing. Factors must be what the customer chooses by, not what you are proud of. The Canvas shows where you differ, but doesn't tell you if that difference is valuable: that requires a separate check.",
+    "blocks/5/title": "Model boundaries"
+  }
+}
