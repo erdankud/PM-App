@@ -49,18 +49,24 @@
   "tiers": [
     {
       "tier": 1,
-      "title": "Читатель системы",
-      "subtitle": "Понять, что происходит"
+      "title": "Level 1",
+      "subtitle": "Понять, что происходит",
+      "titleEn": "Level 1",
+      "subtitleEn": "Understand what is going on"
     },
     {
       "tier": 2,
-      "title": "Участник решения",
-      "subtitle": "Оценить компромисс"
+      "title": "Level 2",
+      "subtitle": "Оценить компромисс",
+      "titleEn": "Level 2",
+      "subtitleEn": "Weigh the trade-off"
     },
     {
       "tier": 3,
-      "title": "Автор требований",
-      "subtitle": "Задать рамку"
+      "title": "Level 3",
+      "subtitle": "Задать рамку",
+      "titleEn": "Level 3",
+      "subtitleEn": "Set the frame"
     }
   ],
   "blocks": [

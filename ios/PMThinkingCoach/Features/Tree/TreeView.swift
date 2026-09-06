@@ -129,20 +129,17 @@ struct TreeView: View {
     private func legend(_ tree: TreeResponse) -> some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.s) {
             SectionHeader(title: S.Tree.ringsTitle, subtitle: S.Tree.ringsSubtitle)
+            // Номер круга не дублируется цифрой слева: он уже в самом названии.
             ForEach(tree.tiers) { tier in
-                HStack(alignment: .firstTextBaseline, spacing: Theme.Spacing.s) {
-                    Text("\(tier.tier)")
-                        .font(.caption.weight(.bold).monospacedDigit())
-                        .frame(width: 16)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(tier.title)
+                        .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Theme.Palette.accent)
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text(tier.title).font(.subheadline.weight(.medium))
-                        Text(tier.subtitle)
-                            .font(.caption)
-                            .foregroundStyle(Theme.Palette.secondaryText)
-                    }
-                    Spacer(minLength: 0)
+                    Text(tier.subtitle)
+                        .font(.caption)
+                        .foregroundStyle(Theme.Palette.secondaryText)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityElement(children: .combine)
             }
         }

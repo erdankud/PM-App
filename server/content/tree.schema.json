@@ -31,7 +31,9 @@
         "required": [
           "tier",
           "title",
-          "subtitle"
+          "subtitle",
+          "titleEn",
+          "subtitleEn"
         ],
         "properties": {
           "tier": {
@@ -44,6 +46,15 @@
             "minLength": 1
           },
           "subtitle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "titleEn": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Authored English. Ring names are product copy, not machine output."
+          },
+          "subtitleEn": {
             "type": "string",
             "minLength": 1
           }

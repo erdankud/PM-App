@@ -4,18 +4,24 @@
   "tiers": [
     {
       "tier": 1,
-      "title": "Junior",
-      "subtitle": "Атомарная задача"
+      "title": "Level 1",
+      "subtitle": "Атомарная задача: собрать или сделать что-то одно",
+      "titleEn": "Level 1",
+      "subtitleEn": "One atomic task: gather or produce one concrete thing"
     },
     {
       "tier": 2,
-      "title": "Middle",
-      "subtitle": "Анализ и обоснованные выводы"
+      "title": "Level 2",
+      "subtitle": "Анализ и агрегация: выводы, которые можно защитить",
+      "titleEn": "Level 2",
+      "subtitleEn": "Analysis and aggregation: conclusions you can defend"
     },
     {
       "tier": 3,
-      "title": "Senior",
-      "subtitle": "Цели, процессы, стратегия"
+      "title": "Level 3",
+      "subtitle": "Цели, процессы и стратегия продукта или портфеля",
+      "titleEn": "Level 3",
+      "subtitleEn": "Goals, process and strategy across a product or a portfolio"
     }
   ],
   "domains": [

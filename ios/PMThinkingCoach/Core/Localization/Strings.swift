@@ -274,20 +274,20 @@ enum S {
             )
         }
 
+        /// Запасное название круга, когда контент ещё не загружен.
+        ///
+        /// Латиницей в обоих языках намеренно: «Уровень 1» столкнулся бы с уровнем
+        /// XP, который показан рядом — в Прогрессе и в боковой панели.
         static func tierName(_ tier: Int) -> String {
-            switch tier {
-            case 1: return t("Junior", "Junior")
-            case 2: return t("Middle", "Middle")
-            default: return t("Senior", "Senior")
-            }
+            "Level \(tier)"
         }
 
         static func tierSubtitle(_ tier: Int) -> String {
             switch tier {
             case 1:
                 return t(
-                    "One task at a time: gather or produce something concrete.",
-                    "Одна задача за раз: собрать или сделать что-то конкретное."
+                    "One atomic task: gather or produce one concrete thing.",
+                    "Атомарная задача: собрать или сделать что-то одно."
                 )
             case 2:
                 return t(
@@ -419,7 +419,7 @@ enum S {
         static var recommendation: String {
             t(
                 "New to product? Start with Discovery in the product map.",
-                "Если вы новичок — начните с блока «Услышать клиента» на карте продукта."
+                "Если вы новичок — начните с первого блока карты продукта."
             )
         }
     }
@@ -464,46 +464,81 @@ enum S {
         }
         static var howItWorksSubtitle: String {
             t(
-                "The map of the profession, turned into a path you can walk from zero.",
-                "Карта профессии, превращённая в путь, который можно пройти с нуля."
+                "The map of the profession, turned into a path you can walk from zero. "
+                    + "Five things worth knowing before the first lesson.",
+                "Карта профессии, превращённая в путь, который можно пройти с нуля. "
+                    + "Пять вещей, которые стоит знать до первого урока."
             )
         }
 
-        static var stepMapTitle: String { t("You see the whole map", "Вы видите всю карту") }
+        static var stepMapTitle: String { t("Two maps, both open", "Две карты, обе открыты") }
         static var stepMapBody: String {
             t(
-                "71 skills in six domains and three rings. Nothing is hidden — one block "
-                    + "is open, and the rest shows you where the route goes.",
-                "71 навык в шести доменах и трёх кругах. Ничего не прячется: открыт один "
-                    + "блок, а остальное показывает, куда ведёт маршрут."
+                "The product map — 71 skills — and System Design — 96 — share one grammar "
+                    + "and one switch at the top. Everything is open from day one: start "
+                    + "at the first block of the product map if you are new, or anywhere else.",
+                "Карта продукта — 71 навык — и System Design — 96 — устроены одинаково и "
+                    + "переключаются наверху экрана. Всё открыто с первого дня: если вы "
+                    + "новичок, начните с первого блока карты продукта, но можно и с любого места."
             )
         }
+
+        // Кольца путали: «Junior / Middle / Senior» читалось как оценка человека,
+        // хотя означает неопределённость задачи. Теперь это сказано прямо.
+        static var stepRingsTitle: String {
+            t("Rings are uncertainty, not seniority", "Кольца — это неопределённость, а не грейд")
+        }
+        static var stepRingsBody: String {
+            t(
+                "The inner ring is a task someone already framed for you. The outer one is "
+                    + "where you choose the frame. It says nothing about how good a manager "
+                    + "you are.",
+                "Внутреннее кольцо — задача, которую уже поставили за вас. Внешнее — то, где "
+                    + "рамку выбираете вы. К оценке вас как менеджера это отношения не имеет."
+            )
+        }
+
         static var stepLessonsTitle: String { t("Short lessons", "Короткие уроки") }
         static var stepLessonsBody: String {
             t(
-                "Three to five minutes each: one idea, one model, and where it stops working.",
-                "По три-пять минут: одна идея, одна модель и границы, за которыми она не работает."
+                "One idea, one model, and where it stops working: three to five minutes on "
+                    + "the product map, twelve to fifteen in System Design. Some carry an "
+                    + "audio overview — two hosts talking the lesson through, not reading it "
+                    + "aloud.",
+                "Одна идея, одна модель и границы, за которыми она не работает: три-пять "
+                    + "минут на карте продукта, двенадцать-пятнадцать в System Design. У части "
+                    + "уроков есть аудиообзор — двое ведущих обсуждают материал, а не читают "
+                    + "его вслух."
             )
         }
+
         static var stepGateTitle: String { t("A gate, not a quiz", "Гейт, а не тест") }
         static var stepGateBody: String {
             t(
                 "Each block ends in a real situation with incomplete data. You decide and "
-                    + "defend the decision in writing — the reasoning is most of the score.",
+                    + "defend the decision in writing — the reasoning is most of the score, "
+                    + "so no option is «the right answer» on its own.",
                 "Каждый блок заканчивается настоящей ситуацией с неполными данными. Вы "
                     + "принимаете решение и обосновываете его письменно — аргументация даёт "
-                    + "большую часть баллов."
+                    + "большую часть баллов, поэтому «правильного варианта» самого по себе тут нет."
             )
         }
-        static var stepUnlockTitle: String { t("Passing opens the next", "Сдача открывает дальше") }
+
+        static var stepUnlockTitle: String {
+            t("Failing costs nothing", "Несданный гейт ничего не стоит")
+        }
         static var stepUnlockBody: String {
             t(
-                "Not finishing a gate costs nothing: no XP is taken away and nothing locks. "
-                    + "It sends you back to the exact lessons that would have helped.",
-                "Несданный гейт ничего не стоит: XP не отнимается и ничего не блокируется. "
-                    + "Он возвращает вас к конкретным урокам, которых не хватило."
+                "No XP is taken away and nothing locks. A failed gate sends you back to the "
+                    + "exact lessons that would have helped, and you can retake it — the "
+                    + "second sitting is a different situation, so it cannot be passed from "
+                    + "memory.",
+                "XP не отнимается и ничего не закрывается. Несданный гейт возвращает вас к "
+                    + "конкретным урокам, которых не хватило, и его можно пересдать — во "
+                    + "второй раз ситуация другая, поэтому пройти его по памяти нельзя."
             )
         }
+
         static var ownPace: String {
             t(
                 "No daily limits and no streaks to lose. Ten minutes on the metro or an "

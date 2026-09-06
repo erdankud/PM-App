@@ -31,6 +31,7 @@ private struct HowItWorksView: View {
     private var steps: [(symbol: String, title: String, body: String)] {
         [
             ("map", S.Onboarding.stepMapTitle, S.Onboarding.stepMapBody),
+            ("circle.circle", S.Onboarding.stepRingsTitle, S.Onboarding.stepRingsBody),
             ("book", S.Onboarding.stepLessonsTitle, S.Onboarding.stepLessonsBody),
             ("flag.checkered", S.Onboarding.stepGateTitle, S.Onboarding.stepGateBody),
             ("lock.open", S.Onboarding.stepUnlockTitle, S.Onboarding.stepUnlockBody),
@@ -73,7 +74,7 @@ private struct HowItWorksView: View {
                     }
 
                     InlineNotice(text: S.Onboarding.ownPace, systemImage: "tortoise")
-                        .appear(5)
+                        .appear(6)
                 }
                 .padding(Theme.Spacing.l)
             }
