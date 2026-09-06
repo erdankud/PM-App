@@ -721,6 +721,11 @@ enum S {
         static var strengthsTitle: String { t("What you did well", "Что получилось хорошо") }
         static var improvementsTitle: String { t("What to strengthen", "Что усилить") }
         static var sharperApproach: String { t("A sharper approach", "Более точный подход") }
+        // Провал — это информация: сервер всегда присылает `remediation` с конкретными
+        // уроками, и разбор должен показать их, а не оставить человека с одним числом.
+        static var remediationTitle: String {
+            t("Where to go back to", "К каким урокам вернуться")
+        }
         static var skillImpactTitle: String { t("Skill impact", "Влияние на навыки") }
         static var skillImpactSubtitle: String {
             t(

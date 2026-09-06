@@ -7,8 +7,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
-from app.config import settings
+from app.config import SERVER_ROOT, settings
 from app.db import engine
 from app.models import Base
 from app.routers import (
@@ -81,6 +83,34 @@ for router in (
     system_design.router,
 ):
     app.include_router(router, prefix=settings.api_prefix)
+
+
+# Веб-клиент раздаётся тем же сервером, к которому ходит: один origin — значит ни
+# CORS, ни второго рантайма, ни отдельного адреса API в настройках. Сборки у него
+# нет, это ES-модули, которые отдаются как есть.
+WEB_ROOT = SERVER_ROOT.parent / "web"
+
+
+class WebFiles(StaticFiles):
+    """Статика приложения с обязательной перепроверкой.
+
+    У клиента нет сборки, поэтому у файлов нет и версии в имени: браузер, взявший
+    модуль из памяти, продолжал бы исполнять прошлую редакцию после правки. ETag
+    остаётся, так что перепроверка стоит один 304.
+    """
+
+    def file_response(self, *args, **kwargs):
+        response = super().file_response(*args, **kwargs)
+        response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
+if WEB_ROOT.is_dir():
+    app.mount("/app", WebFiles(directory=WEB_ROOT, html=True), name="web")
+
+    @app.get("/", include_in_schema=False)
+    def web_root() -> RedirectResponse:
+        return RedirectResponse(url="/app/")
 
 
 @app.get("/health", tags=["ops"])
