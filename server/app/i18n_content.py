@@ -320,6 +320,28 @@ def _use_authored_english(kind: str, document: dict[str, Any]) -> None:
         for item in document.get(collection) or []:
             if isinstance(item, dict) and has_authored_english(item.get(source_field)):
                 item[target_field] = item[source_field]
+    if kind == "tree":
+        _use_authored_models(document)
+
+
+def _use_authored_models(document: dict[str, Any]) -> None:
+    """Названия моделей у узлов.
+
+    Большинство из них международные — «5 Whys», «HEART», «RICE» — и остаются как
+    есть на любом языке. Но четырнадцать названы по-русски («Скрипт от гипотез»),
+    и на английском экране они выглядели чужой строкой посреди перевода. Их
+    английские имена написаны автором в `modelsEn`, потому что у модели есть
+    принятое в отрасли название, а не перевод: «Матрица Ансоффа» — это Ansoff
+    Matrix, и придумывать здесь машине нечего.
+    """
+    for block in document.get("blocks") or []:
+        for node in block.get("nodes") or []:
+            authored = node.get("modelsEn")
+            models = node.get("models")
+            # Длины обязаны совпадать: список идёт по позициям, и разъехавшись
+            # он подписал бы модель чужим именем.
+            if isinstance(authored, list) and isinstance(models, list) and len(authored) == len(models):
+                node["models"] = list(authored)
 
 
 def apply_overlay(

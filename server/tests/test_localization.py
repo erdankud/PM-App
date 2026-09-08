@@ -374,3 +374,63 @@ def test_length_floors_apply_to_the_author_and_ceilings_to_everyone():
     assert option(authored)["description"]["minLength"] == 30
     assert "minLength" not in option(translated)["description"]
     assert option(translated)["description"]["maxLength"] == 320
+
+
+CYRILLIC = re.compile(r"[А-Яа-яЁё]")
+
+
+def _cyrillic_fields(payload, path=""):
+    """Пути до строк с кириллицей внутри ответа."""
+    if isinstance(payload, dict):
+        for key, value in payload.items():
+            yield from _cyrillic_fields(value, f"{path}.{key}")
+    elif isinstance(payload, list):
+        for index, value in enumerate(payload):
+            yield from _cyrillic_fields(value, f"{path}[{index}]")
+    elif isinstance(payload, str) and CYRILLIC.search(payload):
+        yield path, payload
+
+
+def test_english_responses_carry_no_russian(client):
+    """Английский экран не должен показывать русский текст.
+
+    Это ловится только на ответе целиком: корпус может быть переведён на сто
+    процентов, а строка всё равно приедет по-русски — потому что эндпоинт забыл
+    передать язык вниз, или потому что поле вообще не в списке переводимых.
+    Оба случая уже случались: `lessons_for_block` вызывали без языка, и названия
+    моделей узлов не переводились никогда.
+    """
+    headers, _ = onboard(client)
+    headers = {**headers, "X-Content-Language": "en"}
+
+    payloads: dict[str, object] = {}
+    for kind in ("product", "system_design"):
+        payloads[f"/tree/{kind}"] = client.get(f"/v1/tree/{kind}", headers=headers).json()
+        payloads[f"/tree/{kind}/map"] = client.get(
+            f"/v1/tree/{kind}/map", headers=headers
+        ).json()
+    payloads["/trees"] = client.get("/v1/trees", headers=headers).json()
+    payloads["/progress"] = client.get("/v1/progress", headers=headers).json()
+
+    for block_id in ("D1", "G3", "DS1", "SE3"):
+        block = client.get(f"/v1/blocks/{block_id}", headers=headers).json()
+        payloads[f"/blocks/{block_id}"] = block
+        first = block["nodes"][0]["lessons"][0]["id"]
+        payloads[f"/lessons/{first}"] = client.get(
+            f"/v1/lessons/{first}", headers=headers
+        ).json()
+
+    leaks = [
+        f"{endpoint}{path}: {text[:60]}"
+        for endpoint, payload in payloads.items()
+        for path, text in _cyrillic_fields(payload)
+    ]
+    assert not leaks, "русский текст в английском ответе:\n" + "\n".join(leaks)
+
+
+def test_russian_stays_russian(client):
+    """Обратная проверка: правка выше не должна была подменить язык оригинала."""
+    headers, _ = onboard(client)
+    block = client.get("/v1/blocks/D1", headers={**headers, "X-Content-Language": "ru"}).json()
+    titles = [lesson["title"] for node in block["nodes"] for lesson in node["lessons"]]
+    assert titles and all(CYRILLIC.search(title) for title in titles)

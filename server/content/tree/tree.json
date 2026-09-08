@@ -28,7 +28,7 @@
     {
       "key": "discovery",
       "title": "Дискавери и исследования",
-      "titleEn": "Discovery & Researches",
+      "titleEn": "Discovery & Research",
       "order": 1
     },
     {
@@ -100,7 +100,11 @@
             "Best Practice вопросов"
           ],
           "aiImpact": null,
-          "order": 3
+          "order": 3,
+          "modelsEn": [
+            "Hypothesis-Led Script",
+            "Best-Practice Questions"
+          ]
         },
         {
           "id": "d1-monitoring-pokazateley-produkta",
@@ -136,7 +140,13 @@
             "Four Product Forces"
           ],
           "aiImpact": null,
-          "order": 1
+          "order": 1,
+          "modelsEn": [
+            "Customer Profile",
+            "Empathy Map",
+            "Job Stories",
+            "Four Product Forces"
+          ]
         },
         {
           "id": "d2-kachestvennyy-analiz-povedeniya-potrebiteley",
@@ -161,7 +171,12 @@
             "корреляционный анализ"
           ],
           "aiImpact": null,
-          "order": 3
+          "order": 3,
+          "modelsEn": [
+            "Root Cause Analysis",
+            "Cohort Analysis",
+            "Correlation Analysis"
+          ]
         },
         {
           "id": "d2-modelirovanie-izmeneniy",
@@ -199,7 +214,10 @@
             "Иерархия метрик"
           ],
           "aiImpact": null,
-          "order": 2
+          "order": 2,
+          "modelsEn": [
+            "Metrics Hierarchy"
+          ]
         }
       ]
     },
@@ -527,7 +545,12 @@
             "Sales Funnel"
           ],
           "aiImpact": null,
-          "order": 1
+          "order": 1,
+          "modelsEn": [
+            "End-to-End Analytics",
+            "AARRR Metrics",
+            "Sales Funnel"
+          ]
         },
         {
           "id": "m1-formulirovanie-cennosti-produkta-i-svoystv",
@@ -676,7 +699,11 @@
             "ADL Matrix"
           ],
           "aiImpact": null,
-          "order": 3
+          "order": 3,
+          "modelsEn": [
+            "Ansoff Matrix",
+            "ADL Matrix"
+          ]
         },
         {
           "id": "m3-strategiya-zakrytiya-produkta",
@@ -718,7 +745,14 @@
             "Mindmap"
           ],
           "aiImpact": null,
-          "order": 1
+          "order": 1,
+          "modelsEn": [
+            "SCAMPER",
+            "Brainstorming",
+            "Morphological Analysis",
+            "Six Thinking Hats",
+            "Mindmap"
+          ]
         },
         {
           "id": "g1-formulirovanie-gipotez",
@@ -728,7 +762,10 @@
             "Шаблоны и типология гипотез"
           ],
           "aiImpact": null,
-          "order": 2
+          "order": 2,
+          "modelsEn": [
+            "Hypothesis Templates and Typology"
+          ]
         },
         {
           "id": "g1-ocenka-i-sravnenie-idey",
@@ -738,7 +775,10 @@
             "Матрица Декарта"
           ],
           "aiImpact": null,
-          "order": 3
+          "order": 3,
+          "modelsEn": [
+            "Descartes Square"
+          ]
         },
         {
           "id": "g1-provedenie-eksperimentov",
@@ -933,7 +973,11 @@
             "жизненный цикл по Адизесу"
           ],
           "aiImpact": null,
-          "order": 2
+          "order": 2,
+          "modelsEn": [
+            "SWOT Analysis",
+            "Adizes Lifecycle"
+          ]
         },
         {
           "id": "s2-analiz-konkurentov",
@@ -944,7 +988,11 @@
             "Competition Map"
           ],
           "aiImpact": null,
-          "order": 3
+          "order": 3,
+          "modelsEn": [
+            "Porter's Five Forces",
+            "Competition Map"
+          ]
         },
         {
           "id": "s2-opredelenie-segmentov-klientov-dlya-strategii",
@@ -957,7 +1005,13 @@
             "Segment Scoring"
           ],
           "aiImpact": null,
-          "order": 4
+          "order": 4,
+          "modelsEn": [
+            "ABCDX Segmentation",
+            "RFM",
+            "ABC Analysis",
+            "Segment Scoring"
+          ]
         },
         {
           "id": "s2-optimizaciya-modeli-monetizacii",
@@ -988,7 +1042,11 @@
             "юнит-экономика"
           ],
           "aiImpact": null,
-          "order": 1
+          "order": 1,
+          "modelsEn": [
+            "Business Model Canvas",
+            "Unit Economics"
+          ]
         },
         {
           "id": "s3-finansovoe-planirovanie-i-upravlenie-p",

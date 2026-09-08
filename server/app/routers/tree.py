@@ -27,6 +27,9 @@ from app.schemas import (
     LessonCompleteResponse,
     LessonResponse,
     LessonSummary,
+    MapEdge,
+    MapNode,
+    MapResponse,
     NodeDetail,
     NodeView,
     TierView,
@@ -62,9 +65,18 @@ def _summary(
     )
 
 
+#: Подписи переключателя деревьев. Продуктовая копия, а не контент, поэтому
+#: живут в коде — но на обоих языках: захардкоженная русская строка приезжала
+#: в английский ответ как есть.
 TREE_TITLES = {
-    "product": ("Продукт", "Карта навыков продакт-менеджера"),
-    "system_design": ("Системы", "Как устроен продукт изнутри"),
+    "ru": {
+        "product": ("Продукт", "Карта навыков продакт-менеджера"),
+        "system_design": ("Системы", "Как устроен продукт изнутри"),
+    },
+    "en": {
+        "product": ("Product", "The product manager's skill map"),
+        "system_design": ("Systems", "How a product works inside"),
+    },
 }
 
 
@@ -77,7 +89,7 @@ def get_trees(user: CurrentUser, db: DbSession, language: ContentLanguage) -> Tr
     for kind in tree_content.kinds():
         blocks = tree_content.blocks_of(kind, language.value)
         statuses = [rows[block["id"]].status for block in blocks]
-        title, subtitle = TREE_TITLES[kind]
+        title, subtitle = TREE_TITLES.get(language.value, TREE_TITLES["ru"])[kind]
         summaries.append(TreeSummary(
             kind=kind,
             title=title,
@@ -131,6 +143,98 @@ def get_tree_of_kind(
     return _tree_response(kind, user, db, language.value)
 
 
+def _map_response(kind: str, user, db, language: str = "ru") -> MapResponse:
+    """Карта на уровне узлов: одна карточка — один навык, как в исходной схеме.
+
+    Отдельный эндпоинт, а не расширение `/tree`: контракт дерева читают оба клиента,
+    и класть в него 71 узел с уроками ради одного экрана значило бы заставить всех
+    платить за карту.
+    """
+    content = tree_content.tree_content(kind, language)
+    rows = tree_service.recompute(db, user.id)
+    db.commit()
+    completed = tree_service.completed_lesson_ids(db, user.id)
+
+    nodes: list[MapNode] = []
+    edges: list[MapEdge] = []
+    first_node: dict[str, str] = {}
+    last_node: dict[str, str] = {}
+
+    for block in content["tree"]["blocks"]:
+        lessons = tree_content.lessons_for_block(block["id"], language)
+        by_node: dict[str, list] = {}
+        for lesson in lessons:
+            by_node.setdefault(lesson["nodeId"], []).append(lesson)
+
+        ordered = sorted(block["nodes"], key=lambda item: item["order"])
+        for index, node in enumerate(ordered):
+            nodes.append(MapNode(
+                id=node["id"],
+                block_id=block["id"],
+                domain_key=block["domainKey"],
+                tier=block["tier"],
+                order=node["order"],
+                title=node["title"],
+                key_question=node["keyQuestion"],
+                models=node["models"],
+                block_status=rows[block["id"]].status,
+                lessons=[
+                    LessonSummary(
+                        id=lesson["id"],
+                        title=lesson["title"],
+                        estimated_minutes=lesson["estimatedMinutes"],
+                        order=lesson["order"],
+                        completed=lesson["id"] in completed,
+                    )
+                    for lesson in sorted(
+                        by_node.get(node["id"], []), key=lambda item: item["order"]
+                    )
+                ],
+            ))
+            # Внутри блока узлы идут по порядку — это и есть связь.
+            if index > 0:
+                edges.append(MapEdge(
+                    source=ordered[index - 1]["id"], target=node["id"], kind="sequence"
+                ))
+        if ordered:
+            first_node[block["id"]] = ordered[0]["id"]
+            last_node[block["id"]] = ordered[-1]["id"]
+
+    # Между блоками — рёбра графа разблокировки: от последнего узла блока-условия
+    # к первому узлу зависимого блока.
+    for block in content["tree"]["blocks"]:
+        target = first_node.get(block["id"])
+        if not target:
+            continue
+        for prerequisite in block["prerequisiteBlockIds"]:
+            source = last_node.get(prerequisite)
+            if source:
+                edges.append(MapEdge(source=source, target=target, kind="prerequisite"))
+
+    return MapResponse(
+        kind=kind,
+        source_attribution=content["tree"]["sourceAttribution"],
+        tiers=[TierView(**tier) for tier in content["tiers"]],
+        domains=[
+            DomainView(key=d["key"], title=d["title"], order=d["order"])
+            for d in content["domains"]
+        ],
+        nodes=nodes,
+        edges=edges,
+    )
+
+
+@router.get("/tree/{kind}/map", response_model=MapResponse)
+def get_tree_map(
+    kind: str, user: CurrentUser, db: DbSession, language: ContentLanguage
+) -> MapResponse:
+    if kind not in tree_content.kinds():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail={"code": "tree_not_found"}
+        )
+    return _map_response(kind, user, db, language.value)
+
+
 @router.get("/blocks/{block_id}", response_model=BlockDetailResponse)
 def get_block(
     block_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
@@ -149,7 +253,7 @@ def get_block(
     db.commit()
     progress = rows[block_id]
     completed = tree_service.completed_lesson_ids(db, user.id)
-    lessons = tree_content.lessons_for_block(block_id)
+    lessons = tree_content.lessons_for_block(block_id, language.value)
     by_node: dict[str, list[dict]] = {}
     for lesson in lessons:
         by_node.setdefault(lesson["nodeId"], []).append(lesson)
@@ -171,7 +275,7 @@ def get_block(
     tier_title = next(t["title"] for t in content["tiers"] if t["tier"] == block["tier"])
 
     return BlockDetailResponse(
-        block=_summary(block, progress, completed),
+        block=_summary(block, progress, completed, language.value),
         domain_title=domain_title,
         tier_title=tier_title,
         nodes=[

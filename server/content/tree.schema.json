@@ -206,6 +206,14 @@
                   "minLength": 10,
                   "maxLength": 400,
                   "description": "Решение, которое принимает продакт. Обязательно для system_design (спека SD §2.5)."
+                },
+                "modelsEn": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "Авторские английские названия моделей, по позициям как в models."
                 }
               }
             }

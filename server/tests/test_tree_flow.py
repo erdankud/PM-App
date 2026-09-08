@@ -388,3 +388,44 @@ def test_first_map_read_survives_two_requests_at_once(client):
         ]
 
     assert [response.status_code for response in responses] == [200, 200]
+
+
+def test_tree_map_returns_nodes_and_real_edges(client):
+    """Карта на уровне узлов: карточка — навык, а не блок, и ведёт в урок.
+
+    Рёбра не выдуманы: внутри блока это порядок узлов, между блоками — граф
+    разблокировки. Если связь появится «из ниоткуда», тест это заметит.
+    """
+    headers, _ = onboard(client)
+    response = client.get("/v1/tree/product/map", headers=headers)
+    assert response.status_code == 200
+    body = response.json()
+
+    assert len(body["nodes"]) == 71
+    assert len(body["domains"]) == 6
+    assert len(body["tiers"]) == 3
+
+    node_ids = {node["id"] for node in body["nodes"]}
+    assert len(node_ids) == len(body["nodes"]), "идентификаторы узлов должны быть уникальны"
+
+    # У каждого узла есть вопрос и хотя бы один урок: карточка обязана вести в урок.
+    for node in body["nodes"]:
+        assert node["keyQuestion"].strip()
+        assert node["lessons"], f"{node['id']} без уроков"
+
+    assert sum(len(node["lessons"]) for node in body["nodes"]) == 90
+
+    # Оба конца каждого ребра существуют.
+    for edge in body["edges"]:
+        assert edge["source"] in node_ids
+        assert edge["target"] in node_ids
+        assert edge["kind"] in {"sequence", "prerequisite"}
+
+    kinds = {edge["kind"] for edge in body["edges"]}
+    assert kinds == {"sequence", "prerequisite"}
+
+
+def test_tree_map_rejects_unknown_kind(client):
+    headers, _ = onboard(client)
+    response = client.get("/v1/tree/nope/map", headers=headers)
+    assert response.status_code == 404

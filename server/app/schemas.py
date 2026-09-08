@@ -456,6 +456,42 @@ class LessonSummary(ApiModel):
     completed: bool
 
 
+class MapNode(ApiModel):
+    """Узел карты — одна карточка. Именно навык, как в исходной схеме: название,
+    ключевой вопрос и модели. Уроки узла приложены, потому что карточка ведёт
+    в урок, а не в блок."""
+
+    id: str
+    block_id: str
+    domain_key: str
+    tier: int
+    order: int
+    title: str
+    key_question: str
+    models: list[str]
+    # Статус блока, которому принадлежит узел: доступность живёт на блоке.
+    block_status: str
+    lessons: list[LessonSummary]
+
+
+class MapEdge(ApiModel):
+    """Связь между узлами. Внутри блока — порядок прохождения, между блоками —
+    зависимость из графа разблокировки. Ничего не выдумано."""
+
+    source: str
+    target: str
+    kind: str  # sequence | prerequisite
+
+
+class MapResponse(ApiModel):
+    kind: str
+    source_attribution: str
+    tiers: list[TierView]
+    domains: list[DomainView]
+    nodes: list[MapNode]
+    edges: list[MapEdge]
+
+
 class NodeDetail(ApiModel):
     node: NodeView
     lessons: list[LessonSummary]
