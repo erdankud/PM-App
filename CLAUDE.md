@@ -40,8 +40,12 @@ boundaries it explains are unchanged).
   server-side only (`server/app/ai/`).
 - The authored consequence (shown right after submit) is separate from AI
   feedback and must never depend on model/provider availability.
-- Exactly 3 root tabs: Map, Progress, Profile. No chat tab, no paywall, no
-  leaderboards, no user-generated content (v0.1 §24, still in force).
+- **4 root tabs: Learn, Skills Map, Progress, Profile.** This changed on the author's
+  instruction and supersedes v0.1 §24's "exactly 3". The reason the rule existed still
+  holds and still binds: no chat tab, no paywall, no leaderboards, no user-generated
+  content. What split is the map — daily work («what do I read now») and the overview of
+  the whole profession are different jobs, and making the overview the front door meant
+  pushing through it to reach a lesson. Splitting further needs the same kind of reason.
 - A gate needs at least two scenarios. With one, a retake becomes memorising
   which option was right, which is the quiz this product must not be.
 - Failure is information: never take XP away for a failed gate, never lock
@@ -55,9 +59,9 @@ boundaries it explains are unchanged).
 ## System Design — the seventh domain
 
 - A second tree, same grammar: 6 areas × 3 rings = 18 blocks, 96 nodes. It lives in
-  the Map tab behind a **Продукт / Системы** switcher — not a fourth tab, because the
-  three-root-tab rule is not up for revision, and not a seventh sector, because 18
-  more blocks would make the ring unreadable.
+  Skills Map behind a **Продукт / Системы** switcher — not a root of its own, because
+  the two trees are the same thing for two audiences, and not a seventh sector, because
+  18 more blocks would make one map unreadable.
 - **Open from day one**, independent of the product tree: people arrive with different
   backgrounds and someone from engineering may start here. The UI recommends `D1`
   first — a hint, not a lock.
@@ -234,9 +238,23 @@ boundaries it explains are unchanged).
   counting as current, so the reader gets today's Russian rather than last week's
   English. A half-translated file is an error in `validate_content`, not a warning —
   mixed language reads as a broken app, not as "not translated yet".
-- `titleEn` (domains) and `termEn` (glossary) were written by the author. They are used
-  as they are and applied **after** the overlay, so authored English always beats
-  machine English. The five terms whose `termEn` is a dash get translated instead.
+- `titleEn` (domains), `termEn` (glossary) and `modelsEn` (node models) were written by
+  the author. They are used as they are and applied **after** the overlay, so authored
+  English always beats machine English. The five terms whose `termEn` is a dash get
+  translated instead.
+- `modelsEn` exists because most model names are international — «5 Whys», «HEART»,
+  «RICE» — and were therefore excluded from translation altogether. Fourteen are not
+  («Скрипт от гипотез»), and they showed up as Russian on the English screen. They carry
+  industry names, not translations — «Матрица Ансоффа» *is* Ansoff Matrix — so a machine
+  has nothing to invent here. `modelsEn` matches `models` position for position, and
+  adding it does **not** stale the overlay: `digest()` covers only the translatable
+  fields.
+- **`tests/test_localization.py` sweeps every English response for Cyrillic.** A fully
+  translated corpus does not mean a translated screen, and both ways of breaking that
+  have already happened: `get_block` called `lessons_for_block` without a language, so
+  every lesson title in a block came back in the authored language; and `TREE_TITLES`
+  was hardcoded Russian in the router. Neither is visible in `validate_content`, which
+  only checks the files. Check the response, not the corpus.
 - Producing the English corpus:
 
       export EVALUATOR_API_KEY=...
@@ -256,6 +274,208 @@ boundaries it explains are unchanged).
   own prompt (the overview is written in English, not translated from Russian — a
   translated conversation sounds translated), and its own measured `WORDS_PER_MINUTE`
   (172 for English, 110 for Russian). The mp3 name carries the language.
+
+## Visual language — monochrome and glass
+
+- **Black, white and translucent white.** No brand hue. The palette that used to be
+  sand-and-green («Роща», in git history) was replaced wholesale: colour no longer
+  encodes anything except the six domains on the map.
+- The twelve-step scale survived the change because its job survived it — steps 1–2 are
+  page grounds, 3–5 component surfaces, 6–8 borders, 9–10 solid fills, 11–12 text. Only
+  the values changed, to Tailwind's neutral scales with pure black and white at the
+  poles. Components still read **roles** (`--surface`, `--separator`, `--accent`), never
+  steps.
+- **Liquid Glass is a material of four layers**, and dropping any of them turns it back
+  into a pale rectangle: blur *with* a saturation lift (colours behind stay alive rather
+  than going muddy), a gradient across the plate itself, a **specular rim** — a 1 px
+  gradient border cut out with `mask-composite: exclude` so light catches the edge and
+  not the face — and a shadow that lifts it off the content. `.glass` / `.glass-strong`.
+- **It only works over content.** There is nothing to refract on empty white, so it
+  lives on the floating layer and nowhere else: the rail, the map's zoom controls and
+  hint, the capsule switchers. This is why the sidebar was changed from a grid column to
+  a fixed floating rail — as a column nothing passed behind it, and glass there would
+  have been a grey box pretending.
+- The rim is drawn by `::after`, so anything inside a glass surface needs its own
+  stacking context (`position: relative; z-index: 2`) or the rim covers it.
+- Dark theme is a clean inversion — black ground, white ink — so the monochrome logic
+  holds in both. Nothing is defined only inside the media query.
+- On the map the domain hue survives as a **very light fill and the card's border**;
+  titles are black like everything else. Six sectors have to stay distinguishable, and
+  position alone does not do it at overview scale — but the surfaces stay monochrome.
+- Heavy weights, `clamp()` sizes, line-height below 1 on display type, negative
+  tracking. Primary actions are black pills with a white circled arrow rotated −45°;
+  secondary actions are white pills with a black rule that swap ground and ink on hover.
+
+## Type
+
+- **Open Sauce One** (SIL OFL, `marcologous/Open-Sauce-Fonts`) for Latin, **Onest** for
+  Cyrillic, **Literata** for lesson body, **IBM Plex Mono** for designations. All four
+  self-hosted in `web/fonts/`; nothing is fetched from a third-party host.
+- Open Sauce One has **zero Cyrillic glyphs** — 371 characters, all Latin. The corpus is
+  Russian, so as the only face it would fall back on every heading. It is therefore
+  declared with a `unicode-range` covering Latin only, and the browser picks per
+  character: `PM Thinking Coach` and the numerals come out in Open Sauce, «Услышать
+  клиента» in Onest. Check coverage before adopting any display face here; this is the
+  second one to fail on it (Outfit was the first).
+- The licence file ships beside the fonts (`OpenSauceOne-OFL.txt`).
+
+## Motion
+
+- `web/src/motion.js`. Two things only: the splash counter and staggered reveal, both
+  from the reference brief, both off in `prefers-reduced-motion`.
+- The splash counts 0→100 in 2000 ms, bottom-left, then fades. It is driven by
+  `performance.now()` and `requestAnimationFrame`, **not** by a 20 ms `setInterval` as
+  the brief specifies: a background tab clamps timers to a second, which turned a
+  two-second count into a ninety-second one. A hard timeout finishes it regardless,
+  because a hidden tab gets no frames at all and the splash would otherwise never leave.
+- `revealOnScroll` uses an IntersectionObserver at threshold 0.15, fires once, 24 px
+  rise, 120 ms stagger. It carries a **1200 ms safety net**: an observer never fires in
+  a hidden tab, and without the net the reader comes back to a page stuck at opacity 0.
+  The animation is decoration; the content is not.
+- Splash shows once per session (`sessionStorage`), not once per navigation.
+
+## Learn — the home screen
+
+- `/learn` is the root. It answers two questions and nothing else: **which direction am
+  I on, and what do I read next.** It deliberately does not show level, XP or the eight
+  competencies — the Progress tab owns those, and two of three tabs printing the same
+  numbers is how a product stops being read.
+- Three parts, in the order they are used: the **six directions** (which is current,
+  what exists, how far each one is), the **black plate** with the single next lesson,
+  and the **current block's lessons** as a list.
+- The **gate is the last row of that list**, not a separate page. Before this, lessons
+  were read on one screen and the gate sat on another, and the link between them lived
+  in the reader's memory.
+- The **Продукт / Системы** switcher lives on both Learn and the Skills Map, and the
+  choice is shared through `web/src/tree-kind.js`. Two copies of that state would part
+  ways on the first toggle and leave someone studying one tree while looking at the
+  other. The chosen direction is remembered per tree (`pmcoach.learnDomain.<kind>`),
+  because the two trees have different six directions.
+- The chosen direction is remembered. Which block inside it is
+  "current" uses the same order as the map's old recommendation: gate open → started →
+  first available.
+- Under the title sits **one paragraph** saying the six directions are the competencies
+  a product manager is made of, with a deliberately quiet **Learn more** opening a
+  dialog: the six directions with a line each, the three levels with who they are for,
+  and the source. The copy paraphrases the Product Architecture Framework's own skill
+  map and names it; the six System Design areas are written here, built around the
+  `keyQuestion` each area already carries in content.
+- The **blocks of the chosen direction** sit between the switcher and the black plate —
+  three chips with progress. They are not decoration: clicking one changes which block
+  the lesson list below shows, so the recommendation is a starting point, not rails.
+- **The language switch lives only in Profile.** It had been in the rail and on the
+  sign-in screen as well; three ways to do one thing, and the rail is for navigation.
+  Nothing is lost on the way in — `initLanguage()` falls back to the browser's language,
+  so the sign-in screen already arrives in the visitor's own.
+- It costs two requests — `/tree` for directions and blocks, `/blocks/{id}` for the
+  lesson list. If the block list fails the screen still renders: the switcher and the
+  continue button do not depend on it.
+
+## The map: the source diagram, made interactive
+
+- Three shapes were tried and thrown away before this one — a **ring** (neighbouring
+  sectors looked connected when the branches are independent), a **fan** (labels ran
+  along slanted lines), and an orthogonal **skill tree** (legible, but a grid of block
+  codes is not the map this product is about). What ships is the source diagram itself:
+  «Skill Map of Product Management», Product Architecture Framework, Сергей Тихомиров.
+- **Six sectors, three rings, one card per skill.** The card is exactly what the source
+  legend defines: skill name, the key question that characterises it, and the set of
+  models used in its context. Sectors run clockwise from the top in the source's own
+  order (`SECTOR_ORDER` in `web/src/views/atlas.js`) — the content's `order` field is
+  reading order, not a position on the wheel.
+- **A card is a skill, and it opens a lesson.** The gate is not on the map at all; it
+  lives on the block page. Clicking selects and fills the panel, the panel lists that
+  skill's lessons and opens one. 56 of the 71 skills have exactly one lesson, so for
+  most cards the card *is* the lesson.
+- **The layout is computed, not hand-placed.** Each node is seeded inside its wedge
+  (sector × ring) with alternating depth, then a relaxation pass pushes overlaps apart
+  along whichever axis they overlap least, with a soft pull back into the wedge. A card
+  may cross the dashed sector line, exactly as it does in the source. This is why the
+  map survives a new node; the printed original does not.
+- Ring radii are set by **density, not taste**: a band must hold up to 24 cards of
+  176 × 92 with roughly twice their area, or relaxation squeezes them outward and the
+  drawing sprawls. Change `CARD_W/H` or the node count and recompute.
+- **Pan, zoom and level of detail.** Wheel zooms at the cursor, drag pans, two fingers
+  pinch, and the buttons zoom about the canvas centre — never about the origin, because
+  the middle of the map is a hole. Below k≈1.7 the question and the models are hidden
+  and below k≈0.9 the titles go too: on an overview they are mush, and a card that is a
+  coloured tile at a distance is what the printed sheet looks like from two steps away.
+  The map opens at the overview, like any map.
+- **Two traps live in `panZoom`, both already sprung once:**
+  - Its render is scheduled with `requestAnimationFrame`, and a hidden tab gets no
+    frames. Remembering "a frame is already queued" then deadlocks the map forever —
+    zoom, buttons and drag all go silently dead. `schedule()` therefore draws
+    synchronously while `document.hidden`, and flushes a stale frame on
+    `visibilitychange`.
+  - Pointer capture is taken **only once a drag really starts** (4 px of slop), never on
+    `pointerdown`. Capturing on press retargets the compatibility `click` to the
+    capturing element, so the card underneath never receives it and the map stops
+    opening lessons. A click that follows a drag is swallowed in a capture-phase
+    listener, because it is the tail of a gesture, not a choice.
+  - Verifying either of these with `element.dispatchEvent(new MouseEvent('click'))` is
+    worthless: dispatching straight at the node bypasses hit-testing and capture, which
+    is exactly what breaks. Drive real input, at the coordinates the driver expects.
+- `panZoom` is separate from drawing on purpose: selecting a card re-renders **only the
+  panel**, because rebuilding the scene would throw away the position the reader just
+  navigated to.
+- The server side is `GET /v1/tree/{kind}/map` (`_map_response`), a purpose-built
+  endpoint rather than an extension of `/tree`: both clients read the tree contract, and
+  putting 71 nodes with their lessons into it would make everyone pay for one screen.
+  **Edges are not invented** — inside a block they are the node order, between blocks
+  they are the unlock graph. `tests/test_tree_flow.py` asserts both ends of every edge
+  exist and that no third kind appears.
+- One layout serves both trees: product is 6 × 3 with 71 nodes, System Design 6 × 3
+  with 96.
+- Three things mark **your own progress** on it, added on the author's instruction:
+  - **Heavy solid dividers** between the six directions — they are territories, not
+    dashed guides under the cards.
+  - A **tally in the middle**: lessons completed out of the corpus.
+  - Direction labels are sized by the **overview**, not by taste: at that zoom the map
+    is squeezed to roughly 0.21 px per scene unit, so anything under ~55 units is a
+    smear. They are 58, which is why `OUTER` had to grow to make room for them.
+  - A **red frontier line** — the only colour on an otherwise monochrome map, and it is
+    not decoration: red marks exactly what you have covered. Per direction it stands off
+    the centre in proportion to the lessons done there, and the radius between sector
+    axes is eased with a cosine, because progress drawn as a hexagon reads as a shape
+    with corners rather than as ground gained. With nothing done it is a circle around
+    the tally.
+- **iOS still draws the ring** (`Features/Tree/SkillRing.swift`). Porting the atlas is
+  the next piece of work.
+
+## Type and chrome
+
+- Two self-hosted families in `web/fonts/`, wired through `web/fonts.css`: **Onest** for
+  interface and headings, **Literata** for lesson body only. Both carry full Cyrillic —
+  the corpus is Russian, which rules out most geometric display faces (Outfit has no
+  Cyrillic at all, which is why it was never actually adopted).
+- Only the `cyrillic`, `cyrillic-ext`, `latin` and `latin-ext` subsets are stored, and
+  `fonts.css` is generated from the Google Fonts CSS with the URLs rewritten to
+  `/app/fonts/`. **Nothing is fetched from a third-party host** — the web client is
+  served from one origin and that property is worth two files in the repo.
+- The serif is the content, the sans is the chrome: a lesson reads in Literata at
+  18/1.72, but headings inside the lesson stay Onest because they are navigation
+  through the text, not the text.
+- **The sidebar is collapsed by default** (`pmcoach.sidebarCollapsed`, default `"1"`).
+  Three roots whose icons are learned on day one do not need permanent labels; the
+  choice is remembered, and labels stay in `title`/`aria-label` so a collapsed button is
+  never a guess. On narrow screens the sidebar is a top row and labels come back.
+
+## One column for every screen
+
+- Every screen sits in the same container: `--page-width` (1080 px), centred in the space
+  the floating rail leaves. **One width and one alignment** — the two have to move
+  together. Progress and Profile were 780 while Learn was 1080; both were centred, and
+  because centring divides the *leftover*, different widths put the left edge in
+  different places and the app read as two apps. Left-aligning fixes the edge but throws
+  away the composition, so the answer is one width, still centred.
+- The map and the block page used to be wider (1720 and 1240). They are in the shared
+  column now. The atlas lost about 8% of its scale by it — it is bounded by
+  `min(width, height)` and height was already the smaller side — and stayed readable.
+  Give a screen its own width only when it genuinely cannot work in the column, and
+  expect the left edge to jump when you do.
+- **Reading measure is the text's job, not the page's.** `.lesson-body` carries its own
+  `68ch` cap rather than relying on a narrow page. Anything else that grows into long
+  prose needs the same.
 
 ## Web client
 

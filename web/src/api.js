@@ -211,6 +211,8 @@ export class APIClient {
 
   trees = () => this.get("/trees");
   tree = (kind = "product") => this.get(`/tree/${kind}`);
+  /** Карта на уровне узлов: карточка — навык, а не блок. */
+  treeMap = (kind = "product") => this.get(`/tree/${kind}/map`);
   block = (id) => this.get(`/blocks/${id}`);
   lesson = (id) => this.get(`/lessons/${id}`);
   completeLesson = (id) => this.post(`/lessons/${id}/complete`);

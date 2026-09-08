@@ -282,12 +282,14 @@ struct LessonBlockRenderer: View {
                 .padding(Theme.Spacing.m)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
-                    Theme.Palette.background,
+                    Theme.Palette.surfaceTinted,
                     in: RoundedRectangle(cornerRadius: Theme.Radius.control)
                 )
         case "paragraph":
             text(block.text ?? "")
                 .font(.body)
+                // Долгое чтение — на полтона мягче заголовков, как в вебе.
+                .foregroundStyle(Theme.Palette.bodyText)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
 

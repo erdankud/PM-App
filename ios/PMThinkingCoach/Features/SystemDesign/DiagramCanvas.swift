@@ -57,7 +57,7 @@ struct DiagramCanvas: View {
         }
         .padding(Theme.Spacing.m)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Theme.Palette.background, in: RoundedRectangle(cornerRadius: Theme.Radius.card))
+        .background(Theme.Palette.surfaceTinted, in: RoundedRectangle(cornerRadius: Theme.Radius.card))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(diagram.textDescription)
     }

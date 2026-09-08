@@ -65,11 +65,11 @@ struct LessonAudioPlayer: View {
             ZStack {
                 Circle().fill(Theme.Palette.accent).frame(width: 44, height: 44)
                 if viewModel.state == .loading || isBuilding {
-                    ProgressView().tint(.white)
+                    ProgressView().tint(Theme.Palette.accentInk)
                 } else {
                     Image(systemName: symbol)
                         .font(.system(size: 17, weight: .bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Theme.Palette.accentInk)
                 }
             }
         }

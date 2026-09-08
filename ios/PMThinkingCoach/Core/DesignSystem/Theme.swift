@@ -1,8 +1,14 @@
 import SwiftUI
 import UIKit
 
-/// Design tokens. Kept small on purpose: system colours and Dynamic Type do most of
-/// the work, which is also what keeps accessibility correct by default (spec §16).
+/// Design tokens. Kept small on purpose: Dynamic Type still does most of the work,
+/// which is what keeps accessibility correct by default (spec §16).
+///
+/// Colour is the one place where system defaults were given up. «Роща» is a sand
+/// ground with a green accent, and `systemGroupedBackground` is a cool grey — mixing
+/// the two reads as a bug, not as a theme. Every role below is a Color Set in the
+/// asset catalogue with a light and a dark value, so the dark theme stays a property
+/// of the asset instead of a branch in the code.
 enum Theme {
 
     enum Spacing {
@@ -15,25 +21,40 @@ enum Theme {
     }
 
     enum Radius {
-        static let card: CGFloat = 16
+        static let card: CGFloat = 20
         static let control: CGFloat = 12
         static let pill: CGFloat = 999
     }
 
     enum Palette {
+        /// Reads `AccentColor`, so the app-wide tint and this token can never diverge.
         static let accent = Color.accentColor
-        static let surface = Color(.secondarySystemGroupedBackground)
-        static let background = Color(.systemGroupedBackground)
-        static let separator = Color(.separator)
-        static let primaryText = Color(.label)
-        static let secondaryText = Color(.secondaryLabel)
-        static let tertiaryText = Color(.tertiaryLabel)
-        static let positive = Color(.systemGreen)
-        static let caution = Color(.systemOrange)
-        static let negative = Color(.systemRed)
-        static let neutral = Color(.systemGray)
+        /// Text and icons on top of a solid accent fill. A role of its own because the
+        /// accent lightens in the dark theme and white stops being readable on it.
+        static let accentInk = Color("AccentInk")
+        static let accentSoft = Color("AccentSoft")
+        static let accentBorder = Color("AccentBorder")
+        static let surface = Color("Surface")
+        /// An inset inside a card: it has to differ from the card, not from the page.
+        static let surfaceTinted = Color("SurfaceTinted")
+        static let background = Color("Sand")
+        /// Dark green plate — the header and empty states. Dark in both themes.
+        static let panel = Color("Panel")
+        static let separator = Color("Hairline")
+        static let primaryText = Color("Ink")
+        static let bodyText = Color("BodyText")
+        static let secondaryText = Color("Muted")
+        static let tertiaryText = Color("Faint")
+        /// Success is the accent: on a green palette a second green would only be
+        /// noise. What separates «passed» from «tappable» is the mark and the fill
+        /// density, never the hue alone.
+        static let positive = Color.accentColor
+        static let caution = Color("Caution")
+        static let negative = Color("Negative")
+        static let neutral = Color("Neutral")
         /// Warm counterpart to the accent, matching the chosen node in the app icon.
-        static let spark = Color(red: 1.0, green: 0.78, blue: 0.47)
+        /// Once per screen: two of these and neither reads as an accent.
+        static let spark = Color("Spark")
     }
 
     enum Gradients {

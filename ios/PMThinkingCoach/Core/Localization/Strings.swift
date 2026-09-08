@@ -19,6 +19,13 @@ enum S {
         static var tryAgain: String { t("Try again", "Повторить") }
         static var loading: String { t("Loading…", "Загрузка…") }
         static var couldntLoad: String { t("Couldn't load", "Не удалось загрузить") }
+        /// Только веб: ссылка «к содержанию» для клавиатуры. Живёт здесь, потому что
+        /// таблица строк одна на оба клиента и вторая копия разошлась бы на первой правке.
+        /// Подпись под логотипом. Только веб: в приложении название несёт иконка.
+        static var tagline: String { t("skill map of the craft", "карта навыков профессии") }
+        static var skipToContent: String { t("Skip to content", "К содержанию") }
+        static var expandMenu: String { t("Expand menu", "Развернуть меню") }
+        static var collapseMenu: String { t("Collapse menu", "Свернуть меню") }
 
         static func minutes(_ count: Int) -> String {
             t("\(count) min", "\(count) мин")
@@ -37,7 +44,10 @@ enum S {
     }
 
     enum Tab {
-        static var tree: String { t("Map", "Карта") }
+        /// Обучение — то, чем занимаются каждый день; карта навыков стала
+        /// отдельным разделом, который открывают, когда нужен обзор.
+        static var learn: String { t("Learn", "Обучение") }
+        static var tree: String { t("Skills Map", "Карта навыков") }
         static var progress: String { t("Progress", "Прогресс") }
         static var profile: String { t("Profile", "Профиль") }
     }
@@ -195,11 +205,11 @@ enum S {
         }
         static var continueHere: String { t("Continue here", "Продолжить здесь") }
         static var openBlock: String { t("Open block", "Открыть блок") }
-        static var ringsTitle: String { t("Three rings", "Три круга") }
-        static var ringsSubtitle: String {
+        static var tiersTitle: String { t("Three levels", "Три уровня") }
+        static var tiersSubtitle: String {
             t(
-                "The ring is how much uncertainty the task carries, not how hard it is.",
-                "Круг — это степень неопределённости задачи, а не её сложность."
+                "The level is how much uncertainty the task carries, not how hard it is.",
+                "Уровень — это степень неопределённости задачи, а не её сложность."
             )
         }
         static var domainsTitle: String { t("Six domains", "Шесть доменов") }
@@ -218,7 +228,92 @@ enum S {
         static var lessonsComingSoon: String {
             t("Lesson coming soon", "Урок скоро появится")
         }
+        /// Раздел «Обучение».
+        static var currentDirection: String { t("Now studying", "Сейчас изучаете") }
+        static var continueLesson: String { t("Continue", "Продолжить") }
+        static var blockLessonsTitle: String { t("Lessons of this block", "Уроки этого блока") }
+        static var gateLocked: String {
+            t("Opens after the lessons", "Откроется после уроков")
+        }
+        static var noDirectionYet: String {
+            t("Nothing started here yet", "Здесь вы ещё не начинали")
+        }
+
+        static func blocksProgress(_ passed: Int, _ total: Int) -> String {
+            t("\(passed) of \(total) blocks", "\(passed) из \(total) блоков")
+        }
+
+        static var blockGoalTitle: String {
+            t("What this block gives you", "Что даёт этот блок")
+        }
+        static var blockGoalSubtitle: String {
+            t(
+                "Each question below is one skill. The gate at the end asks you to use them, not to recall them.",
+                "Каждый вопрос ниже — один навык. Гейт в конце просит их применить, а не вспомнить."
+            )
+        }
+        static var lessonsTitle: String { t("Lessons", "Уроки") }
+        /// Общее начало карты: одна точка, из которой расходятся все шесть ветвей.
+        static var startNode: String { t("Start", "Начало") }
+        /// Номер таблицы под картой: карта — это изданная схема, и подпись под ней
+        /// набирается как в справочнике, а не как служебная строка.
+        static func plateNumber(_ number: Int) -> String {
+            t("Plate \(number)", "Табл. \(number)")
+        }
+        /// Подпись под счётчиком в середине карты: знаменатель, а не единица
+        /// измерения — «из скольких» здесь важнее слова «уроков».
+        static func skillsLearned(_ total: Int) -> String {
+            t("of \(total) learned", "из \(total) освоено")
+        }
+        static var zoomIn: String { t("Zoom in", "Приблизить") }
+        static var zoomOut: String { t("Zoom out", "Отдалить") }
+        static var zoomReset: String { t("Fit the map", "Вся карта") }
+        static var openLesson: String { t("Open lesson", "Открыть урок") }
+        static var mapHint: String {
+            t(
+                "Drag to move, scroll to zoom. A card is one skill — open it to read its lesson.",
+                "Тяните, чтобы двигать, колесо — масштаб. Карточка — один навык, в ней урок."
+            )
+        }
+
+        static func lessonsInNode(_ count: Int) -> String {
+            t(
+                "\(count) lessons",
+                "\(count) \(plural(count, "урок", "урока", "уроков"))"
+            )
+        }
+
+        static var legendLesson: String { t("Lesson", "Урок") }
+        static var legendLessonDone: String { t("Lesson done", "Урок пройден") }
+        static var legendGate: String { t("Block gate", "Гейт блока") }
         static var gateTitle: String { t("Gate", "Гейт") }
+        static var gateHeadline: String {
+            t("One situation, not a test", "Одна ситуация вместо теста")
+        }
+        static var gatePitch: String {
+            t(
+                "A real situation with incomplete data. You make the call and argue it in writing.",
+                "Настоящая ситуация с неполными данными. Вы принимаете решение и обосновываете его письменно."
+            )
+        }
+        static var gateNoPenalty: String {
+            t(
+                "Failing costs nothing: no XP is taken away and nothing closes.",
+                "Провал ничего не стоит: XP не отнимается и ничего не закрывается."
+            )
+        }
+
+        static func blockSummary(_ nodes: Int, lessons: Int, minutes: Int) -> String {
+            t(
+                "\(nodes) skills · \(lessons) lessons · about \(minutes) min",
+                "\(nodes) \(plural(nodes, "навык", "навыка", "навыков")) · "
+                    + "\(lessons) \(plural(lessons, "урок", "урока", "уроков")) · около \(minutes) мин"
+            )
+        }
+
+        static func lessonNumber(_ index: Int) -> String {
+            t("Lesson \(index)", "Урок \(index)")
+        }
         static var takeGate: String { t("Take the gate", "Сдать гейт") }
         static var retakeGate: String { t("Take it again", "Пересдать") }
 
@@ -411,6 +506,134 @@ enum S {
         }
         static var notAnswered: String { t("Not answered", "Без ответа") }
         static var chooseAnswer: String { t("Choose", "Выберите") }
+    }
+
+    // MARK: - Learn
+
+    /// Объяснение карты на главном экране. Описания направлений пересказывают
+    /// исходный фреймворк (productframework.ru/skill_map) — не цитируют его.
+    /// Шесть областей System Design описаны здесь же: у них в контенте есть
+    /// ключевой вопрос, и абзац строится вокруг него.
+    enum Learn {
+        static var learnMore: String { t("Learn more", "Подробнее") }
+        static var blocksTitle: String { t("Blocks of this direction", "Блоки направления") }
+
+        static func intro(_ kind: String) -> String {
+            kind == "system_design"
+                ? t(
+                    "Six areas of how a product works inside. A product manager does not build them, but every one of them sets a limit on what can be promised and how fast.",
+                    "Шесть областей того, как продукт устроен внутри. Продакт их не строит, но каждая ставит границу тому, что можно пообещать и как быстро."
+                )
+                : t(
+                    "Six directions are not chapters of a course. They are the competencies a product manager is made of: each owns its part of the work, and together they cover the way from research to money.",
+                    "Шесть направлений — это не разделы курса, а составляющие компетенции продакта: каждое отвечает за свой кусок работы, и вместе они покрывают путь от исследования до денег."
+                )
+        }
+
+        static func aboutTitle(_ kind: String) -> String {
+            kind == "system_design"
+                ? t("How the systems map works", "Как устроена карта систем")
+                : t("How the skill map works", "Как устроена карта навыков")
+        }
+
+        static func aboutLead(_ kind: String) -> String {
+            kind == "system_design"
+                ? t(
+                    "The job here is not to design systems but to understand the price of a decision: what a promise costs, what it takes to change, and what breaks under load. Six areas, three levels of uncertainty — the same grammar as the product map.",
+                    "Задача здесь не проектировать системы, а понимать цену решения: сколько стоит обещание, чего стоит его изменить и что ломается под нагрузкой. Шесть областей, три уровня неопределённости — та же грамматика, что и у карты продукта."
+                )
+                : t(
+                    "A product manager's job is to get the most value to people with the least time to market. That work does not split into one skill — it splits into six directions, and inside each one the skills differ by how much uncertainty you carry.",
+                    "Работа продакта — довести до людей максимум ценности за минимум времени до рынка. Эта работа не сводится к одному навыку: она делится на шесть направлений, а внутри каждого навыки отличаются тем, сколько неопределённости вы несёте."
+                )
+        }
+
+        static func levelAudience(_ tier: Int) -> String {
+            switch tier {
+            case 1: return t("Junior level · a single task or feature", "Junior · одиночная задача или фича")
+            case 2: return t("Middle and senior level · a project or a product vertical", "Middle и senior · проект или вертикаль продукта")
+            default: return t("Senior, head of product, CPO · a product or a portfolio", "Senior, head of product, CPO · продукт или портфель")
+            }
+        }
+
+        static func domainBlurb(_ key: String) -> String {
+            switch key {
+            case "discovery":
+                return t(
+                    "Qualitative and quantitative research: the user's context, and the problem behind the request.",
+                    "Качественные и количественные исследования: контекст пользователя и задача, стоящая за просьбой."
+                )
+            case "value_design":
+                return t(
+                    "Turning findings into a value proposition and then into a concrete solution.",
+                    "Превращение находок в ценностное предложение, а затем в конкретное решение."
+                )
+            case "delivery":
+                return t(
+                    "Running the development of that solution and getting it into users' hands.",
+                    "Управление разработкой решения и доведение его до пользователей."
+                )
+            case "marketing":
+                return t(
+                    "Acquiring and keeping people, and carrying the product's value to them.",
+                    "Привлечение и удержание людей и донесение до них ценности продукта."
+                )
+            case "growth":
+                return t(
+                    "Growing a product that already works, through hypotheses you can actually check.",
+                    "Развитие уже работающего продукта через гипотезы, которые можно проверить."
+                )
+            case "economics":
+                return t(
+                    "Turning value into money, and planning the finances that keep it running.",
+                    "Превращение ценности в деньги и финансовое планирование, на котором всё держится."
+                )
+            case "data":
+                return t(
+                    "Where the product's data lives, and what makes it expensive to change.",
+                    "Где живут данные продукта и что делает их изменение дорогим."
+                )
+            case "integration":
+                return t(
+                    "How the parts of a system agree with each other, and why they come apart.",
+                    "Как части системы договариваются друг с другом и почему расходятся."
+                )
+            case "scale":
+                return t(
+                    "What happens when there are a hundred times more users than today.",
+                    "Что происходит, когда пользователей становится в сто раз больше."
+                )
+            case "performance":
+                return t(
+                    "What a second of waiting costs, and what a single request costs.",
+                    "Сколько стоит секунда ожидания и сколько стоит один запрос."
+                )
+            case "ai_systems":
+                return t(
+                    "What an AI feature is made of, and why it gets expensive faster than it grows.",
+                    "Из чего состоит AI-фича и почему она дорожает быстрее, чем растёт."
+                )
+            case "security":
+                return t(
+                    "Who sees what, and what you are obliged to be able to delete.",
+                    "Кто что видит и что вы обязаны уметь удалить."
+                )
+            default:
+                return ""
+            }
+        }
+
+        static func sourceNote(_ kind: String) -> String {
+            kind == "system_design"
+                ? t(
+                    "The systems map extends the product one and follows its grammar.",
+                    "Карта систем расширяет продуктовую и следует её грамматике."
+                )
+                : t(
+                    "The directions and the three levels follow the Product Architecture Framework skill map.",
+                    "Направления и три уровня следуют карте навыков Product Architecture Framework."
+                )
+        }
     }
 
     enum Trees {

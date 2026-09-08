@@ -57,18 +57,6 @@ struct TreeView: View {
     private func content(_ tree: TreeResponse) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Spacing.xl) {
-                if viewModel.kind == "system_design", viewModel.shouldSuggestDiscovery {
-                    Text(S.Trees.recommendation)
-                        .font(.footnote)
-                        .foregroundStyle(Theme.Palette.secondaryText)
-                        .padding(Theme.Spacing.m)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(
-                            Theme.Palette.surface,
-                            in: RoundedRectangle(cornerRadius: Theme.Radius.control)
-                        )
-                        .appear(0)
-                }
 
                 if let suggested = viewModel.suggested {
                     nextCard(suggested).appear(0)
@@ -128,7 +116,7 @@ struct TreeView: View {
 
     private func legend(_ tree: TreeResponse) -> some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.s) {
-            SectionHeader(title: S.Tree.ringsTitle, subtitle: S.Tree.ringsSubtitle)
+            SectionHeader(title: S.Tree.tiersTitle, subtitle: S.Tree.tiersSubtitle)
             // Номер круга не дублируется цифрой слева: он уже в самом названии.
             ForEach(tree.tiers) { tier in
                 VStack(alignment: .leading, spacing: 0) {

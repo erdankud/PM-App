@@ -29,7 +29,7 @@ struct CardContainer<Content: View>: View {
                             )
                     }
                     .shadow(
-                        color: .black.opacity(isHighlighted ? 0.10 : 0.05),
+                        color: Theme.Palette.panel.opacity(isHighlighted ? 0.16 : 0.08),
                         radius: isHighlighted ? 16 : 8,
                         y: isHighlighted ? 8 : 4
                     )
@@ -66,11 +66,11 @@ private struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.body.weight(.semibold))
-            .foregroundStyle(.white)
+            .foregroundStyle(Theme.Palette.accentInk)
             .frame(maxWidth: .infinity, minHeight: Theme.Spacing.xl + Theme.Spacing.m)
             .padding(.vertical, Theme.Spacing.xs)
             .background {
-                RoundedRectangle(cornerRadius: Theme.Radius.control)
+                Capsule()
                     .fill(Theme.Gradients.accentFill)
                     .opacity(isEnabled ? 1 : 0.4)
                     .shadow(
@@ -93,8 +93,10 @@ private struct SecondaryButtonStyle: ButtonStyle {
             .foregroundStyle(Theme.Palette.accent)
             .frame(maxWidth: .infinity, minHeight: Theme.minimumTapTarget)
             .background {
-                RoundedRectangle(cornerRadius: Theme.Radius.control)
-                    .fill(Theme.Palette.accent.opacity(configuration.isPressed ? 0.18 : 0.10))
+                Capsule()
+                    .fill(Theme.Palette.accentSoft)
+                    .overlay { Capsule().strokeBorder(Theme.Palette.accentBorder, lineWidth: 1) }
+                    .opacity(configuration.isPressed ? 0.72 : 1)
             }
             .scaleEffect(reduceMotion ? 1 : (configuration.isPressed ? 0.97 : 1))
             .animation(Motion.quick, value: configuration.isPressed)
@@ -115,7 +117,7 @@ struct PrimaryButton: View {
         } label: {
             HStack(spacing: Theme.Spacing.s) {
                 if isLoading {
-                    ProgressView().tint(.white)
+                    ProgressView().tint(Theme.Palette.accentInk)
                 } else if let systemImage {
                     Image(systemName: systemImage)
                 }

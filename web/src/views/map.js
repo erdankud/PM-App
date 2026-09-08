@@ -1,194 +1,190 @@
-/** Карта — первый раздел: вся карта навыков, с одним открытым маршрутом.
+/** Карта — первый раздел: весь атлас навыков, одна карточка на навык.
  *
- *  Зеркало `Features/Tree/TreeView.swift`. Две карты одной грамматики стоят под
- *  переключателем, а не рядом: восемнадцать блоков System Design не помещаются
- *  седьмым сектором, и четвёртого корневого раздела здесь нет.
+ *  Раскладка повторяет исходную схему («Skill Map of Product Management»): шесть
+ *  секторов, три кольца, карточка = название + ключевой вопрос + модели. Карта
+ *  интерактивная — её двигают и масштабируют, потому что целиком на экран она
+ *  читаемой не помещается, а печатный лист можно поднести к глазам.
+ *
+ *  Карточка ведёт в урок. Гейт с карты убран совсем: он живёт на странице блока,
+ *  и смешивать «прочитать» со «сдать» на одной поверхности незачем.
  */
 import { h, fill } from "../dom.js";
 import { icon } from "../icons.js";
-import { card, chip, button, notice, sectionHeader, progressTrack, loadingState, errorState } from "../components.js";
+import { chip, button, sectionHeader, progressTrack, loadingState, errorState } from "../components.js";
 import { S } from "../strings.js";
 import { api } from "../api.js";
 import { navigate, currentQuery } from "../router.js";
-import { ringMap, blockAccessibility } from "./ring.js";
-
-const KIND_KEY = "pmcoach.treeKind";
-
-function storedKind() {
-  try {
-    return localStorage.getItem(KIND_KEY) || "product";
-  } catch {
-    return "product";
-  }
-}
+import { atlas, panZoom, zoomControls } from "./atlas.js";
+import { revealOnScroll } from "../motion.js";
+import { treeKind, setTreeKind } from "../tree-kind.js";
 
 export function mapView() {
-  const node = h("div.page.wide");
-  let kind = currentQuery().get("tree") || storedKind();
-  let tree = null;
-  let trees = [];
+  const node = h("div.page");
+  let kind = currentQuery().get("tree") || treeKind();
+  let selectedId = null;
+  let map = null;
   let error = null;
 
   const setKind = (next) => {
     if (next === kind) return;
     kind = next;
-    try {
-      localStorage.setItem(KIND_KEY, kind);
-    } catch {
-      /* приватный режим */
-    }
-    tree = null;
+    setTreeKind(kind);
+    map = null;
+    selectedId = null;
     render();
     load();
   };
 
-  /** Блок, который стоит открыть следующим: самый дальний из ещё открытых.
-   *  Это рекомендация — любой разблокированный блок остаётся доступен. */
-  const suggested = () => {
-    if (!tree) return null;
-    const open = tree.blocks.filter(
-      (block) => block.status !== "locked" && block.status !== "passed" && block.contentStatus === "published"
-    );
-    return (
-      open.find((block) => block.status === "gate_ready") ||
-      open.find((block) => block.status === "in_progress") ||
-      open[0] ||
-      null
-    );
-  };
-
-  /** System Design открыт с первого дня, но начинать полезнее с блока о клиенте.
-   *  Подсказка, а не замок (спека SD §2.3). */
-  const shouldSuggestDiscovery = () => {
-    const product = trees.find((summary) => summary.kind === "product");
-    return kind === "system_design" && product && product.blocksPassed === 0;
-  };
-
   const load = async () => {
     try {
-      const [treeResponse, treesResponse] = await Promise.all([
-        api.tree(kind),
-        api.trees().catch(() => null),
-      ]);
-      tree = treeResponse;
-      if (treesResponse) trees = treesResponse.trees;
+      map = await api.treeMap(kind);
       error = null;
     } catch (apiError) {
-      if (!tree) error = apiError;
+      if (!map) error = apiError;
     }
     render();
   };
 
   const switcher = () =>
     h(
-      "div.segmented",
+      "div.segmented.glass",
       { role: "group" },
       h(`button${kind === "product" ? ".selected" : ""}`, { type: "button", onclick: () => setKind("product") }, S.Trees.product),
       h(`button${kind === "system_design" ? ".selected" : ""}`, { type: "button", onclick: () => setKind("system_design") }, S.Trees.systems)
     );
 
+  const openLesson = (mapNode) => {
+    const next = mapNode.lessons.find((lesson) => !lesson.completed) || mapNode.lessons[0];
+    if (next) navigate(`/lesson/${next.id}`);
+  };
+
+  const select = (mapNode) => {
+    selectedId = mapNode.id;
+    renderPanel();
+  };
+
   const render = () => {
     const header = h("div.page-header", h("h1", S.Tab.tree), switcher());
-    if (error && !tree) {
+    if (error && !map) {
       fill(node, header, errorState(S.Tree.loadFailed, error.userMessage, load));
       return;
     }
-    if (!tree) {
+    if (!map) {
       fill(node, header, loadingState(S.Tree.loading));
       return;
     }
 
-    const next = suggested();
+    const { root, scene } = atlas(map, { selected: selectedId, onSelect: select, onOpen: openLesson });
+    const controls = panZoom(root, scene);
+
     fill(
       node,
       header,
-      shouldSuggestDiscovery() && notice(S.Trees.recommendation, { symbol: "info.circle" }),
       h(
-        "div.map-layout",
+        "div.map-board",
         h(
-          "div.stack.xl",
-          ringMap(tree, { highlighted: next?.id, onSelect: openBlock }),
-          legend(tree),
-          h("p.caption.tertiary", tree.sourceAttribution)
+          "div.map-canvas",
+          root,
+          zoomControls(controls),
+          h("p.map-hint.glass", icon("hand.tap", { size: 12 }), h("span", S.Tree.mapHint))
         ),
-        h("div.stack.xl", next && nextCard(next), domains(tree))
-      )
+        h("aside.map-panel")
+      ),
+      h("div.map-footer", tiers(), h("p.caption.tertiary", map.sourceAttribution))
+    );
+    revealOnScroll(node, { selector: ":scope > .map-board, :scope > .map-footer", stagger: 140 });
+    renderPanel();
+  };
+
+  /** Панель перерисовывается отдельно от карты: пересборка атласа сбросила бы
+   *  и масштаб, и положение, к которому человек только что доехал. */
+  const renderPanel = () => {
+    const panel = node.querySelector(".map-panel");
+    if (!panel || !map) return;
+    const chosen = map.nodes.find((item) => item.id === selectedId);
+    const cards = node.querySelectorAll(".atlas-card");
+    cards.forEach((element) => element.classList.remove("selected"));
+    if (chosen) cards[map.nodes.indexOf(chosen)]?.classList.add("selected");
+    fill(panel, chosen ? detail(chosen) : emptyPanel());
+  };
+
+  const emptyPanel = () =>
+    h(
+      "div.detail-card.detail-empty",
+      icon("hand.tap", { size: 22, className: "tertiary" }),
+      h("p.small.muted", S.Tree.mapHint)
+    );
+
+  const detail = (mapNode) => {
+    const done = mapNode.lessons.filter((lesson) => lesson.completed).length;
+    const minutes = mapNode.lessons.reduce((sum, lesson) => sum + lesson.estimatedMinutes, 0);
+    // Тот же урок, который откроет кнопка: первый непрочитанный, иначе первый.
+    const lead = mapNode.lessons.find((lesson) => !lesson.completed) || mapNode.lessons[0];
+    return h(
+      "div.detail-card",
+      h(
+        "div.row.wrap",
+        chip(mapNode.blockId, { symbol: "point.3.connected.trianglepath.dotted" }),
+        chip(
+          map.tiers.find((tier) => tier.tier === mapNode.tier)?.title || S.Tree.tierName(mapNode.tier),
+          { symbol: "circle.circle", tone: "accent" }
+        )
+      ),
+      // Навык — надзаголовок, урок — заголовок: карточка на карте это вход
+      // в урок, и панель должна открывать именно его.
+      h("p.detail-skill", mapNode.title),
+      h("h2.detail-title", lead ? lead.title : mapNode.title),
+      h(
+        "p.detail-meta-line",
+        icon(lead && lead.completed ? "checkmark.circle.fill" : "clock", { size: 13 }),
+        h("span", lead ? S.Common.minutes(lead.estimatedMinutes) : ""),
+        h("span.detail-dot", "·"),
+        h("span", mapNode.keyQuestion)
+      ),
+      mapNode.models.length > 0 &&
+        h("div.row.wrap.detail-models", mapNode.models.map((model) => chip(model))),
+      button(S.Tree.openLesson, () => openLesson(mapNode), { wide: true, arrow: true }),
+      // Остальные уроки навыка — под кнопкой, если их больше одного.
+      mapNode.lessons.length > 1 &&
+        h(
+          "div.detail-lessons",
+          h(
+            "p.caption.tertiary",
+            `${S.Tree.lessonsInNode(mapNode.lessons.length)} · ${S.Common.minutes(minutes)}`
+          ),
+          progressTrack(mapNode.lessons.length ? done / mapNode.lessons.length : 0),
+          mapNode.lessons.map((lesson) =>
+            h(
+              `button.detail-lesson${lesson.completed ? ".done" : ""}`,
+              { type: "button", onclick: () => navigate(`/lesson/${lesson.id}`) },
+              icon(lesson.completed ? "checkmark.circle.fill" : "book", { size: 15 }),
+              h("span.grow", lesson.title),
+              h("span.caption.tertiary", S.Common.minutes(lesson.estimatedMinutes))
+            )
+          )
+        )
     );
   };
 
-  /** Кольца показывают форму пути; эта карточка говорит, что нажать сейчас —
-   *  именно это и нужно новичку. */
-  const nextCard = (block) =>
-    card(
-      [
-        h(
-          "div.row.wrap",
-          chip(tree.tiers.find((tier) => tier.tier === block.tier)?.title || S.Tree.tierName(block.tier), {
-            symbol: "circle.circle",
-            tone: "accent",
-          }),
-          chip(block.id, { symbol: "point.3.connected.trianglepath.dotted" })
-        ),
-        h("p.small", { style: { color: "var(--accent)", fontWeight: "600", marginTop: "12px" } }, S.Tree.continueHere),
-        h("h2", { style: { marginTop: "4px" } }, block.title),
-        h("p.small.muted", { style: { marginTop: "8px" } }, S.Tree.lessonsProgress(block.lessonsCompleted, block.lessonsTotal)),
-        h("div", { style: { marginTop: "8px" } }, progressTrack(lessonProgress(block))),
-        h("div", { style: { marginTop: "16px" } }, button(S.Tree.openBlock, () => openBlock(block), { wide: true })),
-      ],
-      { highlighted: true }
-    );
-
-  const legend = (treeResponse) =>
+  const tiers = () =>
     h(
-      "div.stack.s",
-      sectionHeader(S.Tree.ringsTitle, S.Tree.ringsSubtitle),
-      // Номер круга не дублируется цифрой слева: он уже в самом названии.
-      treeResponse.tiers.map((tier) =>
+      "div.tier-key",
+      sectionHeader(S.Tree.tiersTitle, S.Tree.tiersSubtitle),
+      map.tiers.map((tier) =>
         h(
           "div.stack.s",
-          h("div", { style: { fontWeight: "600", color: "var(--accent)" } }, tier.title),
+          h("div.tier-name", tier.title),
           h("div.caption.muted", tier.subtitle)
         )
       )
     );
-
-  const domains = (treeResponse) =>
-    h(
-      "div.stack",
-      sectionHeader(S.Tree.domainsTitle, S.Tree.domainsSubtitle),
-      treeResponse.domains.map((domain) => {
-        const blocks = treeResponse.blocks
-          .filter((block) => block.domainKey === domain.key)
-          .sort((a, b) => a.tier - b.tier);
-        return h(
-          "div.domain-group",
-          h("div", { style: { fontWeight: "600", marginBottom: "8px" } }, domain.title),
-          h(
-            "div.blocks",
-            blocks.map((block) =>
-              h(
-                `button.block-pill${block.status === "passed" ? ".passed" : ""}${block.status === "locked" ? ".locked" : ""}`,
-                {
-                  type: "button",
-                  onclick: () => openBlock(block),
-                  "aria-label": blockAccessibility(block, treeResponse),
-                },
-                h("span.row", icon(S.Tree.statusSymbol(block.status), { size: 11 }), h("span.id", block.id)),
-                h("span.title", block.title)
-              )
-            )
-          )
-        );
-      })
-    );
-
-  const openBlock = (block) => navigate(`/block/${block.id}`);
 
   render();
   load();
   return node;
 }
 
+/** Доля пройденных уроков блока. Используется страницей блока. */
 export function lessonProgress(block) {
   return block.lessonsTotal > 0 ? block.lessonsCompleted / block.lessonsTotal : 0;
 }

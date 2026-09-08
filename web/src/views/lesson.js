@@ -16,7 +16,7 @@ import { renderBlocks, termCard } from "./content.js";
 import { audioPlayer, initialState } from "./audio.js";
 
 export function lessonView({ id }) {
-  const node = h("div.page.wide");
+  const node = h("div.page");
   let lessonId = id;
   let lesson = null;
   let error = null;

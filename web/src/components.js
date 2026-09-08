@@ -36,17 +36,30 @@ export function progressTrack(progress, { thin = false } = {}) {
   );
 }
 
-export function button(title, onClick, { symbol = null, variant = "", disabled = false, wide = false } = {}) {
+/** `arrow` добавляет кружок со стрелкой в хвост — так помечается главное действие
+ *  экрана. Ровно одна такая кнопка на экран, иначе «главных» становится несколько. */
+export function button(
+  title,
+  onClick,
+  { symbol = null, variant = "", disabled = false, wide = false, arrow = false } = {}
+) {
+  const tail = () => (arrow ? h("span.btn-arrow", icon("arrow.right", { size: 15 })) : null);
   const node = h(
-    `button.btn${variant ? "." + variant : ""}${wide ? ".wide" : ""}`,
+    `button.btn${variant ? "." + variant : ""}${wide ? ".wide" : ""}${arrow ? ".with-arrow" : ""}`,
     { type: "button", onclick: onClick, disabled },
     symbol && icon(symbol, { size: 16 }),
-    h("span", title)
+    h("span", title),
+    tail()
   );
   /** Кнопка сама показывает работу: иначе двойной клик уходит вторым запросом. */
   node.setLoading = (loading) => {
     node.disabled = loading || disabled;
-    fill(node, loading ? h("span.spinner") : symbol && icon(symbol, { size: 16 }), h("span", title));
+    fill(
+      node,
+      loading ? h("span.spinner") : symbol && icon(symbol, { size: 16 }),
+      h("span", title),
+      loading ? null : tail()
+    );
   };
   return node;
 }
@@ -58,6 +71,7 @@ export function loadingState(message = S.Common.loading) {
 export function errorState(title, message, onRetry) {
   return h(
     "div.state",
+    { role: "alert" },
     icon("exclamationmark.triangle", { size: 28 }),
     h("h3", title),
     h("p.small", message),
@@ -95,6 +109,36 @@ function trendSymbol(trend) {
   if (trend === "up") return "arrow.up.right";
   if (trend === "down") return "arrow.down.right";
   return "minus";
+}
+
+/** Пояснение в модальном окне. Нативный `<dialog>`, потому что фокус, Esc и
+ *  подложка в нём уже работают — своя реализация повторила бы это хуже. */
+export function infoDialog(title, content) {
+  const dialog = h("dialog.info-dialog");
+  const close = () => {
+    dialog.close();
+    dialog.remove();
+  };
+  dialog.append(
+    h(
+      "div.info-dialog-head",
+      h("h2", title),
+      h(
+        "button.info-dialog-close",
+        { type: "button", onclick: close, "aria-label": S.Common.close },
+        icon("checkmark", { size: 16 })
+      )
+    ),
+    h("div.info-dialog-body", content)
+  );
+  dialog.addEventListener("cancel", close);
+  // Клик по подложке закрывает: попадание вне рамки — это уже не по окну.
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) close();
+  });
+  document.body.append(dialog);
+  dialog.showModal();
+  return dialog;
 }
 
 /** Подтверждение действия. Нативный `<dialog>`: фокус и Esc уже работают. */

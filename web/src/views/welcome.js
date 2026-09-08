@@ -13,7 +13,6 @@ import { button, notice, sheet } from "../components.js";
 import { S } from "../strings.js";
 import { session } from "../session.js";
 import { api } from "../api.js";
-import { languagePicker } from "./chrome.js";
 import { onLanguageChange } from "../l10n.js";
 
 const PASSWORD_MIN = 8;
@@ -138,7 +137,6 @@ export function welcomeView() {
 
     fill(
       node,
-      h("div.row", h("div.grow"), languagePicker()),
       h(
         "div.stack.l",
         { style: { alignItems: "center", textAlign: "center", padding: "20px 0 8px" } },

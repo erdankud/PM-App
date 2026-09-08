@@ -19,6 +19,10 @@ Common: {
   get tryAgain() { return t("Try again", "Повторить"); },
   get loading() { return t("Loading…", "Загрузка…"); },
   get couldntLoad() { return t("Couldn't load", "Не удалось загрузить"); },
+  get tagline() { return t("skill map of the craft", "карта навыков профессии"); },
+  get skipToContent() { return t("Skip to content", "К содержанию"); },
+  get expandMenu() { return t("Expand menu", "Развернуть меню"); },
+  get collapseMenu() { return t("Collapse menu", "Свернуть меню"); },
   minutes(count) {
     return t(`${count} min`, `${count} мин`)
   },
@@ -36,7 +40,8 @@ Common: {
   },
 },
 Tab: {
-  get tree() { return t("Map", "Карта"); },
+  get learn() { return t("Learn", "Обучение"); },
+  get tree() { return t("Skills Map", "Карта навыков"); },
   get progress() { return t("Progress", "Прогресс"); },
   get profile() { return t("Profile", "Профиль"); },
 },
@@ -88,13 +93,58 @@ Tree: {
   get loadFailed() { return t("Couldn't load the map", "Не удалось загрузить карту"); },
   get continueHere() { return t("Continue here", "Продолжить здесь"); },
   get openBlock() { return t("Open block", "Открыть блок"); },
-  get ringsTitle() { return t("Three rings", "Три круга"); },
-  get ringsSubtitle() { return t( "The ring is how much uncertainty the task carries, not how hard it is.", "Круг — это степень неопределённости задачи, а не её сложность." ); },
+  get tiersTitle() { return t("Three levels", "Три уровня"); },
+  get tiersSubtitle() { return t( "The level is how much uncertainty the task carries, not how hard it is.", "Уровень — это степень неопределённости задачи, а не её сложность." ); },
   get domainsTitle() { return t("Six domains", "Шесть доменов"); },
   get domainsSubtitle() { return t( "Everything is visible from day one. Only the route is earned.", "Всё видно с первого дня. Зарабатывается только маршрут." ); },
   get comingSoon() { return t( "The lessons for this block are still being written.", "Уроки этого блока ещё пишутся." ); },
   get lessonsComingSoon() { return t("Lesson coming soon", "Урок скоро появится"); },
+  get currentDirection() { return t("Now studying", "Сейчас изучаете"); },
+  get continueLesson() { return t("Continue", "Продолжить"); },
+  get blockLessonsTitle() { return t("Lessons of this block", "Уроки этого блока"); },
+  get gateLocked() { return t("Opens after the lessons", "Откроется после уроков"); },
+  get noDirectionYet() { return t("Nothing started here yet", "Здесь вы ещё не начинали"); },
+  blocksProgress(passed, total) {
+    return t(`${passed} of ${total} blocks`, `${passed} из ${total} блоков`)
+  },
+  get blockGoalTitle() { return t("What this block gives you", "Что даёт этот блок"); },
+  get blockGoalSubtitle() { return t( "Each question below is one skill. The gate at the end asks you to use them, not to recall them.", "Каждый вопрос ниже — один навык. Гейт в конце просит их применить, а не вспомнить." ); },
+  get lessonsTitle() { return t("Lessons", "Уроки"); },
+  get startNode() { return t("Start", "Начало"); },
+  plateNumber(number) {
+    return t(`Plate ${number}`, `Табл. ${number}`)
+  },
+  skillsLearned(total) {
+    return t(`of ${total} learned`, `из ${total} освоено`)
+  },
+  get zoomIn() { return t("Zoom in", "Приблизить"); },
+  get zoomOut() { return t("Zoom out", "Отдалить"); },
+  get zoomReset() { return t("Fit the map", "Вся карта"); },
+  get openLesson() { return t("Open lesson", "Открыть урок"); },
+  get mapHint() { return t( "Drag to move, scroll to zoom. A card is one skill — open it to read its lesson.", "Тяните, чтобы двигать, колесо — масштаб. Карточка — один навык, в ней урок." ); },
+  lessonsInNode(count) {
+    return t(
+    `${count} lessons`,
+    `${count} ${plural(count, "урок", "урока", "уроков")}`
+    )
+  },
+  get legendLesson() { return t("Lesson", "Урок"); },
+  get legendLessonDone() { return t("Lesson done", "Урок пройден"); },
+  get legendGate() { return t("Block gate", "Гейт блока"); },
   get gateTitle() { return t("Gate", "Гейт"); },
+  get gateHeadline() { return t("One situation, not a test", "Одна ситуация вместо теста"); },
+  get gatePitch() { return t( "A real situation with incomplete data. You make the call and argue it in writing.", "Настоящая ситуация с неполными данными. Вы принимаете решение и обосновываете его письменно." ); },
+  get gateNoPenalty() { return t( "Failing costs nothing: no XP is taken away and nothing closes.", "Провал ничего не стоит: XP не отнимается и ничего не закрывается." ); },
+  blockSummary(nodes, lessons, minutes) {
+    return t(
+    `${nodes} skills · ${lessons} lessons · about ${minutes} min`,
+    `${nodes} ${plural(nodes, "навык", "навыка", "навыков")} · `
+    + `${lessons} ${plural(lessons, "урок", "урока", "уроков")} · около ${minutes} мин`
+    )
+  },
+  lessonNumber(index) {
+    return t(`Lesson ${index}`, `Урок ${index}`)
+  },
   get takeGate() { return t("Take the gate", "Сдать гейт"); },
   get retakeGate() { return t("Take it again", "Пересдать"); },
   gateSubtitle(threshold) {
@@ -227,6 +277,121 @@ Exercise: {
   get otherThanReference() { return t("Differs from the reasoning", "Иначе, чем в разборе"); },
   get notAnswered() { return t("Not answered", "Без ответа"); },
   get chooseAnswer() { return t("Choose", "Выберите"); },
+},
+Learn: {
+  get learnMore() { return t("Learn more", "Подробнее"); },
+  get blocksTitle() { return t("Blocks of this direction", "Блоки направления"); },
+  intro(kind) {
+    return kind == "system_design"
+    ? t(
+    "Six areas of how a product works inside. A product manager does not build them, but every one of them sets a limit on what can be promised and how fast.",
+    "Шесть областей того, как продукт устроен внутри. Продакт их не строит, но каждая ставит границу тому, что можно пообещать и как быстро."
+    )
+    : t(
+    "Six directions are not chapters of a course. They are the competencies a product manager is made of: each owns its part of the work, and together they cover the way from research to money.",
+    "Шесть направлений — это не разделы курса, а составляющие компетенции продакта: каждое отвечает за свой кусок работы, и вместе они покрывают путь от исследования до денег."
+    )
+  },
+  aboutTitle(kind) {
+    return kind == "system_design"
+    ? t("How the systems map works", "Как устроена карта систем")
+    : t("How the skill map works", "Как устроена карта навыков")
+  },
+  aboutLead(kind) {
+    return kind == "system_design"
+    ? t(
+    "The job here is not to design systems but to understand the price of a decision: what a promise costs, what it takes to change, and what breaks under load. Six areas, three levels of uncertainty — the same grammar as the product map.",
+    "Задача здесь не проектировать системы, а понимать цену решения: сколько стоит обещание, чего стоит его изменить и что ломается под нагрузкой. Шесть областей, три уровня неопределённости — та же грамматика, что и у карты продукта."
+    )
+    : t(
+    "A product manager's job is to get the most value to people with the least time to market. That work does not split into one skill — it splits into six directions, and inside each one the skills differ by how much uncertainty you carry.",
+    "Работа продакта — довести до людей максимум ценности за минимум времени до рынка. Эта работа не сводится к одному навыку: она делится на шесть направлений, а внутри каждого навыки отличаются тем, сколько неопределённости вы несёте."
+    )
+  },
+  levelAudience(tier) {
+    switch (tier) {
+    case 1: return t("Junior level · a single task or feature", "Junior · одиночная задача или фича")
+    case 2: return t("Middle and senior level · a project or a product vertical", "Middle и senior · проект или вертикаль продукта")
+    default: return t("Senior, head of product, CPO · a product or a portfolio", "Senior, head of product, CPO · продукт или портфель")
+    }
+  },
+  domainBlurb(key) {
+    switch (key) {
+    case "discovery":
+    return t(
+    "Qualitative and quantitative research: the user's context, and the problem behind the request.",
+    "Качественные и количественные исследования: контекст пользователя и задача, стоящая за просьбой."
+    )
+    case "value_design":
+    return t(
+    "Turning findings into a value proposition and then into a concrete solution.",
+    "Превращение находок в ценностное предложение, а затем в конкретное решение."
+    )
+    case "delivery":
+    return t(
+    "Running the development of that solution and getting it into users' hands.",
+    "Управление разработкой решения и доведение его до пользователей."
+    )
+    case "marketing":
+    return t(
+    "Acquiring and keeping people, and carrying the product's value to them.",
+    "Привлечение и удержание людей и донесение до них ценности продукта."
+    )
+    case "growth":
+    return t(
+    "Growing a product that already works, through hypotheses you can actually check.",
+    "Развитие уже работающего продукта через гипотезы, которые можно проверить."
+    )
+    case "economics":
+    return t(
+    "Turning value into money, and planning the finances that keep it running.",
+    "Превращение ценности в деньги и финансовое планирование, на котором всё держится."
+    )
+    case "data":
+    return t(
+    "Where the product's data lives, and what makes it expensive to change.",
+    "Где живут данные продукта и что делает их изменение дорогим."
+    )
+    case "integration":
+    return t(
+    "How the parts of a system agree with each other, and why they come apart.",
+    "Как части системы договариваются друг с другом и почему расходятся."
+    )
+    case "scale":
+    return t(
+    "What happens when there are a hundred times more users than today.",
+    "Что происходит, когда пользователей становится в сто раз больше."
+    )
+    case "performance":
+    return t(
+    "What a second of waiting costs, and what a single request costs.",
+    "Сколько стоит секунда ожидания и сколько стоит один запрос."
+    )
+    case "ai_systems":
+    return t(
+    "What an AI feature is made of, and why it gets expensive faster than it grows.",
+    "Из чего состоит AI-фича и почему она дорожает быстрее, чем растёт."
+    )
+    case "security":
+    return t(
+    "Who sees what, and what you are obliged to be able to delete.",
+    "Кто что видит и что вы обязаны уметь удалить."
+    )
+    default:
+    return ""
+    }
+  },
+  sourceNote(kind) {
+    return kind == "system_design"
+    ? t(
+    "The systems map extends the product one and follows its grammar.",
+    "Карта систем расширяет продуктовую и следует её грамматике."
+    )
+    : t(
+    "The directions and the three levels follow the Product Architecture Framework skill map.",
+    "Направления и три уровня следуют карте навыков Product Architecture Framework."
+    )
+  },
 },
 Trees: {
   get product() { return t("Product", "Продукт"); },

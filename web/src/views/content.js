@@ -167,7 +167,7 @@ export function renderDiagram(diagram) {
           h("div.column", column.map((node) => h(`div.node.${node.type}`, node.label)))
         )
     ),
-    diagram.edges.length &&
+    diagram.edges.length > 0 &&
       h(
         "div.edges",
         diagram.edges.map((edge) =>

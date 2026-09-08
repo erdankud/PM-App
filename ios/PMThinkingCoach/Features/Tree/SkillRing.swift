@@ -51,21 +51,31 @@ struct SkillRingMap: View {
     /// One hue per domain. Status changes how strongly a cell is filled, but the hue
     /// stays — otherwise a mostly-locked map reads as one grey disc and stops being
     /// the promise it is supposed to be.
+    ///
+    /// Recomputed for the sand ground: each gives ≥ 4.5:1 on it and sits far enough
+    /// from the green accent in hue. `economics` and `ai_systems` used to be green and
+    /// read as «passed» on this palette, so they moved to olive and yellow-green.
+    /// Hues repeat across the two trees on purpose: the switcher never shows both.
+    /// One hue per domain. Status changes how strongly a cell is filled, but the hue
+    /// stays — otherwise a mostly-locked map reads as one grey disc and stops being
+    /// the promise it is supposed to be.
+    ///
+    /// Values are the same list as `HUES` in `web/src/views/skilltree.js`: recomputed
+    /// for the sand ground, each ≥ 4.5:1 on it and far enough from the green accent.
+    /// **The two lists must stay in step** — it is the same map on two clients.
     private static let domainHues: [String: Color] = [
-        "discovery": Color(red: 0.24, green: 0.47, blue: 0.85),
-        "value_design": Color(red: 0.45, green: 0.35, blue: 0.85),
-        "delivery": Color(red: 0.18, green: 0.58, blue: 0.55),
-        "marketing": Color(red: 0.85, green: 0.52, blue: 0.20),
-        "growth": Color(red: 0.80, green: 0.32, blue: 0.45),
-        "economics": Color(red: 0.36, green: 0.55, blue: 0.25),
-        // Шесть областей System Design: та же грамматика карты, свои оттенки —
-        // иначе вторая карта читается одним серым диском.
-        "data": Color(red: 0.20, green: 0.52, blue: 0.72),
-        "integration": Color(red: 0.42, green: 0.40, blue: 0.78),
-        "scale": Color(red: 0.75, green: 0.42, blue: 0.28),
-        "performance": Color(red: 0.85, green: 0.62, blue: 0.20),
-        "ai_systems": Color(red: 0.30, green: 0.60, blue: 0.45),
-        "security": Color(red: 0.72, green: 0.30, blue: 0.42),
+        "discovery": Color(red: 0.184, green: 0.435, blue: 0.659),   // #2f6fa8
+        "value_design": Color(red: 0.416, green: 0.353, blue: 0.659),   // #6a5aa8
+        "delivery": Color(red: 0.122, green: 0.498, blue: 0.475),   // #1f7f79
+        "marketing": Color(red: 0.659, green: 0.357, blue: 0.094),   // #a85b18
+        "growth": Color(red: 0.698, green: 0.290, blue: 0.388),   // #b24a63
+        "economics": Color(red: 0.486, green: 0.420, blue: 0.133),   // #7c6b22
+        "data": Color(red: 0.169, green: 0.478, blue: 0.620),   // #2b7a9e
+        "integration": Color(red: 0.361, green: 0.369, blue: 0.659),   // #5c5ea8
+        "scale": Color(red: 0.659, green: 0.353, blue: 0.220),   // #a85a38
+        "performance": Color(red: 0.541, green: 0.404, blue: 0.071),   // #8a6712
+        "ai_systems": Color(red: 0.373, green: 0.478, blue: 0.149),   // #5f7a26
+        "security": Color(red: 0.639, green: 0.282, blue: 0.420),   // #a3486b
     ]
 
     private func hue(_ block: BlockSummary) -> Color {
@@ -157,7 +167,7 @@ struct SkillRingMap: View {
 
     private func markerTint(_ block: BlockSummary) -> Color {
         switch block.status {
-        case .passed: return .white
+        case .passed: return Theme.Palette.background
         case .gateReady: return hue(block)
         default: return hue(block).opacity(0.55)
         }

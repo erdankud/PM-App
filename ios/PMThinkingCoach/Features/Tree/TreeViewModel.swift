@@ -100,13 +100,6 @@ final class TreeViewModel: ObservableObject {
         }
     }
 
-    /// Подсказка новичку: System Design открыт с первого дня, но начинать полезнее
-    /// с блока о клиенте. Это рекомендация, а не замок (спека SD §2.3).
-    var shouldSuggestDiscovery: Bool {
-        guard let product = trees.first(where: { $0.kind == "product" }) else { return false }
-        return product.blocksPassed == 0
-    }
-
     func open(_ block: BlockSummary) {
         analytics.track(.blockOpened(blockId: block.id, status: block.status.rawValue))
         selectedBlockId = block.id

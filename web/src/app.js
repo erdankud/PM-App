@@ -9,10 +9,13 @@ import { initLanguage, onLanguageChange } from "./l10n.js";
 import { session, ROUTE } from "./session.js";
 import { route, resolve, currentPath, startRouter, navigate } from "./router.js";
 import { loadingState } from "./components.js";
+import { S } from "./strings.js";
+import { shouldShowSplash, splashScreen } from "./motion.js";
 import { sidebar } from "./views/chrome.js";
 import { welcomeView } from "./views/welcome.js";
 import { onboardingView } from "./views/onboarding.js";
 import { mapView } from "./views/map.js";
+import { learnView } from "./views/learn.js";
 import { blockView } from "./views/block.js";
 import { lessonView } from "./views/lesson.js";
 import { exerciseView } from "./views/exercise.js";
@@ -22,6 +25,7 @@ import { progressView } from "./views/progress.js";
 import { historyView, resultView } from "./views/history.js";
 import { profileView } from "./views/profile.js";
 
+route("/learn", learnView);
 route("/map", mapView);
 route("/block/:id", blockView);
 route("/lesson/:id", lessonView);
@@ -78,7 +82,7 @@ function renderMain() {
   const path = currentPath();
   const match = resolve(path);
   if (!match) {
-    navigate("/map", { replace: true });
+    navigate("/learn", { replace: true });
     return;
   }
   const view = match.view(match.params);
@@ -88,7 +92,15 @@ function renderMain() {
     mount(view);
     return;
   }
-  mount(h("div.shell", sidebar(), h("main.main", view)));
+  mount(
+    h(
+      "div.shell",
+      // Первая цель табуляции — вход в содержание мимо навигации.
+      h("a.skip-link", { href: "#main" }, S.Common.skipToContent),
+      sidebar(),
+      h("main.main#main", { tabindex: "-1" }, view)
+    )
+  );
 }
 
 initLanguage();
@@ -105,6 +117,10 @@ startRouter(() => {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") session.refreshProfile();
 });
+
+// Заставка живёт рядом с приложением, а не вместо него: страница строится сразу,
+// и к моменту, когда счётчик досчитает, за ней уже всё готово.
+if (shouldShowSplash()) document.body.append(splashScreen());
 
 render();
 session.bootstrap();

@@ -127,6 +127,10 @@ struct ProfileView: View {
                         .foregroundStyle(Theme.Palette.tertiaryText)
                 }
             }
+            // Форма — единственный экран на системном фоне; на песочной палитре
+            // он читался бы холодным серым посреди тёплого приложения.
+            .scrollContentBackground(.hidden)
+            .background(Theme.Palette.background)
             .animation(Motion.standard, value: viewModel.error)
             .navigationTitle(S.Profile.title)
             .sheet(isPresented: $showingPrivacy) { PrivacyNoticeView() }
