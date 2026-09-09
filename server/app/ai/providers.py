@@ -99,6 +99,41 @@ def _post(
         raise ProviderError("provider_bad_payload", retryable=True) from exc
 
 
+# Размышление модели списывается из того же `maxOutputTokens`, что и ответ, —
+# и списывается первым. На разборе тренировки это уже стоило целого выпуска:
+# 1344 токена ушло в рассуждение, на JSON осталось 256, и ответ обрывался на
+# середине поля. Наверху `max_output_tokens` означает «сколько текста мне нужно
+# получить», и означать должен одно и то же у всех провайдеров, поэтому запас на
+# размышление добавляет адаптер, а не вызывающий код.
+THINKING_ALLOWANCE = 4096
+
+
+def _gemini_text(payload: dict[str, Any]) -> str:
+    """Текст ответа Gemini, с проверкой, что он не оборван на лимите вывода.
+
+    Обрыв приходит как обычный успешный ответ, просто законченный на полуслове.
+    Молча отдавать его дальше нельзя: ломается он потом, на разборе JSON, и
+    выглядит как «модель не умеет в формат», а не как «не поместилось».
+    """
+    try:
+        candidate = payload["candidates"][0]
+        parts = candidate["content"]["parts"]
+        text = "".join(part.get("text", "") for part in parts)
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ProviderError("provider_empty_response", retryable=True) from exc
+    if not text.strip():
+        raise ProviderError("provider_empty_response", retryable=True)
+    if candidate.get("finishReason") == "MAX_TOKENS":
+        thoughts = (payload.get("usageMetadata") or {}).get("thoughtsTokenCount", 0)
+        raise ProviderError(
+            "provider_output_truncated",
+            f"ответ обрезан на лимите вывода ({len(text)} знаков, "
+            f"{thoughts} токенов ушло в размышление)",
+            retryable=True,
+        )
+    return text
+
+
 class GeminiEvaluator:
     name = "gemini"
     default_model = "gemini-2.0-flash"
@@ -112,20 +147,13 @@ class GeminiEvaluator:
             "systemInstruction": {"parts": [{"text": request.system_prompt}]},
             "contents": [{"role": "user", "parts": [{"text": request.user_prompt}]}],
             "generationConfig": {
-                "temperature": 0.3,
-                "maxOutputTokens": 1600,
+                "temperature": request.temperature,
+                "maxOutputTokens": request.max_output_tokens + THINKING_ALLOWANCE,
                 "responseMimeType": "application/json",
             },
         }
-        payload = _post(url, headers={"x-goog-api-key": key}, json_body=body, timeout=timeout)
-        try:
-            parts = payload["candidates"][0]["content"]["parts"]
-            text = "".join(part.get("text", "") for part in parts)
-        except (KeyError, IndexError, TypeError) as exc:
-            raise ProviderError("provider_empty_response", retryable=True) from exc
-        if not text.strip():
-            raise ProviderError("provider_empty_response", retryable=True)
-        return ProviderResponse(raw_text=text, model_id=model)
+        payload = _post(url, headers={"x-goog-api-key": key}, json_body=body)
+        return ProviderResponse(raw_text=_gemini_text(payload), model_id=model)
 
 
 def gemini_text(
@@ -157,25 +185,7 @@ def gemini_text(
         },
     }
     payload = _post(url, headers={"x-goog-api-key": key}, json_body=body, timeout=timeout)
-    try:
-        candidate = payload["candidates"][0]
-        parts = candidate["content"]["parts"]
-        text = "".join(part.get("text", "") for part in parts)
-    except (KeyError, IndexError, TypeError) as exc:
-        raise ProviderError("provider_empty_response", retryable=True) from exc
-    if not text.strip():
-        raise ProviderError("provider_empty_response", retryable=True)
-
-    # Обрыв по лимиту вывода приходит как обычный ответ, просто оборванный на
-    # полуслове. Молча отдавать его дальше нельзя: ломается он потом, на разборе
-    # JSON, и выглядит как ошибка формата, а не как «не поместилось».
-    if candidate.get("finishReason") == "MAX_TOKENS":
-        raise ProviderError(
-            "provider_output_truncated",
-            f"ответ обрезан на лимите вывода ({len(text)} знаков)",
-            retryable=True,
-        )
-    return text, model_id
+    return _gemini_text(payload), model_id
 
 
 class OpenAICompatibleEvaluator:
@@ -195,8 +205,8 @@ class OpenAICompatibleEvaluator:
             headers["X-Title"] = "PM Thinking Coach"
         body = {
             "model": model,
-            "temperature": 0.3,
-            "max_tokens": 1600,
+            "temperature": request.temperature,
+            "max_tokens": request.max_output_tokens,
             "response_format": {"type": "json_object"},
             "messages": [
                 {"role": "system", "content": request.system_prompt},
@@ -228,8 +238,8 @@ class AnthropicEvaluator:
         }
         body = {
             "model": model,
-            "max_tokens": 1600,
-            "temperature": 0.3,
+            "max_tokens": request.max_output_tokens,
+            "temperature": request.temperature,
             "system": request.system_prompt,
             "messages": [
                 {"role": "user", "content": request.user_prompt},

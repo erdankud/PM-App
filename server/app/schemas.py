@@ -649,3 +649,112 @@ class ExerciseSubmitResponse(ApiModel):
 class GlossaryResponse(ApiModel):
     version: int
     terms: list[TermView]
+
+
+# --- Practice ---------------------------------------------------------------
+
+
+class PracticeCanvasFieldView(ApiModel):
+    id: str
+    label: str
+    hint: str
+    min_chars: int
+    rows: int
+
+
+class PracticeTrackView(ApiModel):
+    """Направление тренировки.
+
+    Тексты приходят по-английски при любом языке интерфейса и не переводятся:
+    Practice готовит к собеседованию, которое проходит на английском (см.
+    `app/practice_catalogue.py`).
+    """
+
+    id: str
+    title: str
+    blurb: str
+    tests: str
+    format: str
+    live: bool
+    target_minutes: int
+    canvas: list[PracticeCanvasFieldView] = Field(default_factory=list)
+    sessions_total: int = 0
+    sessions_answered: int = 0
+
+
+class PracticeTracksResponse(ApiModel):
+    tracks: list[PracticeTrackView]
+
+
+class PracticeClarifierView(ApiModel):
+    question: str
+    answer: str
+
+
+class PracticeBriefView(ApiModel):
+    title: str
+    company: str
+    kind: str
+    context: str
+    prompt: str
+    constraints: list[str] = Field(default_factory=list)
+    clarifiers: list[PracticeClarifierView] = Field(default_factory=list)
+
+
+class PracticeFieldFeedbackView(ApiModel):
+    id: str
+    score: int
+    note: str
+
+
+class PracticeFeedbackView(ApiModel):
+    headline: str
+    bar: str
+    fields: list[PracticeFieldFeedbackView] = Field(default_factory=list)
+    strengths: list[dict[str, str]] = Field(default_factory=list)
+    improvements: list[dict[str, str]] = Field(default_factory=list)
+    missed_question: str
+    sharper_approach: str
+
+
+class PracticeSessionView(ApiModel):
+    """Сохранённая тренировка целиком: задача, ответ, разбор.
+
+    Ни модели, ни версии промпта здесь нет — клиент о них не знает и знать не
+    должен (спека §15).
+    """
+
+    id: str
+    track: str
+    status: Literal["open", "answered"]
+    brief: PracticeBriefView
+    answers: dict[str, str] = Field(default_factory=dict)
+    asked: list[str] = Field(default_factory=list)
+    feedback: PracticeFeedbackView | None = None
+    elapsed_seconds: int | None = None
+    created_at: str
+    answered_at: str | None = None
+
+
+class PracticeSessionSummary(ApiModel):
+    id: str
+    track: str
+    status: Literal["open", "answered"]
+    title: str
+    company: str
+    bar: str | None = None
+    created_at: str
+    answered_at: str | None = None
+
+
+class PracticeSessionsResponse(ApiModel):
+    sessions: list[PracticeSessionSummary]
+
+
+class PracticeRespondRequest(ApiModel):
+    answers: dict[str, str]
+    asked: list[str] = Field(default_factory=list)
+    # Сколько человек просидел над задачей. Не таймер и не ограничение: разбор
+    # знает про темп, потому что тонкий ответ за три минуты и тонкий ответ за
+    # полчаса — разные проблемы.
+    elapsed_seconds: int | None = Field(default=None, ge=0, le=60 * 60 * 8)

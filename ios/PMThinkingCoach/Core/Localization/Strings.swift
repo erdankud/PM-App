@@ -48,6 +48,7 @@ enum S {
         /// отдельным разделом, который открывают, когда нужен обзор.
         static var learn: String { t("Learn", "Обучение") }
         static var tree: String { t("Skills Map", "Карта навыков") }
+        static var practice: String { t("Practice", "Практика") }
         static var progress: String { t("Progress", "Прогресс") }
         static var profile: String { t("Profile", "Профиль") }
     }
@@ -510,10 +511,9 @@ enum S {
 
     // MARK: - Learn
 
-    /// Объяснение карты на главном экране. Описания направлений пересказывают
-    /// исходный фреймворк (productframework.ru/skill_map) — не цитируют его.
-    /// Шесть областей System Design описаны здесь же: у них в контенте есть
-    /// ключевой вопрос, и абзац строится вокруг него.
+    /// Объяснение карты на главном экране. Шесть областей System Design
+    /// описаны здесь же: у них в контенте есть ключевой вопрос, и абзац
+    /// строится вокруг него.
     enum Learn {
         static var learnMore: String { t("Learn more", "Подробнее") }
         static var blocksTitle: String { t("Blocks of this direction", "Блоки направления") }
@@ -630,8 +630,8 @@ enum S {
                     "Карта систем расширяет продуктовую и следует её грамматике."
                 )
                 : t(
-                    "The directions and the three levels follow the Product Architecture Framework skill map.",
-                    "Направления и три уровня следуют карте навыков Product Architecture Framework."
+                    "Six directions, three levels: one grammar for the whole profession.",
+                    "Шесть направлений и три уровня — одна грамматика на всю профессию."
                 )
         }
     }
@@ -1017,6 +1017,10 @@ enum S {
             t("Couldn't load progress", "Не удалось загрузить прогресс")
         }
         static func level(_ value: Int) -> String { t("Level \(value)", "Уровень \(value)") }
+        /// Подпись над цифрой уровня. Веб-клиент печатает уровень как показатель,
+        /// а не как заголовок: одинаковый набор («Прогресс» и «Уровень 3» одним
+        /// кеглем) читался как два заголовка страницы.
+        static var levelLabel: String { t("Level", "Уровень") }
         static func totalXp(_ value: Int) -> String {
             t("\(value) XP total", "Всего \(value) XP")
         }
@@ -1339,6 +1343,110 @@ enum S {
             static var continueLater: String { t("Continue later", "Продолжить позже") }
             static var coachingInProgress: String { t("Coaching in progress", "Разбор готовится") }
             static var completed: String { t("Completed", "Выполнено") }
+        }
+    }
+
+    // MARK: - Practice
+
+    /// Тренировка навыков собеседования. Двуязычен здесь только интерфейс: сами
+    /// задачи, ответы и разборы — по-английски, потому что и собеседования на эти
+    /// роли проходят по-английски. Тренировать формулировку на одном языке, чтобы
+    /// произносить её на другом, смысла нет.
+    enum Practice {
+        static var title: String { t("Practice", "Практика") }
+        static var inPreparation: String { t("In preparation", "Готовится") }
+        static var tests: String { t("What it tests", "Что проверяет") }
+        static var format: String { t("Format", "Формат") }
+
+        static var newTask: String { t("New task", "Новая задача") }
+        static var anotherTask: String { t("Another task", "Другая задача") }
+        static var writingTask: String { t("Writing a task…", "Пишем задачу…") }
+        static var readingAnswer: String { t("Reading your answer…", "Читаем ваш ответ…") }
+        static var submit: String { t("Get feedback", "Получить разбор") }
+        static var backToTracks: String { t("All tracks", "Все направления") }
+
+        static var theTask: String { t("The task", "Задача") }
+        static var constraints: String { t("Constraints", "Ограничения") }
+        static var clarifiers: String { t("Clarifying questions", "Уточняющие вопросы") }
+        /// Не спросить — это тоже ответ, и именно это здесь проверяется.
+        static var clarifiersHint: String {
+            t(
+                "Ask before you answer. What you choose to ask is part of what the review reads.",
+                "Спрашивайте до ответа: что именно вы спросили, разбор тоже читает."
+            )
+        }
+        static var ask: String { t("Ask", "Спросить") }
+        static var yourAnswer: String { t("Your answer", "Ваш ответ") }
+        static var timeOnTask: String { t("Time on task", "Время над задачей") }
+
+        static func target(_ minutes: Int) -> String {
+            t("about \(minutes) min", "около \(minutes) мин")
+        }
+        static func charactersLeft(_ count: Int) -> String {
+            t(
+                "\(count) more characters",
+                "ещё \(count) \(plural(count, "символ", "символа", "символов"))"
+            )
+        }
+        static func sessionsSaved(_ count: Int) -> String {
+            t(
+                "\(count) saved",
+                "\(count) \(plural(count, "сохранена", "сохранено", "сохранено"))"
+            )
+        }
+
+        static var feedback: String { t("Feedback", "Разбор") }
+        static var byField: String { t("Field by field", "По частям ответа") }
+        static var strengths: String { t("What worked", "Что сработало") }
+        static var improvements: String { t("What to sharpen", "Что усилить") }
+        static var missedQuestion: String {
+            t("The question you didn't ask", "Вопрос, который вы не задали")
+        }
+        static var sharperApproach: String { t("A sharper answer", "Как было бы сильнее") }
+
+        static var saved: String { t("Saved sessions", "Сохранённые тренировки") }
+        static var savedHint: String {
+            t(
+                "The task, your answer and the review stay together, so you can come back to them.",
+                "Задача, ваш ответ и разбор хранятся вместе — к ним можно вернуться."
+            )
+        }
+        static var noSessions: String {
+            t("Nothing saved here yet.", "Здесь пока ничего нет.")
+        }
+        static var open: String { t("Open", "Открыть") }
+        static var delete: String { t("Delete", "Удалить") }
+        static var deleteConfirm: String {
+            t("Delete this session for good?", "Удалить эту тренировку насовсем?")
+        }
+        static var unanswered: String { t("Not answered", "Без ответа") }
+        static var reviewed: String { t("Reviewed", "Разобрано") }
+
+        static var limitReached: String {
+            t(
+                "That is today's practice limit. It resets 24 hours after your first session today.",
+                "На сегодня лимит тренировок исчерпан. Он обновится через сутки после первой сегодняшней."
+            )
+        }
+        static var generationFailed: String {
+            t(
+                "The task couldn't be written. Try again in a moment.",
+                "Задачу написать не удалось. Попробуйте через минуту."
+            )
+        }
+        static var feedbackFailed: String {
+            t(
+                "The review couldn't be written. Your answer is still here — try again.",
+                "Разбор не получился. Ответ на месте — попробуйте ещё раз."
+            )
+        }
+        static var notReady: String {
+            t("This track is still in preparation.", "Это направление ещё готовится.")
+        }
+        enum Bar {
+            static var below: String { t("Below the bar", "Ниже планки") }
+            static var at: String { t("At the bar", "На уровне планки") }
+            static var above: String { t("Above the bar", "Выше планки") }
         }
     }
 }

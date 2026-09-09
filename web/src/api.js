@@ -15,6 +15,8 @@ export const RATIONALE_MIN = 30;
 export const RATIONALE_MAX = 600;
 export const FEEDBACK_POLL_ATTEMPTS = 5;
 export const FEEDBACK_POLL_INTERVAL_MS = 2000;
+/** Три попытки по 45 секунд на стороне сервера плюс паузы между ними. */
+export const PRACTICE_TIMEOUT_MS = 180000;
 
 export class APIError extends Error {
   constructor(kind, { status = 0, code = null } = {}) {
@@ -103,7 +105,11 @@ export class APIClient {
     this.tokenProvider = tokenProvider;
   }
 
-  async request(method, path, { query, body, headers = {}, authenticated = true, retry = true } = {}) {
+  async request(
+    method,
+    path,
+    { query, body, headers = {}, authenticated = true, retry = true, timeoutMs = 45000 } = {}
+  ) {
     const url = new URL(this.baseURL + API_PREFIX + path, window.location.origin);
     for (const [key, value] of Object.entries(query || {})) {
       if (value !== null && value !== undefined && value !== "") url.searchParams.set(key, value);
@@ -129,7 +135,7 @@ export class APIClient {
         method,
         headers: requestHeaders,
         body: body === undefined ? undefined : JSON.stringify(body),
-        signal: AbortSignal.timeout(45000),
+        signal: AbortSignal.timeout(timeoutMs),
       });
     } catch (error) {
       if (error.name === "TimeoutError") throw new APIError("timed_out");
@@ -139,7 +145,14 @@ export class APIClient {
     if (response.status === 401 && authenticated && retry) {
       const refreshed = await this.tokenProvider?.refreshAccessToken();
       if (refreshed) {
-        return this.request(method, path, { query, body, headers, authenticated, retry: false });
+        return this.request(method, path, {
+          query,
+          body,
+          headers,
+          authenticated,
+          retry: false,
+          timeoutMs,
+        });
       }
       await this.tokenProvider?.handleAuthenticationFailure();
       throw new APIError("unauthorized", { status: 401 });
@@ -241,6 +254,21 @@ export class APIClient {
   glossary = (q, blockId) => this.get("/glossary", { query: { q, blockId } });
   exercise = (id) => this.get(`/exercises/${id}`);
   submitExercise = (id, values) => this.post(`/exercises/${id}/submit`, { body: { values } });
+
+  // --- Practice ------------------------------------------------------------
+
+  /** Задачу и разбор пишет модель, пока человек смотрит на экран, и оба запроса
+   *  синхронные. Поэтому у них свой запас по времени: сервер отводит провайдеру
+   *  45 секунд и может повторить попытку, а клиент с общим таймаутом отвалился бы
+   *  ровно на границе первой. */
+  practiceTracks = () => this.get("/practice/tracks");
+  practiceGenerate = (track) =>
+    this.post(`/practice/tracks/${track}/sessions`, { timeoutMs: PRACTICE_TIMEOUT_MS });
+  practiceSessions = (track) => this.get("/practice/sessions", { query: { track } });
+  practiceSession = (id) => this.get(`/practice/sessions/${id}`);
+  practiceRespond = (id, body) =>
+    this.post(`/practice/sessions/${id}/response`, { body, timeoutMs: PRACTICE_TIMEOUT_MS });
+  deletePracticeSession = (id) => this.del(`/practice/sessions/${id}`);
 
   // --- Аналитика -----------------------------------------------------------
 

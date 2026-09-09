@@ -99,6 +99,10 @@ class Settings(BaseSettings):
     evaluator_max_attempts: int = 3  # 1 initial + 2 retries (spec §13)
     evaluator_backoff_seconds: float = 2.0
     evaluations_per_user_per_day: int = 20
+    # Practice тратит провайдера дважды за тренировку — на задачу и на разбор.
+    # Лимит считается в тренировках, а не в запросах, потому что понятен он должен
+    # быть человеку, а не биллингу.
+    practice_sessions_per_user_per_day: int = 25
 
     # Background worker
     run_inline_worker: bool = True

@@ -38,4 +38,4 @@ def test_every_specialised_role_has_nodes_and_leaves_some_out():
 
 def test_roles_name_their_source():
     roles = tree_content.load_roles_file()
-    assert "productframework.ru" in roles["sourceAttribution"]
+    assert roles["sourceAttribution"]

@@ -1,6 +1,6 @@
 /** Точка входа веб-клиента.
  *
- *  Корневых разделов ровно три, как в приложении: Карта, Прогресс, Профиль. Гейт
+ *  Корневых разделов пять: Уроки, Карта, Практика, Прогресс, Профиль. Гейт
  *  открывается поверх всего — это отдельная работа, из которой не переключаются
  *  вкладками, ровно как `fullScreenCover` в iOS.
  */
@@ -21,6 +21,7 @@ import { lessonView } from "./views/lesson.js";
 import { exerciseView } from "./views/exercise.js";
 import { glossaryView } from "./views/glossary.js";
 import { challengeView } from "./views/challenge.js";
+import { practiceView, practiceTrackView, practiceSessionView } from "./views/practice.js";
 import { progressView } from "./views/progress.js";
 import { historyView, resultView } from "./views/history.js";
 import { profileView } from "./views/profile.js";
@@ -32,6 +33,9 @@ route("/lesson/:id", lessonView);
 route("/exercise/:id", exerciseView);
 route("/glossary", glossaryView);
 route("/gate/:gateId", challengeView);
+route("/practice", practiceView);
+route("/practice/session/:id", practiceSessionView);
+route("/practice/:track", practiceTrackView);
 route("/progress", progressView);
 route("/history", historyView);
 route("/history/:attemptId", resultView);

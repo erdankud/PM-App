@@ -37,11 +37,19 @@ export function progressView() {
       progressTrack(total > 0 ? value / total : 0)
     );
 
+  /** Уровень — показатель, а не заголовок. Раньше он печатался тем же `h1`, что и
+   *  название страницы: два одинаковых набора подряд читались как два заголовка,
+   *  и «Уровень 3» спорил с «Прогрессом» за то, чем является этот экран. Теперь
+   *  это подпись плюс цифра — регистр показателя, а не титула. */
   const summary = () => {
     const next = progress.xpForNextLevel;
     return card(
       [
-        h("h1", S.Progress.level(progress.level)),
+        h(
+          "div.level-figure",
+          h("span.level-label", S.Progress.levelLabel),
+          h("span.level-value", String(progress.level))
+        ),
         h("p.muted", { style: { marginTop: "2px" } }, S.Progress.totalXp(progress.totalXp)),
         next && next > progress.totalXp
           ? h(

@@ -123,25 +123,36 @@ export function blockView({ id }) {
 
   /** Ключевые вопросы узлов — это и есть цели блока: каждый вопрос равен одному
    *  навыку, и гейт в конце просит применить именно их. Придумывать поверх них
-   *  отдельный список «целей» значило бы писать второй, менее точный. */
+   *  отдельный список «целей» значило бы писать второй, менее точный.
+   *
+   *  Набрано описью, а не сеткой карточек. Карточки здесь были почти теми же, что
+   *  у уроков ниже — та же плитка, та же рамка, тот же моноширинный номер, — и два
+   *  раздела подряд читались как один длинный список, в котором половина плиток
+   *  почему-то не нажимается. Разделять их цветом бесполезно: одинаковую форму
+   *  цвет не разводит. Опись отличается тем, чем эти вещи и отличаются на самом
+   *  деле: цели читают, уроки открывают. Строка на линейках ничего не обещает
+   *  нажатием, плитка с тенью — обещает. */
   const goals = () =>
     h(
       "section.block-section.split",
       h("div.split-head", h("h2", S.Tree.blockGoalTitle), h("p.section-lede", S.Tree.blockGoalSubtitle)),
       h(
-        "div.goal-grid",
+        "ol.goal-list",
         detail.nodes.map((entry, index) =>
           h(
-            "article.goal-card",
+            "li.goal-row",
             h("span.goal-index", String(index + 1).padStart(2, "0")),
-            h("h3", entry.node.title),
-            h("p", entry.node.keyQuestion),
-            entry.node.models.length > 0 &&
-              h(
-                "div.row.wrap.goal-models",
-                // Названия моделей — термины и остаются в исходной форме.
-                entry.node.models.map((model) => chip(model))
-              )
+            h("h3.goal-name", entry.node.title),
+            h(
+              "div.goal-detail",
+              h("p.goal-question", entry.node.keyQuestion),
+              entry.node.models.length > 0 &&
+                h(
+                  "div.row.wrap.goal-models",
+                  // Названия моделей — термины и остаются в исходной форме.
+                  entry.node.models.map((model) => chip(model))
+                )
+            )
           )
         )
       )

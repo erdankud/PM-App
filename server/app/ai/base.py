@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 PROMPT_VERSION = "eval-2026-08-23"  # adds the output-language rule
+PRACTICE_PROMPT_VERSION = "practice-2026-09-09"  # первый выпуск модуля Practice
 
 
 @dataclass(frozen=True)
@@ -22,6 +23,13 @@ class EvaluationRequest:
     # Present so mock/offline evaluators can produce a plausible response without
     # re-parsing the prompt. Real providers ignore it.
     context: dict = field(default_factory=dict)
+    # Оценка и генерация — разные задачи для одной и той же модели. Разбор обязан
+    # быть воспроизводимым и коротким, а сценарий тренировки — наоборот, каждый раз
+    # другим: две подряд одинаковые задачи Practice убивают весь смысл кнопки
+    # «сгенерировать следующую». Значения по умолчанию — ровно те, с которыми
+    # адаптеры жили до появления этих полей, поэтому оценка гейта не меняется.
+    temperature: float = 0.3
+    max_output_tokens: int = 1600
 
 
 @dataclass(frozen=True)

@@ -40,12 +40,15 @@ boundaries it explains are unchanged).
   server-side only (`server/app/ai/`).
 - The authored consequence (shown right after submit) is separate from AI
   feedback and must never depend on model/provider availability.
-- **4 root tabs: Learn, Skills Map, Progress, Profile.** This changed on the author's
-  instruction and supersedes v0.1 §24's "exactly 3". The reason the rule existed still
-  holds and still binds: no chat tab, no paywall, no leaderboards, no user-generated
-  content. What split is the map — daily work («what do I read now») and the overview of
-  the whole profession are different jobs, and making the overview the front door meant
-  pushing through it to reach a lesson. Splitting further needs the same kind of reason.
+- **5 root tabs: Learn, Practice, Skills Map, Progress, Profile.** This changed twice on
+  the author's instruction and supersedes v0.1 §24's "exactly 3". The reason the rule
+  existed still holds and still binds: no chat tab, no paywall, no leaderboards, no
+  user-generated content. What split first was the map — daily work («what do I read
+  now») and the overview of the whole profession are different jobs, and making the
+  overview the front door meant pushing through it to reach a lesson. What split second
+  is Practice: the course explains a skill and then checks that you can apply it, while
+  Practice rehearses an interview, and a rehearsal room folded inside a lesson or a map
+  card is a room nobody walks into. Splitting further needs the same kind of reason.
 - A gate needs at least two scenarios. With one, a retake becomes memorising
   which option was right, which is the quiz this product must not be.
 - Failure is information: never take XP away for a failed gate, never lock
@@ -106,10 +109,24 @@ boundaries it explains are unchanged).
 
 - Backend: FastAPI + SQLAlchemy + Alembic, SQLite for dev, Postgres in
   production via docker-compose. 97 tests passing at last check.
-- Evaluator: `EVALUATOR_PROVIDER=mock` (deterministic keyword heuristic) — no
-  real AI provider key has been chosen yet. Good enough to exercise the flow;
-  coaching text reads as a stub, and gate calibration against the QA fixtures
-  is not meaningful until a real provider is wired up.
+- Evaluator: `EVALUATOR_PROVIDER=gemini`, `EVALUATOR_MODEL=gemini-3.6-flash`, on the
+  same Google AI Studio key the audio and translation pipelines use. It was `mock`
+  (a deterministic keyword heuristic) until Practice needed real feedback; the mock
+  is still there and is still what the tests run on, but it is no longer what the dev
+  server answers with. Switching back is two lines of `server/.env`.
+  **Gate calibration against the QA fixtures has not been re-run on the real
+  provider** — `scripts/qa_evaluate.py` now means something, and nobody has looked
+  at what it says.
+- **Gemini spends `maxOutputTokens` on its own thinking first.** A discovery that
+  cost a working feature: Practice feedback failed three times running as
+  «модель не умеет в JSON», when in fact 1344 of the 1600 tokens went into
+  reasoning and the JSON was cut off mid-field. Two things follow, both in
+  `app/ai/providers.py`: `max_output_tokens` on an `EvaluationRequest` means «how
+  much text I need back», and the Gemini adapter adds `THINKING_ALLOWANCE` on top
+  of it, so the number means the same thing on every provider; and a candidate
+  with `finishReason: MAX_TOKENS` raises `provider_output_truncated` instead of
+  being handed on as if it were an answer. `tests/test_providers.py` holds both.
+  Gate evaluation ran on the same 1600 and would have broken the same way.
 - Content: **all 18 blocks are written and published** — 71 nodes, 90 lessons,
   18 gates, 36 gate scenarios (2 per gate), 108 QA fixtures. No block is
   `coming_soon` any more. Each domain has one fictional company running through
@@ -201,6 +218,45 @@ boundaries it explains are unchanged).
 - Synthesis dependencies live in `requirements-audio.txt` and are **not** in the runtime
   image: the API serves prebuilt files and never synthesizes. `server/var/audio` is
   generated and gitignored.
+
+## Practice — the rehearsal room
+
+- Six kinds of product interview, one simulation each: Product Strategy, Product Sense,
+  Analytics and Execution, Leadership & Drive (behavioral), Technical Fluency, Take-Home.
+  The catalogue is `server/app/practice_catalogue.py`; **only `product_sense` is live**,
+  and the other five render as tiles marked "In preparation". A track that exists but has
+  no generator answers **409 `practice_track_not_ready`**, never 404 — the direction is on
+  the screen, it is just not open yet, and the client shows the tile and withholds the
+  button.
+- **There is no question bank, on purpose.** Fifty pre-written tasks run out, and a
+  pre-written task is one the next person already read in someone else's review. The task
+  is generated when the button is pressed, at `temperature=1.0`, with the titles of the
+  last 12 tasks this person saw in this track passed in as «do not repeat these».
+- **Formative, like the System Design exercises**: no XP, no skill deltas, no effect on
+  unlock status. Nothing in `app/services/practice.py` touches `skills` or `scoring`, and
+  `tests/test_practice.py::test_practice_never_moves_the_score` compares the whole
+  `/v1/progress` and `/v1/tree` payload either side of a full session. The reason is not
+  caution: the model writes the task here, and something that sets its own exam must not
+  be able to move the score.
+- **Content is English at any interface language**, and `test_practice_texts_are_english_at_any_ui_language`
+  sweeps the responses for Cyrillic at both `Accept-Language` values. These interviews are
+  conducted in English; rehearsing a formulation in one language to deliver it in another
+  is not rehearsal. The chrome around it stays bilingual — the instruction is not what the
+  person will say out loud.
+- **The answer is write-once** (409 on a second submit). What a saved session is worth is
+  that it records how someone thought at that moment; a rewritten one records nothing.
+  An empty answer is rejected with 422 **before** the provider is called, so a blank
+  submit cannot burn the daily quota.
+- **Only the canvas fields reach the prompt.** `respond()` clips the submitted answers to
+  the track's own field ids, and `test_only_canvas_fields_reach_the_prompt` spies on the
+  built prompt string to prove a stray key in the request body never gets there. Asked
+  clarifiers are filtered against the brief the same way.
+- Both calls are **synchronous**, unlike gate evaluation, which goes through the queue.
+  A gate is submitted and left; a practice task is watched. That is why `web/src/api.js`
+  grew a per-call `timeoutMs` and uses `PRACTICE_TIMEOUT_MS` (180 s) for these two: the
+  shared 45 s default was exactly the server's per-attempt provider timeout, so any
+  retried generation would have been cut off in the browser before it could land.
+- Another person's session is **404, not 403**: 403 confirms the record exists.
 
 ## Signing in
 
@@ -356,10 +412,12 @@ boundaries it explains are unchanged).
   first available.
 - Under the title sits **one paragraph** saying the six directions are the competencies
   a product manager is made of, with a deliberately quiet **Learn more** opening a
-  dialog: the six directions with a line each, the three levels with who they are for,
-  and the source. The copy paraphrases the Product Architecture Framework's own skill
-  map and names it; the six System Design areas are written here, built around the
-  `keyQuestion` each area already carries in content.
+  dialog: the six directions with a line each and the three levels with who they are
+  for. The six System Design areas are written here, built around the `keyQuestion`
+  each area already carries in content. **The map carries no third-party attribution**
+  — it was removed from content, copy and docs on the author's instruction, so do not
+  reintroduce a credit line into `sourceAttribution`, `Learn.sourceNote` or the map
+  footer.
 - The **blocks of the chosen direction** sit between the switcher and the black plate —
   three chips with progress. They are not decoration: clicking one changes which block
   the lesson list below shows, so the recommendation is a starting point, not rails.
@@ -376,8 +434,8 @@ boundaries it explains are unchanged).
 - Three shapes were tried and thrown away before this one — a **ring** (neighbouring
   sectors looked connected when the branches are independent), a **fan** (labels ran
   along slanted lines), and an orthogonal **skill tree** (legible, but a grid of block
-  codes is not the map this product is about). What ships is the source diagram itself:
-  «Skill Map of Product Management», Product Architecture Framework, Сергей Тихомиров.
+  codes is not the map this product is about). What ships is the printed diagram made
+  interactive.
 - **Six sectors, three rings, one card per skill.** The card is exactly what the source
   legend defines: skill name, the key question that characterises it, and the set of
   models used in its context. Sectors run clockwise from the top in the source's own
@@ -476,6 +534,22 @@ boundaries it explains are unchanged).
 - **Reading measure is the text's job, not the page's.** `.lesson-body` carries its own
   `68ch` cap rather than relying on a narrow page. Anything else that grows into long
   prose needs the same.
+- **One gap under the page title, set by the column, not by the screen.** 32 px on every
+  page — `.page`'s own `gap` plus `margin-bottom: var(--space-s)` on `.page > h1` and on
+  `.page-header`. Learn had that margin by hand while every other screen ran on the bare
+  gap, so Progress and Profile started 8 px tighter and the app read as two apps again.
+  A new screen gets it for free whether its title sits in a wrapper or on its own.
+- **A section that is read must not be shaped like a section that is clicked.** «What
+  this block gives you» was a grid of bordered tiles with a mono number, directly above
+  the lessons — another grid of bordered tiles with a mono number — and the two ran
+  together into one list where half the tiles inexplicably did nothing. It is now an
+  **ordered list on hairline rules**: no border, no fill, no shadow, no hover. Colour
+  cannot separate two things that share a silhouette; affordance can. The same test
+  applies anywhere two sections sit adjacent.
+- **A figure is not a heading.** Progress printed the level in the page's own `h1`, so
+  «Level 3» read as a second title of the screen (and it was a second `h1` in the
+  document). It is a `.level-figure` now — a mono label over a large tabular numeral —
+  which is the register the rest of the design already uses for designations.
 
 ## Web client
 

@@ -18,6 +18,7 @@ from app.routers import (
     auth,
     events,
     me,
+    practice,
     progress,
     system_design,
     tree,
@@ -81,6 +82,7 @@ for router in (
     progress.router,
     events.router,
     system_design.router,
+    practice.router,
 ):
     app.include_router(router, prefix=settings.api_prefix)
 

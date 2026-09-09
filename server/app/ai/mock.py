@@ -10,7 +10,9 @@ from __future__ import annotations
 import json
 import re
 
-from app.ai.base import EvaluationRequest, ProviderResponse
+from app import practice_catalogue
+from app.ai import practice_mock
+from app.ai.base import EvaluationRequest, ProviderError, ProviderResponse
 from app.i18n import Language
 from app.models import SKILL_KEYS
 
@@ -128,6 +130,22 @@ class MockEvaluator:
 
     def evaluate(self, request: EvaluationRequest) -> ProviderResponse:
         context = request.context
+        # Practice просит у той же ручки другую работу: сначала задачу, потом её
+        # разбор. Ветка здесь, а не отдельным провайдером, потому что выбор
+        # провайдера — это конфигурация, и заводить вторую настройку ради заглушки
+        # значило бы уметь собрать конфигурацию, где разбор гейта живой, а
+        # тренировка нет.
+        practice = context.get("practice")
+        if practice:
+            track = practice_catalogue.track(practice["track"])
+            if track is None:
+                raise ProviderError("practice_track_unknown", practice["track"], retryable=False)
+            if practice["stage"] == "brief":
+                text = practice_mock.brief(track, int(practice.get("sequence", 0)))
+            else:
+                text = practice_mock.feedback(track, practice.get("answers", {}))
+            return ProviderResponse(raw_text=text, model_id="mock")
+
         language = Language.coerce(context.get("language"))
         copy = _COPY.get(language, _COPY[Language.EN])
         rationale: str = context.get("rationale", "")

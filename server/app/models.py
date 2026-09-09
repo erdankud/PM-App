@@ -145,6 +145,53 @@ class ExerciseAttempt(Base):
     )
 
 
+class PracticeSession(Base):
+    """Одна тренировка модуля Practice: задача, ответ и разбор в одной строке.
+
+    Формирующая, как и упражнения System Design: ни XP, ни дельт по компетенциям,
+    ни влияния на доступность блоков. Причина жёстче, чем там: задачу здесь пишет
+    модель, а не автор, и то, что генерирует само себя, не должно уметь двигать
+    счёт.
+
+    Хранится ради единственного требования — вернуться к своей задаче потом.
+    Поэтому и текст задачи лежит здесь целиком, а не ссылкой на что-то
+    воспроизводимое: воспроизвести генерацию нечем, и без копии открытая через
+    неделю тренировка была бы разбором неизвестно чего.
+    """
+
+    __tablename__ = "practice_sessions"
+    __table_args__ = (
+        Index("ix_practice_user_track", "user_id", "track", "created_at"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    track: Mapped[str] = mapped_column(String(32), index=True)
+    # open -> answered. Разбор приходит синхронно, поэтому промежуточного
+    # состояния «оценивается» нет: либо ответ ещё не отправлен, либо есть и он,
+    # и разбор.
+    status: Mapped[str] = mapped_column(String(16), default="open")
+    brief: Mapped[dict] = mapped_column(JSON, default=dict)
+    answers: Mapped[dict] = mapped_column(JSON, default=dict)
+    feedback: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    # Какие уточняющие вопросы человек открыл. Это часть ответа, а не интерфейса:
+    # не спросить ничего — тоже решение, и разбор о нём знает.
+    asked: Mapped[list] = mapped_column(JSON, default=list)
+    elapsed_seconds: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    # Чем именно сгенерировано и разобрано. Наружу не отдаётся: клиент не знает
+    # ни модели, ни версии промпта (спека §15).
+    brief_model_id: Mapped[str | None] = mapped_column(String(64))
+    feedback_model_id: Mapped[str | None] = mapped_column(String(64))
+    prompt_version: Mapped[str | None] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    answered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, onupdate=utcnow
+    )
+
+
 class TermEncounter(Base):
     """Отметка «встречал» в глоссарии: термин показан в прочитанном уроке."""
 

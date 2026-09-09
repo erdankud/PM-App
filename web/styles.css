@@ -428,6 +428,13 @@ a { color: var(--accent); }
 /* Страница блока дышит крупнее — но в той же колонке. */
 .page.full { gap: var(--space-xxl); }
 
+/* Заголовок страницы и то, что под ним, разделены одинаково везде. Отступ снят
+ * с Learn — там он единственный был выставлен руками, а остальные экраны жили на
+ * голом `gap` колонки, и «Прогресс» с «Профилем» начинались заметно теснее. Это
+ * колонка страницы, а не свойство конкретного экрана: заголовок в обёртке
+ * (`.page-header`) и заголовок сам по себе получают его одинаково. */
+.page > h1 { margin-bottom: var(--space-s); }
+
 .page-header {
   margin-bottom: var(--space-s);
   display: flex;
@@ -463,6 +470,31 @@ a { color: var(--accent); }
   outline: 1px solid var(--accent-border);
 }
 .card.tight { padding: var(--space-m); }
+
+/* Уровень набран как цифра с подписью: моноширинная марка сверху, крупное
+ * число под ней. С заголовком страницы он не спорит, потому что это другой
+ * регистр — показатель, а не титул. */
+.level-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.level-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.level-value {
+  font-family: var(--font-sans);
+  font-size: clamp(38px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
 
 .stack { display: flex; flex-direction: column; gap: var(--space-m); }
 .stack.s { gap: var(--space-s); }
@@ -1258,41 +1290,45 @@ dialog .actions { display: flex; gap: var(--space-s); justify-content: flex-end;
   .block-section.split .split-head { grid-template-columns: 1fr; gap: var(--space-m); }
 }
 
-.goal-grid {
+/* Цели блока — опись, а не сетка карточек: ниже идут уроки такими же плитками,
+ * и два одинаковых грида подряд сливались в один список. Здесь нет ни рамки, ни
+ * фона, ни тени — только линейки: читаемое, а не нажимаемое. */
+.goal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--separator-strong);
+}
+.goal-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: var(--space-l);
+  grid-template-columns: 3ch minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: var(--space-m) var(--space-xl);
+  align-items: baseline;
+  padding: var(--space-l) 0;
+  border-bottom: 1px solid var(--separator);
 }
-.goal-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-  padding: var(--space-xl);
-  border: 1px solid var(--separator);
-  border-radius: var(--radius-card);
-  background: var(--surface);
-}
-/* Номер цели — как номер позиции на чертеже: моноширинный, с линейкой. */
+/* Номер позиции на чертеже: моноширинный, тускнее текста — он нумерует, а не
+ * привлекает. */
 .goal-index {
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--spark-ink);
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
 }
-.goal-index::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--separator);
+.goal-name { letter-spacing: -0.015em; }
+.goal-detail { display: flex; flex-direction: column; gap: var(--space-s); }
+.goal-question { color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
+.goal-models { padding-top: var(--space-xs); }
+
+@media (max-width: 860px) {
+  .goal-row {
+    grid-template-columns: 3ch minmax(0, 1fr);
+    gap: var(--space-s) var(--space-l);
+  }
+  .goal-detail { grid-column: 2; }
 }
-.goal-card h3 { letter-spacing: -0.015em; }
-.goal-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
-.goal-models { margin-top: auto; padding-top: var(--space-s); }
 
 .lesson-grid {
   display: grid;
@@ -1757,3 +1793,322 @@ dialog .actions { display: flex; gap: var(--space-s); justify-content: flex-end;
   font-size: 12px;
   color: var(--text-tertiary);
 }
+
+/* --- Practice --------------------------------------------------------------
+ *
+ * Репетиционная, а не экзамен, и разметка это говорит: ни одной оценки крупным
+ * кеглем, ни одной шкалы. Задача набрана как бриф — контекст мельче, сам вопрос
+ * крупнее, — а разбор стоит вплотную к тому куску ответа, к которому относится,
+ * потому что замечание, оторванное от своей фразы, читается как приговор.
+ */
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--seam);
+}
+
+.practice-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding: var(--space-xl);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+/* Готовящееся направление видно, но не обещает кнопки: разница читается тоном,
+ * а не отсутствием карточки — шесть направлений это карта модуля. */
+.practice-card.preparing { background: none; color: var(--text-secondary); }
+.practice-card.preparing h2 { color: var(--text-secondary); }
+
+.practice-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+.practice-card-head h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.practice-blurb { font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+
+.practice-facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px var(--space-m);
+  margin: 0;
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--separator);
+}
+.practice-facts dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding-top: 3px;
+}
+.practice-facts dd { margin: 0; font-size: 13px; line-height: 1.45; color: var(--text-secondary); }
+
+.practice-card-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  margin-top: auto;
+  padding-top: var(--space-s);
+}
+
+.practice-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.practice-link:hover { color: var(--text-primary); }
+
+/* Ожидание провайдера длится десятки секунд, поэтому у него есть слова: кружок
+ * без подписи на таком отрезке читается как зависание. */
+.practice-waiting {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.practice-waiting .spinner { width: 16px; height: 16px; }
+
+/* --- Сохранённые тренировки --- */
+
+.practice-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+}
+.practice-row-open {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.practice-row-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.practice-row-meta {
+  display: flex;
+  gap: var(--space-xs);
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.practice-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.practice-delete:hover { background: var(--surface-active); color: var(--text-primary); }
+
+/* --- Задача --- */
+
+.practice-brief {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding: var(--space-xl);
+  border-radius: var(--radius-card);
+  background: var(--surface-tinted);
+}
+.practice-brief h1 {
+  font-size: clamp(24px, 3.2vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.practice-context {
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+/* Собственно вопрос — единственное, что набрано крупнее контекста: в комнате
+ * его произносят один раз, и на экране он должен находиться так же быстро. */
+.practice-prompt {
+  max-width: 62ch;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+.practice-constraints {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--separator);
+}
+.practice-constraints ul { margin: 0; padding-left: var(--space-l); }
+.practice-constraints li { font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+
+/* --- Уточняющие вопросы --- */
+
+.practice-clarifiers { display: flex; flex-direction: column; gap: var(--space-s); }
+.practice-clarifier {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-m) var(--space-l);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-control);
+}
+.practice-clarifier.open { background: var(--surface); }
+.practice-clarifier-q { font-size: 14px; font-weight: 600; }
+.practice-clarifier-a { font-size: 14px; line-height: 1.55; color: var(--text-secondary); }
+
+/* --- Холст ответа --- */
+
+.practice-canvas { display: flex; flex-direction: column; gap: var(--space-l); }
+.practice-canvas-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+.practice-clock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-tertiary);
+}
+
+.practice-field { display: flex; flex-direction: column; gap: var(--space-xs); }
+.practice-field-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+.practice-field-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+/* Счётчик — подсказка о полноте, а не запрет: короткое поле отправить можно,
+ * и разбор про него честно скажет. */
+.practice-counter { font-size: 12px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.practice-field-hint { font-size: 13px; line-height: 1.45; color: var(--text-secondary); }
+.practice-field textarea { font-size: 15px; }
+
+.practice-field.reviewed {
+  gap: var(--space-s);
+  padding: var(--space-l);
+  border: 1px solid var(--separator);
+  border-radius: var(--radius-control);
+}
+.practice-score {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+.practice-answer {
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+/* Замечание отбито линейкой, а не цветом: цвета в палитре нет, а отличать
+ * чужой голос от своего ответа надо. */
+.practice-note {
+  max-width: 68ch;
+  padding-left: var(--space-m);
+  border-left: 2px solid var(--separator-strong);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* --- Разбор --- */
+
+.practice-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  padding: var(--space-xl);
+  border-radius: var(--radius-card);
+  background: var(--surface-tinted);
+}
+.practice-feedback-head { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+.practice-headline {
+  max-width: 62ch;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.practice-bullets { display: flex; flex-direction: column; gap: var(--space-s); }
+.practice-bullets ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-s); }
+.practice-bullets li {
+  display: flex;
+  gap: var(--space-s);
+  max-width: 68ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.practice-bullets li .icon { flex: none; margin-top: 3px; color: var(--text-tertiary); }
+.practice-bullets strong { color: var(--text-primary); }
+
+.practice-closers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-l);
+  padding-top: var(--space-l);
+  border-top: 1px solid var(--separator);
+}
+.practice-closer { display: flex; flex-direction: column; gap: var(--space-xs); }
+.practice-closer .text { max-width: 52ch; font-size: 14px; line-height: 1.55; }
+
+.practice-session .practice-canvas { margin-top: var(--space-l); }
+.practice-track-tests { max-width: 68ch; }

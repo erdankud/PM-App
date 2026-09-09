@@ -42,6 +42,7 @@ Common: {
 Tab: {
   get learn() { return t("Learn", "Обучение"); },
   get tree() { return t("Skills Map", "Карта навыков"); },
+  get practice() { return t("Practice", "Практика"); },
   get progress() { return t("Progress", "Прогресс"); },
   get profile() { return t("Profile", "Профиль"); },
 },
@@ -388,8 +389,8 @@ Learn: {
     "Карта систем расширяет продуктовую и следует её грамматике."
     )
     : t(
-    "The directions and the three levels follow the Product Architecture Framework skill map.",
-    "Направления и три уровня следуют карте навыков Product Architecture Framework."
+    "Six directions, three levels: one grammar for the whole profession.",
+    "Шесть направлений и три уровня — одна грамматика на всю профессию."
     )
   },
 },
@@ -548,6 +549,7 @@ Progress: {
   level(value) {
     return t(`Level ${value}`, `Уровень ${value}`)
   },
+  get levelLabel() { return t("Level", "Уровень"); },
   totalXp(value) {
     return t(`${value} XP total`, `Всего ${value} XP`)
   },
@@ -715,6 +717,63 @@ Labels: {
     get continueLater() { return t("Continue later", "Продолжить позже"); },
     get coachingInProgress() { return t("Coaching in progress", "Разбор готовится"); },
     get completed() { return t("Completed", "Выполнено"); },
+  },
+},
+Practice: {
+  get title() { return t("Practice", "Практика"); },
+  get inPreparation() { return t("In preparation", "Готовится"); },
+  get tests() { return t("What it tests", "Что проверяет"); },
+  get format() { return t("Format", "Формат"); },
+  get newTask() { return t("New task", "Новая задача"); },
+  get anotherTask() { return t("Another task", "Другая задача"); },
+  get writingTask() { return t("Writing a task…", "Пишем задачу…"); },
+  get readingAnswer() { return t("Reading your answer…", "Читаем ваш ответ…"); },
+  get submit() { return t("Get feedback", "Получить разбор"); },
+  get backToTracks() { return t("All tracks", "Все направления"); },
+  get theTask() { return t("The task", "Задача"); },
+  get constraints() { return t("Constraints", "Ограничения"); },
+  get clarifiers() { return t("Clarifying questions", "Уточняющие вопросы"); },
+  get clarifiersHint() { return t( "Ask before you answer. What you choose to ask is part of what the review reads.", "Спрашивайте до ответа: что именно вы спросили, разбор тоже читает." ); },
+  get ask() { return t("Ask", "Спросить"); },
+  get yourAnswer() { return t("Your answer", "Ваш ответ"); },
+  get timeOnTask() { return t("Time on task", "Время над задачей"); },
+  target(minutes) {
+    return t(`about ${minutes} min`, `около ${minutes} мин`)
+  },
+  charactersLeft(count) {
+    return t(
+    `${count} more characters`,
+    `ещё ${count} ${plural(count, "символ", "символа", "символов")}`
+    )
+  },
+  sessionsSaved(count) {
+    return t(
+    `${count} saved`,
+    `${count} ${plural(count, "сохранена", "сохранено", "сохранено")}`
+    )
+  },
+  get feedback() { return t("Feedback", "Разбор"); },
+  get byField() { return t("Field by field", "По частям ответа"); },
+  get strengths() { return t("What worked", "Что сработало"); },
+  get improvements() { return t("What to sharpen", "Что усилить"); },
+  get missedQuestion() { return t("The question you didn't ask", "Вопрос, который вы не задали"); },
+  get sharperApproach() { return t("A sharper answer", "Как было бы сильнее"); },
+  get saved() { return t("Saved sessions", "Сохранённые тренировки"); },
+  get savedHint() { return t( "The task, your answer and the review stay together, so you can come back to them.", "Задача, ваш ответ и разбор хранятся вместе — к ним можно вернуться." ); },
+  get noSessions() { return t("Nothing saved here yet.", "Здесь пока ничего нет."); },
+  get open() { return t("Open", "Открыть"); },
+  get delete() { return t("Delete", "Удалить"); },
+  get deleteConfirm() { return t("Delete this session for good?", "Удалить эту тренировку насовсем?"); },
+  get unanswered() { return t("Not answered", "Без ответа"); },
+  get reviewed() { return t("Reviewed", "Разобрано"); },
+  get limitReached() { return t( "That is today's practice limit. It resets 24 hours after your first session today.", "На сегодня лимит тренировок исчерпан. Он обновится через сутки после первой сегодняшней." ); },
+  get generationFailed() { return t( "The task couldn't be written. Try again in a moment.", "Задачу написать не удалось. Попробуйте через минуту." ); },
+  get feedbackFailed() { return t( "The review couldn't be written. Your answer is still here — try again.", "Разбор не получился. Ответ на месте — попробуйте ещё раз." ); },
+  get notReady() { return t("This track is still in preparation.", "Это направление ещё готовится."); },
+  Bar: {
+    get below() { return t("Below the bar", "Ниже планки"); },
+    get at() { return t("At the bar", "На уровне планки"); },
+    get above() { return t("Above the bar", "Выше планки"); },
   },
 },
 };

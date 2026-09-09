@@ -1,6 +1,6 @@
 {
   "language": "en",
-  "sourceDigest": "033bd6e13c1251e7",
+  "sourceDigest": "3814046786a2b1a7",
   "translationStatus": "machine",
   "generator": {
     "provider": "gemini",
@@ -9,7 +9,7 @@
     "generatedAt": "2026-09-04T19:03:30Z"
   },
   "fields": {
-    "sourceAttribution": "Skill Map — Skill Map of Product Management, part of Product Architecture Framework, Sergey Tikhomirov (productframework.ru).",
+    "sourceAttribution": "The product manager's skill map: six directions, three levels, 71 skills.",
     "blocks/0/title": "Hear the customer",
     "blocks/0/nodes/0/title": "Feedback collection and processing",
     "blocks/0/nodes/0/keyQuestion": "What problems do customers face when using the product?",
