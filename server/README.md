@@ -81,12 +81,18 @@ the repository:
   after five minutes idle; the dropped connection is caught by `pool_pre_ping=True` in
   `app/db.py`, which was already there.
 
-Neon's free plan meters **compute-hours** (100 a month), and its clock runs whenever
-something queries. The inline worker polls every 1.5 s, so the database stays awake for
-as long as the Render instance is awake — and a free Render instance sleeps after about
-15 minutes without traffic, which is what keeps the two budgets in step. If the compute
-hours run out anyway, `RUN_INLINE_WORKER=false` plus a separate worker service, or a
-provider that does not meter idle time, are the two ways out.
+Neon's free plan meters **CU-hours**, not queries: 100 a month, which is 400 wall-clock
+hours at the 0.25 CU floor — around thirteen hours a day. The clock runs whenever the
+compute is awake, and the inline worker polls every 1.5 s, so the database stays awake
+for exactly as long as the Render instance does. A free Render instance sleeps after
+about 15 minutes without traffic, which is what keeps the two budgets in step. If the
+hours run out anyway, `RUN_INLINE_WORKER=false` with a separate worker, or a provider
+that does not meter idle time, are the ways out.
+
+Storage is the limit that will not bind: content lives in files, so the database holds
+only people and their progress. The dev database is 888 KB for 33 accounts, and a
+learner who finishes both trees costs well under a megabyte — 0.5 GB is several hundred
+of them.
 
 `ENVIRONMENT=production` is not a label: `get_settings()` refuses to boot on the dev
 JWT secret, on `ALLOW_DEV_AUTH=true` and on the mock evaluator. It also removes the
