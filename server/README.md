@@ -54,7 +54,38 @@ docker compose up --build
 ```
 
 Runs migrations and starts the API on `:8000` with the worker as its
-own service — closer to how you would deploy it.
+own service — closer to how you would deploy it. Note that the image is built from
+`server/` alone, so `../web` is not in it: this path serves the API without the web
+client.
+
+### Render
+
+`render.yaml` at the repository root is a Blueprint: one web service and one Postgres.
+Point Render at the repo, pick the branch, and it reads that file.
+
+It deploys the **Python** runtime rather than the Dockerfile, because the web client
+has to come with it — Render checks out the whole repository and runs from `server/`,
+so `../web` is where the app expects it. One service, one origin, `/app` and `/v1` on
+the same host, exactly as locally.
+
+Two things the file cannot carry:
+
+- `EVALUATOR_API_KEY` is `sync: false` — set it by hand in the dashboard. A key in a
+  repository is a leaked key.
+- The database is Render's free plan, which is **deleted after 30 days**. Accounts and
+  practice sessions go with it. Move to a paid instance before anyone's progress is
+  worth keeping.
+
+`ENVIRONMENT=production` is not a label: `get_settings()` refuses to boot on the dev
+JWT secret, on `ALLOW_DEV_AUTH=true` and on the mock evaluator. It also removes the
+developer sign-in button — `/v1/auth/methods` stops advertising it — so the way in is
+email and password, which needs no console setup. Add `GOOGLE_CLIENT_ID` and the
+Google button appears on its own.
+
+The disk is ephemeral, so nothing is stored on it: state is in Postgres, and
+`alembic upgrade head` runs on every start. Lesson audio is not deployed — the mp3s
+live in `server/var/`, which is generated and gitignored, and the API only ever serves
+prebuilt files.
 
 ---
 

@@ -1,0 +1,65 @@
+# Развёртывание на Render: один веб-сервис и одна база.
+#
+# Сервис — тот же процесс, что и локально: FastAPI отдаёт API на /v1 и веб-клиент
+# на /app. Отдельного хостинга для фронтенда нет и не должно быть — один origin
+# это то, ради чего клиент вообще живёт внутри сервера (CLAUDE.md, «Web client»).
+#
+# Runtime — python, а не docker, намеренно. `server/Dockerfile` собирается из
+# каталога server/, то есть web/ в образ не попадает: контейнер отдал бы API без
+# приложения. Здесь Render выкладывает репозиторий целиком и заходит в server/,
+# так что `SERVER_ROOT.parent / "web"` находится там, где и ожидается.
+#
+# EVALUATOR_API_KEY здесь нет и быть не может: `sync: false` означает «значение
+# задаётся руками в дашборде и не хранится в репозитории».
+
+databases:
+  - name: pmcoach-db
+    databaseName: pmcoach
+    user: pmcoach
+    plan: free
+    region: frankfurt
+
+services:
+  - type: web
+    name: pmcoach
+    runtime: python
+    plan: free
+    region: frankfurt
+    # Вся работа идёт в этой ветке; `main` остался на одном коммите MVP. Ветка
+    # названа здесь явно, чтобы деплой не зависел от того, какая ветка сегодня
+    # считается веткой по умолчанию.
+    branch: system-design-domain
+    rootDir: server
+    buildCommand: pip install -r requirements.txt
+    # Диск на Render эфемерный, поэтому состояние живёт только в Postgres, а схему
+    # накатывает миграция при каждом старте. `Base.metadata.create_all` в lifespan
+    # срабатывает только на SQLite и здесь не участвует.
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      # Локально проверено на 3.11; пины в requirements.txt под неё и подобраны.
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      # Включает проверки в `get_settings()`: dev-секрет, dev-вход и mock-оценщик
+      # роняют процесс на старте, а не тихо уезжают в прод.
+      - key: ENVIRONMENT
+        value: production
+      - key: ALLOW_DEV_AUTH
+        value: "false"
+      # Вход остаётся по почте и паролю: он работает без настройки в консоли.
+      # Google появится на экране сам, как только тут будет GOOGLE_CLIENT_ID, —
+      # список способов отдаёт сервер (`GET /v1/auth/methods`).
+      - key: ALLOW_PASSWORD_AUTH
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pmcoach-db
+          property: connectionString
+      - key: EVALUATOR_PROVIDER
+        value: gemini
+      - key: EVALUATOR_MODEL
+        value: gemini-3.6-flash
+      - key: EVALUATOR_API_KEY
+        sync: false

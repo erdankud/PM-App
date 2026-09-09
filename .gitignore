@@ -13,6 +13,8 @@ server/*.db-shm
 server/test-*.db*
 .env
 .env.local
+# Резервные копии .env — в них лежит заполненный ключ провайдера.
+.env.bak*
 
 # macOS / Xcode
 .DS_Store
