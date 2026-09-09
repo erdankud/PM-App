@@ -60,21 +60,33 @@ client.
 
 ### Render
 
-`render.yaml` at the repository root is a Blueprint: one web service and one Postgres.
-Point Render at the repo, pick the branch, and it reads that file.
+`render.yaml` at the repository root is a Blueprint: one web service, and a Postgres
+that is **not** Render's. Point Render at the repo, pick the branch, and it reads that
+file.
 
 It deploys the **Python** runtime rather than the Dockerfile, because the web client
 has to come with it — Render checks out the whole repository and runs from `server/`,
 so `../web` is where the app expects it. One service, one origin, `/app` and `/v1` on
 the same host, exactly as locally.
 
-Two things the file cannot carry:
+Two values are `sync: false` — they are typed into the dashboard and never live in
+the repository:
 
-- `EVALUATOR_API_KEY` is `sync: false` — set it by hand in the dashboard. A key in a
-  repository is a leaked key.
-- The database is Render's free plan, which is **deleted after 30 days**. Accounts and
-  practice sessions go with it. Move to a paid instance before anyone's progress is
-  worth keeping.
+- `EVALUATOR_API_KEY`. A key in a repository is a leaked key.
+- `DATABASE_URL`. Render's own free Postgres is **deleted after 30 days**, which is not
+  free, only deferred: accounts and practice sessions go with it. The database is
+  therefore external, and what is expected here is **Neon** — ordinary Postgres, so the
+  same `psycopg2` and the same migrations, on a free plan that does not expire. Use the
+  pooled host (`-pooler` in the name) with `?sslmode=require`. Neon parks its compute
+  after five minutes idle; the dropped connection is caught by `pool_pre_ping=True` in
+  `app/db.py`, which was already there.
+
+Neon's free plan meters **compute-hours** (100 a month), and its clock runs whenever
+something queries. The inline worker polls every 1.5 s, so the database stays awake for
+as long as the Render instance is awake — and a free Render instance sleeps after about
+15 minutes without traffic, which is what keeps the two budgets in step. If the compute
+hours run out anyway, `RUN_INLINE_WORKER=false` plus a separate worker service, or a
+provider that does not meter idle time, are the two ways out.
 
 `ENVIRONMENT=production` is not a label: `get_settings()` refuses to boot on the dev
 JWT secret, on `ALLOW_DEV_AUTH=true` and on the mock evaluator. It also removes the
