@@ -12,10 +12,7 @@
     <link rel="preload" href="/app/fonts/open-sauce-one-800.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="stylesheet" href="/app/fonts.css" />
     <link rel="stylesheet" href="/landing.css" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M7 4v9a4 4 0 0 0 4 4h3M7 4a2 2 0 1 0 0 .01M17 13a2 2 0 1 0 0 .01M17 4a2 2 0 1 0 0 .01M17 6v3a4 4 0 0 1-4 4'/%3E%3C/svg%3E"
-    />
+    <link rel="icon" href="/app/logo.svg" type="image/svg+xml" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -32,27 +29,38 @@
       <!-- ЭКРАН 1. Заливка и снимок, ничего нарисованного. Первый снимок
            грузится сразу: он и есть первый экран. -->
       <section class="band paper s-hero" aria-labelledby="hero-h">
-        <div class="inner">
-          <p class="eyebrow">
-            For people entering product management from zero, and for engineers
-            crossing into it.
-          </p>
-          <h1 id="hero-h"><span class="sr-only">PM Thinking Coach. </span>Product<br />Thinking</h1>
-          <div class="hero-foot">
-            <p class="lead">
-              The skill map of the profession, and a route through it. Read a
-              short lesson, then decide something real with incomplete data.
+        <div class="inner hero">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              For people entering product management from zero, and for engineers
+              crossing into it.
             </p>
-            <a class="pill" href="/app/">
-              Start free
-              <span class="arrow" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
-                    stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-            </a>
+            <h1 id="hero-h"><span class="sr-only">PM Thinking Coach. </span>Product<br />Thinking</h1>
+            <div class="hero-foot">
+              <p class="lead">
+                See the complete skill map of the profession and chart your path
+                through it. Learn through short, focused lessons, then apply what
+                you’ve learned by making real decisions with incomplete
+                information - the way the work actually happens.
+              </p>
+              <a class="pill" href="/app/">
+                Start free
+                <span class="arrow" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </a>
+            </div>
           </div>
+
+          <!-- Знак берётся маской из того же файла, что и иконка вкладки: один
+               контур на две роли, и цвет приходит от полосы, а не от заливки
+               внутри файла. В разметке он лежит рядом с текстовой колонкой, а не
+               внутри заголовка: место ему даёт сетка первого экрана. -->
+          <span class="hero-mark" aria-hidden="true"></span>
+
           <figure class="shot wide">
             <picture>
               <source media="(prefers-color-scheme: dark)" srcset="/app/shots/learn-dark.jpg" />
@@ -62,7 +70,6 @@
                      direction below them, and a black plate naming the next lesson to read."
               />
             </picture>
-            <figcaption>Learn. Which direction you are on, and what you read next.</figcaption>
           </figure>
         </div>
       </section>
@@ -75,14 +82,16 @@
             <p class="label frontier">The map</p>
             <h2 id="map-h">The map<br />comes first</h2>
             <p class="body">
-              You cannot close a gap you cannot see. Every skill of the craft is
-              one card on one sheet: what it is, the question it answers, the
-              models used in its context.
+              You can’t close a gap you can’t see. Every skill in the craft is
+              mapped and made visible, giving you a clear picture of your
+              competencies, blind spots, and areas for growth.
             </p>
             <p class="body">
-              Seventy-one product skills and ninety-six system-design skills, in
-              the same grammar. Both are open from day one, so somebody arriving
-              from engineering can start on the other side.
+              The map includes 71 Product Management skills and 96 System Design
+              skills. Both tracks are open from day one, so professionals can
+              enter from their existing area of expertise and build toward the
+              other side - whether you come from product, engineering, or another
+              discipline.
             </p>
             <p class="body legend">
               <span class="swatch" aria-hidden="true"></span>
@@ -99,7 +108,6 @@
                      with a red line drawn around the middle marking the skills covered so far."
               />
             </picture>
-            <figcaption>Skills Map. A card is one skill, and it opens a lesson.</figcaption>
           </figure>
         </div>
       </section>
@@ -116,20 +124,21 @@
                      holding an audio overview and a short summary of the point."
               />
             </picture>
-            <figcaption>A lesson, with the point of it stated before you read.</figcaption>
           </figure>
           <div class="col">
             <p class="label">Lessons</p>
             <h2 id="lesson-h">Short, and<br />never abstract</h2>
             <p class="body">
-              Every lesson names the cost of getting the skill wrong, and carries
-              one fictional company through the whole direction. Two hosts talk
-              the lesson over in an audio overview if you would rather listen.
+              Every lesson makes the cost of getting the skill wrong explicit and
+              follows one fictional company throughout, giving each concept a
+              consistent real-world context. If you prefer to listen, two hosts
+              discuss the lesson in a concise audio overview.
             </p>
             <p class="body">
-              Two hundred and forty-eight of them, in English and Russian. The
-              exercises between them are formative: they carry no score, and the
-              reasoning comes back either way.
+              The exercises between lessons are formative: there’s no score to
+              chase. Instead, you receive the reasoning behind the decision either
+              way, helping you understand not just what the right answer is, but
+              why.
             </p>
           </div>
         </div>
@@ -175,7 +184,6 @@
                      the block covers, each with the question it answers and the models it uses."
               />
             </picture>
-            <figcaption>A block. Four skills, six lessons, one gate at the end.</figcaption>
           </figure>
         </div>
       </section>
@@ -186,13 +194,13 @@
           <div class="head">
             <div class="col">
               <p class="label">Practice</p>
-              <h2 id="practice-h">Six interviews<br />you can rehearse</h2>
+              <h2 id="practice-h">Six practice modules<br />you can rehearse</h2>
             </div>
             <p class="body">
               Product Strategy, Product Sense, Analytics and Execution,
-              Leadership and Drive, Technical Fluency, Take-Home. There is no
-              question bank: the task is written the moment you press the button,
-              so it is not one somebody else already read in a review.
+              Leadership and Drive, Technical Fluency, Take-Home. No question
+              bank. Every task is generated on demand, so the challenge is fresh
+              and never something you’ve already seen before.
             </p>
           </div>
           <figure class="shot wide">
@@ -200,11 +208,10 @@
               <source media="(prefers-color-scheme: dark)" srcset="/app/shots/practice-dark.jpg" />
               <img
                 src="/app/shots/practice-light.jpg" width="1800" height="1125" loading="lazy" decoding="async"
-                alt="The Practice screen: six interview formats as cards, each saying what it tests
+                alt="The Practice screen: six practice formats as cards, each saying what it tests
                      and what shape the round takes, with a New task button."
               />
             </picture>
-            <figcaption>Practice. Formative, like the exercises: nothing here moves your score.</figcaption>
           </figure>
         </div>
       </section>
@@ -219,7 +226,7 @@
             <div class="stat"><dt>lessons</dt><dd class="mono">248</dd></div>
             <div class="stat"><dt>gates</dt><dd class="mono">36</dd></div>
             <div class="stat"><dt>scenarios</dt><dd class="mono">87</dd></div>
-            <div class="stat"><dt>interview formats</dt><dd class="mono">6</dd></div>
+            <div class="stat"><dt>practice formats</dt><dd class="mono">6</dd></div>
           </dl>
           <a class="pill inverse big" href="/app/">
             Start free
@@ -235,9 +242,7 @@
     </main>
 
     <footer class="fine">
-      <span>English and Русский</span>
-      <span>Email, Google, or a password</span>
-      <span>No leaderboards, no paywall, no chat tab</span>
+      <span>© 2026 Erdan Kudaibergen. All rights reserved.</span>
     </footer>
 
     <script type="module" src="/landing.js"></script>

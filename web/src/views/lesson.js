@@ -46,7 +46,11 @@ export function lessonView({ id }) {
   };
 
   // Переход, а не перезагрузка на месте: экран строит маршрутизатор. Стрелка
-  // при этом ведёт не в предыдущий урок, а в блок — см. `up()` в router.js.
+  // при этом ведёт не в предыдущий урок, а на домашний экран — см. `up()` в
+  // router.js. В блок с его рубежом ведёт отдельная кнопка внизу урока: выход
+  // наверх и переход к рубежу — разные намерения, и вешать их на одну стрелку
+  // значило отправлять читателя на страницу рубежа всякий раз, когда он просто
+  // закрывает урок.
   const advance = (nextId) => navigate(`/lesson/${nextId}`);
 
   const openTerm = (termId) => {
@@ -65,11 +69,11 @@ export function lessonView({ id }) {
 
   const render = () => {
     if (!lesson && error) {
-      fill(node, breadcrumb(S.Lesson.backToBlock, "/learn"), errorState(S.Common.couldntLoad, error.userMessage, load));
+      fill(node, breadcrumb(S.Tab.learn, "/learn"), errorState(S.Common.couldntLoad, error.userMessage, load));
       return;
     }
     if (!lesson) {
-      fill(node, breadcrumb(S.Lesson.backToBlock, "/learn"), loadingState());
+      fill(node, breadcrumb(S.Tab.learn, "/learn"), loadingState());
       return;
     }
 
@@ -87,7 +91,7 @@ export function lessonView({ id }) {
 
     fill(
       node,
-      breadcrumb(lesson.nodeTitle, `/block/${lesson.blockId}`),
+      breadcrumb(S.Tab.learn, "/learn"),
       h(
         "div.lesson-layout",
         h(

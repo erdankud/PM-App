@@ -595,6 +595,28 @@ boundaries it explains are unchanged).
 - Every call to action goes to `/app/`, which for a signed-out visitor is
   `welcomeView()` — sign in and sign up on one screen. There is nothing else to
   click.
+- **The header is a full-bleed sticky bar**: the name left, the note and a quiet
+  sign-in pill right, nothing in between. The bar itself was taken from the author's
+  portfolio (`erdankud.github.io/my_portfolio`), the type and buttons on it were not —
+  11 px uppercase on wide tracking was borrowed with it and put back on the author's
+  instruction, because that register argued with this page's own dense display type.
+  Section anchors were dropped at the same time; the page is six bands read in order,
+  and a menu into them was navigation for a document nobody scrolls past. It replaced a
+  floating glass pill, so the four-layer glass rules do not apply — here the device is
+  the grid, not the material. What the reference has no use for is the fill: it always
+  rides over white, this one rides over ink bands and screenshots, so it keeps a dense
+  ground (0.92) and a hairline bottom edge.
+- **One mark, two roles.** `web/logo.svg` is the product's node-graph glyph and it is
+  both the tab icon (the file fills itself, with its own `prefers-color-scheme` block,
+  because a favicon has nothing to inherit from) and the large mark on the first screen,
+  where it is cut as a CSS mask so the colour comes from the band and inverts with it.
+  It is 700 px there, and that is a ceiling, not a taste: the first screen is one row of
+  the mark beside a column of copy, and past ~700 the headline has to drop below 100 px
+  to keep «Thinking» on one line, at which point the mark leads the screen and the
+  sentence stops doing it.
+  Before this the tab icon and the sidebar carried two different glyphs. The sidebar
+  carries none now: a lone icon above the buttons in a collapsed rail reads as another
+  button, and it was not clickable.
 - **The pictures are screenshots, and the fields behind them are flat.** The first
   version drew the illustrations in a canvas — the skill map, the rubric, a block —
   and cut each card as a window into one large image. It read as noise: the drawing

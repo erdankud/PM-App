@@ -367,14 +367,11 @@ a { color: var(--accent); }
 
 .sidebar .mark {
   display: flex;
-  align-items: center;
-  gap: var(--space-s);
+  align-items: flex-start;
   padding: 0 var(--space-s) var(--space-l);
-  color: var(--accent);
   font-weight: 700;
   letter-spacing: -0.01em;
 }
-.sidebar .mark { align-items: flex-start; }
 .mark-words { display: flex; flex-direction: column; }
 .mark-line {
   font-size: 17px;
@@ -396,7 +393,9 @@ a { color: var(--accent); }
 /* Свёрнутое меню: остаются значки и цель нажатия 44 px, подписи уезжают
  * в `title` и `aria-label`, чтобы кнопка не превратилась в загадку. */
 .sidebar.collapsed { padding-inline: var(--space-s); }
-.sidebar.collapsed .mark { justify-content: center; padding-inline: 0; }
+/* Свёрнутая колонка: название спрятано, а больше в строке ничего нет —
+ * значит прячется и она сама, иначе сверху остаётся пустой отступ. */
+.sidebar.collapsed .mark { display: none; }
 .sidebar.collapsed .mark-words,
 .sidebar.collapsed .nav-item span,
 .sidebar.collapsed .footnote { display: none; }
@@ -905,6 +904,7 @@ input:focus, select:focus, textarea:focus {
   .sidebar .spacer, .sidebar .footnote { display: none; }
   .sidebar-toggle { display: none; }
   .sidebar.collapsed { padding-inline: var(--space-l); }
+  .sidebar.collapsed .mark { display: flex; }
   .sidebar.collapsed .mark-words,
   .sidebar.collapsed .nav-item span { display: inline; }
   .sidebar.collapsed .nav-item { padding: 0 var(--space-m); }
