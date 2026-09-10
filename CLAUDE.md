@@ -146,8 +146,8 @@ boundaries it explains are unchanged).
 - Per-node `aiImpact` is still `null` everywhere: the source map does not carry
   it and it must not be invented.
 - Both trees are complete: the product tree (18 blocks, 71 nodes) and System Design
-  (18 blocks, 96 nodes) are fully published. The corpus totals 254 lessons, 36 gates,
-  72 gate scenarios.
+  (18 blocks, 96 nodes) are fully published. The corpus totals 248 lessons (90 + 158), 36 gates and
+  87 gate scenarios — counted in `content/`, which is the only place that knows.
 - The «Полка» running example is numerically consistent across the System Design
   corpus: 180 тыс. активных × 1.4 сессии ≈ 250 тыс. сессий и ~20 тыс. заказов в сутки
   при 8 млн заказов накопленным итогом. Add a new number about «Полка» only after
@@ -573,6 +573,41 @@ boundaries it explains are unchanged).
   «Level 3» read as a second title of the screen (and it was a second `h1` in the
   document). It is a `.level-figure` now — a mono label over a large tabular numeral —
   which is the register the rest of the design already uses for designations.
+
+## The landing page
+
+- **`/` is the landing, `/app` is the client.** Three files at the root
+  (`web/landing.html`, `landing.css`, `landing.js`), served by `main.py` as three
+  explicit routes rather than a fourth mount — `StaticFiles` on `/` would swallow
+  `/v1`. The root used to redirect into the app, which meant a link put a stranger
+  in a sign-in form before they knew what the product was. `tests/test_landing.py`
+  pins both halves.
+- It shares nothing with the client but the fonts: no `strings.js`, no `api.js`, no
+  session. Its own stylesheet, its own module, and `/app/fonts.css` for the four
+  self-hosted families — **still nothing from a third-party host**.
+- Every call to action goes to `/app/`, which for a signed-out visitor is
+  `welcomeView()` — sign in and sign up on one screen. There is nothing else to
+  click.
+- **The pictures are drawn, not photographed.** The reference brief's masked-card
+  trick shares one large image across several cards, each showing a different
+  window into it; here that image is generated in a canvas — the product's own
+  skill map, the gate rubric, a block — because this product has no objects to
+  photograph and stock imagery would be a lie about what it is. One expensive draw
+  into an offscreen canvas per section, then `drawImage` blits into each card. A
+  `ResizeObserver`-less redraw on `resize` and on `document.fonts.ready`, because
+  headings change height and take the windows with them.
+- The canvas is an **opaque fill inside the card**, so everything else in a card
+  needs its own stacking context: `.card > *:not(canvas) { z-index: 2 }`. Written as
+  a rule on all children rather than on a wrapper class — the wrapper is optional,
+  the background is not.
+- Motion is the same two things as the app (`web/src/motion.js` documents why), and
+  the landing repeats them rather than importing: splash counted with
+  `requestAnimationFrame` plus a hard timeout, reveal on an IntersectionObserver at
+  0.15 with a 1200 ms safety net. Both off under `prefers-reduced-motion`.
+- **Every number on it is counted, not quoted.** 167 skills, 248 lessons, 36 gates,
+  87 scenarios, 6 formats; 25 / 45 / 70 read off `app/services/scoring.py`. This
+  file said 254 lessons while the corpus held 248 — check the corpus before printing
+  a figure on a page strangers read.
 
 ## Web client
 

@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.config import SERVER_ROOT, settings
@@ -107,12 +107,44 @@ class WebFiles(StaticFiles):
         return response
 
 
+LANDING = {
+    "/": ("landing.html", "text/html; charset=utf-8"),
+    "/landing.css": ("landing.css", "text/css; charset=utf-8"),
+    "/landing.js": ("landing.js", "text/javascript; charset=utf-8"),
+}
+
+
+def _landing(name: str, media_type: str):
+    """Три файла в корне, а не четвёртая точка монтирования.
+
+    Лендинг — это страница, а не приложение: у него нет ни маршрутов, ни модулей,
+    ни своей директории, и StaticFiles на корне перехватил бы всё, включая /v1.
+    Шрифты он берёт из /app/fonts.css, потому что там они уже лежат и origin один.
+    """
+
+    def handler() -> FileResponse:
+        return FileResponse(
+            WEB_ROOT / name,
+            media_type=media_type,
+            headers={"Cache-Control": "no-cache"},
+        )
+
+    return handler
+
+
 if WEB_ROOT.is_dir():
     app.mount("/app", WebFiles(directory=WEB_ROOT, html=True), name="web")
 
-    @app.get("/", include_in_schema=False)
-    def web_root() -> RedirectResponse:
-        return RedirectResponse(url="/app/")
+    if (WEB_ROOT / "landing.html").is_file():
+        # Корень — витрина, /app — клиент. Человек, пришедший по ссылке, сначала
+        # должен узнать, что это, а не упереться в форму входа.
+        for route, (name, media_type) in LANDING.items():
+            app.get(route, include_in_schema=False)(_landing(name, media_type))
+    else:
+
+        @app.get("/", include_in_schema=False)
+        def web_root() -> RedirectResponse:
+            return RedirectResponse(url="/app/")
 
 
 @app.get("/health", tags=["ops"])

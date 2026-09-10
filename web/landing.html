@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>PM Thinking Coach — the map of the craft, and a route through it</title>
+    <meta
+      name="description"
+      content="A course for people entering product management from zero. 167 skills mapped across two trees, 248 short lessons, and gates that check you can apply a skill rather than recite it."
+    />
+    <link rel="preload" href="/app/fonts/open-sauce-one-800.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="/app/fonts.css" />
+    <link rel="stylesheet" href="/landing.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M7 4v9a4 4 0 0 0 4 4h3M7 4a2 2 0 1 0 0 .01M17 13a2 2 0 1 0 0 .01M17 4a2 2 0 1 0 0 .01M17 6v3a4 4 0 0 1-4 4'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div id="splash"><div class="count mono">0</div></div>
+
+    <header class="nav">
+      <a class="brand" href="/">
+        <b>PM Thinking</b>
+        <b>Coach</b>
+        <small>the map of the craft</small>
+      </a>
+      <div class="nav-right">
+        <span class="nav-note">Free while it is being built</span>
+        <a class="pill" href="/app/">
+          Sign in
+          <span class="arrow" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ЭКРАН 1. Фон один на все четыре карточки: это настоящая карта навыков,
+         нарисованная в canvas, а карточки — окна в неё. -->
+    <section class="s-hero" id="s1">
+      <div class="bars">
+        <div class="card window bar rise" data-window><span>Six domains, three rings</span></div>
+        <div class="card window bar rise" data-window><span>A lesson ends in a decision</span></div>
+        <div class="card window bar rise" data-window><span>Six interviews you can rehearse</span></div>
+      </div>
+      <div class="card window hero rise" data-window>
+        <p class="eyebrow">
+          For people entering product management from zero — and for engineers
+          crossing into it.
+        </p>
+        <div class="title">
+          <span class="kicker">PM Thinking Coach</span>
+          <h1>Product<br />Thinking</h1>
+        </div>
+        <div class="corner">
+          <a class="pill ghost" href="/app/">
+            Start free
+            <span class="arrow" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 2. Второй общий фон — решётка узлов и связей. -->
+    <section id="s2">
+      <div class="grid">
+        <div class="card window pad between rise" data-window>
+          <h2 class="card-h">The map comes first</h2>
+          <p class="card-p">
+            You cannot close a gap you cannot see. Every skill of the craft is one
+            card on one sheet — what it is, the question it answers, the models
+            used in its context.
+          </p>
+        </div>
+
+        <div class="card window tall pad between rise" data-window>
+          <div>
+            <p class="label">Two trees</p>
+            <h2 class="card-xl">Product<br />&amp; Systems</h2>
+          </div>
+          <div>
+            <p class="card-p tight">
+              Seventy-one product skills and ninety-six system-design skills, in the
+              same grammar. Both are open from day one — someone arriving from
+              engineering may well start on the other side.
+            </p>
+            <a class="pill ghost" href="/app/">
+              Open the map
+              <span class="arrow" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                  <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="card window pad between rise" data-window>
+          <h2 class="card-xl">Read.<br />Then<br />decide.</h2>
+          <p class="label">Not a quiz</p>
+        </div>
+
+        <div class="card window wide rise" data-window>
+          <div class="parts">
+            <article class="part on">
+              <div>
+                <h3>Lessons</h3>
+                <p>Short, and each one names the cost of getting the skill wrong.</p>
+              </div>
+              <span class="num mono">01</span>
+            </article>
+            <article class="part">
+              <div>
+                <h3>Gates</h3>
+                <p>A real situation with incomplete data, at the end of every block.</p>
+              </div>
+              <span class="num mono">02</span>
+            </article>
+            <article class="part">
+              <div>
+                <h3>Exercises</h3>
+                <p>Formative: they carry no score, and the reasoning comes back either way.</p>
+              </div>
+              <span class="num mono">03</span>
+            </article>
+            <article class="part">
+              <div>
+                <h3>Practice</h3>
+                <p>Six interview formats, each task written the moment you ask for it.</p>
+              </div>
+              <span class="num mono">04</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 3. Без общего фона: сплошные заливки и нарисованные схемы. -->
+    <section id="s3">
+      <div class="cols">
+        <div class="col">
+          <div class="card fill-stone pad between rise grow">
+            <h2 class="card-xl">What a<br />gate reads</h2>
+            <p class="card-p">
+              Picking the right option is worth 25 of 100. Why you picked it is
+              worth 45. Passing is 70 — so the option alone can never carry it.
+            </p>
+          </div>
+
+          <div class="figures rise">
+            <figure class="figure">
+              <figcaption>Rubric</figcaption>
+              <canvas data-figure="rubric"></canvas>
+            </figure>
+            <figure class="figure">
+              <figcaption>A block</figcaption>
+              <canvas data-figure="route"></canvas>
+            </figure>
+          </div>
+
+          <div class="card fill-zinc pad rise shrink">
+            <div class="in split">
+              <div>
+                <p class="label">Practice</p>
+                <h3 class="card-h">
+                  Strategy. Sense.<br />Analytics. Leadership.<br />Technical. Take-home.
+                </h3>
+              </div>
+              <a class="pill ghost" href="/app/">
+                Try a round
+                <span class="arrow" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card fill-ink map-card rise">
+          <canvas data-figure="frontier"></canvas>
+          <div class="overlay">
+            <article class="o-card solid">
+              <h4>Failure is<br />information</h4>
+              <p>A missed gate never takes XP away and never locks anything. It comes back naming the lessons to reread.</p>
+              <span class="ring-arrow" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                  <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </article>
+            <article class="o-card glass">
+              <h4>The red line<br />is your ground</h4>
+              <p>The only colour on the map. Per direction it stands off the centre in proportion to what you have actually covered.</p>
+              <span class="ring-arrow" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                  <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЗАКРЫТИЕ -->
+    <section id="s4">
+      <div class="card fill-ink close-card rise">
+        <div>
+          <p class="label inverse">Start where you are</p>
+          <h2>Find the<br />gap. Close it.</h2>
+        </div>
+        <div class="close-foot">
+          <div class="stats">
+            <div class="stat"><b class="mono">167</b><span>skills mapped</span></div>
+            <div class="stat"><b class="mono">248</b><span>lessons</span></div>
+            <div class="stat"><b class="mono">36</b><span>gates</span></div>
+            <div class="stat"><b class="mono">87</b><span>scenarios</span></div>
+            <div class="stat"><b class="mono">6</b><span>interview formats</span></div>
+          </div>
+          <a class="pill ghost big" href="/app/">
+            Sign in or sign up
+            <span class="arrow" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+                <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+      <p class="fine">
+        <span>Русский и English</span>
+        <span>Email, Google, or a password</span>
+        <span>No leaderboards, no paywall, no chat tab</span>
+      </p>
+    </section>
+
+    <script type="module" src="/landing.js"></script>
+  </body>
+</html>
