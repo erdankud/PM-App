@@ -2018,6 +2018,41 @@ dialog .actions { display: flex; gap: var(--space-s); justify-content: flex-end;
 }
 
 .practice-field { display: flex; flex-direction: column; gap: var(--space-xs); }
+/* Возражение и поле, которым на него отвечают, — одна связка: между ними зазор
+ * меньше, чем между полями канвы, иначе реплика читается как отдельный раздел,
+ * а не как то, на что отвечает следующее поле. */
+.practice-field-group { display: flex; flex-direction: column; gap: var(--space-m); }
+
+/* Реплика чужого голоса: она не заперта декоративно — до неё нельзя ответить,
+ * и запертое состояние это показывает, а не прячет. */
+.practice-pushback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-l);
+  border: 1px solid var(--separator-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface-tinted);
+}
+.practice-pushback.locked {
+  border-style: dashed;
+  border-color: var(--separator);
+  background: none;
+  color: var(--text-tertiary);
+}
+.practice-pushback .row { align-items: center; gap: var(--space-xs); }
+.practice-pushback-text {
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.practice-pushback-text.reviewed {
+  padding-left: var(--space-m);
+  border-left: 2px solid var(--separator-strong);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
 .practice-field-label {
   display: flex;
   align-items: baseline;

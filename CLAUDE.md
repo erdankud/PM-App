@@ -223,11 +223,34 @@ boundaries it explains are unchanged).
 
 - Six kinds of product interview, one simulation each: Product Strategy, Product Sense,
   Analytics and Execution, Leadership & Drive (behavioral), Technical Fluency, Take-Home.
-  The catalogue is `server/app/practice_catalogue.py`; **only `product_sense` is live**,
-  and the other five render as tiles marked "In preparation". A track that exists but has
-  no generator answers **409 `practice_track_not_ready`**, never 404 — the direction is on
-  the screen, it is just not open yet, and the client shows the tile and withholds the
-  button.
+  The catalogue is `server/app/practice_catalogue.py`, and **all six are live**. A track
+  that exists but is not open answers **409 `practice_track_not_ready`**, never 404 — the
+  direction is on the screen, it is just not open yet, and the client shows the tile and
+  withholds the button. Nothing is dormant today, so
+  `test_unknown_track_is_404_and_unfinished_track_is_409` makes one dormant with
+  `monkeypatch`; that rule must stay tested or the next track gets added broken.
+- **Six forms, two mechanisms.** The five tracks after Product Sense were built by
+  generalising what Product Sense already had, not by giving each one a schema:
+  - **Clarifiers** — what can be asked *before* answering, with the interviewer's reply.
+    Product Sense calls them clarifying questions, Analytics calls them cuts of the data
+    and answers them with numbers, Take-Home calls them what the hiring manager will
+    answer by email. Same mechanism, same `asked` list, same filtering against the brief.
+    The label is the track's (`clarifier_title` / `clarifier_hint`), which is why the
+    analytics round reads as requesting data rather than asking questions.
+  - **The counter** — a line that lands *after* a position is taken. Only
+    `product_strategy` («Executive pushback») and `technical_fluency` («The
+    counter-argument») use it. The brief carries `counter`, the track names the canvas
+    field that answers it (`counter_field`), and `counter_after` derives which fields must
+    be filled first. The web client keeps the panel locked until they are, because an
+    objection you can read before committing is not an objection.
+  Consequently there is **no per-track endpoint, schema or session model**: `FEEDBACK_SCHEMA`
+  is one constant and only the rules text varies per track (`BRIEF_RULES` / `FEEDBACK_RULES`
+  in `app/ai/practice_prompt.py`). The 0–3 score anchors are deliberately shared — a «3»
+  must mean the same thing in strategy as in analytics, or comparing your own rounds across
+  tracks means nothing.
+- `kinds` are validated **per track**, not against one global list: `diagnose` in analytics
+  and `diagnose` in product sense are different tasks, and a kind borrowed from another
+  track's vocabulary is a brief nothing here has rules for.
 - **There is no question bank, on purpose.** Fifty pre-written tasks run out, and a
   pre-written task is one the next person already read in someone else's review. The task
   is generated when the button is pressed, at `temperature=1.0`, with the titles of the

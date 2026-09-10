@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import dataclasses
 import re
 
 import pytest
@@ -43,6 +44,28 @@ ANSWERS = {
 }
 
 
+def filled(track_id: str) -> dict[str, str]:
+    """Ответ, который проходит нижние границы канвы этого направления.
+
+    Собирается из канвы, а не пишется руками на каждое направление: иначе
+    добавление поля молча оставляло бы его пустым во всех тестах, и «разбор
+    покрывает всю канву» проверялось бы на ответе, где полканвы нет.
+    """
+    entry = practice_catalogue.track(track_id)
+    answers = {}
+    for index, item in enumerate(entry.canvas):
+        text = (
+            f"On {item.label.lower()} I would start from what the brief actually says, "
+            f"because the {index + 1} step only counts if it follows from the one before "
+            f"it. Concretely: about 30 percent of the people described here are in the "
+            f"segment I picked, and I would rather give up breadth than give up the reason."
+        )
+        answers[item.id] = text + " " * 0
+        while len(answers[item.id]) < item.min_chars:
+            answers[item.id] += " I would say the same thing again with a number: 12."
+    return answers
+
+
 def generate(client, headers, track: str = "product_sense") -> dict:
     response = client.post(f"/v1/practice/tracks/{track}/sessions", headers=headers)
     assert response.status_code == 201, response.json()
@@ -70,9 +93,13 @@ def test_catalogue_lists_all_six_tracks(client):
         "technical_fluency",
         "take_home",
     ]
-    # Готовые направления отмечены сервером, а не догадкой клиента: плитка
-    # остальных видна, кнопки у неё нет.
-    assert [track["id"] for track in tracks if track["live"]] == ["product_sense"]
+    # Готовность отмечает сервер, а не догадка клиента. Сейчас открыты все шесть;
+    # проверяется здесь не число, а то, что признак приходит с сервера и что у
+    # открытого направления есть канва, на которой можно отвечать.
+    for track in tracks:
+        assert track["live"] is True
+        assert len(track["canvas"]) >= 5
+        assert track["clarifierTitle"] and track["clarifierHint"]
 
 
 def test_practice_texts_are_english_at_any_ui_language(client):
@@ -91,31 +118,56 @@ def test_practice_texts_are_english_at_any_ui_language(client):
         assert not CYRILLIC.search(blob), f"кириллица в каталоге Practice ({language})"
 
 
-def test_unknown_track_is_404_and_unfinished_track_is_409(client):
+def test_unknown_track_is_404_and_unfinished_track_is_409(client, monkeypatch):
+    """Разница между «нет такого» и «ещё не открыто» — часть контракта с клиентом.
+
+    Сейчас открыты все шесть направлений, поэтому дремлющее берётся подменой: без
+    этого правило, на котором держится плитка «готовится», перестало бы
+    проверяться ровно в тот день, когда открыли последнее направление, — и
+    следующее направление завели бы уже сломанным.
+    """
     headers, _ = onboard(client)
     assert client.post("/v1/practice/tracks/nope/sessions", headers=headers).status_code == 404
-    response = client.post("/v1/practice/tracks/product_strategy/sessions", headers=headers)
+
+    dormant = dataclasses.replace(practice_catalogue.track("take_home"), live=False)
+    monkeypatch.setitem(practice_catalogue.BY_ID, "take_home", dormant)
+    response = client.post("/v1/practice/tracks/take_home/sessions", headers=headers)
     assert response.status_code == 409
     assert response.json()["detail"]["code"] == "practice_track_not_ready"
 
 
-def test_generated_brief_is_answerable(client):
+@pytest.mark.parametrize("track_id", [track.id for track in practice_catalogue.live_tracks()])
+def test_generated_brief_is_answerable(client, track_id):
+    entry = practice_catalogue.track(track_id)
     headers, _ = onboard(client)
-    brief = generate(client, headers)["brief"]
-    assert brief["kind"] in {"improve", "design", "evaluate", "diagnose"}
+    brief = generate(client, headers, track_id)["brief"]
+    # Вид задачи проверяется по словарю направления: он задаёт форму вопроса, и
+    # вид из чужого словаря означал бы задачу, под которую здесь нет ни правил,
+    # ни канвы.
+    assert brief["kind"] in entry.kinds
     assert len(brief["context"]) >= 80
     assert 2 <= len(brief["constraints"]) <= 4
     # Уточнения — не украшение: их меньше двух не бывает, и у каждого есть ответ,
     # иначе «спроси, если нужно» ничего не даёт.
     assert len(brief["clarifiers"]) >= 2
     assert all(item["question"] and item["answer"] for item in brief["clarifiers"])
+    # Возражение есть ровно там, где на него отвечают полем канвы. Иначе человек
+    # получил бы поле «ответьте на возражение» и ни одного возражения.
+    if entry.counter_field is None:
+        assert brief.get("counter") is None
+    else:
+        assert len(brief["counter"]) >= 40
+        assert entry.counter_field in {item.id for item in entry.canvas}
 
 
-def test_feedback_covers_every_canvas_field_in_order(client):
+@pytest.mark.parametrize("track_id", [track.id for track in practice_catalogue.live_tracks()])
+def test_feedback_covers_every_canvas_field_in_order(client, track_id):
     headers, _ = onboard(client)
-    session = answer(client, headers, generate(client, headers))
+    session = answer(
+        client, headers, generate(client, headers, track_id), answers=filled(track_id)
+    )
     feedback = session["feedback"]
-    canvas = [item.id for item in practice_catalogue.track("product_sense").canvas]
+    canvas = [item.id for item in practice_catalogue.track(track_id).canvas]
     # Порядок разбора совпадает с порядком холста: иначе замечание к полю
     # приходится искать, а читается он рядом с собственным ответом.
     assert [item["id"] for item in feedback["fields"]] == canvas

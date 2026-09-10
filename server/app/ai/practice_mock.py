@@ -26,7 +26,7 @@ _TRADEOFF = re.compile(
     re.IGNORECASE,
 )
 
-_BRIEFS = (
+_PRODUCT_SENSE_BRIEFS = (
     {
         "title": "Weeknight cooking on a grocery app",
         "company": "Larder (fictional grocery delivery, 2.1m monthly users)",
@@ -118,8 +118,213 @@ _BRIEFS = (
 )
 
 
+_PRODUCT_STRATEGY_BRIEFS = (
+    {
+        "title": "Same-day delivery in a market that already has it",
+        "company": "Harrow (fictional home goods retailer, 340m EUR revenue)",
+        "kind": "enter",
+        "context": (
+            "Harrow sells furniture and homeware through 60 stores and a web shop that "
+            "takes 31% of revenue. Two marketplaces now offer same-day delivery on small "
+            "homeware in the same cities and have taken roughly four points of category "
+            "share in eighteen months. Harrow's own delivery is a three-day promise run "
+            "by a contracted carrier at 6.20 EUR a parcel. Board members are asking "
+            "whether the stores are a same-day network nobody is using."
+        ),
+        "prompt": "Should Harrow enter same-day delivery, and if so on what basis?",
+        "counter": (
+            "Same-day is a race we cannot win. The marketplaces are subsidising delivery "
+            "out of advertising revenue we do not have, and we would be spending margin "
+            "to match a promise our customers have never asked us for."
+        ),
+        "constraints": [
+            "The carrier contract runs for two more years at a fixed volume commitment",
+            "Store staffing is set by the retail P&L and cannot grow this year",
+        ],
+        "clarifiers": [
+            {
+                "question": "What share of orders is within same-day range of a store?",
+                "answer": "About 54% of online orders ship to a postcode within 15 km of a store.",
+            },
+            {
+                "question": "How does basket size differ between the marketplaces and Harrow?",
+                "answer": "Marketplace homeware baskets average 28 EUR; Harrow's online basket is 96 EUR.",
+            },
+            {
+                "question": "What does a store fulfilment pick cost today?",
+                "answer": "Click-and-collect picks cost about 2.40 EUR in staff time, measured last year.",
+            },
+        ],
+    },
+)
+
+_ANALYTICAL_BRIEFS = (
+    {
+        "title": "Weekly active teams flat after a launch that tested well",
+        "company": "Ledger Room (fictional B2B accounting tool, 9,400 paying teams)",
+        "kind": "flat",
+        "context": (
+            "Ledger Room shipped a redesigned month-end close checklist six weeks ago. In "
+            "the beta it raised on-time closes by eleven points. Since general "
+            "availability, weekly active teams have held at 6,100, exactly where they were "
+            "before, and on-time closes have moved by less than a point. The team has "
+            "already ruled out a tracking outage: event volume is continuous, and the two "
+            "release cohorts show identical instrumentation coverage."
+        ),
+        "prompt": "The launch moved nothing. Work out why, and say what you would do about it.",
+        "constraints": [
+            "The next release train is in three weeks and the slot is already allocated",
+            "Event data older than 90 days is not retained",
+        ],
+        "clarifiers": [
+            {
+                "question": "Split weekly active teams by whether they have opened the new checklist.",
+                "answer": "1,900 teams have opened it; they are up 14%. The other 4,200 are down 6%.",
+            },
+            {
+                "question": "How do teams reach the checklist?",
+                "answer": "Only from the close screen, which 2,300 teams visited in the last 30 days.",
+            },
+            {
+                "question": "Break on-time closes down by team size.",
+                "answer": "Teams under five people: up 9 points. Teams over twenty: down 2 points.",
+            },
+            {
+                "question": "Did anything else ship in the same window?",
+                "answer": "A pricing page change on the marketing site. No product surface was touched.",
+            },
+            {
+                "question": "What did the beta cohort look like?",
+                "answer": "412 teams, all of whom had asked to be in it, median size four people.",
+            },
+        ],
+    },
+)
+
+_LEADERSHIP_BRIEFS = (
+    {
+        "title": "Disagreeing with someone who outranked you",
+        "company": "Senior PM, payments at a fictional travel marketplace",
+        "kind": "conflict",
+        "context": (
+            "This interviewer is listening for whether you can disagree without stalling "
+            "the work, and whether the decision that came out of it was better for your "
+            "having pushed. At this level they expect the disagreement to have been about "
+            "something that mattered to the business, not about process."
+        ),
+        "prompt": (
+            "Tell me about a time you disagreed with someone more senior than you about a "
+            "decision you owned. What did you do?"
+        ),
+        "constraints": [
+            "From the last three years, in a professional setting",
+            "You have to be able to say what the decision cost or saved",
+        ],
+        "clarifiers": [
+            {
+                "question": "Do you want the disagreement itself or how it was resolved?",
+                "answer": "Both, but spend most of the time on what you personally did about it.",
+            },
+            {
+                "question": "Does it matter whether I turned out to be right?",
+                "answer": "No. I care how you handled being unsure, and what you did afterwards.",
+            },
+        ],
+    },
+)
+
+_TECHNICAL_BRIEFS = (
+    {
+        "title": "Answers that cite the wrong policy document",
+        "company": "Kestrel (fictional HR software, 700 enterprise customers)",
+        "kind": "tradeoff",
+        "context": (
+            "Kestrel's assistant answers employee questions about company policy by "
+            "retrieving from each customer's uploaded documents. Support has logged 240 "
+            "cases in a quarter where the answer was confidently wrong because it "
+            "retrieved a superseded version of a policy. Engineering has proposed two "
+            "fixes: re-rank retrieved passages with a larger model, adding about 900 ms "
+            "per answer, or require customers to mark documents as current, which shifts "
+            "work onto them. You are explaining the choice to the support lead, who has "
+            "to tell customers what is changing."
+        ),
+        "prompt": "Explain what is going wrong and say which fix you would ship.",
+        "counter": (
+            "Re-ranking does not fix this. The superseded document is genuinely the best "
+            "match for the query — it says the same things in the same words. You are "
+            "spending 900 milliseconds on every answer to maybe help one in fifty."
+        ),
+        "constraints": [
+            "The answer latency budget is 3 seconds end to end; today it averages 2.1",
+            "No engineering time for a document versioning system before Q3",
+        ],
+        "clarifiers": [
+            {
+                "question": "How many of the 240 cases involve documents that have a newer version uploaded?",
+                "answer": "218 of 240. In those cases the current version is present and was not retrieved.",
+            },
+            {
+                "question": "Do uploads carry any date we can trust?",
+                "answer": "File upload timestamps are reliable. Dates inside documents are not.",
+            },
+            {
+                "question": "What does an answer cost today?",
+                "answer": "About 0.004 EUR. Re-ranking would roughly triple it, on 1.2m answers a month.",
+            },
+        ],
+    },
+)
+
+_TAKE_HOME_BRIEFS = (
+    {
+        "title": "Two quarters for a product with good numbers and bad retention",
+        "company": "Bellhop (fictional shift-scheduling app for hospitality)",
+        "kind": "roadmap",
+        "context": (
+            "Bellhop has 3,100 paying venues and grew signups 40% last year. Month-three "
+            "retention is 46%, against 71% for the two venues-per-manager cohort. Support "
+            "volume is dominated by shift-swap disputes: 38% of tickets. A manager in a "
+            "user interview said «I still keep the real rota in a spreadsheet, the app is "
+            "where I publish it». Sales says every lost deal mentions payroll export. The "
+            "team is six engineers, one designer, and runway to the end of next year."
+        ),
+        "prompt": (
+            "Write a one-page recommendation for the next two quarters. We expect this to "
+            "take about 90 minutes and we do not reward more."
+        ),
+        "constraints": [
+            "Six engineers and one designer, no hiring before next year",
+            "A signed commitment to ship payroll export to one chain by the end of Q1",
+        ],
+        "clarifiers": [
+            {
+                "question": "How long should the document be?",
+                "answer": "One page of argument. Appendices are fine but we may not read them.",
+            },
+            {
+                "question": "Who is the audience?",
+                "answer": "Me and the CTO. Assume we know the product and not your reasoning.",
+            },
+        ],
+    },
+)
+
+# Кольцо заготовок на каждое направление. У пяти из шести оно длиной в одну
+# задачу: заглушка существует, чтобы проверялись экран и сохранение, а не чтобы
+# заменять модель — «другая задача» вернёт ту же самую, и это видно сразу.
+_BRIEFS: dict[str, tuple[dict, ...]] = {
+    "product_sense": _PRODUCT_SENSE_BRIEFS,
+    "product_strategy": _PRODUCT_STRATEGY_BRIEFS,
+    "analytical_execution": _ANALYTICAL_BRIEFS,
+    "leadership_drive": _LEADERSHIP_BRIEFS,
+    "technical_fluency": _TECHNICAL_BRIEFS,
+    "take_home": _TAKE_HOME_BRIEFS,
+}
+
+
 def brief(track: Track, sequence: int) -> str:
-    payload = dict(_BRIEFS[sequence % len(_BRIEFS)])
+    ring = _BRIEFS[track.id]
+    payload = dict(ring[sequence % len(ring)])
     return json.dumps(payload, ensure_ascii=False)
 
 

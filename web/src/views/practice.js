@@ -340,10 +340,14 @@ export function practiceSessionView({ id }) {
   const draft = readDraft(id);
   const answers = draft.answers || {};
   const asked = new Set(draft.asked || []);
+  // Прочитанное возражение остаётся прочитанным: перезагрузка страницы не должна
+  // запирать обратно то, на что человек уже начал отвечать.
+  let counterSeen = Boolean(draft.counterSeen);
   let seconds = draft.seconds || 0;
   let ticker = null;
 
-  const persist = () => writeDraft(id, { answers, asked: [...asked], seconds });
+  const persist = () =>
+    writeDraft(id, { answers, asked: [...asked], counterSeen, seconds });
 
   const stopClock = () => {
     if (ticker) clearInterval(ticker);
@@ -400,11 +404,57 @@ export function practiceSessionView({ id }) {
     if (session.status === "answered") window.scrollTo({ top: 0 });
   };
 
+  /** Поля, которые должны быть заполнены, прежде чем откроется возражение.
+   *  Правило то же, что на сервере: всё, что стоит в канве до поля-ответа. */
+  const beforeCounter = () => {
+    if (!track.counterField) return [];
+    const index = track.canvas.findIndex((item) => item.id === track.counterField);
+    return index <= 0 ? [] : track.canvas.slice(0, index);
+  };
+
+  const counterUnlocked = () =>
+    counterSeen ||
+    beforeCounter().every((item) => (answers[item.id] || "").trim().length >= item.minChars);
+
+  let pushbackNode = null;
+
+  /** Возражение появляется само, когда позиция занята, но перерисовывается
+   *  отдельно от канвы: полная перерисовка вынула бы курсор из поля, в котором
+   *  человек в эту секунду пишет. */
+  const pushback = () => {
+    const open = counterUnlocked();
+    if (open && !counterSeen) {
+      counterSeen = true;
+      persist();
+    }
+    return h(
+      `div.practice-pushback${open ? "" : ".locked"}`,
+      h(
+        "div.row",
+        icon(open ? "quote.bubble" : "lock", { size: 14 }),
+        h("span.caption.tertiary", track.counterTitle)
+      ),
+      open
+        ? [
+            h("p.practice-pushback-text", session.brief.counter),
+            track.counterHint && h("p.practice-field-hint", track.counterHint),
+          ]
+        : h("p.practice-field-hint", S.Practice.counterLocked)
+    );
+  };
+
+  const refreshPushback = () => {
+    if (!pushbackNode) return;
+    const next = pushback();
+    pushbackNode.replaceWith(next);
+    pushbackNode = next;
+  };
+
   const canvasField = (field) => {
     const value = answers[field.id] || "";
     const left = field.minChars - value.trim().length;
     const counter = h("span.practice-counter", left > 0 ? S.Practice.charactersLeft(left) : "");
-    return h(
+    const wrap = h(
       "div.practice-field",
       h(
         "label.practice-field-label",
@@ -421,9 +471,13 @@ export function practiceSessionView({ id }) {
           persist();
           const remaining = field.minChars - event.target.value.trim().length;
           counter.textContent = remaining > 0 ? S.Practice.charactersLeft(remaining) : "";
+          if (!counterSeen) refreshPushback();
         },
       })
     );
+    if (track.counterField !== field.id) return wrap;
+    pushbackNode = pushback();
+    return h("div.practice-field-group", pushbackNode, wrap);
   };
 
   /** Ответ и замечание к нему — рядом. Разбор, собранный отдельным списком внизу,
@@ -437,6 +491,9 @@ export function practiceSessionView({ id }) {
         h("span.practice-field-name", field.label),
         item && h("span.practice-score", `${item.score}/5`)
       ),
+      track.counterField === field.id &&
+        session.brief.counter &&
+        h("p.practice-pushback-text.reviewed", session.brief.counter),
       h("p.practice-answer", session.answers[field.id] || "—"),
       item && h("p.practice-note", item.note)
     );
@@ -447,7 +504,10 @@ export function practiceSessionView({ id }) {
     if (!list.length) return null;
     return h(
       "div.practice-clarifiers",
-      sectionHeader(S.Practice.clarifiers, S.Practice.clarifiersHint),
+      sectionHeader(
+        track.clarifierTitle || S.Practice.clarifiers,
+        track.clarifierHint || S.Practice.clarifiersHint
+      ),
       list.map((item) => {
         const row = h("div.practice-clarifier", h("p.practice-clarifier-q", item.question));
         // Открывается только эта строка: перерисовка всего экрана вынула бы
@@ -570,7 +630,7 @@ export function practiceSessionView({ id }) {
       session.asked.length > 0 &&
         h(
           "div.practice-clarifiers",
-          sectionHeader(S.Practice.clarifiers, null),
+          sectionHeader(track.clarifierTitle || S.Practice.clarifiers, null),
           session.asked.map((question) => h("p.practice-clarifier-q", question))
         )
     );

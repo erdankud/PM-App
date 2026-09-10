@@ -735,6 +735,7 @@ Practice: {
   get clarifiers() { return t("Clarifying questions", "Уточняющие вопросы"); },
   get clarifiersHint() { return t( "Ask before you answer. What you choose to ask is part of what the review reads.", "Спрашивайте до ответа: что именно вы спросили, разбор тоже читает." ); },
   get ask() { return t("Ask", "Спросить"); },
+  get counterLocked() { return t( "Fill in the fields above first — the objection comes after you have committed.", "Сначала заполните поля выше: возражение приходит после того, как позиция занята." ); },
   get yourAnswer() { return t("Your answer", "Ваш ответ"); },
   get timeOnTask() { return t("Time on task", "Время над задачей"); },
   target(minutes) {

@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 PROMPT_VERSION = "eval-2026-08-23"  # adds the output-language rule
-PRACTICE_PROMPT_VERSION = "practice-2026-09-09"  # первый выпуск модуля Practice
+PRACTICE_PROMPT_VERSION = "practice-2026-09-09b"  # все шесть направлений
 
 
 @dataclass(frozen=True)

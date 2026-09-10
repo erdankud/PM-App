@@ -130,6 +130,11 @@ def list_tracks(user: CurrentUser, db: DbSession) -> PracticeTracksResponse:
                     )
                     for item in track.canvas
                 ],
+                clarifier_title=track.clarifier_title,
+                clarifier_hint=track.clarifier_hint,
+                counter_field=track.counter_field,
+                counter_title=track.counter_title,
+                counter_hint=track.counter_hint,
                 sessions_total=total,
                 sessions_answered=answered,
             )

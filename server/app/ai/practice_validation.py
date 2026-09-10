@@ -20,7 +20,9 @@ from app.practice_catalogue import Track
 
 _JSON_BLOCK = re.compile(r"\{.*\}", re.DOTALL)
 
-BRIEF_KINDS = {"improve", "design", "evaluate", "diagnose"}
+# Виды задачи проверяются по словарю направления, а не по общему списку: «diagnose»
+# в аналитике и «diagnose» в продуктовом чутье — разные задачи, и общий список
+# пропустил бы вид, для которого у направления нет ни правил, ни канвы.
 BARS = {"below", "at", "above"}
 
 MAX_TITLE = 80
@@ -36,6 +38,7 @@ MAX_ITEM_TITLE = 60
 MAX_ITEM_DETAIL = 320
 MAX_MISSED = 280
 MAX_SHARPER = 1000
+MAX_COUNTER = 480
 
 
 class InvalidPracticeOutput(ValueError):
@@ -100,11 +103,11 @@ def _items(value: Any, field: str, *, low: int, high: int) -> list[dict[str, str
     return items
 
 
-def parse_brief(raw_text: str) -> dict[str, Any]:
+def parse_brief(raw_text: str, track: Track) -> dict[str, Any]:
     data = _extract_json(raw_text)
 
     kind = data.get("kind")
-    if kind not in BRIEF_KINDS:
+    if kind not in track.kinds:
         raise InvalidPracticeOutput("brief_kind_unknown", str(kind)[:40])
 
     clarifiers_raw = data.get("clarifiers")
@@ -125,7 +128,7 @@ def parse_brief(raw_text: str) -> dict[str, Any]:
     if len(clarifiers) < 2:
         raise InvalidPracticeOutput("list_too_short", "clarifiers")
 
-    return {
+    brief: dict[str, Any] = {
         "title": _text(data.get("title"), MAX_TITLE, "title", minimum=4),
         "company": _text(data.get("company"), MAX_COMPANY, "company", minimum=2),
         "kind": kind,
@@ -138,6 +141,13 @@ def parse_brief(raw_text: str) -> dict[str, Any]:
         ),
         "clarifiers": clarifiers,
     }
+
+    # Возражение обязательно там, где на него отвечают полем канвы: задача без него
+    # оставила бы человека перед пустым полем «ответьте на возражение».
+    if track.counter_field is not None:
+        brief["counter"] = _text(data.get("counter"), MAX_COUNTER, "counter", minimum=40)
+
+    return brief
 
 
 def parse_feedback(raw_text: str, track: Track) -> dict[str, Any]:

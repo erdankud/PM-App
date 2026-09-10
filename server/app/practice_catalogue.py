@@ -16,6 +16,17 @@
 
 Тексты подсказок и разборов здесь не хранятся: их каждый раз пишет модель. Хранится
 рамка — что тренируем, какой формы задача, из каких полей состоит ответ.
+
+**Шесть форм собраны из двух механизмов, а не из шести.** Первый — уточнения:
+вопросы, которые можно задать до ответа, с ответом интервьюера. В продуктовом чутье
+это «что вы спросите, прежде чем решать», в аналитике — «какой разрез данных вы
+запросите», и это один и тот же механизм с разной вывеской: что человек открыл,
+записано и уходит в разбор. Второй — возражение: реплика, которая появляется
+**после** того, как позиция занята, и на которую надо ответить, не сменив тему.
+Его используют стратегия («executive pushback») и техническая беглость
+(«counter-argument»). Больше механизмов заводить не понадобилось, и заводить их
+ради разнообразия не нужно: форма существует, чтобы ловить конкретный способ
+провалиться, а не чтобы отличаться от соседней.
 """
 
 from __future__ import annotations
@@ -52,6 +63,28 @@ class Track:
     # как факт, а не как угроза — но ответ, написанный за три минуты, объясняется
     # темпом, и разбору об этом полезно знать.
     target_minutes: int = 20
+    # Словарь поля `kind` в задаче. Это не украшение: вид задачи задаёт её форму,
+    # и проверка отвергает задачу с видом, которого у направления нет.
+    kinds: tuple[str, ...] = ()
+    # Заголовок и подсказка над уточнениями. По-английски, как и всё содержимое
+    # Practice: в аналитике это не «уточняющие вопросы», а запрос разреза данных,
+    # и назвать их одинаково значило бы спрятать то, что как раз и тренируется.
+    clarifier_title: str = ""
+    clarifier_hint: str = ""
+    # Возражение. `counter_field` — поле канвы, которым на него отвечают; до него
+    # возражение закрыто, и открывается оно, только когда всё, что стоит выше,
+    # написано. Иначе это не возражение на позицию, а часть условия задачи.
+    counter_field: str | None = None
+    counter_title: str = ""
+    counter_hint: str = ""
+
+    @property
+    def counter_after(self) -> tuple[str, ...]:
+        """Поля, которые должны быть заполнены, прежде чем возражение откроется."""
+        if self.counter_field is None:
+            return ()
+        ids = [item.id for item in self.canvas]
+        return tuple(ids[: ids.index(self.counter_field)])
 
 
 PRODUCT_SENSE_CANVAS: tuple[CanvasField, ...] = (
@@ -100,6 +133,232 @@ PRODUCT_SENSE_CANVAS: tuple[CanvasField, ...] = (
 )
 
 
+# Стратегия. Провал здесь почти всегда один и тот же: рекомендация, которая
+# рассыпается на первом возражении, потому что позиции под ней не было — был обзор
+# рынка. Поэтому ставка стоит отдельным полем, а не выводом из предыдущего абзаца,
+# и последним шагом идёт ответ на возражение.
+PRODUCT_STRATEGY_CANVAS: tuple[CanvasField, ...] = (
+    CanvasField(
+        id="landscape",
+        label="The market as you read it",
+        hint="Where does the money sit in this market today, who holds it, and what is changing that makes now different?",
+        min_chars=60,
+        rows=4,
+    ),
+    CanvasField(
+        id="position",
+        label="Where this company can win",
+        hint="What does it have that a competitor cannot copy in a year — and what does that make possible that others cannot do?",
+        min_chars=50,
+        rows=4,
+    ),
+    CanvasField(
+        id="bet",
+        label="The bet",
+        hint="State the recommendation in two sentences. Say what you are doing and what you are deliberately not doing.",
+        min_chars=60,
+        rows=4,
+    ),
+    CanvasField(
+        id="sequence",
+        label="The first two moves",
+        hint="What ships in the next two quarters, and what has to be true before the move after that is worth making?",
+        min_chars=60,
+        rows=4,
+    ),
+    CanvasField(
+        id="risk",
+        label="What would kill it",
+        hint="The assumption the bet rests on, and the signal that would make you walk away rather than double down.",
+        min_chars=50,
+        rows=4,
+    ),
+    CanvasField(
+        id="rebuttal",
+        label="Answering the pushback",
+        hint="Hold your position or change it — both are respectable. Answering a different question is not.",
+        min_chars=60,
+        rows=4,
+    ),
+)
+
+
+# Аналитика. Здесь тренируется не вывод, а путь к нему: какой разрез данных вы
+# запросили и что он исключил. Поэтому гипотезы и разрезы — разные поля: список
+# причин без единого разреза это гадание, а разрез без гипотезы — экскурсия.
+ANALYTICAL_CANVAS: tuple[CanvasField, ...] = (
+    CanvasField(
+        id="restate",
+        label="What actually moved",
+        hint="Which number, by how much, over what window — and say plainly what the number does not tell you yet.",
+        min_chars=50,
+        rows=3,
+    ),
+    CanvasField(
+        id="hypotheses",
+        label="What could explain it",
+        hint="Three or four candidate causes. Cover more than one family: instrumentation, mix, seasonality, a product change, the outside world.",
+        min_chars=70,
+        rows=5,
+    ),
+    CanvasField(
+        id="cuts",
+        label="How the data separates them",
+        hint="For each hypothesis you kept, name the cut you asked for and what it ruled in or out. Say which cut you would ask for next.",
+        min_chars=70,
+        rows=5,
+    ),
+    CanvasField(
+        id="conclusion",
+        label="What you now believe",
+        hint="The cause you are willing to name, how confident you are, and the part of the move that is still unexplained.",
+        min_chars=50,
+        rows=4,
+    ),
+    CanvasField(
+        id="action",
+        label="What you would do on Monday",
+        hint="The decision this justifies, who you would tell, and what you would do differently if you turn out to be wrong.",
+        min_chars=50,
+        rows=4,
+    ),
+)
+
+
+# Поведенческий раунд. Короткий по времени и тесный по полям намеренно: провал
+# здесь не в длине рассказа, а в том, что «мы» вытесняет «я», а результат остаётся
+# без числа. Поэтому действия и результат — отдельные поля, а не одна история.
+LEADERSHIP_CANVAS: tuple[CanvasField, ...] = (
+    CanvasField(
+        id="situation",
+        label="The situation",
+        hint="Where you were, what was at stake and who else was in it. Two or three sentences — the story is not the point yet.",
+        min_chars=50,
+        rows=3,
+    ),
+    CanvasField(
+        id="tension",
+        label="What made it hard",
+        hint="The specific conflict, constraint or unknown. If anyone would have done the obvious thing, this is the wrong story.",
+        min_chars=50,
+        rows=3,
+    ),
+    CanvasField(
+        id="actions",
+        label="What you did",
+        hint="Your own actions, in order, and the one you were least sure about. Say «I» where it was you and «we» only where it was not.",
+        min_chars=70,
+        rows=5,
+    ),
+    CanvasField(
+        id="outcome",
+        label="How it landed",
+        hint="The result, with a number if you have one, and how you know. Include the part that did not go well.",
+        min_chars=50,
+        rows=3,
+    ),
+    CanvasField(
+        id="learning",
+        label="What it changed",
+        hint="What you do differently now — and where you have already applied it since.",
+        min_chars=40,
+        rows=3,
+    ),
+)
+
+
+# Техническая беглость. Проверяется не знание, а способность объяснить механизм
+# названной аудитории и удержать выбор под возражением инженера. Поэтому первое
+# поле — объяснение конкретному человеку, а не определение.
+TECHNICAL_CANVAS: tuple[CanvasField, ...] = (
+    CanvasField(
+        id="explain",
+        label="Explain it plainly",
+        hint="Explain the mechanism to the audience the brief names, in words they already use. An analogy is fine if it survives one question about it.",
+        min_chars=70,
+        rows=5,
+    ),
+    CanvasField(
+        id="boundary",
+        label="Where it breaks",
+        hint="When does this stop working, and what does the failure look like from the user's side rather than from the logs?",
+        min_chars=50,
+        rows=4,
+    ),
+    CanvasField(
+        id="choice",
+        label="The call you would make",
+        hint="Which option you would ship, and the one or two numbers that decide it rather than taste.",
+        min_chars=60,
+        rows=4,
+    ),
+    CanvasField(
+        id="cost",
+        label="What it costs",
+        hint="Latency, money, quality or engineering time — name which one you are spending, roughly how much, and who notices.",
+        min_chars=40,
+        rows=3,
+    ),
+    CanvasField(
+        id="rebuttal",
+        label="Answering the counter-argument",
+        hint="An engineer disagrees. Concede what is true, then say what you would still ship and why.",
+        min_chars=60,
+        rows=4,
+    ),
+)
+
+
+# Домашнее задание. Это единственное направление, где проверяют письмо, а не речь,
+# поэтому поля — разделы документа, а нижние границы длиннее: короткий раздел здесь
+# не лаконичность, а пропуск. Ориентир 90 минут стоит в самой задаче, и переработка
+# сверх него на реальном собеседовании считается минусом.
+TAKE_HOME_CANVAS: tuple[CanvasField, ...] = (
+    CanvasField(
+        id="summary",
+        label="Executive summary",
+        hint="The recommendation and the reason for it, in the first five sentences. Assume the reader stops there.",
+        min_chars=150,
+        rows=5,
+    ),
+    CanvasField(
+        id="evidence",
+        label="What the material says",
+        hint="What you took from the numbers and quotes you were given — including what they do not support.",
+        min_chars=200,
+        rows=7,
+    ),
+    CanvasField(
+        id="users",
+        label="Who this is for",
+        hint="The segments you can see, the one you are prioritising, and who you are choosing not to serve yet.",
+        min_chars=150,
+        rows=6,
+    ),
+    CanvasField(
+        id="plan",
+        label="The plan",
+        hint="What ships, in what order, over the horizon the brief names. Say what each stage is for, not just what is in it.",
+        min_chars=250,
+        rows=8,
+    ),
+    CanvasField(
+        id="metrics",
+        label="How you will know",
+        hint="Targets and guardrails, and the review point at which you would change course rather than push on.",
+        min_chars=120,
+        rows=5,
+    ),
+    CanvasField(
+        id="risks",
+        label="Risks and what you left out",
+        hint="The two risks that would matter most, what you would do about them, and what you deliberately kept out of scope.",
+        min_chars=120,
+        rows=5,
+    ),
+)
+
+
 TRACKS: tuple[Track, ...] = (
     Track(
         id="product_strategy",
@@ -110,7 +369,20 @@ TRACKS: tuple[Track, ...] = (
             "and say what would make you abandon it."
         ),
         format="A market brief, your recommendation, and one round of executive pushback.",
+        live=True,
+        canvas=PRODUCT_STRATEGY_CANVAS,
         target_minutes=25,
+        kinds=("enter", "expand", "defend", "retreat"),
+        clarifier_title="What you can ask before you commit",
+        clarifier_hint=(
+            "Strategy answers get graded on what you assumed. Ask, and the assumption "
+            "becomes a fact you were given."
+        ),
+        counter_field="rebuttal",
+        counter_title="Executive pushback",
+        counter_hint=(
+            "Take the bet first. This is what the leadership team puts to you once you have."
+        ),
     ),
     Track(
         id="product_sense",
@@ -125,6 +397,11 @@ TRACKS: tuple[Track, ...] = (
         live=True,
         canvas=PRODUCT_SENSE_CANVAS,
         target_minutes=20,
+        kinds=("improve", "design", "evaluate", "diagnose"),
+        clarifier_title="Clarifying questions",
+        clarifier_hint=(
+            "Ask before you answer. What you choose to ask is part of what the review reads."
+        ),
     ),
     Track(
         id="analytical_execution",
@@ -135,7 +412,15 @@ TRACKS: tuple[Track, ...] = (
             "the data you ask for, so this one is a conversation, not an essay."
         ),
         format="A metric moves. You request cuts of the data, receive them, and then conclude.",
+        live=True,
+        canvas=ANALYTICAL_CANVAS,
         target_minutes=20,
+        kinds=("drop", "spike", "flat", "divergence"),
+        clarifier_title="Cuts of the data you can request",
+        clarifier_hint=(
+            "Every cut comes back with a real answer. Which ones you ask for is the round — "
+            "and asking for all of them is an answer too."
+        ),
     ),
     Track(
         id="leadership_drive",
@@ -147,7 +432,15 @@ TRACKS: tuple[Track, ...] = (
             "wrong altitude reads as a down-level."
         ),
         format="A behavioural prompt, your story, a level read, and the follow-up an interviewer would ask.",
+        live=True,
+        canvas=LEADERSHIP_CANVAS,
         target_minutes=10,
+        kinds=("conflict", "failure", "influence", "ambiguity"),
+        clarifier_title="What you can ask the interviewer",
+        clarifier_hint=(
+            "A behavioural prompt is wider than it looks. Asking which part they want is "
+            "how you avoid telling the wrong story well."
+        ),
     ),
     Track(
         id="technical_fluency",
@@ -159,7 +452,20 @@ TRACKS: tuple[Track, ...] = (
             "token cost — in ordinary product rounds, not just technical ones."
         ),
         format="Explain a mechanism to a named audience, then defend a trade-off against a counter-argument.",
+        live=True,
+        canvas=TECHNICAL_CANVAS,
         target_minutes=15,
+        kinds=("mechanism", "tradeoff", "failure", "cost"),
+        clarifier_title="What you can ask the engineer",
+        clarifier_hint=(
+            "You are not expected to know the internals. You are expected to know which "
+            "detail changes the decision."
+        ),
+        counter_field="rebuttal",
+        counter_title="The counter-argument",
+        counter_hint=(
+            "Make the call first. Then the engineer who would have to build it answers back."
+        ),
     ),
     Track(
         id="take_home",
@@ -170,7 +476,15 @@ TRACKS: tuple[Track, ...] = (
             "structure and clarity — and overinvesting past the time box counts against you."
         ),
         format="A longer brief with a stated time box, answered as a structured document.",
+        live=True,
+        canvas=TAKE_HOME_CANVAS,
         target_minutes=90,
+        kinds=("roadmap", "launch", "pitch", "turnaround"),
+        clarifier_title="What the hiring manager will answer by email",
+        clarifier_hint=(
+            "A take-home is sent, not sat. Asking the two questions that change the shape "
+            "of the document is part of doing it well."
+        ),
     ),
 )
 

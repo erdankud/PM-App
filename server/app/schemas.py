@@ -678,6 +678,16 @@ class PracticeTrackView(ApiModel):
     live: bool
     target_minutes: int
     canvas: list[PracticeCanvasFieldView] = Field(default_factory=list)
+    # Заголовок и подсказка над уточнениями приходят от направления, а не из
+    # словаря интерфейса: в аналитике это запрос разреза данных, и общая подпись
+    # спрятала бы то, что там как раз и тренируется.
+    clarifier_title: str = ""
+    clarifier_hint: str = ""
+    # Поле канвы, которым отвечают на возражение, и подписи к нему. Пусто у тех
+    # направлений, где возражения нет.
+    counter_field: str | None = None
+    counter_title: str = ""
+    counter_hint: str = ""
     sessions_total: int = 0
     sessions_answered: int = 0
 
@@ -699,6 +709,9 @@ class PracticeBriefView(ApiModel):
     prompt: str
     constraints: list[str] = Field(default_factory=list)
     clarifiers: list[PracticeClarifierView] = Field(default_factory=list)
+    # Возражение, на которое отвечают после того, как позиция занята. Есть только
+    # у направлений с `counterField`.
+    counter: str | None = None
 
 
 class PracticeFieldFeedbackView(ApiModel):

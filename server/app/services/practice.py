@@ -143,7 +143,7 @@ def generate(db: Session, user_id: str, track: Track) -> PracticeSession:
         temperature=1.0,
         max_output_tokens=2000,
     )
-    brief, model_id = _call(request, parse_brief)
+    brief, model_id = _call(request, lambda text: parse_brief(text, track))
 
     session = PracticeSession(
         id=new_id(),

@@ -1376,6 +1376,14 @@ enum S {
             )
         }
         static var ask: String { t("Ask", "Спросить") }
+        /// Возражение заперто, пока позиция не занята: в этом весь смысл механизма —
+        /// отвечать на «а если нет» имеет смысл только тому, кто уже сказал «да».
+        static var counterLocked: String {
+            t(
+                "Fill in the fields above first — the objection comes after you have committed.",
+                "Сначала заполните поля выше: возражение приходит после того, как позиция занята."
+            )
+        }
         static var yourAnswer: String { t("Your answer", "Ваш ответ") }
         static var timeOnTask: String { t("Time on task", "Время над задачей") }
 
