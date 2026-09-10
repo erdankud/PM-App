@@ -47,7 +47,7 @@ Tab: {
   get profile() { return t("Profile", "Профиль"); },
 },
 Welcome: {
-  get headline() { return t( "Practise thinking like a Product Manager.", "Тренируйте мышление продакт-менеджера." ); },
+  get headline() { return t( "Practice thinking like a Product Manager", "Тренируйте мышление продакт-менеджера" ); },
   get continueWithApple() { return t("Continue with Apple", "Продолжить с Apple"); },
   get developerSignIn() { return t("Continue without Apple (development)", "Продолжить без Apple (для разработки)"); },
   get privacyNotice() { return t("Privacy notice", "О приватности"); },

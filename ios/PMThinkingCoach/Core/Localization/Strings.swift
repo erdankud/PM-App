@@ -58,8 +58,8 @@ enum S {
     enum Welcome {
         static var headline: String {
             t(
-                "Practise thinking like a Product Manager.",
-                "Тренируйте мышление продакт-менеджера."
+                "Practice thinking like a Product Manager",
+                "Тренируйте мышление продакт-менеджера"
             )
         }
         static var continueWithApple: String {
