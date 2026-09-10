@@ -287,16 +287,22 @@ export function learnView() {
             },
             selected && h("span.direction-flag", S.Tree.currentDirection),
             h("span.direction-name", domain.title),
-            h("span.direction-bar", h("i", { style: { width: `${stats.share * 100}%` } })),
+            // Полоса и есть счётчик уроков — её доля считается из них. Раньше
+            // рядом стояло ещё и «0/26»: то же самое числом, без единицы, под
+            // подписью про блоки, так что два числа в плитке значили разное и
+            // не говорили об этом. Осталась полоса, а единица переехала в её имя.
+            h("span.direction-bar", {
+              role: "img",
+              "aria-label": S.Tree.lessonsProgress(stats.done, stats.total),
+            }, h("i", { style: { width: `${stats.share * 100}%` } })),
             h(
               "span.direction-meta",
-              h("span", S.Tree.blocksProgress(stats.passed, stats.blocks.length)),
-              h("span.direction-count", `${stats.done}/${stats.total}`)
+              h("span", S.Tree.blocksProgress(stats.passed, stats.blocks.length))
             ),
-            h(
-              "span.direction-next",
-              stats.done === 0 && !selected ? S.Tree.noDirectionYet : next?.title || ""
-            )
+            // Название блока, который здесь откроется. Раньше нетронутые
+            // направления печатали «Здесь вы ещё не начинали» — одну и ту же
+            // фразу пять раз подряд, и ни одна из пяти не говорила, что там.
+            h("span.direction-next", next?.title || "")
           );
         })
       )

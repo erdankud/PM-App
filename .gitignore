@@ -32,3 +32,9 @@ node_modules/
 # не кладётся — голос весит 63 МБ, корпус в mp3 около 170 МБ.
 server/var/
 .neon
+
+# Сторонние скиллы: ставятся `npx skills add`, воспроизводятся из skills-lock.json.
+# В репозиторий не кладутся — это чужой текст (в apple-design 1.4 МБ HIG
+# дословно), а лок-файл и так знает, откуда его взять.
+.agents/
+.claude/skills/apple-design

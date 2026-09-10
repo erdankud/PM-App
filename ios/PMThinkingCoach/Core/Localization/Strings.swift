@@ -230,12 +230,15 @@ enum S {
         static var gateLocked: String {
             t("Opens after the lessons", "Откроется после уроков")
         }
-        static var noDirectionYet: String {
-            t("Nothing started here yet", "Здесь вы ещё не начинали")
-        }
-
         static func blocksProgress(_ passed: Int, _ total: Int) -> String {
             t("\(passed) of \(total) blocks", "\(passed) из \(total) блоков")
+        }
+
+        /// Имя полосы прогресса направления. Полоса рисует долю пройденных
+        /// уроков, и без этой подписи она остаётся вторым числом без единицы
+        /// рядом с блоками — а для чтения с экрана просто пустым элементом.
+        static func lessonsProgress(_ done: Int, _ total: Int) -> String {
+            t("\(done) of \(total) lessons", "\(done) из \(total) уроков")
         }
 
         static var blockGoalTitle: String {

@@ -103,9 +103,11 @@ Tree: {
   get continueLesson() { return t("Continue", "Продолжить"); },
   get blockLessonsTitle() { return t("Lessons of this block", "Уроки этого блока"); },
   get gateLocked() { return t("Opens after the lessons", "Откроется после уроков"); },
-  get noDirectionYet() { return t("Nothing started here yet", "Здесь вы ещё не начинали"); },
   blocksProgress(passed, total) {
     return t(`${passed} of ${total} blocks`, `${passed} из ${total} блоков`)
+  },
+  lessonsProgress(done, total) {
+    return t(`${done} of ${total} lessons`, `${done} из ${total} уроков`)
   },
   get blockGoalTitle() { return t("What this block gives you", "Что даёт этот блок"); },
   get blockGoalSubtitle() { return t( "Each question below is one skill. The gate at the end asks you to use them, not to recall them.", "Каждый вопрос ниже — один навык. Гейт в конце просит их применить, а не вспомнить." ); },

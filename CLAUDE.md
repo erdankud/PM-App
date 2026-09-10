@@ -595,22 +595,39 @@ boundaries it explains are unchanged).
 - Every call to action goes to `/app/`, which for a signed-out visitor is
   `welcomeView()` — sign in and sign up on one screen. There is nothing else to
   click.
-- **The pictures are drawn, not photographed.** The reference brief's masked-card
-  trick shares one large image across several cards, each showing a different
-  window into it; here that image is generated in a canvas — the product's own
-  skill map, the gate rubric, a block — because this product has no objects to
-  photograph and stock imagery would be a lie about what it is. One expensive draw
-  into an offscreen canvas per section, then `drawImage` blits into each card. A
-  `ResizeObserver`-less redraw on `resize` and on `document.fonts.ready`, because
-  headings change height and take the windows with them.
-- The canvas is an **opaque fill inside the card**, so everything else in a card
-  needs its own stacking context: `.card > *:not(canvas) { z-index: 2 }`. Written as
-  a rule on all children rather than on a wrapper class — the wrapper is optional,
-  the background is not.
-- Motion is the same two things as the app (`web/src/motion.js` documents why), and
-  the landing repeats them rather than importing: splash counted with
-  `requestAnimationFrame` plus a hard timeout, reveal on an IntersectionObserver at
-  0.15 with a 1200 ms safety net. Both off under `prefers-reduced-motion`.
+- **The pictures are screenshots, and the fields behind them are flat.** The first
+  version drew the illustrations in a canvas — the skill map, the rubric, a block —
+  and cut each card as a window into one large image. It read as noise: the drawing
+  was denser than any text lying on it, and the page looked cluttered rather than
+  composed. What ships now is one flat fill per band and one real screenshot on it,
+  taken from the running client at 1440×900. Nothing is drawn, nothing is
+  translucent, and there is no canvas left in `landing.js`.
+- The screenshots live in `web/shots/` and are therefore served by the `/app` mount
+  as `/app/shots/<name>.jpg` — same origin, like the fonts. Each screen exists in a
+  light and a dark copy, chosen with `<picture><source media="(prefers-color-scheme:
+  dark)">`. **The shot follows the band, not the page**: an ink band is dark under a
+  light OS and white under a dark one, so it takes the dark shot by default and the
+  light one in the media query, the opposite way round from a paper band. Only the
+  hero shot loads eagerly; the rest are `loading="lazy"`.
+- Reshooting them is `node web/tools/shoot.mjs <out-dir> <light|dark>`: headless
+  Chrome driven over raw DevTools protocol, because neither puppeteer nor playwright
+  is installed here. Two things it has to do and both were learned the hard way — the
+  client reads its session once at document load, so a hash-only `Page.navigate` must
+  be followed by an explicit `Page.reload` or every shot comes back as the sign-in
+  screen; and `getBoundingClientRect()` serialises to `{}` under `returnByValue`
+  (DOMRect exposes its values as prototype getters), so copy the fields into a plain
+  object before comparing them.
+- **Shoot an account that has been used.** The shots are taken on a dev account with
+  eighteen lessons read, because an empty one prints «0 of 3 blocks» six times and
+  draws the map's red frontier as a bare circle. The strongest single image the
+  product has is the map with that line on it, and it only exists once somebody has
+  covered something.
+- Motion is one thing: reveal on an IntersectionObserver at 0.15 with a 1200 ms
+  safety net, off under `prefers-reduced-motion`, and `.rise` is applied by the
+  script rather than written into the markup so the page arrives visible without it.
+  The splash counter belongs to the app (`web/src/motion.js` documents why) and is
+  not repeated here — a stranger who followed a link should meet the page, not a
+  two-second count.
 - **Every number on it is counted, not quoted.** 167 skills, 248 lessons, 36 gates,
   87 scenarios, 6 formats; 25 / 45 / 70 read off `app/services/scoring.py`. This
   file said 254 lessons while the corpus held 248 — check the corpus before printing
