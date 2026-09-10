@@ -101,7 +101,7 @@ class UserProfile(Base):
     target_role: Mapped[str | None] = mapped_column(String(48))
     # Content language. Stored rather than read from a request header because the
     # evaluation worker writes coaching long after the request that queued it.
-    language: Mapped[str] = mapped_column(String(8), default="ru", server_default="ru")
+    language: Mapped[str] = mapped_column(String(8), default="en", server_default="en")
     current_level: Mapped[str | None] = mapped_column(String(16))
     level: Mapped[int] = mapped_column(Integer, default=1)
     total_xp: Mapped[int] = mapped_column(Integer, default=0)

@@ -102,23 +102,27 @@ def test_tree_titles_are_written_in_the_authored_language():
 
 def test_language_persists_and_the_header_overrides_one_request(client):
     headers, me = onboard(client)
-    assert me["language"] == "ru"  # the ICP is Russian-speaking (spec v0.2 §16)
-
-    assert switch(client, headers, "en")["language"] == "en"
+    # English until someone chooses otherwise: the corpus is authored in Russian,
+    # but the product's own language is English and nobody has picked yet.
+    assert me["language"] == "en"
     english = client.get("/v1/progress", headers=headers).json()
     assert not _russian(english["footnote"])
     assert not _russian(english["skills"][0]["label"])
 
-    # The header closes the gap between switching in the app and the PATCH landing.
-    russian = client.get(
-        "/v1/progress", headers={**headers, "X-Content-Language": "ru"}
-    ).json()
+    assert switch(client, headers, "ru")["language"] == "ru"
+    russian = client.get("/v1/progress", headers=headers).json()
     assert _russian(russian["footnote"])
-    assert client.get("/v1/me", headers=headers).json()["language"] == "en"
+
+    # The header closes the gap between switching in the app and the PATCH landing.
+    header_english = client.get(
+        "/v1/progress", headers={**headers, "X-Content-Language": "en"}
+    ).json()
+    assert not _russian(header_english["footnote"])
+    assert client.get("/v1/me", headers=headers).json()["language"] == "ru"
 
 
 def test_coaching_is_written_in_the_learners_language(client):
-    headers, _ = onboard(client)
+    headers, _ = onboard(client, language="ru")
     read_all_lessons(client, headers, "D1")
     challenge = start_gate(client, headers)
     attempt_id = challenge["attempt"]["attemptId"]

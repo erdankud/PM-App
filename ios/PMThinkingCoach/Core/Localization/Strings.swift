@@ -62,12 +62,6 @@ enum S {
                 "Тренируйте мышление продакт-менеджера."
             )
         }
-        static var subheadline: String {
-            t(
-                "A short daily product scenario. Your decision. Clear feedback.",
-                "Короткий продуктовый сценарий каждый день. Ваше решение. Понятный разбор."
-            )
-        }
         static var continueWithApple: String {
             t("Continue with Apple", "Продолжить с Apple")
         }
@@ -697,10 +691,10 @@ enum S {
         static var stepMapTitle: String { t("Two maps, both open", "Две карты, обе открыты") }
         static var stepMapBody: String {
             t(
-                "The product map — 71 skills — and System Design — 96 — share one grammar "
+                "The product map (71 skills) and System Design (96) share one grammar "
                     + "and one switch at the top. Everything is open from day one: start "
                     + "at the first block of the product map if you are new, or anywhere else.",
-                "Карта продукта — 71 навык — и System Design — 96 — устроены одинаково и "
+                "Карта продукта (71 навык) и System Design (96) устроены одинаково и "
                     + "переключаются наверху экрана. Всё открыто с первого дня: если вы "
                     + "новичок, начните с первого блока карты продукта, но можно и с любого места."
             )
@@ -709,15 +703,15 @@ enum S {
         // Кольца путали: «Junior / Middle / Senior» читалось как оценка человека,
         // хотя означает неопределённость задачи. Теперь это сказано прямо.
         static var stepRingsTitle: String {
-            t("Rings are uncertainty, not seniority", "Кольца — это неопределённость, а не грейд")
+            t("Rings are uncertainty, not seniority", "Кольца показывают неопределённость, а не грейд")
         }
         static var stepRingsBody: String {
             t(
                 "The inner ring is a task someone already framed for you. The outer one is "
                     + "where you choose the frame. It says nothing about how good a manager "
                     + "you are.",
-                "Внутреннее кольцо — задача, которую уже поставили за вас. Внешнее — то, где "
-                    + "рамку выбираете вы. К оценке вас как менеджера это отношения не имеет."
+                "Во внутреннем кольце задачу уже поставили за вас. Во внешнем рамку "
+                    + "выбираете вы. К оценке вас как менеджера это отношения не имеет."
             )
         }
 
@@ -726,11 +720,11 @@ enum S {
             t(
                 "One idea, one model, and where it stops working: three to five minutes on "
                     + "the product map, twelve to fifteen in System Design. Some carry an "
-                    + "audio overview — two hosts talking the lesson through, not reading it "
+                    + "audio overview: two hosts talking the lesson through, not reading it "
                     + "aloud.",
                 "Одна идея, одна модель и границы, за которыми она не работает: три-пять "
                     + "минут на карте продукта, двенадцать-пятнадцать в System Design. У части "
-                    + "уроков есть аудиообзор — двое ведущих обсуждают материал, а не читают "
+                    + "уроков есть аудиообзор: двое ведущих обсуждают материал, а не читают "
                     + "его вслух."
             )
         }
@@ -739,10 +733,10 @@ enum S {
         static var stepGateBody: String {
             t(
                 "Each block ends in a real situation with incomplete data. You decide and "
-                    + "defend the decision in writing — the reasoning is most of the score, "
+                    + "defend the decision in writing. The reasoning is most of the score, "
                     + "so no option is «the right answer» on its own.",
                 "Каждый блок заканчивается настоящей ситуацией с неполными данными. Вы "
-                    + "принимаете решение и обосновываете его письменно — аргументация даёт "
+                    + "принимаете решение и обосновываете его письменно. Аргументация даёт "
                     + "большую часть баллов, поэтому «правильного варианта» самого по себе тут нет."
             )
         }
@@ -753,33 +747,16 @@ enum S {
         static var stepUnlockBody: String {
             t(
                 "No XP is taken away and nothing locks. A failed gate sends you back to the "
-                    + "exact lessons that would have helped, and you can retake it — the "
+                    + "exact lessons that would have helped, and you can retake it. The "
                     + "second sitting is a different situation, so it cannot be passed from "
                     + "memory.",
                 "XP не отнимается и ничего не закрывается. Несданный гейт возвращает вас к "
-                    + "конкретным урокам, которых не хватило, и его можно пересдать — во "
+                    + "конкретным урокам, которых не хватило, и его можно пересдать. Во "
                     + "второй раз ситуация другая, поэтому пройти его по памяти нельзя."
             )
         }
 
-        static var ownPace: String {
-            t(
-                "No daily limits and no streaks to lose. Ten minutes on the metro or an "
-                    + "hour at the weekend — both work.",
-                "Никаких дневных лимитов и стриков, которые можно потерять. Десять минут в "
-                    + "метро или час на выходных — оба варианта рабочие."
-            )
-        }
-
         static var roleTitle: String { t("Aiming at a role?", "Метите в конкретную роль?") }
-        static var roleSubtitle: String {
-            t(
-                "It highlights part of the map. It changes nothing about the order, and you "
-                    + "can skip it or change it later.",
-                "Она подсветит часть карты. Порядок это не меняет, и её можно пропустить или "
-                    + "поменять позже."
-            )
-        }
         static var startLearning: String { t("Start learning", "Начать учиться") }
         static var skipRole: String { t("Skip for now", "Пропустить") }
     }

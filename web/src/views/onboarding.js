@@ -46,7 +46,6 @@ export function onboardingView() {
           )
         )
       ),
-      notice(S.Onboarding.ownPace, { symbol: "tortoise" }),
       button(S.Common.continueAction, () => {
         step = "role";
         render();
@@ -57,7 +56,7 @@ export function onboardingView() {
   const roleStep = () =>
     h(
       "div.stack.xl",
-      h("div.stack.s", h("h1", S.Onboarding.roleTitle), h("p.muted", S.Onboarding.roleSubtitle)),
+      h("div.stack.s", h("h1", S.Onboarding.roleTitle)),
       h(
         "div.stack.s",
         S.Roles.keys.map((key) =>

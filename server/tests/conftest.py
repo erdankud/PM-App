@@ -53,16 +53,23 @@ def db():
         session.close()
 
 
-def onboard(client: TestClient) -> tuple[dict, dict]:
-    """Sign in and finish onboarding. There is no diagnostic any more (spec v0.2 §10)."""
+def onboard(client: TestClient, language: str | None = None) -> tuple[dict, dict]:
+    """Sign in and finish onboarding. There is no diagnostic any more (spec v0.2 §10).
+
+    A fresh profile reads in English. Pass ``language="ru"`` to get the authored
+    corpus: a test that needs Russian has to ask for it, rather than leaning on
+    whatever the column default happens to be this month — that is how six tests
+    came to depend on a default none of them were about.
+    """
     auth = client.post(
         "/v1/auth/dev",
         json={"deviceId": f"test-{uuid.uuid4()}", "timezone": "Europe/Moscow"},
     ).json()
     headers = {"Authorization": f"Bearer {auth['accessToken']}"}
-    me = client.patch(
-        "/v1/me/profile", headers=headers, json={"completeOnboarding": True}
-    ).json()
+    profile: dict = {"completeOnboarding": True}
+    if language is not None:
+        profile["language"] = language
+    me = client.patch("/v1/me/profile", headers=headers, json=profile).json()
     return headers, me
 
 

@@ -167,7 +167,7 @@ def test_lesson_with_audio_serves_the_file(client, monkeypatch, tmp_path):
     lesson = tree_content.lesson("ds1-n1-l1")
     audio.audio_path(lesson).write_bytes(b"\xff\xfb\x90\x00fake mp3")
 
-    headers, _ = onboard(client)
+    headers, _ = onboard(client, language="ru")
     body = client.get("/v1/lessons/ds1-n1-l1", headers=headers).json()
     assert body["audio"]["available"] is True
     assert audio.digest(lesson) in body["audio"]["url"]

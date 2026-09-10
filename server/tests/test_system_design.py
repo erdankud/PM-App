@@ -44,7 +44,7 @@ def test_unknown_tree_kind_is_rejected(client):
 
 
 def test_lesson_carries_sections_terms_and_diagram(client):
-    headers, _ = onboard(client)
+    headers, _ = onboard(client, language="ru")
     lesson = client.get("/v1/lessons/ds1-n1-l1", headers=headers).json()
     assert [section["kind"] for section in lesson["sections"]] == [
         "question", "cost", "substance", "example", "limits", "takeaway",
@@ -71,7 +71,7 @@ def test_reading_a_lesson_marks_its_terms_as_seen(client):
 
 
 def test_glossary_searches_both_languages(client):
-    headers, _ = onboard(client)
+    headers, _ = onboard(client, language="ru")
     russian = client.get("/v1/glossary", headers=headers, params={"q": "индекс"}).json()
     english = client.get("/v1/glossary", headers=headers, params={"q": "index"}).json()
     assert russian["terms"] and english["terms"]
@@ -160,7 +160,7 @@ def test_typed_exercises_are_answerable(client):
     """
     from app.tree_content import tree_content
 
-    headers, _ = onboard(client)
+    headers, _ = onboard(client, language="ru")
     content = tree_content("system_design")
     typed = [e for e in content["exercises"].values() if e["acceptance"]]
     assert len(typed) >= 50, "разметка упражнений пропала — проверьте scripts/type_exercises.py"

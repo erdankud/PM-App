@@ -37,12 +37,6 @@ struct WelcomeView: View {
                     .font(.largeTitle.weight(.bold))
                     .multilineTextAlignment(.center)
                     .appear(2)
-
-                Text(S.Welcome.subheadline)
-                    .font(.title3)
-                    .foregroundStyle(Theme.Palette.secondaryText)
-                    .multilineTextAlignment(.center)
-                    .appear(3)
             }
             .padding(.horizontal, Theme.Spacing.l)
 

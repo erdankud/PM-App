@@ -72,9 +72,6 @@ private struct HowItWorksView: View {
                             .accessibilityElement(children: .combine)
                         }
                     }
-
-                    InlineNotice(text: S.Onboarding.ownPace, systemImage: "tortoise")
-                        .appear(6)
                 }
                 .padding(Theme.Spacing.l)
             }
@@ -98,9 +95,6 @@ private struct RoleSelectionView: View {
                     VStack(alignment: .leading, spacing: Theme.Spacing.s) {
                         Text(S.Onboarding.roleTitle)
                             .font(.largeTitle.weight(.bold))
-                        Text(S.Onboarding.roleSubtitle)
-                            .font(.subheadline)
-                            .foregroundStyle(Theme.Palette.secondaryText)
                     }
                     .appear(0)
 

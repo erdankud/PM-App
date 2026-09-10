@@ -25,10 +25,13 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     /// Drives date and number formatting so a switch changes more than just the words.
     var locale: Locale { Locale(identifier: rawValue) }
 
-    static var deviceDefault: AppLanguage {
-        let preferred = Locale.preferredLanguages.first ?? "en"
-        return preferred.hasPrefix("ru") ? .russian : .english
-    }
+    /// English until someone chooses otherwise in Profile.
+    ///
+    /// This used to follow the device locale. The product's interface language is
+    /// English and Practice is conducted in English at any UI language, so guessing
+    /// Russian from the phone's region showed the wrong one to a visitor who had
+    /// expressed no preference at all.
+    static var deviceDefault: AppLanguage { .english }
 }
 
 /// Holds the language for the plain-Swift string table in `Strings.swift`.

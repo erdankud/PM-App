@@ -18,9 +18,15 @@ const state = {
   listeners: new Set(),
 };
 
+/** Английский, пока человек не выберет другое.
+ *
+ *  Раньше здесь стоял язык браузера. Интерфейс продукта — английский, и Practice
+ *  проводится по-английски при любом языке чромa; угаданный русский означал, что
+ *  посетитель из русской локали видел не тот язык, которого от продукта ждут.
+ *  Выбор в Профиле никуда не делся и по-прежнему сильнее этого значения.
+ */
 function deviceDefault() {
-  const preferred = navigator.languages?.[0] || navigator.language || "en";
-  return preferred.toLowerCase().startsWith("ru") ? "ru" : "en";
+  return "en";
 }
 
 export function initLanguage() {

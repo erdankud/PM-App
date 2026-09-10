@@ -141,8 +141,7 @@ export function welcomeView() {
         "div.stack.l",
         { style: { alignItems: "center", textAlign: "center", padding: "20px 0 8px" } },
         icon("arrow.triangle.branch", { size: 48 }),
-        h("h1", S.Welcome.headline),
-        h("p.muted", S.Welcome.subheadline)
+        h("h1", S.Welcome.headline)
       ),
       session.isAuthenticating
         ? h("div.state", h("div.spinner"))
