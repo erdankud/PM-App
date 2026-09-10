@@ -10,9 +10,246 @@
     <link rel="stylesheet" href="./fonts.css" />
     <link rel="stylesheet" href="./styles.css" />
     <link rel="icon" href="./logo.svg" type="image/svg+xml" />
+
+    <!-- Весь граф модулей — списком, здесь, а не по цепочке импортов.
+         Сборки у клиента нет, поэтому браузер узнаёт о модуле только разобрав
+         того, кто его импортирует: граф от app.js уходит на шесть уровней, и
+         каждый уровень стоит отдельного обхода до сервера. Со списком все
+         запросы уходят разом, и глубина графа перестаёт что-либо стоить.
+         Список считается, а не пишется рукой:
+
+             python3 web/tools/preload_map.py
+
+         Расхождение с графом ловит tests/test_web_shell.py — рукописный список
+         разошёлся бы на первом же новом экране, и разошёлся бы молча. -->
+    <!-- modulepreload:begin -->
+    <link rel="modulepreload" href="./src/app.js" />
+    <link rel="modulepreload" href="./src/dom.js" />
+    <link rel="modulepreload" href="./src/l10n.js" />
+    <link rel="modulepreload" href="./src/session.js" />
+    <link rel="modulepreload" href="./src/router.js" />
+    <link rel="modulepreload" href="./src/components.js" />
+    <link rel="modulepreload" href="./src/strings.js" />
+    <link rel="modulepreload" href="./src/views/chrome.js" />
+    <link rel="modulepreload" href="./src/views/welcome.js" />
+    <link rel="modulepreload" href="./src/views/onboarding.js" />
+    <link rel="modulepreload" href="./src/views/map.js" />
+    <link rel="modulepreload" href="./src/views/learn.js" />
+    <link rel="modulepreload" href="./src/views/block.js" />
+    <link rel="modulepreload" href="./src/views/lesson.js" />
+    <link rel="modulepreload" href="./src/views/exercise.js" />
+    <link rel="modulepreload" href="./src/views/glossary.js" />
+    <link rel="modulepreload" href="./src/views/challenge.js" />
+    <link rel="modulepreload" href="./src/views/practice.js" />
+    <link rel="modulepreload" href="./src/views/progress.js" />
+    <link rel="modulepreload" href="./src/views/history.js" />
+    <link rel="modulepreload" href="./src/views/profile.js" />
+    <link rel="modulepreload" href="./src/api.js" />
+    <link rel="modulepreload" href="./src/icons.js" />
+    <link rel="modulepreload" href="./src/views/atlas.js" />
+    <link rel="modulepreload" href="./src/motion.js" />
+    <link rel="modulepreload" href="./src/tree-kind.js" />
+    <link rel="modulepreload" href="./src/views/content.js" />
+    <link rel="modulepreload" href="./src/views/audio.js" />
+    <!-- modulepreload:end -->
+
+    <!-- Экран загрузки живёт здесь, а не в модуле, ровно потому, что ждать
+         приходится сами модули: заставка из motion.js появлялась бы уже после
+         того, как ожидание кончилось, и добавляла бы к нему свои две секунды.
+         Отсюда же и встроенный стиль — styles.css в этот момент ещё в пути. -->
+    <style>
+      .boot {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        color: #000000;
+        transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .boot.leaving { opacity: 0; pointer-events: none; }
+      .boot-mark {
+        width: clamp(96px, 18vw, 240px);
+        height: clamp(96px, 18vw, 240px);
+        animation: boot-breathe 2.4s ease-in-out infinite;
+      }
+      /* Набор здесь системный намеренно: Onest едет в том же потоке, что и всё
+       * остальное, и цифра, набранная им, сменила бы начертание на середине
+       * счёта. Цифры табличные, иначе счётчик дёргает ширину на каждом шаге. */
+      .boot-count {
+        position: absolute;
+        left: clamp(24px, 4vw, 40px);
+        bottom: clamp(28px, 4vw, 48px);
+        font: 800 clamp(64px, 12vw, 120px) / 0.8 system-ui, -apple-system, sans-serif;
+        letter-spacing: -0.05em;
+        font-variant-numeric: tabular-nums;
+      }
+      /* Линия по нижнему краю — это и есть доля приехавшего. Единственная
+       * фигура на экране, которая что-то измеряет, поэтому она одна и есть. */
+      .boot-rule {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: #e5e5e5;
+      }
+      .boot-rule i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: #000000;
+        transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes boot-breathe {
+        0%, 100% { opacity: 0.32; transform: scale(0.97); }
+        50% { opacity: 1; transform: scale(1); }
+      }
+      @media (prefers-color-scheme: dark) {
+        .boot { background: #000000; color: #ffffff; }
+        .boot-rule { background: #262626; }
+        .boot-rule i { background: #ffffff; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot { transition: none; }
+        .boot-mark { animation: none; opacity: 1; }
+        .boot-rule i { transition: none; }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+
+    <div id="boot" class="boot" role="status" aria-live="polite" aria-label="Loading">
+      <!-- Тот же контур, что в logo.svg. Здесь он встроен, а не взят маской из
+           файла: экран загрузки должен рисоваться первым же байтом, а не после
+           ещё одного обхода до сервера. Совпадение контуров проверяет
+           tests/test_web_shell.py. -->
+      <svg class="boot-mark" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+        <path d="M200,152a31.84,31.84,0,0,0-19.53,6.68l-23.11-18A31.65,31.65,0,0,0,160,128c0-.74,0-1.48-.08-2.21l13.23-4.41A32,32,0,1,0,168,104c0,.74,0,1.48.08,2.21l-13.23,4.41A32,32,0,0,0,128,96a32.59,32.59,0,0,0-5.27.44L115.89,81A32,32,0,1,0,96,88a32.59,32.59,0,0,0,5.27-.44l6.84,15.4a31.92,31.92,0,0,0-8.57,39.64L73.83,165.44a32.06,32.06,0,1,0,10.63,12l25.71-22.84a31.91,31.91,0,0,0,37.36-1.24l23.11,18A31.65,31.65,0,0,0,168,184a32,32,0,1,0,32-32Zm0-64a16,16,0,1,1-16,16A16,16,0,0,1,200,88ZM80,56A16,16,0,1,1,96,72,16,16,0,0,1,80,56ZM56,208a16,16,0,1,1,16-16A16,16,0,0,1,56,208Zm56-80a16,16,0,1,1,16,16A16,16,0,0,1,112,128Zm88,72a16,16,0,1,1,16-16A16,16,0,0,1,200,200Z"/>
+      </svg>
+      <span class="boot-count" aria-hidden="true">0</span>
+      <span class="boot-rule" aria-hidden="true"><i></i></span>
+    </div>
+
+    <script>
+      /* Счётчик считает приехавшее, а не время.
+       *
+       * Ждём ровно то, что перечислено выше: модули из modulepreload и два листа
+       * стилей. Resource Timing говорит, что из этого уже пришло, поэтому число
+       * на экране — доля загруженного, а не таймер, который дотикает до ста над
+       * пустой страницей. Сотня наступает не от счёта, а от app.js: до первого
+       * построенного экрана показывать всё равно нечего.
+       */
+      (function () {
+        var boot = document.getElementById("boot");
+        if (!boot) return;
+        var count = boot.querySelector(".boot-count");
+        var bar = boot.querySelector(".boot-rule i");
+        var reduced =
+          window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        var wanted = Object.create(null);
+        var total = 0;
+        var links = document.querySelectorAll(
+          'link[rel="modulepreload"], link[rel="stylesheet"]'
+        );
+        for (var i = 0; i < links.length; i++) {
+          if (!wanted[links[i].href]) {
+            wanted[links[i].href] = true;
+            total++;
+          }
+        }
+
+        var arrived = 0;
+        var finished = false;
+        var shown = 0;
+        var startedAt = Date.now();
+        var MIN_MS = 450; /* чтобы на быстром канале не мигнуть и пропасть */
+        var HOLD_MS = 220;
+        var FADE_MS = 500;
+
+        function seen(name) {
+          if (wanted[name]) {
+            delete wanted[name];
+            arrived++;
+          }
+        }
+
+        try {
+          var already = performance.getEntriesByType("resource");
+          for (var j = 0; j < already.length; j++) seen(already[j].name);
+          new PerformanceObserver(function (list) {
+            var entries = list.getEntries();
+            for (var k = 0; k < entries.length; k++) seen(entries[k].name);
+          }).observe({ type: "resource", buffered: true });
+        } catch (error) {
+          /* Без Resource Timing счётчик держится на одном только полу времени
+           * ниже: он не соврёт про сотню, просто будет знать меньше. */
+        }
+
+        /* Пол по времени. Не для красоты: если Resource Timing недоступен или
+         * ответ задерживается на первом же файле, неподвижная цифра читается
+         * как зависшая страница. Пол ползёт к 0.9 и никогда не доходит до
+         * единицы — единицу ставит только app.js. */
+        function floorByTime() {
+          var elapsed = (Date.now() - startedAt) / 8000;
+          return 0.9 * (1 - Math.exp(-2.2 * elapsed));
+        }
+
+        function target() {
+          if (finished) return 1;
+          var byResources = total ? 0.06 + 0.86 * (arrived / total) : 0;
+          return Math.max(byResources, floorByTime());
+        }
+
+        function paint(value) {
+          var percent = Math.round(value * 100);
+          count.textContent = String(percent);
+          boot.setAttribute("aria-label", percent + "%");
+          bar.style.width = percent + "%";
+        }
+
+        function step() {
+          var goal = target();
+          shown += (goal - shown) * (finished ? 0.3 : 0.12);
+          if (goal - shown < 0.005) shown = goal;
+          paint(shown);
+          if (!finished || shown < 1) requestAnimationFrame(step);
+        }
+        if (reduced) paint(0);
+        else requestAnimationFrame(step);
+
+        function leave() {
+          finished = true;
+          if (reduced) {
+            paint(1);
+            boot.remove();
+            return;
+          }
+          var wait = Math.max(0, MIN_MS - (Date.now() - startedAt));
+          setTimeout(function () {
+            paint(1);
+            setTimeout(function () {
+              boot.classList.add("leaving");
+              setTimeout(function () {
+                boot.remove();
+              }, FADE_MS);
+            }, HOLD_MS);
+          }, wait);
+        }
+
+        window.__pmBoot = { done: leave };
+
+        /* Страховка. Модуль может не приехать вовсе — тогда за экраном загрузки
+         * навсегда осталось бы то, что успело построиться, включая сообщение об
+         * ошибке. Содержимое важнее анимации, здесь как и везде. */
+        setTimeout(leave, 20000);
+      })();
+    </script>
+
     <script type="module" src="./src/app.js"></script>
   </body>
 </html>

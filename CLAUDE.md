@@ -400,18 +400,33 @@ boundaries it explains are unchanged).
 
 ## Motion
 
-- `web/src/motion.js`. Two things only: the splash counter and staggered reveal, both
-  from the reference brief, both off in `prefers-reduced-motion`.
-- The splash counts 0→100 in 2000 ms, bottom-left, then fades. It is driven by
-  `performance.now()` and `requestAnimationFrame`, **not** by a 20 ms `setInterval` as
-  the brief specifies: a background tab clamps timers to a second, which turned a
-  two-second count into a ninety-second one. A hard timeout finishes it regardless,
-  because a hidden tab gets no frames at all and the splash would otherwise never leave.
-- `revealOnScroll` uses an IntersectionObserver at threshold 0.15, fires once, 24 px
-  rise, 120 ms stagger. It carries a **1200 ms safety net**: an observer never fires in
-  a hidden tab, and without the net the reader comes back to a page stuck at opacity 0.
-  The animation is decoration; the content is not.
-- Splash shows once per session (`sessionStorage`), not once per navigation.
+- **The loading screen lives in `web/index.html`, not in a module** — markup, style and
+  script inline, on purpose. It replaced a splash counter that shipped inside
+  `web/src/motion.js`, and that was the whole problem: it arrived among the very modules
+  it was supposed to be covering the wait for, so it started counting *after* the wait
+  had ended and added two seconds on top of a page that was already built. **Only
+  something that is not being loaded can measure loading.** Inline style for the same
+  reason — `styles.css` is itself still in flight at that moment.
+- **It counts what has arrived, not the clock.** The links above are the work list:
+  Resource Timing (`getEntriesByType` plus a buffered `PerformanceObserver`) says how
+  much of it is in, and the number on screen is that fraction. A time floor eases toward
+  0.9 so a stalled first response does not read as a frozen page, and it can never reach
+  the end — **100 is set only by `app.js`**, through `window.__pmBoot.done()`, once a
+  screen is actually mounted. A counter that hits 100 over an empty page is a lie about
+  the one thing it exists to report.
+- `dismissBoot()` in `app.js` is called after the screen is built, and deliberately not
+  on the redirect path: `renderMain()` returns `false` when it is navigating to `/learn`
+  instead of rendering, and taking the cover off then would show blank ground.
+- Three marks, one measurement: the product's own glyph breathing at 2.4 s (the same
+  path as `logo.svg`, inlined — the loading screen must not itself wait for a file), the
+  number bottom-left in the designation register the rest of the design uses, and a
+  hairline along the bottom edge whose width **is** the fraction. A **20 s hard timeout**
+  removes it regardless: a module may never arrive, and then the cover would hide the
+  error message forever. Content outranks animation, here as everywhere.
+- `web/src/motion.js` is now one thing: `revealOnScroll`, an IntersectionObserver at
+  threshold 0.15, fires once, 24 px rise, 120 ms stagger, off in
+  `prefers-reduced-motion`. It carries a **1200 ms safety net** — an observer never fires
+  in a hidden tab, and without the net the reader comes back to a page stuck at opacity 0.
 
 ## Learn — the home screen
 
@@ -647,9 +662,9 @@ boundaries it explains are unchanged).
 - Motion is one thing: reveal on an IntersectionObserver at 0.15 with a 1200 ms
   safety net, off under `prefers-reduced-motion`, and `.rise` is applied by the
   script rather than written into the markup so the page arrives visible without it.
-  The splash counter belongs to the app (`web/src/motion.js` documents why) and is
-  not repeated here — a stranger who followed a link should meet the page, not a
-  two-second count.
+  The loading screen belongs to the app (`web/index.html` documents why) and is not
+  repeated here — the landing is one document with no module graph behind it, and a
+  stranger who followed a link should meet the page, not a counter.
 - **Every number on it is counted, not quoted.** 167 skills, 248 lessons, 36 gates,
   87 scenarios, 6 formats; 25 / 45 / 70 read off `app/services/scoring.py`. This
   file said 254 lessons while the corpus held 248 — check the corpus before printing
@@ -664,8 +679,26 @@ boundaries it explains are unchanged).
   one origin: no CORS, no second address to configure, and `Authorization` works on the
   audio files. There is **no build step** — plain ES modules, no npm, no bundler. Adding
   a toolchain for twenty screens would put a second build system into a repo that has
-  none. The price is no version in the filenames, so outside production the files go out
-  with `Cache-Control: no-cache`.
+  none. The price is paid in two places, and both are handled explicitly:
+- **Caching is split by name, because the names carry no version.** `WebFiles` in
+  `main.py` serves everything with `Cache-Control: no-cache` — revalidate every time, a
+  304 when nothing changed — *except* `web/fonts/`, which goes out `immutable` for a
+  year. Fonts are the one thing here that never changes in place, and they are the
+  heaviest bytes on the page. The contract that buys it: **a regenerated font must be
+  written under a new name**, or a returning reader keeps last year's for a year.
+  `tests/test_web_shell.py` pins both halves.
+- **The whole module graph is listed as `modulepreload` in `index.html`.** With no
+  bundler the browser learns a module exists only by parsing the one that imports it, and
+  the graph from `app.js` is 28 modules six levels deep — six round trips before the last
+  file is even requested. Listed, they all go out at once: over HTTP/2 in production that
+  is one round trip instead of four (measured against `pmcoach.onrender.com`). The list is
+  **computed, not written**:
+
+      python3 web/tools/preload_map.py          # переписывает блок в index.html
+      python3 web/tools/preload_map.py --check  # только проверка
+
+  A hand-kept list would drift on the first new screen and drift silently;
+  `tests/test_web_shell.py` compares it against the real import graph.
 - `web/src/strings.js` is **generated** from the iOS string table and must never be
   hand-edited:
 

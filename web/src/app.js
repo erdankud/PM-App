@@ -10,7 +10,6 @@ import { session, ROUTE } from "./session.js";
 import { route, resolve, currentPath, startRouter, navigate } from "./router.js";
 import { loadingState } from "./components.js";
 import { S } from "./strings.js";
-import { shouldShowSplash, splashScreen } from "./motion.js";
 import { sidebar } from "./views/chrome.js";
 import { welcomeView } from "./views/welcome.js";
 import { onboardingView } from "./views/onboarding.js";
@@ -44,6 +43,20 @@ route("/profile", profileView);
 const root = document.getElementById("root");
 let mounted = null;
 let renderedRoute = null;
+let bootDismissed = false;
+
+/** Экран загрузки из `index.html` уходит, когда на месте появляется экран.
+ *
+ *  Он висит с первого байта документа и потому единственный, кто вообще видим,
+ *  пока едут модули. Прежняя заставка со счётчиком жила в модуле и появлялась
+ *  уже после того, как ожидание кончилось, то есть добавляла к нему свои две
+ *  секунды; здесь счёт кончается ровно тогда, когда есть что показать.
+ */
+function dismissBoot() {
+  if (bootDismissed) return;
+  bootDismissed = true;
+  window.__pmBoot?.done();
+}
 
 function mount(node) {
   // Уходя с экрана, view может закрыть за собой: плеер отпускает файл,
@@ -73,13 +86,16 @@ function render({ force = false } = {}) {
       return;
     case ROUTE.signedOut:
       mount(welcomeView());
-      return;
+      break;
     case ROUTE.onboarding:
       mount(onboardingView());
-      return;
+      break;
     default:
-      renderMain();
+      // Маршрут мог не найтись — тогда экран ещё не построен, а идёт переход
+      // на /learn, и снимать заставку рано: под ней пусто.
+      if (!renderMain()) return;
   }
+  dismissBoot();
 }
 
 function renderMain() {
@@ -87,14 +103,14 @@ function renderMain() {
   const match = resolve(path);
   if (!match) {
     navigate("/learn", { replace: true });
-    return;
+    return false;
   }
   const view = match.view(match.params);
   // Гейт занимает экран целиком: боковая навигация в нём была бы приглашением
   // уйти из наполовину заполненной формы.
   if (path.startsWith("/gate/")) {
     mount(view);
-    return;
+    return true;
   }
   mount(
     h(
@@ -105,6 +121,7 @@ function renderMain() {
       h("main.main#main", { tabindex: "-1" }, view)
     )
   );
+  return true;
 }
 
 initLanguage();
@@ -121,10 +138,6 @@ startRouter(() => {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") session.refreshProfile();
 });
-
-// Заставка живёт рядом с приложением, а не вместо него: страница строится сразу,
-// и к моменту, когда счётчик досчитает, за ней уже всё готово.
-if (shouldShowSplash()) document.body.append(splashScreen());
 
 render();
 session.bootstrap();

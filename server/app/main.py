@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -93,18 +94,49 @@ for router in (
 WEB_ROOT = SERVER_ROOT.parent / "web"
 
 
+# Год. Ровно столько живёт файл, имя которого — обещание: содержимое под этим
+# именем не поменяется никогда.
+IMMUTABLE_MAX_AGE = 31_536_000
+
+
 class WebFiles(StaticFiles):
-    """Статика приложения с обязательной перепроверкой.
+    """Статика приложения: перепроверка по умолчанию, вечность — по имени.
 
     У клиента нет сборки, поэтому у файлов нет и версии в имени: браузер, взявший
-    модуль из памяти, продолжал бы исполнять прошлую редакцию после правки. ETag
-    остаётся, так что перепроверка стоит один 304.
+    модуль из памяти, продолжал бы исполнять прошлую редакцию после правки. Отсюда
+    `no-cache` — не «не кэшировать», а «спроси, прежде чем взять из памяти»; ETag
+    остаётся, так что перепроверка стоит один 304, а не повторную загрузку.
+
+    Платит за это не байт, а обход до сервера, и до `modulepreload` в index.html
+    платить приходилось столбиком: граф модулей уходит на шесть уровней, и каждый
+    уровень ждал перепроверки предыдущего. Теперь все запросы уходят разом, и один
+    общий обход — честная цена за то, что правка доезжает до читателя сразу.
+
+    Шрифты — исключение, и единственное. Они не меняются: `web/fonts/` набирается
+    из подмножеств Google Fonts и переписывается только вместе с самим набором.
+    Полмегабайта на семнадцать файлов, перепроверяемых на каждом заходе, — это
+    обход до сервера за то, что заведомо не изменилось. Взамен имя становится
+    обещанием: **пересобранный шрифт кладётся под новым именем**, иначе у
+    вернувшегося читателя год будет старый.
     """
 
-    def file_response(self, *args, **kwargs):
-        response = super().file_response(*args, **kwargs)
-        response.headers["Cache-Control"] = "no-cache"
+    IMMUTABLE_DIRS = ("fonts",)
+
+    def file_response(self, full_path, *args, **kwargs):
+        response = super().file_response(full_path, *args, **kwargs)
+        response.headers["Cache-Control"] = (
+            f"public, max-age={IMMUTABLE_MAX_AGE}, immutable"
+            if self._is_immutable(full_path)
+            else "no-cache"
+        )
         return response
+
+    def _is_immutable(self, full_path) -> bool:
+        try:
+            relative = Path(full_path).resolve().relative_to(Path(self.directory).resolve())
+        except ValueError:
+            return False
+        return relative.parts[:1] in {(name,) for name in self.IMMUTABLE_DIRS}
 
 
 LANDING = {

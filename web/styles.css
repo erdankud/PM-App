@@ -183,29 +183,8 @@
 
 * { box-sizing: border-box; }
 
-/* Заставка: белый экран и счётчик 0→100 в левом нижнем углу. Огромная цифра
- * моноширинными знаками — единственное, что на экране, и потому она и есть
- * экран, а не украшение поверх него. */
-.splash {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  background: var(--background);
-  transition: opacity 0.7s var(--ease-out);
-}
-.splash.exiting { opacity: 0; pointer-events: none; }
-.splash-count {
-  padding: clamp(24px, 4vw, 40px);
-  font-size: clamp(72px, 14vw, 128px);
-  font-weight: 800;
-  line-height: 0.8;
-  letter-spacing: -0.05em;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-primary);
-}
+/* Экрана загрузки здесь нет намеренно: он лежит встроенным в `web/index.html`
+ * вместе со своим стилем, потому что ждать приходится в том числе этот файл. */
 
 /* Liquid Glass.
  *
