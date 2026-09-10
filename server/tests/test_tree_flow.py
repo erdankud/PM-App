@@ -171,6 +171,33 @@ def test_lesson_payload_carries_its_content_and_the_next_step(client):
     assert lesson["nextLessonId"]
 
 
+def test_next_lesson_walks_the_block_in_the_order_the_screen_lists_it(client):
+    """«Следующий урок» ведёт на следующий, а не через один.
+
+    Экран блока сортирует узлы по `order`, а `lessons_by_block` сортировался по
+    самому `nodeId`, то есть по алфавиту. В 17 блоках из 36 порядки расходились,
+    и кнопка перепрыгивала уроки. Проверяется не сама сортировка, а то, что два
+    порядка совпадают: у списка и у перехода он должен быть один.
+    """
+    headers, _ = onboard(client)
+    for block_id in ("D1", "D2", "G1"):
+        detail = client.get(f"/v1/blocks/{block_id}", headers=headers).json()
+        listed = [
+            lesson["id"] for node in detail["nodes"] for lesson in node["lessons"]
+        ]
+
+        walked = [listed[0]]
+        while True:
+            payload = client.get(f"/v1/lessons/{walked[-1]}", headers=headers).json()
+            next_id = payload["nextLessonId"]
+            if next_id is None:
+                break
+            assert next_id not in walked, f"{block_id}: цепочка зациклилась"
+            walked.append(next_id)
+
+        assert walked == listed, block_id
+
+
 # --- The gate ----------------------------------------------------------------
 
 

@@ -45,8 +45,8 @@ export function lessonView({ id }) {
     render();
   };
 
-  // Переход, а не перезагрузка на месте: экран строит маршрутизатор, и «назад»
-  // в браузере возвращает к предыдущему уроку.
+  // Переход, а не перезагрузка на месте: экран строит маршрутизатор. Стрелка
+  // при этом ведёт не в предыдущий урок, а в блок — см. `up()` в router.js.
   const advance = (nextId) => navigate(`/lesson/${nextId}`);
 
   const openTerm = (termId) => {
@@ -65,11 +65,11 @@ export function lessonView({ id }) {
 
   const render = () => {
     if (!lesson && error) {
-      fill(node, breadcrumb(S.Lesson.backToBlock), errorState(S.Common.couldntLoad, error.userMessage, load));
+      fill(node, breadcrumb(S.Lesson.backToBlock, "/learn"), errorState(S.Common.couldntLoad, error.userMessage, load));
       return;
     }
     if (!lesson) {
-      fill(node, breadcrumb(S.Lesson.backToBlock), loadingState());
+      fill(node, breadcrumb(S.Lesson.backToBlock, "/learn"), loadingState());
       return;
     }
 

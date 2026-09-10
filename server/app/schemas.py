@@ -619,6 +619,9 @@ class ExerciseResponse(ApiModel):
     id: str
     node_id: str
     block_id: str
+    # Урок, к которому упражнение относится: стрелка «назад» ведёт вверх по
+    # иерархии, а не по истории, и по прямой ссылке истории может не быть вовсе.
+    lesson_id: str | None = None
     type: str
     title: str
     estimated_minutes: int

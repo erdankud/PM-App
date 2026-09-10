@@ -55,17 +55,17 @@ export function blockView({ id }) {
 
   const render = () => {
     if (!detail && error) {
-      fill(node, breadcrumb(S.Tab.tree), errorState(S.Common.couldntLoad, error.userMessage, load));
+      fill(node, breadcrumb(S.Tab.learn, "/learn"), errorState(S.Common.couldntLoad, error.userMessage, load));
       return;
     }
     if (!detail) {
-      fill(node, breadcrumb(S.Tab.tree), loadingState());
+      fill(node, breadcrumb(S.Tab.learn, "/learn"), loadingState());
       return;
     }
 
     fill(
       node,
-      breadcrumb(S.Tab.tree),
+      breadcrumb(S.Tab.learn, "/learn"),
       hero(),
       detail.block.status === "locked"
         ? notice(S.Tree.lockedExplanation(detail.block.prerequisiteBlockIds), { symbol: "lock" })

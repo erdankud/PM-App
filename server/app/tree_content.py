@@ -544,8 +544,25 @@ def tree_content(
     if errors:
         raise ContentError(f"Invalid {kind} tree content:\n  " + "\n  ".join(errors))
 
+    # Порядок уроков в блоке — узлы по своему `order`, внутри узла уроки по своему.
+    #
+    # Ключом здесь стоял сам `nodeId`, то есть узлы выстраивались по алфавиту
+    # идентификатора. Экран блока всё это время сортировал узлы по `order`, и в
+    # 17 блоках из 36 два порядка расходились: список показывал одно, а
+    # `nextLessonId` вёл по другому — «Следующий урок» из первого урока D1
+    # перепрыгивал через два. Порядок должен быть один, и считаться он должен
+    # здесь, а не в каждом экране заново.
+    # Позиция узла в блоке — запасной ключ: так порядок остаётся тем же и если
+    # два узла одного блока однажды получат одинаковый `order`.
+    node_order = {
+        node["id"]: (node["order"], position)
+        for block in tree["blocks"]
+        for position, node in enumerate(block["nodes"])
+    }
     lessons_by_block: dict[str, list[dict[str, Any]]] = {}
-    for lesson in sorted(lessons, key=lambda item: (item["nodeId"], item["order"])):
+    for lesson in sorted(
+        lessons, key=lambda item: (node_order[item["nodeId"]], item["order"])
+    ):
         lessons_by_block.setdefault(lesson["blockId"], []).append(lesson)
 
     return {

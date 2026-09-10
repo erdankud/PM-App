@@ -446,8 +446,15 @@ boundaries it explains are unchanged).
   the lesson list below shows, so the recommendation is a starting point, not rails.
 - **The language switch lives only in Profile.** It had been in the rail and on the
   sign-in screen as well; three ways to do one thing, and the rail is for navigation.
-  Nothing is lost on the way in — `initLanguage()` falls back to the browser's language,
-  so the sign-in screen already arrives in the visitor's own.
+- **English until someone chooses otherwise**, on every client and on a fresh profile.
+  The browser's locale used to decide it, and that guessed wrong in the one place it
+  mattered: Practice is conducted in English at any interface language, so a visitor
+  from a Russian locale met a product whose own rehearsal room did not match its
+  chrome. Three places have to agree or the change does nothing — `deviceDefault()` in
+  `web/src/l10n.js`, `AppLanguage.deviceDefault` on iOS, and the `language` column
+  default in `server/app/models.py`, which the client reads back through
+  `adoptLanguageFromServer()` and which therefore wins over both. The choice in
+  Profile is still stronger than all of them.
 - It costs two requests — `/tree` for directions and blocks, `/blocks/{id}` for the
   lesson list. If the block list fails the screen still renders: the switcher and the
   continue button do not depend on it.
@@ -631,6 +638,20 @@ boundaries it explains are unchanged).
   places where a parameter name collided with a sibling key.
 - The three root tabs are three sidebar items. A desktop bottom tab bar would be wrong,
   but the rule is about how many roots there are, not where they sit.
+- **The arrow is «вверх», not «назад».** `up(parent)` in `router.js`, and `parent` is a
+  route the screen knows about itself — the block for a lesson, the lesson for an
+  exercise, the track for a practice session. It used to be `back(fallback)`: browser
+  history first, the route only if there was no history, which meant «Следующий урок»
+  five times turned the arrow into a rewind of the same five lessons instead of a way
+  out to the list. Roots (`/learn`, `/map`, `/practice`, `/progress`, `/profile`) carry
+  no arrow at all.
+- History is still history: the browser's own back button stays chronological and is
+  never intercepted. `up()` only *unwinds* — when the parent is already the previous
+  entry, it calls `history.back()` rather than pushing a duplicate, so opening a lesson
+  from its block and coming back leaves the stack the length it was. It knows which
+  entry is previous by numbering each one in `history.state.i`; a hash push arrives with
+  no state, a restored entry arrives with its own, and that is the only way to tell a
+  forward move from a back one when both fire the same `hashchange`.
 - Sign in with Apple is not wired up on the web: it needs a Services ID and a verified
   domain, which the free personal Apple account does not have. The dev path is used
   instead, and the button only appears when `/health` reports `devAuthEnabled` — the

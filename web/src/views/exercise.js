@@ -10,6 +10,7 @@ import { button, loadingState, errorState } from "../components.js";
 import { S } from "../strings.js";
 import { api } from "../api.js";
 import { breadcrumb } from "./chrome.js";
+import { up } from "../router.js";
 import { renderBlocks } from "./content.js";
 
 export function exerciseView({ id }) {
@@ -18,6 +19,11 @@ export function exerciseView({ id }) {
   let result = null;
   let error = null;
   const values = {};
+
+  /** Упражнение принадлежит уроку, из которого на него ссылаются, — туда и ведёт
+   *  стрелка. Пока урок не известен (загрузка, ошибка, прямая ссылка на
+   *  упражнение без родителя в контенте) — в Обучение: это корень, а не догадка. */
+  const parentPath = () => (exercise?.lessonId ? `/lesson/${exercise.lessonId}` : "/learn");
 
   const load = async () => {
     try {
@@ -84,17 +90,17 @@ export function exerciseView({ id }) {
 
   const render = () => {
     if (!exercise && error) {
-      fill(node, breadcrumb(S.Common.back), errorState(S.Common.couldntLoad, error.userMessage, load));
+      fill(node, breadcrumb(S.Common.back, "/learn"), errorState(S.Common.couldntLoad, error.userMessage, load));
       return;
     }
     if (!exercise) {
-      fill(node, breadcrumb(S.Common.back), loadingState());
+      fill(node, breadcrumb(S.Common.back, "/learn"), loadingState());
       return;
     }
 
     fill(
       node,
-      breadcrumb(S.Exercise.title),
+      breadcrumb(S.Common.back, parentPath()),
       h("h1", exercise.title),
       h("div.lesson-body", renderBlocks(exercise.promptBlocks, { diagrams: exercise.diagrams })),
       h(
@@ -125,7 +131,7 @@ export function exerciseView({ id }) {
       "div.stack",
       h("div.caption.muted", { style: { fontWeight: "600" } }, S.Exercise.reference),
       h("div.lesson-body", renderBlocks(result.referenceReasoningBlocks, { diagrams: exercise.diagrams })),
-      button(S.Exercise.understood, () => window.history.back(), { wide: true })
+      button(S.Exercise.understood, () => up(parentPath()), { wide: true })
     );
 
   render();

@@ -636,7 +636,11 @@ export function practiceSessionView({ id }) {
     );
 
   const render = () => {
-    const crumb = breadcrumb(S.Practice.title, "/practice");
+    // Разбор принадлежит своему формату, а не списку форматов: из сессии стрелка
+    // ведёт в тот трек, где её сгенерировали. Пока трек не загружен — в Практику.
+    const crumb = track
+      ? breadcrumb(track.title, `/practice/${track.id}`)
+      : breadcrumb(S.Practice.title, "/practice");
     if (!session || !track) {
       fill(
         node,

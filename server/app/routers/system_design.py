@@ -48,6 +48,22 @@ def _attempt(db: DbSession, user_id: str, exercise_id: str) -> ExerciseAttempt |
     )
 
 
+def _lesson_of(exercise: dict, language: str) -> str | None:
+    """Урок, из которого открывают это упражнение.
+
+    Связь односторонняя — ссылка стоит на уроке (`exerciseId`), — поэтому
+    родителя ищем по ней, а не по узлу: у узла уроков может быть несколько, и
+    упражнение принадлежит тому, который на него ссылается.
+    """
+    for lesson in tree_content.lessons_for_block(exercise["blockId"], language):
+        if lesson.get("exerciseId") == exercise["id"]:
+            return lesson["id"]
+    for lesson in tree_content.lessons_for_block(exercise["blockId"], language):
+        if lesson["nodeId"] == exercise["nodeId"]:
+            return lesson["id"]
+    return None
+
+
 @router.get("/exercises/{exercise_id}", response_model=ExerciseResponse)
 def get_exercise(
     exercise_id: str, user: CurrentUser, db: DbSession, language: ContentLanguage
@@ -58,6 +74,7 @@ def get_exercise(
         id=exercise["id"],
         node_id=exercise["nodeId"],
         block_id=exercise["blockId"],
+        lesson_id=_lesson_of(exercise, language.value),
         type=exercise["type"],
         title=exercise["title"],
         estimated_minutes=exercise["estimatedMinutes"],

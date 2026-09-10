@@ -69,7 +69,7 @@ export function glossaryView() {
 
   fill(
     node,
-    breadcrumb(S.Tab.tree),
+    breadcrumb(S.Tab.profile, "/profile"),
     h("h1", S.Glossary.title),
     h("input", {
       type: "search",

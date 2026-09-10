@@ -11,7 +11,7 @@ import { h } from "../dom.js";
 import { icon } from "../icons.js";
 import { S } from "../strings.js";
 import { LANGUAGES, language, selectLanguage } from "../l10n.js";
-import { navigate, currentPath, back } from "../router.js";
+import { navigate, currentPath, up } from "../router.js";
 import { session } from "../session.js";
 
 /** Меню свёрнуто по умолчанию: разделов немного, их значки узнаются с первого
@@ -115,11 +115,17 @@ export function languagePicker() {
   );
 }
 
-/** Строка возврата. На вебе «назад» — это история браузера, а не стек экранов. */
-export function breadcrumb(title, fallback = "/map") {
+/** Стрелка «вверх»: экран, которому этот принадлежит, а не предыдущий по времени.
+ *
+ *  `parent` — маршрут, а не запасной вариант. Раньше он и был запасным: клик
+ *  разматывал историю браузера и попадал сюда, только если истории нет. Из-за
+ *  этого «Следующий урок» десять раз подряд превращал стрелку в перемотку той же
+ *  ленты назад, вместо выхода к списку уроков.
+ */
+export function breadcrumb(title, parent = "/learn") {
   return h(
     "button.breadcrumb",
-    { type: "button", onclick: () => back(fallback) },
+    { type: "button", onclick: () => up(parent) },
     icon("chevron.left", { size: 13 }),
     h("span", title)
   );

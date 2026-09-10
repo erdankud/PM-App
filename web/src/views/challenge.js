@@ -17,7 +17,7 @@ import {
 } from "../components.js";
 import { S } from "../strings.js";
 import { api, RATIONALE_MIN, RATIONALE_MAX, FEEDBACK_POLL_ATTEMPTS, FEEDBACK_POLL_INTERVAL_MS } from "../api.js";
-import { back, navigate } from "../router.js";
+import { navigate, up } from "../router.js";
 
 const STEPS = ["brief", "investigate", "decide", "consequence", "feedback"];
 
@@ -251,7 +251,7 @@ export function challengeView({ gateId }) {
   const leave = () => {
     clearTimeout(pollHandle);
     if (challenge) navigate(`/block/${challenge.blockId}`, { replace: true });
-    else back("/map");
+    else up("/learn");
   };
 
   // --- Отрисовка -----------------------------------------------------------
